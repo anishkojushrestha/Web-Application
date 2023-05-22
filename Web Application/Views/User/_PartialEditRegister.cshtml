@@ -1,0 +1,44 @@
+﻿@model Web_Application.ModelViews.UpdateRegisterVM
+
+<div class="modal fade" id="addRegister">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addRegisterLabel">New Register</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form action="EditRegister" class="form-group">
+                    @Html.AntiForgeryToken()
+                    <input type="text" asp-for="Id" class="form-control" hidden>
+                    <div class="mb-3">
+                        <input type="text" asp-for="FirstName" class="form-control" placeholder="First Name">
+                        <span asp-validation-for="FirstName" class="alert-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" asp-for="LastName" class="form-control" placeholder="Last Name">
+                        <span asp-validation-for="LastName" class="alert-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" asp-for="UserName" class="form-control" placeholder="Username">
+                        <span asp-validation-for="UserName" class="alert-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" asp-for="Email" class="form-control" placeholder="Email">
+                        <span asp-validation-for="Email" class="alert-danger"></span>
+                    </div>
+
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-save="modal">Submit</button>
+
+            </div>
+        </div>
+    </div>
+</div>

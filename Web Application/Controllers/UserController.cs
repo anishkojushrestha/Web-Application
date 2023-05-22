@@ -14,7 +14,8 @@ namespace Web_Application.Controllers
         }
         public IActionResult Register()
         {
-            return View();
+            RegisterVM vm = new RegisterVM();   
+            return PartialView("_PartialRegister", vm);
         }
         [HttpPost]
 
@@ -29,11 +30,11 @@ namespace Web_Application.Controllers
                     {
                         ViewBag.Message = "Register Details Added Successfully";
                         ModelState.Clear();
-                        return RedirectToAction("Login");
+                        return RedirectToAction("Index");
                     }
                 }
             }
-            return View();
+            return PartialView("_PartialRegister", vm);
         }
 
         public IActionResult Login()
@@ -59,7 +60,8 @@ namespace Web_Application.Controllers
         public ActionResult EditRegister(int id)
         {
             UserDbHandle sdb = new UserDbHandle();
-            return View(sdb.GetUser().Find(vm => vm.Id == id));
+            //return View(sdb.GetUser().Find(vm => vm.Id == id));
+            return PartialView("_PartialEditRegister", sdb.GetUser().Find(vm => vm.Id == id));
 
         }
 
@@ -75,12 +77,13 @@ namespace Web_Application.Controllers
                 {
                     ViewBag.Message = "Register Details Edited Successfully";
                     ModelState.Clear();
+                    return RedirectToAction("Index");
                 }
 
 
 
             }
-            return View();
+            return PartialView("_PartialEditRegister", vm);
         }
 
         public ActionResult Delete(int id)
