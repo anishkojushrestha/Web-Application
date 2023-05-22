@@ -4,13 +4,10 @@
 }
 <div class="input-group" style="margin-left:75%;">
   <div class="form-outline">
-    <input type="search" id="form1" class="form-control" />
+    <input type="search" id="search" class="form-control" placeholder="Search..." />
   </div>
-  <button type="button" class="btn btn-primary">
-    Search
-  </button>
 </div>
-<table class="table" id="myTable">
+<table class="table" >
     <thead>
         <tr>
             <th scope="col">FirstName</th>
@@ -21,7 +18,7 @@
             <th scope="col">Handle</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="table">
         @foreach (var data in Model)
         {
             <tr>
@@ -42,6 +39,20 @@
 
         }
 
-
+        
     </tbody>
+
 </table>
+
+@section Scripts{
+    <script>
+        $(document).ready(function(){
+          $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#table tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+    </script>
+}
