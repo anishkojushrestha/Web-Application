@@ -1,0 +1,55 @@
+﻿@model Web_Application.ModelViews.LoginVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Web_Application</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Web_Application.styles.css" asp-append-version="true" />
+    <style>
+        .fl {
+            width: 35%;
+            padding-bottom: 2%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <form action="@Url.Action("Login", "User")" method="post">
+                @Html.AntiForgeryToken()
+                <div class="container" style="display:flex; flex-direction:column; justify-content:center; align-items:center; margin-top:2%; padding:50px;">
+                    
+                    <div class="fl">
+                        <input type="text" asp-for="UserName" class="form-control" placeholder="Username">
+                        <span asp-validation-for="UserName" class="alert-danger"></span>
+                    </div>
+                    <div class="fl">
+                        <input type="password" asp-for="Password" class="form-control" placeholder="Password">
+                        <span asp-validation-for="Password" class="alert-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 35%;">Submit</button>
+                </div>
+                <div class="text-center">
+                    <p>Not a member? <a href="~/User/Register" style="text-decoration:none">Register</a></p>
+                </div>
+                <h3>@ViewBag.Message</h3>
+            </form>
+
+        </main>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

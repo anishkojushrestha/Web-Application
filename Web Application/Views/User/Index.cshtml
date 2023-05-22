@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Web_Application.ModelViews.UpdateRegisterVM>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">FirstName</th>
+            <th scope="col">LastName</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Email</th>
+            <th scope="col">Password</th>
+            <th scope="col">Handle</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var data in Model)
+        {
+            <tr>
+                <td>@data.Id</td>
+                <td>@data.FirstName</td>
+                <td>@data.LastName</td>
+                <td>@data.UserName</td>
+                <td>@data.Email</td>
+                <td>
+                    <a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" class="btn btn-warning">Edit</a> |
+                    <a asp-action="Delete" asp-controller="User" asp-route-id="@data.Id" class="btn btn-danger" onclick="return confirm('Are sure wants to delete?');">Delete</a>
+                   @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = data.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
+                </td>
+
+            </tr>
+
+
+        }
+
+
+    </tbody>
+</table>
