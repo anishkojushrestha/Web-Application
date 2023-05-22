@@ -13,9 +13,8 @@ namespace Web_Application.Controllers
             return View(dbhandle.GetUser());
         }
         public IActionResult Register()
-        {
-            RegisterVM vm = new RegisterVM();   
-            return PartialView("_PartialRegister", vm);
+        { 
+            return PartialView("_PartialRegister");
         }
         [HttpPost]
 
@@ -83,7 +82,7 @@ namespace Web_Application.Controllers
 
 
             }
-            return PartialView("_PartialEditRegister", vm);
+            return PartialView("_PartialEditRegister");
         }
 
         public ActionResult Delete(int id)

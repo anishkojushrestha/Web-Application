@@ -2,8 +2,8 @@
 @{
     ViewData["Title"] = "Index";
 }
-<div id="PlaceHolderHere"></div>
-<button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Register")" style="width:100px;margin-left:90%; ">Create</button>
+<div id="PlaceHolderHere" ></div>
+<button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister"  data-url="@Url.Action("Register")" style="width:100px;margin-left:90%; ">Create</button>
 <div class="input-group" style="margin-left:79%;margin-top:4px;">
   <div class="form-outline">
     <input type="search" id="search" class="form-control" placeholder="Search..." />
@@ -62,6 +62,7 @@
             var PlaceHolderEleent = $('#PlaceHolderHere');
             $('button[data-toggle="ajax-modal"]').click(function(event){
                 var url = $(this).data('url');
+                
                 var decodedUrl = decodeURIComponent(url);
                 $.get(decodedUrl).done(function (data){
                     PlaceHolderEleent.html(data);
@@ -73,10 +74,10 @@
                 var actionUrl = form.attr('action');
                 var url = '/user/'+actionUrl;
                 var sentData = form.serialize();
+
                 $.post(url, sentData).done(function (data) {
                     PlaceHolderEleent.find('.modal').modal('hide');
                     window.location.reload();
-                    
                 })
                 
             })
