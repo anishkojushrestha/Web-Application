@@ -70,15 +70,16 @@
                 })
             })
             PlaceHolderEleent.on('click','[data-save="modal"]',function (event){
-                var form =$(this).parents('.modal').find('form');
-                var actionUrl = form.attr('action');
-                var url = '/user/'+actionUrl;
-                var sentData = form.serialize();
 
-                $.post(url, sentData).done(function (data) {
-                    PlaceHolderEleent.find('.modal').modal('hide');
-                    window.location.reload();
-                })
+                //var form =$(this).parents('.modal').find('form');
+                //var actionUrl = form.attr('action');
+                //var url = '/user/'+actionUrl;
+                //var sentData = form.serialize();
+
+                //$.post(url, sentData).done(function (data) {
+                //    PlaceHolderEleent.find('.modal').modal('hide');
+                //    window.location.reload();
+                //})
                 
             })
         })

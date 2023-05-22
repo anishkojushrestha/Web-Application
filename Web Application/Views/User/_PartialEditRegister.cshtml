@@ -10,35 +10,35 @@
 
             </div>
             <div class="modal-body">
-                <form action="EditRegister" class="form-group">
+                <form asp-action="EditRegister" asp-controller="User" method="post" >
                     @Html.AntiForgeryToken()
                     <input type="text" asp-for="Id" class="form-control" hidden>
                     <div class="mb-3">
-                        <input type="text" asp-for="FirstName" class="form-control" placeholder="First Name">
+                        <input type="text" asp-for="FirstName" class="form-control" placeholder="First Name" required>
                         <span asp-validation-for="FirstName" class="alert-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <input type="text" asp-for="LastName" class="form-control" placeholder="Last Name">
+                        <input type="text" asp-for="LastName" class="form-control" placeholder="Last Name" required>
                         <span asp-validation-for="LastName" class="alert-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <input type="text" asp-for="UserName" class="form-control" placeholder="Username">
+                        <input type="text" asp-for="UserName" class="form-control" placeholder="Username" required>
                         <span asp-validation-for="UserName" class="alert-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <input type="email" asp-for="Email" class="form-control" placeholder="Email">
+                        <input type="email" asp-for="Email" class="form-control" placeholder="Email" required>
                         <span asp-validation-for="Email" class="alert-danger"></span>
                     </div>
 
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" >Submit</button>
 
+                    </div>
                 </form>
 
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-save="modal">Submit</button>
-
-            </div>
+            
         </div>
     </div>
 </div>

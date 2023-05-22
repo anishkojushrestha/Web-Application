@@ -33,7 +33,7 @@ namespace Web_Application.Controllers
                     }
                 }
             }
-            return PartialView("_PartialRegister", vm);
+            return RedirectToAction("Index");
         }
 
         public IActionResult Login()
@@ -82,7 +82,7 @@ namespace Web_Application.Controllers
 
 
             }
-            return PartialView("_PartialEditRegister");
+            return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id)
