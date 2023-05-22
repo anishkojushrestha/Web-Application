@@ -2,8 +2,15 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<table class="table">
+<div class="input-group" style="margin-left:75%;">
+  <div class="form-outline">
+    <input type="search" id="form1" class="form-control" />
+  </div>
+  <button type="button" class="btn btn-primary">
+    Search
+  </button>
+</div>
+<table class="table" id="myTable">
     <thead>
         <tr>
             <th scope="col">FirstName</th>
