@@ -1,0 +1,83 @@
+﻿@model Web_Application.ModelViews.SupportMV
+
+<style>
+    .rw {
+        width: 30%;
+    }
+</style>
+<div class="modal fade" id="addRegister" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addRegisterLabel">Support</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form asp-action="EditSupport" asp-controller="Support">
+                    @Html.AntiForgeryToken()
+                    <input type="text" asp-for="Id" class="form-control" hidden>
+
+                    <div class="col">
+                        <div class="row pb-4">
+                            <div class="rw">
+                                <label class="form-label">Company Name</label>
+                                <input type="text" asp-for="CompanyName" class="form-control">
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Client Name</label>
+                                <input type="text" class="form-control" asp-for="ClientName">
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Call By</label>
+                                <input type="text" asp-for="CallBy" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row pb-4">
+                            <div class="rw">
+                                <label class="form-label">Support Staff</label>
+                                <input type="text" asp-for="SupportStaff" class="form-control">
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" asp-for="Date">
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Issues</label>
+                                <textarea type="text" asp-for="Issue" class="form-control" style="height:65px;"></textarea>
+                            </div>
+                        </div>
+                        <div class="row pb-4">
+                            <div class="rw">
+                                <label class="form-label">Feed Back</label>
+                                <textarea type="text" asp-for="FeedBack" class="form-control" style="height:65px;"></textarea>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Remote/Onsite</label>
+                                <input type="text" asp-for="Remote" class="form-control">
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Status</label>
+                                <input type="text" class="form-control" asp-for="Status">
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

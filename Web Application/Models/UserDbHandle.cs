@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
@@ -107,5 +108,8 @@ namespace Web_Application.Models
             else
                 return false;
         }
+        
+
+
     }
 }

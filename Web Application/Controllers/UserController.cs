@@ -12,12 +12,21 @@ namespace Web_Application.Controllers
             ModelState.Clear();
             return View(dbhandle.GetUser());
         }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            UserDbHandle data = new UserDbHandle();
+            var result = data.GetUser();
+            return Json(result);
+        }
+
         public IActionResult Register()
         { 
             return PartialView("_PartialRegister");
         }
+        
         [HttpPost]
-
         public IActionResult Register(RegisterVM vm)
         {
             if (ModelState.IsValid)
@@ -101,6 +110,8 @@ namespace Web_Application.Controllers
                 return View();
             }
         }
+       
+
 
 
     }
