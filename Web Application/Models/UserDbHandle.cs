@@ -29,11 +29,16 @@ namespace Web_Application.Models
         }
 
         public bool UserExist(string username, string password) { 
+            //establish the database connection
             connection();
+            //create sql cmd
             SqlCommand cmd = new SqlCommand("SELECT UserName, Password FROM users WHERE Username = '"+username+"' And Password = '"+password+"'", con);
+            //create object and pass sql command
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            //create database table to hold data
             DataTable dt = new DataTable();
             con.Open();
+            //fills datatable and with data retrieved by executing the sql cmd 
             sd.Fill(dt);
             con.Close();
             if (dt.Rows.Count > 0)
