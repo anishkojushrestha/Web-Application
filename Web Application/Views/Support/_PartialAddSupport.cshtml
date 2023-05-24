@@ -23,43 +23,43 @@
                         <div class="row pb-4">
                             <div class="rw">
                                 <label class="form-label">Company Name</label>
-                                <input type="text" asp-for="CompanyName" class="form-control">
+                                <input type="text" asp-for="CompanyName" class="form-control" required>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Client Name</label>
-                                <input type="text" class="form-control" asp-for="ClientName">
+                                <input type="text" class="form-control" asp-for="ClientName" required>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Call By</label>
-                                <input type="text" asp-for="CallBy" class="form-control">
+                                <input type="text" asp-for="CallBy" class="form-control" required>
                             </div>
                         </div>
                         <div class="row pb-4">
                             <div class="rw">
                                 <label class="form-label">Support Staff</label>
-                                <input type="text" asp-for="SupportStaff" class="form-control">
+                                <input type="text" asp-for="SupportStaff" class="form-control" required>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Date</label>
-                                <input type="date" class="form-control" asp-for="Date">
+                                <input type="date" asp-for="SubmitDate" class="form-control" required>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Issues</label>
-                                <textarea type="text" asp-for="Issue" class="form-control" style="height:65px;"></textarea>
+                                <textarea type="text" asp-for="Issue" class="form-control" style="height:65px;" required></textarea>
                             </div>
                         </div>
                         <div class="row pb-4">
                             <div class="rw">
                                 <label class="form-label">Feed Back</label>
-                                <textarea type="text" asp-for="FeedBack" class="form-control" style="height:65px;"></textarea>
+                                <textarea type="text" asp-for="FeedBack" class="form-control" style="height:65px;" required></textarea>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Remote/Onsite</label>
-                                <input type="text" asp-for="Remote" class="form-control">
+                                <input type="text" asp-for="Remote" class="form-control" required>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Status</label>
-                                <input type="text" class="form-control" asp-for="Status">
+                                <input type="text" class="form-control" asp-for="Status" required>
                             </div>
 
                         </div>

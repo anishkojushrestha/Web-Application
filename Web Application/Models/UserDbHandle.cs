@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using System.Security.Cryptography;
+using System.Security.Policy;
+using System.Text;
 using Web_Application.ModelViews;
 
 namespace Web_Application.Models
@@ -19,7 +23,9 @@ namespace Web_Application.Models
         public bool RegisteUser(RegisterVM vm)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("INSERT into users(FirstName, LastName, UserName, Email, Password) VALUES('"+vm.FirstName+"','"+vm.LastName+"', '"+vm.UserName+"','"+vm.Email+"','"+vm.NewPassword+"')", con);
+
+            var pass = new PasswordHasher<object>().HashPassword(null, vm.NewPassword);
+            SqlCommand cmd = new SqlCommand("INSERT into users(FirstName, LastName, UserName, Email, Password) VALUES('"+vm.FirstName+"','"+vm.LastName+"', '"+vm.UserName+"','"+vm.Email+"','"+ pass + "')", con);
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();

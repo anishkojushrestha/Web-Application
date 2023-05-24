@@ -30,7 +30,7 @@ namespace Web_Application.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return View(vm);
+            return RedirectToAction("Index");
 
         }
         public IActionResult EditSupport(int id)
