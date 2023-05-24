@@ -1,0 +1,70 @@
+﻿@model Web_Application.ModelViews.SupportMV
+@{
+    ViewData["Title"] = "Index";
+    <style>
+        .rw {
+            width: 30%;
+        }
+    </style>
+
+}
+
+
+<form asp-action="Support" asp-controller="User">
+    @Html.AntiForgeryToken()
+    <div class="col">
+        <div class="row pb-4">
+            <div class="rw">
+                <label class="form-label">Company Name</label>
+                <input type="text" asp-for="CompanyName" class="form-control">
+            </div>
+            <div class="rw">
+                <label class="form-label">Client Name</label>
+                <input type="text" class="form-control" asp-for="ClientName">
+            </div>
+            <div class="rw">
+                <label class="form-label">Call By</label>
+                <input type="text" asp-for="CallBy" class="form-control">
+            </div>
+        </div>
+        <div class="row pb-4">
+            <div class="rw">
+                <label class="form-label">Support Staff</label>
+                <input type="text" asp-for="SupportStaff" class="form-control">
+            </div>
+            <div class="rw">
+                <label class="form-label">Date</label>
+                <input type="date" class="form-control" asp-for="Date">
+            </div>
+            <div class="rw">
+                <label class="form-label">Issues</label>
+                <textarea type="text" asp-for="Issue" class="form-control" style="height:65px;"></textarea>
+            </div>
+        </div>
+        <div class="row pb-4">
+            <div class="rw">
+                <label class="form-label">Feed Back</label>
+                <textarea type="text" asp-for="FeedBack" class="form-control" style="height:65px;"></textarea>
+            </div>
+            <div class="rw">
+                <label class="form-label">Remote/Onsite</label>
+                <input type="text" asp-for="Remote" class="form-control">
+            </div>
+            <div class="rw">
+                <label class="form-label">Status</label>
+                <input type="text" class="form-control" asp-for="Status">
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</form>
+
