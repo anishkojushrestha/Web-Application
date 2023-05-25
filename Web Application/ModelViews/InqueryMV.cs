@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public string CompanyName { get; set; }
         public DateTime Date { get; set; }
-        public DateTime Miti { get; set; }
+        public string Miti { get; set; }
         public string ContactPerson { get; set; }
         public string Address { get; set; }
         public string CompanyEmail { get; set; }

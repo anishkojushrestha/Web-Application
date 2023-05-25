@@ -1,13 +1,15 @@
 ﻿@model Web_Application.ModelViews.InqueryMV
+@section Styles {
 <link
-href="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/css/nepali.datepicker.v4.0.1.min.css"
-rel="stylesheet" type="text/css"/>
+href="//nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/css/nepali.datepicker.v4.0.1.min.css"
+rel="stylesheet" >
+}
 <style>
     .rw {
         width: 30%;
     }
 </style>
-<link href="~/css/nepali.datepicker.v4.0.1.min.css" rel="stylesheet" />
+
 <div class="modal fade" id="addRegister" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content" style="width:155%; margin-left: -27%; margin-top: -10px;">
@@ -32,7 +34,7 @@ rel="stylesheet" type="text/css"/>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Miti:</label>
-                                <input type="text" asp-for="Miti" class="form-control" id="nepali-datepicker" required>
+                                <input type="text" asp-for="Miti"  id="nepali-datepicker" class="date-picker form-control" required>
                             </div>
                         </div>
                         <div class="row pb-4">
@@ -121,12 +123,29 @@ rel="stylesheet" type="text/css"/>
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    window.onload = function () {
-        var mainInput = document.getElementById("nepali-datepicker");
-        mainInput.nepaliDatePicker();
-    };
-    <script
-    src="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/js/nepali.datepicker.v4.0.1.min.js"
-    type = "text/javascript" ></script>
+@section Scripts{
+    <script src="//nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/js/nepali.datepicker.v4.0.1.min.js"
+        type="text/javascript"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            /* Select your element */
+            var elm = document.getElementById("nepali-datepicker");
+
+            /* Initialize Datepicker with options */
+            elm.nepaliDatePicker({});
+        };
+        //$(document).ready(function () {
+        //    $("#nepali-datepicker").nepaliDatePicker();
+        //}
+                
+        //$(document).ready(function () {
+        //    $("#nepali-datepicker").on("keyup", function () {
+        //        var value = $(this).val();
+        //        value.nepaliDatePicker();
+        //    });
+        //});
+        </script>
+        
+}
+
 
