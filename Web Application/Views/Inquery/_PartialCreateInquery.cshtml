@@ -1,16 +1,17 @@
 ﻿@model Web_Application.ModelViews.InqueryMV
 
-<link href="~/css/nepali.datepicker.v4.0.1.min.css" rel="stylesheet" />
-<style>
-    .rw {
-        width: 30%;
-    }
-</style>
+<link href="~/css/nepali.datepicker.v4.0.1.min.css" rel="stylesheet" type="text/css" />
 
 <div class="modal fade" id="addRegister" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content" style="width:155%; margin-left: -27%; margin-top: -10px;">
             <div class="modal-header">
+
+                <style>
+                    .rw {
+                        width: 30%;
+                    }
+                </style>
                 <h4 class="modal-title" id="addRegisterLabel">Create Inquery</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal">
                 </button>
@@ -31,7 +32,7 @@
                             </div>
                             <div class="rw">
                                 <label class="form-label">Miti:</label>
-                                <input type="text" asp-for="Miti"  id="nepali-datepicker" class="date-picker form-control" required>
+                                <input type="text" asp-for="Miti" id="nepali-datepicker" placeholder="Select Nepali Date" required>
                             </div>
                         </div>
                         <div class="row pb-4">
@@ -51,12 +52,12 @@
                         <div class="row pb-4">
                             <div class="rw">
                                 <label class="form-label">Contact Person Email:</label>
-                                <input type="text" asp-for="ContactPersonEmail" class="form-control"  required></input>
+                                <input type="text" asp-for="ContactPersonEmail" class="form-control" required></input>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Software Type:</label>
                                 <input type="text" asp-for="SoftwareType" class="form-control" required>
-                                
+
                             </div>
                             <div class="rw">
                                 <label class="form-label">Reference By:</label>
@@ -121,28 +122,18 @@
     </div>
 </div>
 
-<script src="~/js/nepali.datepicker.v4.0.1.min.js"
-    type="text/javascript"></script>
-<script type="text/javascript">
-    //window.onload = function () {
-    //    /* Select your element */
-    //    var elm = document.getElementById("nepali-datepicker");
 
-    //    /* Initialize Datepicker with options */
-    //    elm.nepaliDatePicker({});
-    //};
-    $(document).ready(function () {
-        $("#nepali-datepicker").nepaliDatePicker();
-    }
-                
-    //$(document).ready(function () {
-    //    $("#nepali-datepicker").on("keyup", function () {
-    //        var value = $(this).val();
-    //        value.nepaliDatePicker();
-    //    });
-    //});
-    // 
+<script src="~/js/nepali.datepicker.v4.0.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+   $( function() {
+        $("#nepali-datepicker").nepaliDatePicker({
+            container: "#" + $("#nepali-datepicker").closest(".modal").attr("id"),
+            dateFormat: "DD/MM/YYYY"
+        });
+    });
+
 </script>
-        
+
+
 
 
