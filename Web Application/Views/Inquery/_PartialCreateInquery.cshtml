@@ -1,9 +1,6 @@
 ﻿@model Web_Application.ModelViews.InqueryMV
-@section Styles {
-<link
-href="//nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/css/nepali.datepicker.v4.0.1.min.css"
-rel="stylesheet" >
-}
+
+<link href="~/css/nepali.datepicker.v4.0.1.min.css" rel="stylesheet" />
 <style>
     .rw {
         width: 30%;
@@ -123,29 +120,29 @@ rel="stylesheet" >
         </div>
     </div>
 </div>
-@section Scripts{
-    <script src="//nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/js/nepali.datepicker.v4.0.1.min.js"
-        type="text/javascript"></script>
-    <script type="text/javascript">
-        window.onload = function () {
-            /* Select your element */
-            var elm = document.getElementById("nepali-datepicker");
 
-            /* Initialize Datepicker with options */
-            elm.nepaliDatePicker({});
-        };
-        //$(document).ready(function () {
-        //    $("#nepali-datepicker").nepaliDatePicker();
-        //}
+<script src="~/js/nepali.datepicker.v4.0.1.min.js"
+    type="text/javascript"></script>
+<script type="text/javascript">
+    //window.onload = function () {
+    //    /* Select your element */
+    //    var elm = document.getElementById("nepali-datepicker");
+
+    //    /* Initialize Datepicker with options */
+    //    elm.nepaliDatePicker({});
+    //};
+    $(document).ready(function () {
+        $("#nepali-datepicker").nepaliDatePicker();
+    }
                 
-        //$(document).ready(function () {
-        //    $("#nepali-datepicker").on("keyup", function () {
-        //        var value = $(this).val();
-        //        value.nepaliDatePicker();
-        //    });
-        //});
-        </script>
+    //$(document).ready(function () {
+    //    $("#nepali-datepicker").on("keyup", function () {
+    //        var value = $(this).val();
+    //        value.nepaliDatePicker();
+    //    });
+    //});
+    // 
+</script>
         
-}
 
 
