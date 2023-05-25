@@ -25,7 +25,11 @@ namespace Web_Application.Controllers
         { 
             return PartialView("_PartialRegister");
         }
-        
+        public IActionResult NewRegister()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Register(RegisterVM vm)
         {
@@ -45,6 +49,7 @@ namespace Web_Application.Controllers
             return RedirectToAction("Index");
         }
 
+
         public IActionResult Login()
         {
             return View();
@@ -60,7 +65,7 @@ namespace Web_Application.Controllers
                 if (userDbHandle.UserExist(vm.UserName, vm.Password) == true)
                 {
                     ModelState.Clear();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Customer");
                 }
             }
             return View();

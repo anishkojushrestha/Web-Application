@@ -5,11 +5,11 @@
 <div id="PlaceHolderHere" ></div>
 <button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister"  data-url="@Url.Action("Register")" style="width:100px;margin-left:90%; ">Create</button>
 <div class="input-group" style="margin-left:79%;margin-top:4px;">
-  <div class="form-outline">
+  @*<div class="form-outline">
     <input type="search" id="search" class="form-control" placeholder="Search..." />
-  </div>
+  </div>*@
 </div>
-<table class="table table-bordered" style="margin-top:2%;">
+<table id="datatable" class="display" >
     <thead>
         <tr>
             <th scope="col">Id</th>
@@ -31,7 +31,7 @@
                 <td>@data.Email</td>
                 <td>
                     <button type="button" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning" data-url="@Url.Action($"EditRegister/{data.Id}")">Edit</button>
-                    @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@ |
+                    @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@ 
                     <a asp-action="Delete" asp-controller="User" asp-route-id="@data.Id" class="btn btn-danger" onclick="return confirm('Are sure wants to delete?');">Delete</a>
                    @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = data.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
@@ -50,8 +50,9 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-            $('#myTable').DataTable();
+            $('#datatable').DataTable();
         });
+
         $(document).ready(function(){
           $("#search").on("keyup", function() {
             var value = $(this).val().toLowerCase();

@@ -25,5 +25,7 @@ namespace Web_Application.ModelViews
         public string Remote { get; set; }
         [Required]
         public string Status { get; set; }   
+
+        
     }
 }

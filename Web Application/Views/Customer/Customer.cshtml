@@ -1,0 +1,66 @@
+﻿@model Web_Application.ModelViews.CustomerVM
+@{
+    ViewData["Title"] = "Customer";
+}
+
+<form asp-action="AddSupport" asp-controller="Support">
+    @Html.AntiForgeryToken()
+    <div class="col">
+        <div class="row pb-4">
+            <div class="rw">
+                <label class="form-label">Company Name</label>
+                <input type="text" asp-for="CompanyName" class="form-control" required>
+            </div>
+            <div class="rw">
+                <label class="form-label">Person Contact</label>
+                <input type="text" class="form-control" asp-for="ContactPerson" required>
+            </div>
+            <div class="rw">
+                <label class="form-label">Phone No.</label>
+                <input type="text" asp-for="phoneNumber" class="form-control" required>
+            </div>
+        </div>
+        <div class="row pb-4">
+            <div class="rw">
+                <label class="form-label">Mobile No.</label>
+                <input type="text" asp-for="MobileNumber" class="form-control" required>
+            </div>
+            <div class="rw">
+                <label class="form-label">Email</label>
+                <input type="email" asp-for="Email" class="form-control" required>
+            </div>
+            <div class="rw">
+                <label class="form-label">Pan No.</label>
+                <textarea type="text" asp-for="PanNumber" class="form-control" style="height:65px;" required></textarea>
+            </div>
+        </div>
+        <div class="row pb-4">
+            <div class="rw">
+                <label class="form-label">Address</label>
+                <textarea type="text" asp-for="Address" class="form-control" style="height:65px;" required></textarea>
+            </div>
+        </div>
+        <div class="row pb-4">
+            <div class="rw">
+                <label class="form-label">City</label>
+                <textarea type="text" asp-for="City" class="form-control" style="height:65px;" required></textarea>
+            </div>
+        </div>
+        <div class="row pb-4">
+            <div class="rw">
+                <label class="form-label">Country</label>
+                <textarea type="text" asp-for="Country" class="form-control" style="height:65px;" required></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</form>
+

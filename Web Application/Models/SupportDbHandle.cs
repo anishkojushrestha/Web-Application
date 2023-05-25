@@ -38,8 +38,8 @@ namespace Web_Application.Models
                         Issue = Convert.ToString(dr["Issue"]),
                         FeedBack = Convert.ToString(dr["FeedBack"]),
                         SubmitDate  = Convert.ToDateTime(dr["Date"]),
-                        Remote = Convert.ToString(dr["Remote"]),
-                        Status = Convert.ToString(dr["Status"]),
+                        //Remote = Convert.ToString(dr["Remote"]),
+                        //Status = Convert.ToString(dr["Status"]),
                     }) ;
             }
             return SupportList;

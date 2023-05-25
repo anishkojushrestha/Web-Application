@@ -1,0 +1,122 @@
+﻿@model Web_Application.ModelViews.InstallationMV
+
+<style>
+    .rw {
+        width: 30%;
+    }
+</style>
+<div class="modal fade" id="addRegister" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:155%; margin-left: -27%; margin-top: -10px;">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addRegisterLabel">Create Inquery</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form asp-action="CreateInstallation" asp-controller="Installation">
+                    @Html.AntiForgeryToken()
+                    <div class="col" style="margin-left: 45px;">
+                        <div class="row pb-4">
+                            <div class="rw">
+                                <label class="form-label">Company Name:</label>
+                                <input type="text" asp-for="CompanyName" class="form-control" required>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Company Email:</label>
+                                <input type="text" class="form-control" asp-for="CompanyEmail" required>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Contact Person:</label>
+                                <input type="text" asp-for="ContactPerson" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row pb-4">
+                                <div class="rw">
+                                    <label class="form-label">Contact Person Email:</label>
+                                    <input type="text" asp-for="ContactPersonEmail" class="form-control" required></input>
+                                </div>
+                                <div class="rw">
+                                <label class="form-label">Pan No.</label>
+                                <input type="text" asp-for="PanNo" class="form-control" required>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Address:</label>
+                                <input type="text" asp-for="Address" class="form-control" required>
+                            </div>
+                            
+                        </div>
+                        <div class="row pb-4">
+                            <div class="rw">
+                                <label class="form-label">City:</label>
+                                <input type="text" asp-for="City" class="form-control" required></input>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">phone No.</label>
+                                <input type="text" asp-for="PhoneNo" class="form-control" required>
+
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Mobile No.</label>
+                                <input type="text" asp-for="MobileNo" class="form-control" required>
+                            </div>
+
+                        </div>
+                        <div class="row pb-4">
+                            <div class="rw">
+                                <label class="form-label">No Of Users:</label>
+                                <input type="text" asp-for="NoOfUser" class="form-control" required></input>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Installaton Date:</label>
+                                <input type="date" asp-for="InstallationDate" class="form-control" required>
+
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Expiry Date:</label>
+                                <input type="text" asp-for="ExpiryDate" class="form-control" required>
+                            </div>
+
+                        </div>
+                        <div class="row pb-4">
+                            <div class="rw">
+                                <label class="form-label">Support Staff:</label>
+                                <input type="text" asp-for="SupportStaff" class="form-control" required></input>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">reference By:</label>
+                                <input type="date" asp-for="ReferenceBy" class="form-control" required>
+
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Feed Back:</label>
+                                <textarea type="text" asp-for="FeedBack" style="height:65px;" class="form-control" required></textarea>
+                            </div>
+
+                        </div>
+                        <div class="row pb-6">
+                            <div class="f" style="width:40%;">
+                                <input type="file" asp-for="Attachment" class="form-control" required />
+
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -55,11 +55,20 @@
                             </div>
                             <div class="rw">
                                 <label class="form-label">Remote/Onsite</label>
-                                <input type="text" asp-for="Remote" class="form-control" required>
+                                @*<input type="text" asp-for="Remote" class="form-control" required>*@
+                                <select asp-for="Remote" class="form-control">
+                                    <option disabled selected>-----select-----</option>
+                                    <option>Remote</option>
+                                    <option>Onsite</option>
+                                </select>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Status</label>
-                                <input type="text" class="form-control" asp-for="Status" required>
+                                <select asp-for="Status" class="form-control">
+                                    <option disabled selected>-----select-----</option>
+                                    <option>Close</option>
+                                    <option>open</option>
+                                </select>
                             </div>
 
                         </div>

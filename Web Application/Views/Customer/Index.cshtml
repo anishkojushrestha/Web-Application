@@ -1,26 +1,27 @@
-﻿@model IEnumerable<Web_Application.ModelViews.SupportMV>
+﻿@model IEnumerable<Web_Application.ModelViews.CustomerVM>
 @{
     ViewData["Title"] = "Index";
 }
 <div id="PlaceHolderHere"></div>
-<button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("AddSupport")" style="width:100px;margin-left:90%; ">Create</button>
+<button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Customer")" style="width:100px;margin-left:90%; ">Create</button>
 <div class="input-group" style="margin-left:79%;margin-top:4px;">
-    @*<div class="form-outline">
-        <input type="search" id="search" class="form-control" placeholder="Search..." />
-    </div>*@
+    <div class="form-outline">
+        @*<input type="search" id="search" class="form-control" placeholder="Search..." />*@
+    </div>
 </div>
-<table class="display" id="datatable" >
+<table class="display" id="datatable">
     <thead>
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Company Name</th>
-            <th scope="col">Client Name</th>
-            <th scope="col">Call By</th>
-            <th scope="col">Support Staff</th>
-            <th scope="col">Date</th>
-            <th scope="col">Issue</th>
-            <th scope="col">FeedBack</th>
-            <th scope="col">Status</th>
+            <th scope="col">Contact Person</th>
+            <th scope="col">Phone No.</th>
+            <th scope="col">Mobile No.</th>
+            <th scope="col">Email</th>
+            <th scope="col">Pan No.</th>
+            <th scope="col">Address</th>
+            <th scope="col">City</th>
+            <th scope="col">Country</th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -30,15 +31,16 @@
             <tr>
                 <td>@data.Id</td>
                 <td>@data.CompanyName</td>
-                <td>@data.ClientName</td>
-                <td>@data.CallBy</td>
-                <td>@data.SupportStaff</td>
-                <td>@data.SubmitDate.ToShortDateString()</td>
-                <td>@data.Issue</td>
-                <td>@data.FeedBack</td>
-                <td>@data.Status</td>
+                <td>@data.ContactPerson</td>
+                <td>@data.phoneNumber</td>
+                <td>@data.MobileNumber</td>
+                <td>@data.Email</td>
+                <td>@data.PanNumber</td>
+                <td>@data.Address</td>
+                <td>@data.City</td>
+                <td>@data.Country</td>
                 <td>
-                    <button type="button" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning" data-url="@Url.Action($"EditSupport/{data.Id}")">Edit</button>
+                    <button type="button" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning" data-url="@Url.Action($"EditCustomer/{data.Id}")">Edit</button>
                     @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@ 
                     <a asp-action="Delete" asp-controller="Support" asp-route-id="@data.Id" class="btn btn-danger" onclick="return confirm('Are sure wants to delete?');">Delete</a>
                     @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
