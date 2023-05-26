@@ -10,7 +10,7 @@ namespace Web_Application.Models
         private SqlConnection con;
         private void connection()
         {
-            string constring = "Data Source=DESKTOP-3P1U2GV\\OMSSERVER;Initial Catalog=WebAppDB;Integrated Security=True;Pooling=False";
+            string constring = "Data Source=.;Initial Catalog=WebAppDB;Integrated Security=True;Pooling=False";
             con = new SqlConnection(constring);
         }
 
