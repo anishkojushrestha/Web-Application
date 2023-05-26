@@ -1,0 +1,165 @@
+﻿@model Web_Application.ModelViews.InqueryMV
+
+<link href="~/css/nepali.datepicker.v4.0.1.min.css" rel="stylesheet" type="text/css" />
+
+<div class="modal fade" id="addRegister" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:155%; margin-left: -27%; margin-top: -10px;">
+            <div class="modal-header">
+
+                <style>
+                    .rw {
+                        width: 30%;
+                    }
+                </style>
+                <h4 class="modal-title" id="addRegisterLabel">Create Inquery</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form asp-action="CreateInquery" asp-controller="Inquery">
+                    @Html.AntiForgeryToken()
+                    <div class="col" style="margin-left: 45px;">
+                        <div class="row pb-4">
+                            <div class="rw">
+                                <label class="form-label">Company Name:</label>
+                                <input type="text" asp-for="CompanyName" class="form-control" required>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Date:</label>
+                                <input type="date" class="form-control " id="datepicker" asp-for="Date" required>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Miti:</label>
+                                <input type="text" asp-for="Miti" id="nepali-datepicker"  class="form-control" placeholder="Select Nepali Date" required>
+                            </div>
+                        </div>
+                        <div class="row pb-4">
+                            <div class="rw">
+                                <label class="form-label">Contact Person:</label>
+                                <input type="text" asp-for="ContactPerson" class="form-control" required>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Address:</label>
+                                <input type="text" asp-for="Address" class="form-control" required>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Company Email:</label>
+                                <input type="text" asp-for="CompanyEmail" class="form-control" required></input>
+                            </div>
+                        </div>
+                        <div class="row pb-4">
+                            <div class="rw">
+                                <label class="form-label">Contact Person Email:</label>
+                                <input type="text" asp-for="ContactPersonEmail" class="form-control" required></input>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Software Type:</label>
+                                <input type="text" asp-for="SoftwareType" class="form-control" required>
+
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Reference By:</label>
+                                <input type="text" asp-for="ReferenceBY" class="form-control" required>
+                            </div>
+
+                        </div>
+                        <div class="row pb-4">
+                            <div class="rw">
+                                <label class="form-label">Organization Type:</label>
+                                <input type="text" asp-for="OrganaizationType" class="form-control" required></input>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Phone No:</label>
+                                <input type="text" asp-for="Phone" class="form-control" required>
+
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Pan No:</label>
+                                <input type="text" asp-for="PanNo" class="form-control" required>
+                            </div>
+
+                        </div>
+                        <div class="row pb-4">
+                            <div class="rw">
+                                <label class="form-label">Follow Up By:</label>
+                                <input type="text" asp-for="FollowUpBy" class="form-control" required></input>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Next Follow Up Date:</label>
+                                <input type="date" asp-for="Phone" class="form-control" required>
+
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Feed Back:</label>
+                                <textarea type="text" asp-for="FeedBack" style="height:65px;" class="form-control" required></textarea>
+                            </div>
+
+                        </div>
+                        <div class="row pb-6">
+                            <div class="f" style="width:40%;">
+                                <input type="file" asp-for="Attechment" class="form-control" required />
+
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<script src="~/js/nepali.datepicker.v4.0.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+   $( function() {
+        $("#nepali-datepicker").nepaliDatePicker({
+            container: "#" + $("#nepali-datepicker").closest(".modal").attr("id"),
+            dateFormat: "DD/MM/YYYY",
+            onChange: function () {
+                var nep = $("#nepali-datepicker").val();
+                var nepconvert = NepaliFunctions.BS2AD(nep, "DD/MM/YYYY", "mm/dd/yyyy");
+                alert(nepconvert);
+                $("#datepicker").val(nepconvert);
+            }
+        });
+    });
+
+    $("#datepicker").on("change",function(){
+       
+        var eng = $("#datepicker").val();
+        alert(eng);
+        var convert = NepaliFunctions.AD2BS(eng, "YYYY-MM-DD", "DD/MM/YYYY");
+        $("#nepali-datepicker").val(convert);
+        //console.log(NepaliFunctions.AD2BS({ year: 2001, month: 6, day: 1 }));
+    });
+
+    
+
+
+       //$(function(){
+   //    $('#datepicker').datepicker({
+   //         container: "#" + $("#datepicker").closest(".modal").attr("id"),
+   //       format: 'mm-dd-yyyy'
+   //     });
+   // });
+    
+
+</script>
+
+
+
+

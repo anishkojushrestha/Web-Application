@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using System.Security.Cryptography;
+using System.Security.Policy;
+using System.Text;
 using Web_Application.ModelViews;
 
 namespace Web_Application.Models
@@ -16,10 +21,20 @@ namespace Web_Application.Models
             con = new SqlConnection(constring);
         }
 
+        public string hasdPassword(string password)
+        {
+            var sha = SHA256.Create();
+            var asByteArray = Encoding.Default.GetBytes(password);
+            var hashedPassword = sha.ComputeHash(asByteArray);
+            return Convert.ToBase64String(hashedPassword);
+        }
         public bool RegisteUser(RegisterVM vm)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("INSERT into users(FirstName, LastName, UserName, Email, Password) VALUES('"+vm.FirstName+"','"+vm.LastName+"', '"+vm.UserName+"','"+vm.Email+"','"+vm.NewPassword+"')", con);
+            //var pass = new PasswordHasher<object>().HashPassword(null, vm.NewPassword);
+            
+            string pass = hasdPassword(vm.NewPassword);
+            SqlCommand cmd = new SqlCommand("INSERT into users(FirstName, LastName, UserName, Email, Password) VALUES('"+vm.FirstName+"','"+vm.LastName+"', '"+vm.UserName+"','"+vm.Email+"','"+ pass + "')", con);
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();
@@ -32,8 +47,11 @@ namespace Web_Application.Models
         public bool UserExist(string username, string password) { 
             //establish the database connection
             connection();
+            
+            string pass = hasdPassword(password);
             //create sql cmd
-            SqlCommand cmd = new SqlCommand("SELECT UserName, Password FROM users WHERE Username = '"+username+"' And Password = '"+password+"'", con);
+            SqlCommand cmd = new SqlCommand("SELECT UserName, Password FROM users WHERE UserName = '"+username+"' And Password = '"+ pass + "'", con);
+            
             //create object and pass sql command
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
             //create database table to hold data

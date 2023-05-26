@@ -4,10 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Web_Application</title>
+    <link href="//cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Web_Application.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    
+    <!-- this should go after your </body> -->
     <style>
         .fl {
             width: 35%;
@@ -32,14 +36,42 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">Master</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <div class="dropdown">
+                                <button style="background-color:transparent;" class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Tranctions
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Inquery" >Inquery</a></li>
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Installation">Installation</a></li>
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Support">Support</a></li>
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Demo">Demo</a></li>
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="User">Registration</a></li>
+                                </ul>
+                            </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Support" asp-action="Index">Support</a>
+                            <div class="dropdown">
+                                <button style="background-color:transparent;" class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Reports
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Current Month Installation</a></li>
+                                    <li><a class="dropdown-item" href="#">Current Month Expiry</a></li>
+                                    <li><a class="dropdown-item" href="#">Expired</a></li>
+                                    <li><a class="dropdown-item" href="#">Restration report</a></li>
+                                    <li><a class="dropdown-item" href="#">Support</a></li>
+                                </ul>
+
+                            </div>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="#">Client Issue</a>
+                        </li>
+                        
+                        
                     </ul>
                 </div>
             </div>
@@ -55,9 +87,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="//kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     
-  
-<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

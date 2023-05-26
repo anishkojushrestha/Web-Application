@@ -20,6 +20,7 @@
     </style>
 </head>
 <body>
+
     <div class="container">
         <main role="main" class="pb-3">
             <form action="@Url.Action("Login", "User")" method="post">
@@ -37,7 +38,7 @@
                     <button type="submit" class="btn btn-primary" style="width: 35%;">Submit</button>
                 </div>
                 <div class="text-center">
-                    <p>Not a member? <a href="~/User/Register" style="text-decoration:none">Register</a></p>
+                    <p>Not a member? <a href="~/User/NewRegister" style="text-decoration:none">Register</a></p>
                 </div>
                 <h3>@ViewBag.Message</h3>
             </form>

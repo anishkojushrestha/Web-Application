@@ -37,9 +37,10 @@ namespace Web_Application.Models
                         //Date = Convert.ToDateTime(dr["Date"]),
                         Issue = Convert.ToString(dr["Issue"]),
                         FeedBack = Convert.ToString(dr["FeedBack"]),
-                        Remote = Convert.ToString(dr["Remote"]),
-                        Status = Convert.ToString(dr["Status"]),
-                    });
+                        SubmitDate  = Convert.ToDateTime(dr["Date"]),
+                        //Remote = Convert.ToString(dr["Remote"]),
+                        //Status = Convert.ToString(dr["Status"]),
+                    }) ;
             }
             return SupportList;
 
@@ -48,7 +49,8 @@ namespace Web_Application.Models
         public bool AddSupport(SupportMV vm)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("INSERT into supports(CompanyName, ClientName, CallBy, SupportStaff, Date, Issue, FeedBack, Remote, Status) VALUES ('" + vm.CompanyName + "','" + vm.ClientName + "', '" + vm.CallBy + "','" + vm.SupportStaff + "','" + vm.Date + "','" + vm.Issue + "','" + vm.FeedBack + "','" + vm.Remote + "','" + vm.Status + "')", con);
+            var data = vm.SubmitDate.ToString("MM/dd/yyyy"); 
+            SqlCommand cmd = new SqlCommand("INSERT into supports(CompanyName, ClientName, CallBy, SupportStaff, Date, Issue, FeedBack, Remote, Status) VALUES ('" + vm.CompanyName + "','" + vm.ClientName + "', '" + vm.CallBy + "','" + vm.SupportStaff + "','" + data + "','" + vm.Issue + "','" + vm.FeedBack + "','" + vm.Remote + "','" + vm.Status + "')", con);
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();
@@ -61,7 +63,7 @@ namespace Web_Application.Models
         public bool UpdateSupport(SupportMV vm)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("UPDATE supports SET CompanyName = '" + vm.CompanyName + "',ClientName = '" + vm.ClientName + "', CallBy = '" + vm.CallBy + "',SupportStaff = '" + vm.SupportStaff + "',Date = '" + vm.Date + "',Issue = '" + vm.Issue + "',FeedBack = '" + vm.FeedBack + "',Remote = '" + vm.Remote + "',Status = '" + vm.Status + "' WHERE ID = "+vm.Id, con);
+            SqlCommand cmd = new SqlCommand("UPDATE supports SET CompanyName = '" + vm.CompanyName + "',ClientName = '" + vm.ClientName + "', CallBy = '" + vm.CallBy + "',SupportStaff = '" + vm.SupportStaff + "',Date = '" + vm.SubmitDate + "',Issue = '" + vm.Issue + "',FeedBack = '" + vm.FeedBack + "',Remote = '" + vm.Remote + "',Status = '" + vm.Status + "' WHERE ID = "+vm.Id, con);
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();

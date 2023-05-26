@@ -16,7 +16,7 @@ namespace Web_Application.ModelViews
         public string SupportStaff { get; set; }
         [Required]
 
-        public DateOnly Date { get; set; }
+        public DateTime SubmitDate { get; set; } 
         [Required]
         public string Issue { get; set; }
         [Required]
@@ -24,6 +24,8 @@ namespace Web_Application.ModelViews
         [Required]
         public string Remote { get; set; }
         [Required]
-        public string Status { get; set; }
+        public string Status { get; set; }   
+
+        
     }
 }
