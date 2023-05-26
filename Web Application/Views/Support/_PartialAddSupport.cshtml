@@ -9,7 +9,7 @@
 </style>
 <div class="modal fade" id="addRegister" data-bs-backdrop="static">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="width:155%; margin-left: -27%; margin-top: 70px;">
             <div class="modal-header">
                 <h4 class="modal-title" id="addRegisterLabel">Support</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal">
@@ -19,7 +19,7 @@
             <div class="modal-body">
                 <form asp-action="AddSupport" asp-controller="Support">
                     @Html.AntiForgeryToken()
-                    <div class="col">
+                    <div class="col" style="margin-left: 45px;">
                         <div class="row pb-4">
                             <div class="rw">
                                 <label class="form-label">Company Name</label>

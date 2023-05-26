@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Web_Application</title>
-    <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"
+    <link href="//cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css"
           rel="stylesheet" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -50,7 +50,6 @@
                                     <li><a class="dropdown-item" asp-action="Index" asp-controller="Demo">Demo</a></li>
                                     <li><a class="dropdown-item" asp-action="Index" asp-controller="User">Registration</a></li>
                                 </ul>
-
                             </div>
                         </li>
                         <li class="nav-item">
@@ -90,6 +89,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="//kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    
     
     @await RenderSectionAsync("Scripts", required: false)
 </body>
