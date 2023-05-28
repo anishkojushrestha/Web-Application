@@ -3,12 +3,59 @@
     ViewData["Title"] = "Index";
 }
 <div id="PlaceHolderHere" ></div>
-<button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister"  data-url="@Url.Action("Register")" style="width:100px;margin-left:90%; ">Create</button>
+
+
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+   
+   
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Company Information DataTables</h6>
+        </div>
+        <div class="card-body">
+            <button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister"  data-url="@Url.Action("Register")" style="width:100px;margin-left:90%; ">Create</button>
 <div class="input-group" style="margin-left:79%;margin-top:4px;">
   @*<div class="form-outline">
     <input type="search" id="search" class="form-control" placeholder="Search..." />
   </div>*@
 </div>
+<<<<<<< HEAD
+=======
+
+            <div class="table-responsive">
+                <table class="table table-bordered" id="datatable" width="100%" cellspacing="0">
+                    <thead>
+        <tr>
+            <th>Id</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="table">
+        @foreach (var data in Model)
+        {
+            <tr>
+                <td>@data.Id</td>
+                <td>@data.FirstName</td>
+                <td>@data.LastName</td>
+                <td>@data.UserName</td>
+                <td>@data.Email</td>
+                <td>
+                    <button type="button" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning" data-url="@Url.Action($"EditRegister/{data.Id}")">Edit</button>
+                    @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@ 
+                    <a asp-action="Delete" asp-controller="User" asp-route-id="@data.Id" class="btn btn-danger" onclick="return confirm('Are sure wants to delete?');">Delete</a>
+                   @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = data.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
+                </td>
+>>>>>>> 9284302731813c440115954e5bb41de2f0ea0833
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -49,12 +96,24 @@
 
                     }
 
+<<<<<<< HEAD
 
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+=======
+        
+    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+>>>>>>> 9284302731813c440115954e5bb41de2f0ea0833
 
 @section Scripts{
     <script>
