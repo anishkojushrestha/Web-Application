@@ -3,21 +3,38 @@
     ViewData["Title"] = "Index";
 }
 <div id="PlaceHolderHere" ></div>
-<button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister"  data-url="@Url.Action("Register")" style="width:100px;margin-left:90%; ">Create</button>
+
+
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+   
+   
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Company Information DataTables</h6>
+        </div>
+        <div class="card-body">
+            <button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister"  data-url="@Url.Action("Register")" style="width:100px;margin-left:90%; ">Create</button>
 <div class="input-group" style="margin-left:79%;margin-top:4px;">
   @*<div class="form-outline">
     <input type="search" id="search" class="form-control" placeholder="Search..." />
   </div>*@
 </div>
-<table id="datatable" class="display" >
-    <thead>
+
+            <div class="table-responsive">
+                <table class="table table-bordered" id="datatable" width="100%" cellspacing="0">
+                    <thead>
         <tr>
-            <th scope="col">Id</th>
-            <th scope="col">FirstName</th>
-            <th scope="col">LastName</th>
-            <th scope="col">UserName</th>
-            <th scope="col">Email</th>
-            <th scope="col">Actions</th>
+            <th>Id</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody id="table">
@@ -44,8 +61,13 @@
 
         
     </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-</table>
+</div>
+
 
 @section Scripts{
     <script>

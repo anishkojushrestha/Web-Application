@@ -132,7 +132,6 @@
             onChange: function () {
                 var nep = $("#nepali-datepicker").val();
                 var nepconvert = NepaliFunctions.BS2AD(nep, "DD/MM/YYYY", "mm/dd/yyyy");
-                alert(nepconvert);
                 $("#datepicker").val(nepconvert);
             }
         });
@@ -141,7 +140,6 @@
     $("#datepicker").on("change",function(){
        
         var eng = $("#datepicker").val();
-        alert(eng);
         var convert = NepaliFunctions.AD2BS(eng, "YYYY-MM-DD", "DD/MM/YYYY");
         $("#nepali-datepicker").val(convert);
         //console.log(NepaliFunctions.AD2BS({ year: 2001, month: 6, day: 1 }));
