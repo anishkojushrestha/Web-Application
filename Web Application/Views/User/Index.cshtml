@@ -9,48 +9,57 @@
     <input type="search" id="search" class="form-control" placeholder="Search..." />
   </div>*@
 </div>
-<table id="datatable" class="display" >
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">FirstName</th>
-            <th scope="col">LastName</th>
-            <th scope="col">UserName</th>
-            <th scope="col">Email</th>
-            <th scope="col">Actions</th>
-        </tr>
-    </thead>
-    <tbody id="table">
-        @foreach (var data in Model)
-        {
-            <tr>
-                <td>@data.Id</td>
-                <td>@data.FirstName</td>
-                <td>@data.LastName</td>
-                <td>@data.UserName</td>
-                <td>@data.Email</td>
-                <td>
-                    <button type="button" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning" data-url="@Url.Action($"EditRegister/{data.Id}")">Edit</button>
-                    @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@ 
-                    <a asp-action="Delete" asp-controller="User" asp-route-id="@data.Id" class="btn btn-danger" onclick="return confirm('Are sure wants to delete?');">Delete</a>
-                   @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = data.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
-                </td>
 
-            </tr>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">User Informations DataTables</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="display" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">FirstName</th>
+                        <th scope="col">LastName</th>
+                        <th scope="col">UserName</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table">
+                    @foreach (var data in Model)
+                    {
+                        <tr>
+                            <td>@data.Id</td>
+                            <td>@data.FirstName</td>
+                            <td>@data.LastName</td>
+                            <td>@data.UserName</td>
+                            <td>@data.Email</td>
+                            <td>
+                                <button type="button" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning" data-url="@Url.Action($"EditRegister/{data.Id}")">Edit</button>
+                                @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
+                                <a asp-action="Delete" asp-controller="User" asp-route-id="@data.Id" class="btn btn-danger" onclick="return confirm('Are sure wants to delete?');">Delete</a>
+                                @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = data.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
+                            </td>
+
+                        </tr>
 
 
-        }
+                    }
 
-        
-    </tbody>
 
-</table>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 @section Scripts{
     <script>
         $(document).ready(function () {
-            $('#datatable').DataTable();
+            $('#dataTable').DataTable();
         });
 
         $(document).ready(function(){
