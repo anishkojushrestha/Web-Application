@@ -7,10 +7,13 @@
     <link href="//cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css"
           rel="stylesheet" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Web_Application.styles.css" asp-append-version="true" />
-    
+   
+    <link href="~/css/datatables.css" rel="stylesheet" />
+    <link href="~/css/datatables.min.css" rel="stylesheet" />
+
+  
     <!-- this should go after your </body> -->
     <style>
         .fl {
@@ -84,12 +87,14 @@
     </div>
 
     
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/jquery.min.js"></script>
+  
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="//kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <script src='~/js/bootstrap.min.js'></script>
+   @* <script src="//kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>*@
     <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    
+    <script src="~/js/datatables.min.js"></script>
+    <script src="~/js/datatables.js"></script>
     
     @await RenderSectionAsync("Scripts", required: false)
 </body>

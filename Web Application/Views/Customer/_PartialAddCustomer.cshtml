@@ -4,6 +4,41 @@
     .rw {
         width: 30%;
     }
+
+    body {
+        padding: 10px;
+    }
+
+    #exTab1 .tab-content {
+        color: white;
+        background-color: #428bca;
+        padding: 5px 15px;
+    }
+
+    #exTab2 h3 {
+        color: white;
+        background-color: #428bca;
+        padding: 5px 15px;
+    }
+
+    /* remove border radius for the tab */
+
+    #exTab1 .nav-pills > li > a {
+        border-radius: 0;
+    }
+
+    /* change border radius for the tab , apply corners on top*/
+
+    #exTab3 .nav-pills > li > a {
+        border-radius: 4px 4px 0 0;
+    }
+
+    #exTab3 .tab-content {
+        color: white;
+        background-color: #428bca;
+        padding: 5px 15px;
+    }
+
 </style>
 <div class="modal fade" id="addRegister" data-bs-backdrop="static">
     <div class="modal-dialog">
@@ -15,66 +50,104 @@
 
             </div>
             <div class="modal-body">
-                <form asp-action="Customer" asp-controller="Customer">
-                    @Html.AntiForgeryToken()
-                    <div class="col" style="margin-left: 45px;">
-                        <div class="row pb-4">
-                            <div class="rw">
-                                <label class="form-label">Company Name:</label>
-                                <input type="text" asp-for="CompanyName" class="form-control" required>
-                            </div>
-                            <div class="rw">
-                                <label class="form-label">Contact Person:</label>
-                                <input type="text" class="form-control" asp-for="ContactPerson" required>
-                            </div>
-                            <div class="rw">
-                                <label class="form-label">Phone No.</label>
-                                <input type="text" asp-for="phoneNumber" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="row pb-4">
-                            <div class="rw">
-                                <label class="form-label">Mobile No.</label>
-                                <input type="text" asp-for="MobileNumber" class="form-control" required>
-                            </div>
-                            <div class="rw">
-                                <label class="form-label">Email:</label>
-                                <input type="email" asp-for="Email" class="form-control" required>
-                            </div>
-                            <div class="rw">
-                                <label class="form-label">Pan No.</label>
-                                <input type="text" asp-for="PanNumber" class="form-control" required></input>
-                            </div>
-                        </div>
-                        <div class="row pb-4">
-                            <div class="rw">
-                                <label class="form-label">Address:</label>
-                                <input type="text" asp-for="Address" class="form-control"  required></input>
-                            </div>
-                            <div class="rw">
-                                <label class="form-label">City:</label>
-                                <input type="text" asp-for="City" class="form-control" required></input>
-                            </div>
-                            <div class="rw">
-                                <label class="form-label">Country:</label>
-                                <input type="text" asp-for="Country" class="form-control" required></input>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
-                                <button type="submit" class="btn btn-primary">Submit</button>
 
-                            </div>
-                        </div>
 
+      
+
+             
+
+
+
+              
+                <div id="exTab1" class="container">
+                    <ul class="nav nav-pills">
+                        <li class="active"> 
+                            <a href="#1a" data-toggle="tab" class="btn btn-secondary" >Company</a>
+                        </li>
+                        <li>
+                            <a href="#2a" data-toggle="tab" class="btn btn-secondary">Contact</a>
+                        </li>
+                    
+                    </ul>
+
+                    <div class="tab-content clearfix">
+                        <div class="tab-pane active" id="1a">
+                            <form asp-action="Customer" asp-controller="Customer">
+                                @Html.AntiForgeryToken()
+                                <div class="col" style="margin-left: 45px;">
+                                    <div class="row pb-4">
+                                        <div class="rw">
+                                            <label class="form-label">Company Name:</label>
+                                            <input type="text" asp-for="CompanyName" class="form-control" required>
+                                        </div>
+                                        <div class="rw">
+                                            <label class="form-label">Contact Person:</label>
+                                            <input type="text" class="form-control" asp-for="ContactPerson" required>
+                                        </div>
+                                        <div class="rw">
+                                            <label class="form-label">Phone No.</label>
+                                            <input type="text" asp-for="phoneNumber" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="row pb-4">
+                                        <div class="rw">
+                                            <label class="form-label">Mobile No.</label>
+                                            <input type="text" asp-for="MobileNumber" class="form-control" required>
+                                        </div>
+                                        <div class="rw">
+                                            <label class="form-label">Email:</label>
+                                            <input type="email" asp-for="Email" class="form-control" required>
+                                        </div>
+                                        <div class="rw">
+                                            <label class="form-label">Pan No.</label>
+                                            <input type="text" asp-for="PanNumber" class="form-control" required></input>
+                                        </div>
+                                    </div>
+                                    <div class="row pb-4">
+                                        <div class="rw">
+                                            <label class="form-label">Address:</label>
+                                            <input type="text" asp-for="Address" class="form-control" required></input>
+                                        </div>
+                                        <div class="rw">
+                                            <label class="form-label">City:</label>
+                                            <input type="text" asp-for="City" class="form-control" required></input>
+                                        </div>
+                                        <div class="rw">
+                                            <label class="form-label">Country:</label>
+                                            <input type="text" asp-for="Country" class="form-control" required></input>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="2a">
+                            <h3>We use the class nav-pills instead of nav-tabs which automatically creates a background color for the tab</h3>
+                        </div>
+                       
                     </div>
+                </div>
 
 
-                </form>
+              
 
 
+                <!-- Bootstrap core JavaScript
+                    ================================================== -->
+                <!-- Placed at the end of the document so the pages load faster -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
             </div>
 
         </div>
     </div>
 </div>
+
