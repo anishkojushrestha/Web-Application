@@ -65,7 +65,7 @@ namespace Web_Application.Controllers
                 if (userDbHandle.UserExist(vm.UserName, vm.Password) == true)
                 {
                     ModelState.Clear();
-                    return RedirectToAction("Index", "Customer");
+                    return RedirectToAction("Index", "Company");
                 }
             }
             return View();

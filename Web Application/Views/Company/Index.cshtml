@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Web_Application.ModelViews.CompanyMV>
+@{
+    ViewData["Title"] = "Index";
+}
+<div id="PlaceHolderHere"></div>
+<button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("AddCompany")" style="width:100px;margin-left:90%; margin-bottom:5px;">Create</button>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Company Informations DataTables</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="display" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Company Name</th>
+                        <th scope="col">Registration Date</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Pan No.</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Achive From</th>
+                        <th scope="col">Achive To</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table">
+                    @foreach (var data in Model)
+                    {
+                        <tr>
+                            <td>@data.Id</td>
+                            <td>@data.CompanyName</td>
+                            <td>@data.RegistrationDate.ToShortDateString()</td>
+                            <td>@data.Email</td>
+                            <td>@data.PanNumber</td>
+                            <td>@data.Address</td>
+                            <td>@data.City</td>
+                            <td>@data.AchiveFrom.ToShortDateString()</td>
+                            <td>@data.AchiveTo.ToShortDateString()</td>
+                            <td>
+                                <a data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"EditRegister/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
+                                @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
+                                <a asp-action="Delete" asp-controller="Company" asp-route-id="@data.Id" onclick="return confirm('Are sure wants to delete?');"><i class="fa-solid fa-delete-left fa-lg"></i></a>
+                                @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = data.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
+                            </td>
+
+                        </tr>
+
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+        $(document).ready(function () {
+            $("#search").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#table tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        $(function () {
+            var PlaceHolderEleent = $('#PlaceHolderHere');
+            $('button[data-toggle="ajax-modal"]').click(function (event) {
+                var url = $(this).data('url');
+
+                var decodedUrl = decodeURIComponent(url);
+                $.get(decodedUrl).done(function (data) {
+                    PlaceHolderEleent.html(data);
+                    PlaceHolderEleent.find('.modal').modal('show');
+                })
+            })
+            PlaceHolderEleent.on('click', '[data-save="modal"]', function (event) {
+
+                //var form =$(this).parents('.modal').find('form');
+                //var actionUrl = form.attr('action');
+                //var url = '/user/'+actionUrl;
+                //var sentData = form.serialize();
+
+                //$.post(url, sentData).done(function (data) {
+                //    PlaceHolderEleent.find('.modal').modal('hide');
+                //    window.location.reload();
+                //})
+
+            })
+        })
+    </script>
+}

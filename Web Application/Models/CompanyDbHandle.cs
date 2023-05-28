@@ -1,0 +1,89 @@
+﻿using System.Data;
+using System.Data.SqlClient;
+using System.Text;
+using Web_Application.ModelViews;
+
+namespace Web_Application.Models
+{
+    public class CompanyDbHandle
+    {
+        private SqlConnection con;
+        private void connection()
+        {
+            string constring = "Data Source=DESKTOP-3P1U2GV\\OMSSERVER;Initial Catalog=WebAppDB;Integrated Security=True;Pooling=False";
+            con = new SqlConnection(constring);
+        }
+
+        public bool CreateCompany(CompanyMV vm)
+        {
+            connection();
+            var registerDate = vm.RegistrationDate.ToString("MM/dd/yyyy");
+            var AchiveFrom = vm.AchiveFrom.ToString("MM/dd/yyyy");
+            var AchiveTo = vm.AchiveTo.ToString("MM/dd/yyyy");
+            StringBuilder str = new StringBuilder();
+            str.Append(" declare @cid bigint \n");
+            str.Append(" set @cid = (select isnull(max(id), 0) + 1 from CompanyInfo) \n");
+           str.Append(" INSERT INTO CompanyInfo(id,CompanyName, Email, PanNumber, Address, City, RegistrationDate, AchiveFrom, AchiveTo ) VALUES(@cid,'" + vm.CompanyName+"','"+vm.Email+"',"+vm.PanNumber+",'"+vm.Address+"','"+vm.City+"','"+ registerDate + "','"+ AchiveFrom + "','"+ AchiveTo + "') \n");
+
+//insert into[dbo].[ContactPerson] (contactname, phonenumber, mobilenumber, companyid)
+//select 'contactperson1','1111','4554555',@cid
+
+
+
+            SqlCommand cmd = new SqlCommand(str.ToString(), con);
+            con.Open();
+            var i = cmd.ExecuteNonQuery();
+            con.Close();
+            if(i>=1)
+                return true;
+            else
+                return false;
+        }
+
+        public List<CompanyMV> GetCompany() {
+            connection();
+            List<CompanyMV> customerList = new List<CompanyMV>();
+            SqlCommand cmd = new SqlCommand("SELECT * FROM CompanyInfo", con);
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);   
+            DataTable dt = new DataTable();
+            con.Open();
+            ad.Fill(dt);
+            con.Close();
+            foreach (DataRow dr in dt.Rows)
+            {
+                customerList.Add(
+                    new CompanyMV
+                    {
+
+                        Id = Convert.ToInt32(dr["Id"]),
+                        CompanyName = Convert.ToString(dr["CompanyName"]),
+                        Address = Convert.ToString(dr["Address"]),
+                        Email = Convert.ToString(dr["Email"]),
+                        PanNumber = Convert.ToInt32(dr["PanNumber"]),
+                        //Date = Convert.ToDateTime(dr["Date"]),
+                        City = Convert.ToString(dr["City"]),
+                        RegistrationDate = Convert.ToDateTime(dr["RegistrationDate"]),
+                        AchiveFrom = Convert.ToDateTime(dr["AchiveFrom"]),
+                        AchiveTo = Convert.ToDateTime(dr["AchiveTo"]),
+
+                    });
+            }
+            return customerList;
+
+
+        }
+        public bool DeleteUser(int id)
+        {
+            connection();
+            SqlCommand cmd = new SqlCommand("Delete FROM CompanyInfo WHERE Id =" + id, con);
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+
+            if (i >= 1)
+                return true;
+            else
+                return false;
+        }
+    }
+}
