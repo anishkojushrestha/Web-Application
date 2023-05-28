@@ -67,7 +67,7 @@
 
                     <div class="tab-content clearfix">
                         <div class="tab-pane active" id="1a">
-                            <form asp-action="AddCompany" asp-controller="Company">
+                            <form id="form1" asp-action="AddCompany" asp-controller="Company">
                                 @Html.AntiForgeryToken()
                                 <div class="col" style="margin-left: 10px;">
                                     <div class="row pb-4">
@@ -79,7 +79,6 @@
                                     </div>
                                     <div class="row pb-4">
                                         <div class="rw">
-
                                             <label class="form-label">Registration Date:</label>
                                             <input type="date" name="RegistrationDate" class="form-control" required>
                                         </div>
@@ -127,7 +126,7 @@
                             </form>
                         </div>
                         <div class="tab-pane" id="2a">
-                                <form asp-action="AddCompany" asp-controller="Company">
+                                <form asp-action="AddCompany" asp-controller="Company" id="form2">
                                     @Html.AntiForgeryToken()
                                 <div class="col" style="margin-left: 10px;">
                                     <div class="row pb-4">
@@ -175,14 +174,14 @@
                                     
                                         
 </form>
-                       
-                    </div>
-                        <div class="row">
-                            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
-                                <button type="submit" value="AddCompany" class="btn btn-primary">Submit</button>
+                            <div class="row">
+                                <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                                    <button type="submit" id="submit"  class="btn btn-primary">Submit</button>
 
+                                </div>
                             </div>
                         </div>
+                        
                 </div>
                 
 
@@ -194,9 +193,21 @@
                 <!-- Placed at the end of the document so the pages load faster -->
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
                 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+                    <script>
+                        document.getElementById('submit').addEventListener('click', function () {
+                            // check for and report errors here
+                            for (var i = 0; i < document.forms.length; i++) {
+                                document.forms[i].submit();
+                            };
+                            console.log(document.forms.length);
+                        });
+
+
+                    </script>
             </div>
 
         </div>
     </div>
 </div>
+
 
