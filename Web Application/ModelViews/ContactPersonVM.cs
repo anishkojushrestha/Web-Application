@@ -7,5 +7,6 @@
         public string? Address { get; set; }
         public int? phoneNumber { get; set; }
         public int? MobileNumber { get; set; }
+        public string? Designation { get; set; }
     }
 }

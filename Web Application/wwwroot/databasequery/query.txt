@@ -1,0 +1,22 @@
+CREATE TABLE CompanyInfo(
+CompanyId bigint NOT NULL identity(1,1) primary key,
+CompanyName varchar(50),
+Address varchar(50),
+Email varchar(50),
+PanNumber int,
+City varchar(50),
+Coutry varchar(50),
+AchiveFrom date,
+AchiveTo date,
+
+)
+
+CREATE TABLE ContactPerson(
+ContactId bigint NOT NULL identity(1,1) primary key,
+ContactName varchar(50),
+PhoneNumber varchar(50),
+MobileNumber varchar(50),
+CompanyId int foreign key References companyinfo(Id)
+
+)
+

@@ -36,8 +36,8 @@
                             <td>@data.PanNumber</td>
                             <td>@data.Address</td>
                             <td>@data.City</td>
-                            <td>@data.AchiveFrom.ToShortDateString()</td>
-                            <td>@data.AchiveTo.ToShortDateString()</td>
+                            <td>@data.ValidFrom.ToShortDateString()</td>
+                            <td>@data.ValidTo.ToShortDateString()</td>
                             <td>
                                 <a data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"EditRegister/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
                                 @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@

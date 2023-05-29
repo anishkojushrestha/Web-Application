@@ -18,8 +18,8 @@ namespace Web_Application.Models
         {
             connection();
             var registerDate = vm.RegistrationDate.ToString("MM/dd/yyyy");
-            var AchiveFrom = vm.AchiveFrom.ToString("MM/dd/yyyy");
-            var AchiveTo = vm.AchiveTo.ToString("MM/dd/yyyy");
+            var AchiveFrom = vm.ValidFrom.ToString("MM/dd/yyyy");
+            var AchiveTo = vm.ValidTo.ToString("MM/dd/yyyy");
             StringBuilder str = new StringBuilder();
             str.Append(" declare @cid bigint \n");
             str.Append(" set @cid = (select isnull(max(id), 0) + 1 from CompanyInfo) \n");
@@ -63,8 +63,8 @@ namespace Web_Application.Models
                         //Date = Convert.ToDateTime(dr["Date"]),
                         City = Convert.ToString(dr["City"]),
                         RegistrationDate = Convert.ToDateTime(dr["RegistrationDate"]),
-                        AchiveFrom = Convert.ToDateTime(dr["AchiveFrom"]),
-                        AchiveTo = Convert.ToDateTime(dr["AchiveTo"]),
+                        ValidFrom = Convert.ToDateTime(dr["AchiveFrom"]),
+                        ValidTo = Convert.ToDateTime(dr["AchiveTo"]),
 
                     });
             }

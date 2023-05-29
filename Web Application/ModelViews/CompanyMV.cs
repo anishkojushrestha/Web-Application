@@ -14,10 +14,10 @@
         public string City { get; set; }
         public string Country { get; set; }
         public DateTime RegistrationDate { get; set; }
-        public DateTime AchiveFrom { get; set; }
-        public DateTime AchiveTo { get; set; }
+        public DateTime ValidFrom { get; set; }
+        public DateTime ValidTo { get; set; }
 
-        public List<ContactPersonVM> contactPersonVM { get; set; }
+        public List<ContactPersonVM>? contactPersonVM { get; set; }
         
     }
 }

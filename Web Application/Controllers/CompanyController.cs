@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using Web_Application.Models;
 using Web_Application.ModelViews;
 
@@ -18,11 +19,26 @@ namespace Web_Application.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddCompany(CompanyMV vm)
+        public IActionResult AddCompany(CompanyMV vm,IFormCollection frm)
         {
             if (ModelState.IsValid)
             {
+                
                 CompanyDbHandle cdh = new CompanyDbHandle();
+                //vm.contactPersonVM = new List<ContactPersonVM>();
+
+                
+               string[] contactName = Request.Form["txtContactName"];
+
+                StringValues id; 
+                Request.Form.TryGetValue("txtContactName", out id);
+
+                
+
+
+              //  Request.Form.TryGetValue("txtContactName", out id);
+              
+
                 if (cdh.CreateCompany(vm))
                 {
                     return RedirectToAction("Index");
