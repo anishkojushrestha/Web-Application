@@ -20,3 +20,4 @@ CompanyId int foreign key References companyinfo(Id)
 
 )
 
+https://stackoverflow.com/questions/38651320/how-to-insert-data-to-the-database-using-a-list-listobject-of-objects-and-mo

@@ -23,8 +23,13 @@ namespace Web_Application.Models
             StringBuilder str = new StringBuilder();
             str.Append(" declare @cid bigint \n");
             str.Append(" set @cid = (select isnull(max(id), 0) + 1 from CompanyInfo) \n");
-           str.Append(" INSERT INTO CompanyInfo(id,CompanyName, Email, PanNumber, Address, City, RegistrationDate, AchiveFrom, AchiveTo ) VALUES(@cid,'" + vm.CompanyName+"','"+vm.Email+"',"+vm.PanNumber+",'"+vm.Address+"','"+vm.City+"','"+ registerDate + "','"+ AchiveFrom + "','"+ AchiveTo + "') \n");
-           
+            str.Append(" INSERT INTO CompanyInfo(id,CompanyName, Email, PanNumber, Address, City, RegistrationDate, AchiveFrom, AchiveTo ) VALUES(@cid,'" + vm.CompanyName+"','"+vm.Email+"',"+vm.PanNumber+",'"+vm.Address+"','"+vm.City+"','"+ registerDate + "','"+ AchiveFrom + "','"+ AchiveTo + "') \n");
+            str.Append("declare @pid bigint\n");
+            str.Append("set @pid = (select isnull(max(id),0)+1 from ContactPerson\n");
+            vm.contactPersonVM = new List<ContactPersonVM>();
+            var c= vm.contactPersonVM.Select(x => x.ContactName);
+
+            str.Append("INSERT INTO ContactPerson(contactid, contactname, phonenumber, mobilenumber, companyid ) VALUES(@pid, '"+ vm.contactPersonVM +"')\n");
 //insert into[dbo].[ContactPerson] (contactname, phonenumber, mobilenumber, companyid)
 //select 'contactperson1','1111','4554555',@cid
 

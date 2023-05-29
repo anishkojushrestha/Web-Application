@@ -19,7 +19,7 @@ namespace Web_Application.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddCompany(CompanyMV vm,IFormCollection frm)
+        public IActionResult AddCompany(CompanyMV vm)
         {
             if (ModelState.IsValid)
             {
@@ -28,10 +28,10 @@ namespace Web_Application.Controllers
                 //vm.contactPersonVM = new List<ContactPersonVM>();
 
                 
-               string[] contactName = Request.Form["txtContactName"];
+               //string[] contactName = Request.Form["txtContactName"];
 
-                StringValues id; 
-                Request.Form.TryGetValue("txtContactName", out id);
+               // StringValues id; 
+               // Request.Form.TryGetValue("txtContactName", out id);
 
                 
 
