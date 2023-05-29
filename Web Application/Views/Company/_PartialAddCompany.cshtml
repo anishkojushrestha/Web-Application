@@ -220,7 +220,7 @@
                     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
                     <script>
                         $(document).ready(function () {
-                            
+            var rowCount = 0;
                             $("#add").click(function () {
                                 //var contactName = $("#contact").val();
                                 //var gender = $("#gender").val();
@@ -236,18 +236,19 @@
                                 //newRow.append($('<td>').text(mobile));
                                 //newRow.append($('<td>').text(designation));
                                // var col = $('<tr><td><input type="text" id="contact" name="contactPersonVM.ContactName" class="form - control" required>< /td></tr >');
-                var rowCount = 0;
-                alert(rowCount)
+                                 
+                                
                                 //newRow.append($('<td>').html('<button type="button" id="delete" class="btn btn-link btn-sm px-3" data-ripple-color="dark">delete</button>'));
                                 var cols="";
-                cols = cols + "<tr><td><input type='text' class='form-control' style='height:33px;' name='contactPersonVM[" + 0 + "].ContactName' value='" + $("#contact").val() + "'/></td><td><input type='text' style='height:33px;' name='contactPersonVM[" + 0 + "].Gender' class='form-control' value='" + $("#gender").val() + "'/></td><td><input type='text' style='height:33px;' class='form-control' name='contactPersonVM[" + 0 + "].Address' value='" + $("#address").val() + "'/></td><td><input type='text' style='height:33px;' class='form-control' name='contactPersonVM[" + 0 + "].PhoneNumber' value='" + $("#phone").val() + "'/></td><td><input style='height:33px;' type='text' class='form-control' name='contactPersonVM[" + 0 + "].MobileNumber' value='" + $("#mobile").val() + "'/></td><td><input style='height:33px;' type='text' class='form-control' name='contactPersonVM[" + 0 + "].Designation' value='" + $("#designation").val() + "'/></td></tr><tr><td><button type='button' class='btn btn-link btn-sm px-3' id='delete' data-ripple-color='dark'>delete</button></td ></tr>";
+                cols = cols + "<tr><td><input type='text' class='form-control' style='height:33px;' name='contactPersonVM[" + rowCount + "].ContactName' value='" + $("#contact").val() + "'/></td><td><input type='text' style='height:33px;' name='contactPersonVM[" + rowCount + "].Gender' class='form-control' value='" + $("#gender").val() + "'/></td><td><input type='text' style='height:33px;' class='form-control' name='contactPersonVM[" + rowCount + "].Address' value='" + $("#address").val() + "'/></td><td><input type='text' style='height:33px;' class='form-control' name='contactPersonVM[" + rowCount + "].PhoneNumber' value='" + $("#phone").val() + "'/></td><td><input style='height:33px;' type='text' class='form-control' name='contactPersonVM[" + rowCount + "].MobileNumber' value='" + $("#mobile").val() + "'/></td><td><input style='height:33px;' type='text' class='form-control' name='contactPersonVM[" + rowCount+ "].Designation' value='" + $("#designation").val() + "'/></td><td><button type='button' class='btn btn-link btn-sm px-3' id='delete'  data-ripple-color='dark'>delete</button></td ></tr>";
                                 //alert(cols);
+                               
                                 $("#tbldatatabletbody").append(cols);
                                 rowCount++;
                             });
 
                             $(document).on('click', '#delete', function () {
-                                $(this).closest('cols').remove();
+                $(this).closest('#tbldatatabletbody tr').remove();
                                 rowCount--;
                             });
                         })

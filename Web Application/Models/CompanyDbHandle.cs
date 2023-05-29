@@ -24,7 +24,7 @@ namespace Web_Application.Models
             str.Append(" declare @cid bigint \n");
             str.Append(" set @cid = (select isnull(max(id), 0) + 1 from CompanyInfo) \n");
            str.Append(" INSERT INTO CompanyInfo(id,CompanyName, Email, PanNumber, Address, City, RegistrationDate, AchiveFrom, AchiveTo ) VALUES(@cid,'" + vm.CompanyName+"','"+vm.Email+"',"+vm.PanNumber+",'"+vm.Address+"','"+vm.City+"','"+ registerDate + "','"+ AchiveFrom + "','"+ AchiveTo + "') \n");
-
+           
 //insert into[dbo].[ContactPerson] (contactname, phonenumber, mobilenumber, companyid)
 //select 'contactperson1','1111','4554555',@cid
 
