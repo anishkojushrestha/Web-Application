@@ -54,122 +54,124 @@
                 </button>
 
             </div>
-            <div class="modal-body">
+            <div class="modal-body p-1">
 
-                <!-- Tabs content -->
-                <div id="exTab1" class="container">
-                    <ul class="nav nav-pills">
-                        <li class="active">
-                            <a href="#1a" data-toggle="tab" class="btn btn-secondary">Company</a>
-                        </li>
-                        <li>
-                            <a href="#2a" data-toggle="tab" class="btn btn-secondary">Contact</a>
-                        </li>
+                
+                  
 
+
+                <div class="card-header p-0 pt-1 border-bottom-0">
+                    <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Company</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="true">Contact Person</a>
+                        </li>
                     </ul>
-                    <form id="form1" asp-action="AddCompany" asp-controller="Company">
-                    <div class="tab-content clearfix">
-                        <div class="tab-pane active" id="1a">
-                          
-                                @Html.AntiForgeryToken()
-                                <div class="col" style="margin-left: 10px; ">
-                                    <div class="row pb-3" >
-                                        <div>
-                                            <label class="form-label">Company Name:</label>
-                                            <input type="text" asp-for="CompanyName" class="form-control" style="height:33px" required>
-                                        </div>
+                </div>
+                <form  asp-action="AddCompany" asp-controller="Company">
+                    @Html.AntiForgeryToken()
+                <div class="card-body">
+                    <div class="tab-content" id="custom-tabs-three-tabContent">
+                        <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+                            <div class="col" style="margin-left: 10px; ">
+                                <div class="row pb-3">
+                                    <div>
+                                        <label class="form-label">Company Name:</label>
+                                        <input type="text" asp-for="CompanyName" class="form-control" style="height:33px" required>
+                                    </div>
 
+                                </div>
+                                <div class="row pb-3">
+                                    <div class="rw">
+                                        <label class="form-label">Registration Date:</label>
+                                        <input type="date" asp-for="RegistrationDate" class="form-control" style="height:33px" required>
                                     </div>
-                                    <div class="row pb-3">
-                                        <div class="rw">
-                                            <label class="form-label">Registration Date:</label>
-                                            <input type="date" asp-for="RegistrationDate" class="form-control" style="height:33px" required>
-                                        </div>
-                                        <div class="rw">
-                                            <label class="form-label">Email:</label>
-                                            <input type="email" asp-for="Email" class="form-control" style="height:33px" required>
-                                        </div>
-                                    </div>
-                                    <div class="row pb-3">
-                                        <div class="rw">
-                                            <label class="form-label">Address:</label>
-                                            <input type="text" asp-for="Address" class="form-control" style="height:33px" required>
-                                        </div>
-                                        <div class="rw">
-                                            <label class="form-label">Pan No.</label>
-                                            <input type="text" asp-for="PanNumber" class="form-control" style="height:33px" required>
-                                        </div>
-                                    </div>
-                                    <div class="row pb-3">
-
-                                        <div class="rw">
-                                            <label class="form-label">City:</label>
-                                            <input type="text" asp-for="City" class="form-control" style="height:33px" required>
-                                        </div>
-                                        <div class="rw">
-                                            <label class="form-label">Country:</label>
-                                            <input type="text" asp-for="Country" class="form-control" style="height:33px" required>
-                                        </div>
-                                    </div>
-                                    <div class="row pb-3">
-                                        <div class="rw">
-                                            <label class="form-label">Valid From:</label>
-                                            <input type="date" asp-for="ValidFrom" class="form-control" style="height:33px" required>
-                                        </div>
-                                        <div class="rw">
-                                            <label class="form-label">Valid To:</label>
-                                            <input type="date" asp-for="ValidTo" class="form-control" style="height:33px" required>
-                                        </div>
+                                    <div class="rw">
+                                        <label class="form-label">Email:</label>
+                                        <input type="email" asp-for="Email" class="form-control" style="height:33px" required>
                                     </div>
                                 </div>
-                           
+                                <div class="row pb-3">
+                                    <div class="rw">
+                                        <label class="form-label">Address:</label>
+                                        <input type="text" asp-for="Address" class="form-control" style="height:33px" required>
+                                    </div>
+                                    <div class="rw">
+                                        <label class="form-label">Pan No.</label>
+                                        <input type="text" asp-for="PanNumber" class="form-control" style="height:33px" required>
+                                    </div>
+                                </div>
+                                <div class="row pb-3">
+
+                                    <div class="rw">
+                                        <label class="form-label">City:</label>
+                                        <input type="text" asp-for="City" class="form-control" style="height:33px" required>
+                                    </div>
+                                    <div class="rw">
+                                        <label class="form-label">Country:</label>
+                                        <input type="text" asp-for="Country" class="form-control" style="height:33px" required>
+                                    </div>
+                                </div>
+                                <div class="row pb-3">
+                                    <div class="rw">
+                                        <label class="form-label">Valid From:</label>
+                                        <input type="date" asp-for="ValidFrom" class="form-control" style="height:33px" required>
+                                    </div>
+                                    <div class="rw">
+                                        <label class="form-label">Valid To:</label>
+                                        <input type="date" asp-for="ValidTo" class="form-control" style="height:33px" required>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="tab-pane" id="2a">
-                                <div class="col" style="margin-left: 10px;">
-                                    <div class="row pb-3">
-                                        <div class="rws">
+                        <div class="tab-pane fade show" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+                            <div class="col" style="margin-left: 10px;">
+                                <div class="row pb-3">
+                                    <div class="rws">
 
-                                            <label class="form-label">Contact Name:</label>
-                                            <input type="text" id="contact" name="contactName" style="height:33px" class="form-control" required>
-                                        </div>
-                                        <div class="rws">
-                                            <label class="form-label">Gender:</label>
-                                            <select class="form-control" id="gender" name="gender" style="height:33px">
-                                                <option>Male</option>
-                                                <option>Female</option>
-                                            </select>
-                                        </div>
-                                        <div class="rws">
-                                            <label class="form-label">Address:</label>
-                                            <input type="text" name="address" id="address" class="form-control" style="height:33px" required>
-                                        </div>
+                                        <label class="form-label">Contact Name:</label>
+                                        <input type="text" id="contact" name="contactName" style="height:33px" class="form-control" required>
                                     </div>
-                                    <div class="row pb-3">
-                                        <div class="rws">
-                                            <label class="form-label">Phone Number:</label>
-                                            <input type="text" name="phoneNumber" id="phone" class="form-control" style="height:33px" required>
-                                        </div>
-                                        <div class="rws">
-                                            <label class="form-label">Mobile Number:</label>
-                                            <input type="text" name="mobileNumber" id="mobile" class="form-control" style="height:33px" required>
-                                        </div>
-                                        <div class="rws">
-                                            <label class="form-label">Desigation:</label>
-                                            <select class="form-control" id="designation" name="designation" style="height:33px">
-                                                <option>Staff</option>
-                                                <option>Assistance</option>
-                                                <option>CEO</option>
-                                                <option>Reception</option>
-                                            </select>
-                                        </div>
+                                    <div class="rws">
+                                        <label class="form-label">Gender:</label>
+                                        <select class="form-control" id="gender" name="gender" style="height:33px">
+                                            <option>Male</option>
+                                            <option>Female</option>
+                                        </select>
                                     </div>
-
-                                    @*<div class="rw">
-                                    <label class="form-label">Mobile Number:</label>
-                                    <input type="text" asp-for="MobileNumber" class="form-control" required>
-                                    </div>*@
+                                    <div class="rws">
+                                        <label class="form-label">Address:</label>
+                                        <input type="text" name="address" id="address" class="form-control" style="height:33px" required>
+                                    </div>
                                 </div>
-                                <button type="button" class="btn btn-primary small" id="add" style="margin-left:80%; margin-top: -8px;">Add</button>
+                                <div class="row pb-3">
+                                    <div class="rws">
+                                        <label class="form-label">Phone Number:</label>
+                                        <input type="text" name="phoneNumber" id="phone" class="form-control" style="height:33px" required>
+                                    </div>
+                                    <div class="rws">
+                                        <label class="form-label">Mobile Number:</label>
+                                        <input type="text" name="mobileNumber" id="mobile" class="form-control" style="height:33px" required>
+                                    </div>
+                                    <div class="rws">
+                                        <label class="form-label">Desigation:</label>
+                                        <select class="form-control" id="designation" name="designation" style="height:33px">
+                                            <option>Staff</option>
+                                            <option>Assistance</option>
+                                            <option>CEO</option>
+                                            <option>Reception</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                @*<div class="rw">
+                                <label class="form-label">Mobile Number:</label>
+                                <input type="text" asp-for="MobileNumber" class="form-control" required>
+                                </div>*@
+                            </div>
+                            <button type="button" class="btn btn-primary small" id="add" style="margin-left:80%; margin-top: -8px;">Add</button>
                             <table class="table align-middle" id="datatable">
                                 <thead>
                                     <tr>
@@ -203,14 +205,13 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
-                    </form>
-
-
-                  
                 </div>
+                </form>
+
+
+                <!-- Tabs content -->
+                
 
             </div>
         </div>
