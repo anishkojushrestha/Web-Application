@@ -5,7 +5,8 @@ Address varchar(50),
 Email varchar(50),
 PanNumber int,
 City varchar(50),
-Coutry varchar(50),
+Country varchar(50),
+RegistrationDate date,
 AchiveFrom date,
 AchiveTo date,
 
@@ -16,8 +17,8 @@ ContactId bigint NOT NULL primary key,
 ContactName varchar(50),       
 PhoneNumber int,
 MobileNumber int,
-Designation varchar(50)
-CompanyId int foreign key References companyinfo(Id)
+Designation varchar(50),
+CompanyId bigint foreign key References CompanyInfo(CompanyId)
 
 )
 

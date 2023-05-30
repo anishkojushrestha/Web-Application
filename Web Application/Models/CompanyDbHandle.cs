@@ -22,8 +22,8 @@ namespace Web_Application.Models
             var AchiveTo = vm.ValidTo.ToString("MM/dd/yyyy");
             StringBuilder str = new StringBuilder();
             str.Append(" declare @cid bigint \n");
-            str.Append(" set @cid = (select isnull(max(id), 0) + 1 from CompanyInfo) \n");
-            str.Append(" INSERT INTO CompanyInfo(id,CompanyName, Email, PanNumber, Address, City, RegistrationDate, AchiveFrom, AchiveTo ) VALUES(@cid,'" +vm.CompanyName+"','" +vm.Email+"',"+vm.PanNumber+",'"+vm.Address+"','"+vm.City+"','"+ registerDate + "','"+ AchiveFrom + "','"+ AchiveTo + "') \n");
+            str.Append(" set @cid = (select isnull(max(companyid), 0) + 1 from CompanyInfo) \n");
+            str.Append(" INSERT INTO CompanyInfo(CompanyId,CompanyName, Email, PanNumber, Address, City,Country, RegistrationDate, AchiveFrom, AchiveTo ) VALUES(@cid,'" +vm.CompanyName+"','" +vm.Email+"',"+vm.PanNumber+",'"+vm.Address+"','"+vm.City+"','"+vm.Country+"','"+ registerDate + "','"+ AchiveFrom + "','"+ AchiveTo + "') \n");
             str.Append("declare @pid bigint\n");
 
             foreach (var data in vm.contactPersonVM)
@@ -32,7 +32,7 @@ namespace Web_Application.Models
                 
                 str.Append("set @pid = (select isnull(max(ContactId),0)+1 from ContactPerson)\n");
 
-                str.Append("INSERT INTO ContactPerson(ContactId, ContactName, PhoneNumber, MobileNumber, CompanyId ) VALUES(@pid, '" + data.ContactName + "'," + data.phoneNumber + "," + data.MobileNumber + ",@cid) \n");
+                str.Append("INSERT INTO ContactPerson(ContactId, ContactName, PhoneNumber, MobileNumber,Designation, CompanyId ) VALUES(@pid, '" + data.ContactName + "'," + data.phoneNumber + "," + data.MobileNumber + ",'"+data.Designation+"',@cid) \n");
 
                 
             }
@@ -68,13 +68,14 @@ namespace Web_Application.Models
                     new CompanyMV
                     {
 
-                        Id = Convert.ToInt32(dr["Id"]),
+                        Id = Convert.ToInt32(dr["CompanyId"]),
                         CompanyName = Convert.ToString(dr["CompanyName"]),
                         Address = Convert.ToString(dr["Address"]),
                         Email = Convert.ToString(dr["Email"]),
                         PanNumber = Convert.ToInt32(dr["PanNumber"]),
                         //Date = Convert.ToDateTime(dr["Date"]),
                         City = Convert.ToString(dr["City"]),
+                        Country = Convert.ToString(dr["Country"]),
                         RegistrationDate = Convert.ToDateTime(dr["RegistrationDate"]),
                         ValidFrom = Convert.ToDateTime(dr["AchiveFrom"]),
                         ValidTo = Convert.ToDateTime(dr["AchiveTo"]),
