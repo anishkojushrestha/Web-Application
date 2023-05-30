@@ -13,11 +13,11 @@
                 <form asp-action="EditRegister" asp-controller="User" method="post" >
                     @Html.AntiForgeryToken()
                     <input type="text" asp-for="Id" class="form-control" hidden>
-                    <div class="mb-3">
+                    <div >
                         <input type="text" asp-for="FirstName" class="form-control" placeholder="First Name" required>
                         <span asp-validation-for="FirstName" class="alert-danger"></span>
                     </div>
-                    <div class="mb-3">
+                    <div >
                         <input type="text" asp-for="LastName" class="form-control" placeholder="Last Name" required>
                         <span asp-validation-for="LastName" class="alert-danger"></span>
                     </div>
@@ -27,6 +27,15 @@
                     </div>
                     <div class="mb-3">
                         <input type="email" asp-for="Email" class="form-control" placeholder="Email" required>
+                        <span asp-validation-for="Email" class="alert-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-control" placeholder="select profile">
+                            <option>Admin</option>
+                            <option>Super Admin</option>
+                            <option>OMS Users</option>
+                            <option>Support Person</option>
+                        </select>
                         <span asp-validation-for="Email" class="alert-danger"></span>
                     </div>
 
