@@ -217,49 +217,49 @@
         </div>
     </div>
 
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-                    <script>
-                        $(document).ready(function () {
-            var rowCount = 0;
-                            $("#add").click(function () {
-                                //var contactName = $("#contact").val();
-                                //var gender = $("#gender").val();
-                                //var address = $("#address").val();
-                                //var phone = $("#phone").val();
-                                //var mobile = $("#mobile").val();
-                                //var designation = $("#designation").val();
-                                //var newRow = $('<tr>');
-                                //newRow.append($('<td>').text(contactName));
-                                //newRow.append($('<td>').text(gender));
-                                //newRow.append($('<td>').text(address));
-                                //newRow.append($('<td>').text(phone));
-                                //newRow.append($('<td>').text(mobile));
-                                //newRow.append($('<td>').text(designation));
-                               // var col = $('<tr><td><input type="text" id="contact" name="contactPersonVM.ContactName" class="form - control" required>< /td></tr >');
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function () {
+    var rowCount = 0;
+    $("#add").click(function () {
+        //var contactName = $("#contact").val();
+        //var gender = $("#gender").val();
+        //var address = $("#address").val();
+        //var phone = $("#phone").val();
+        //var mobile = $("#mobile").val();
+        //var designation = $("#designation").val();
+        //var newRow = $('<tr>');
+        //newRow.append($('<td>').text(contactName));
+        //newRow.append($('<td>').text(gender));
+        //newRow.append($('<td>').text(address));
+        //newRow.append($('<td>').text(phone));
+        //newRow.append($('<td>').text(mobile));
+        //newRow.append($('<td>').text(designation));
+        // var col = $('<tr><td><input type="text" id="contact" name="contactPersonVM.ContactName" class="form - control" required>< /td></tr >');
                                  
                                 
-                                //newRow.append($('<td>').html('<button type="button" id="delete" class="btn btn-link btn-sm px-3" data-ripple-color="dark">delete</button>'));
-                                var cols="";
-                cols = cols + "<tr><td><input type='text' class='form-control' style='height:33px;' name='contactPersonVM[" + rowCount + "].ContactName' value='" + $("#contact").val() + "'/></td><td><input type='text' style='height:33px;' name='contactPersonVM[" + rowCount + "].Gender' class='form-control' value='" + $("#gender").val() + "'/></td><td><input type='text' style='height:33px;' class='form-control' name='contactPersonVM[" + rowCount + "].Address' value='" + $("#address").val() + "'/></td><td><input type='text' style='height:33px;' class='form-control' name='contactPersonVM[" + rowCount + "].PhoneNumber' value='" + $("#phone").val() + "'/></td><td><input style='height:33px;' type='text' class='form-control' name='contactPersonVM[" + rowCount + "].MobileNumber' value='" + $("#mobile").val() + "'/></td><td><input style='height:33px;' type='text' class='form-control' name='contactPersonVM[" + rowCount+ "].Designation' value='" + $("#designation").val() + "'/></td><td><button type='button' class='btn btn-link btn-sm px-3' id='delete'  data-ripple-color='dark'>delete</button></td ></tr>";
-                                //alert(cols);
+        //newRow.append($('<td>').html('<button type="button" id="delete" class="btn btn-link btn-sm px-3" data-ripple-color="dark">delete</button>'));
+        var cols="";
+        cols = cols + "<tr><td><input type='text' class='form-control' style='height:33px;' name='contactPersonVM[" + rowCount + "].ContactName' value='" + $("#contact").val() + "'/></td><td><input type='text' style='height:33px;' name='contactPersonVM[" + rowCount + "].Gender' class='form-control' value='" + $("#gender").val() + "'/></td><td><input type='text' style='height:33px;' class='form-control' name='contactPersonVM[" + rowCount + "].Address' value='" + $("#address").val() + "'/></td><td><input type='text' style='height:33px;' class='form-control' name='contactPersonVM[" + rowCount + "].PhoneNumber' value='" + $("#phone").val() + "'/></td><td><input style='height:33px;' type='text' class='form-control' name='contactPersonVM[" + rowCount + "].MobileNumber' value='" + $("#mobile").val() + "'/></td><td><input style='height:33px;' type='text' class='form-control' name='contactPersonVM[" + rowCount + "].Designation' value='" + $("#designation").val() + "'/></td><td><button type='button' class='btn btn-link btn-sm px-3' id='delete'  data-ripple-color='dark'><i class='fas fa-times'></i></button></td ></tr>";
+        //alert(cols);
                                
-                                $("#tbldatatabletbody").append(cols);
-                                rowCount++;
-                            });
+        $("#tbldatatabletbody").append(cols);
+        rowCount++;
+    });
 
-                            $(document).on('click', '#delete', function () {
-                $(this).closest('#tbldatatabletbody tr').remove();
-                                rowCount--;
-                            });
-                        })
-                        document.getElementById('submit').addEventListener('click', function () {
-                            // check for and report errors here
-                            document.getElementById("form1").submit();
-                            document.getElementById("form2").submit();
-
-
-                        });
+    $(document).on('click', '#delete', function () {
+        $(this).closest('#tbldatatabletbody tr').remove();
+        rowCount--;
+    });
+})
+document.getElementById('submit').addEventListener('click', function () {
+    // check for and report errors here
+    document.getElementById("form1").submit();
+    document.getElementById("form2").submit();
 
 
-                    </script>
+});
+
+
+</script>
