@@ -1,5 +1,5 @@
 CREATE TABLE CompanyInfo(
-CompanyId bigint NOT NULL identity(1,1) primary key,
+CompanyId bigint NOT NULL primary key,
 CompanyName varchar(50),
 Address varchar(50),
 Email varchar(50),
@@ -12,12 +12,22 @@ AchiveTo date,
 )
 
 CREATE TABLE ContactPerson(
-ContactId bigint NOT NULL identity(1,1) primary key,
-ContactName varchar(50),
-PhoneNumber varchar(50),
-MobileNumber varchar(50),
+ContactId bigint NOT NULL primary key,
+ContactName varchar(50),       
+PhoneNumber int,
+MobileNumber int,
+Designation varchar(50)
 CompanyId int foreign key References companyinfo(Id)
 
 )
 
-https://stackoverflow.com/questions/38651320/how-to-insert-data-to-the-database-using-a-list-listobject-of-objects-and-mo
+CREATE TABLE User(
+UserId bigint NOT NULL primary key,,
+FirstName varchar(50),
+LastName varchar(50),
+UserName varchar(50),
+Address varchar(50),
+Password varchar(50),
+Profile varchar(50),
+IsActive bool,
+)

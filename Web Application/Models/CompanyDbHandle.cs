@@ -29,12 +29,6 @@ namespace Web_Application.Models
             foreach (var data in vm.contactPersonVM)
             {
 
-                var list = new ContactPersonVM()
-                {
-                    ContactName = data.ContactName,
-                    MobileNumber = data.MobileNumber,
-                    phoneNumber = data.phoneNumber
-                };
                 
                 str.Append("set @pid = (select isnull(max(ContactId),0)+1 from ContactPerson)\n");
 

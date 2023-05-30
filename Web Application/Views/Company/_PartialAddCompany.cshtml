@@ -55,11 +55,6 @@
 
             </div>
             <div class="modal-body p-1">
-
-                
-                  
-
-
                 <div class="card-header p-0 pt-1 border-bottom-0">
                     <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                         <li class="nav-item">
@@ -76,14 +71,14 @@
                     <div class="tab-content" id="custom-tabs-three-tabContent">
                         <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
                             <div class="col" style="margin-left: 10px; ">
-                                <div class="row pb-3">
+                                <div class="row pb-1">
                                     <div>
                                         <label class="form-label">Company Name:</label>
                                         <input type="text" asp-for="CompanyName" class="form-control" style="height:33px" required>
                                     </div>
 
                                 </div>
-                                <div class="row pb-3">
+                                <div class="row pb-1">
                                     <div class="rw">
                                         <label class="form-label">Registration Date:</label>
                                         <input type="date" asp-for="RegistrationDate" class="form-control" style="height:33px" required>
@@ -93,7 +88,7 @@
                                         <input type="email" asp-for="Email" class="form-control" style="height:33px" required>
                                     </div>
                                 </div>
-                                <div class="row pb-3">
+                                <div class="row pb-1">
                                     <div class="rw">
                                         <label class="form-label">Address:</label>
                                         <input type="text" asp-for="Address" class="form-control" style="height:33px" required>
@@ -103,7 +98,7 @@
                                         <input type="text" asp-for="PanNumber" class="form-control" style="height:33px" required>
                                     </div>
                                 </div>
-                                <div class="row pb-3">
+                                <div class="row pb-1">
 
                                     <div class="rw">
                                         <label class="form-label">City:</label>
@@ -114,7 +109,7 @@
                                         <input type="text" asp-for="Country" class="form-control" style="height:33px" required>
                                     </div>
                                 </div>
-                                <div class="row pb-3">
+                                <div class="row pb-1">
                                     <div class="rw">
                                         <label class="form-label">Valid From:</label>
                                         <input type="date" asp-for="ValidFrom" class="form-control" style="height:33px" required>
@@ -128,7 +123,7 @@
                         </div>
                         <div class="tab-pane fade show" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
                             <div class="col" style="margin-left: 10px;">
-                                <div class="row pb-3">
+                                <div class="row pb-1">
                                     <div class="rws">
 
                                         <label class="form-label">Contact Name:</label>
@@ -171,9 +166,16 @@
                                 <input type="text" asp-for="MobileNumber" class="form-control" required>
                                 </div>*@
                             </div>
-                            <button type="button" class="btn btn-primary small" id="add" style="margin-left:80%; margin-top: -8px;">Add</button>
+
+                                <button type="button" class="btn btn-primary" id="add" style="margin-left:90%; margin-top: 2px; ">Add</button>
+
+
+                            
+
+
+
                             <table class="table align-middle" id="datatable">
-                                <thead>
+                                <thead >
                                     <tr>
                                         <th scope="col">Contact Name</th>
                                         <th scope="col">Gender</th>
@@ -206,7 +208,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
                 </form>
 
 
@@ -216,6 +217,7 @@
             </div>
         </div>
     </div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -236,15 +238,18 @@ $(document).ready(function () {
         //newRow.append($('<td>').text(phone));
         //newRow.append($('<td>').text(mobile));
         //newRow.append($('<td>').text(designation));
-        // var col = $('<tr><td><input type="text" id="contact" name="contactPersonVM.ContactName" class="form - control" required>< /td></tr >');
-                                 
-                                
+        // var col = $('<tr><td><input type="text" id="contact" name="contactPersonVM.ContactName" class="form - control" required>< /td></tr >');                     
         //newRow.append($('<td>').html('<button type="button" id="delete" class="btn btn-link btn-sm px-3" data-ripple-color="dark">delete</button>'));
+        
         var cols="";
         cols = cols + "<tr><td><input type='text' class='form-control' style='height:33px;' name='contactPersonVM[" + rowCount + "].ContactName' value='" + $("#contact").val() + "'/></td><td><input type='text' style='height:33px;' name='contactPersonVM[" + rowCount + "].Gender' class='form-control' value='" + $("#gender").val() + "'/></td><td><input type='text' style='height:33px;' class='form-control' name='contactPersonVM[" + rowCount + "].Address' value='" + $("#address").val() + "'/></td><td><input type='text' style='height:33px;' class='form-control' name='contactPersonVM[" + rowCount + "].PhoneNumber' value='" + $("#phone").val() + "'/></td><td><input style='height:33px;' type='text' class='form-control' name='contactPersonVM[" + rowCount + "].MobileNumber' value='" + $("#mobile").val() + "'/></td><td><input style='height:33px;' type='text' class='form-control' name='contactPersonVM[" + rowCount + "].Designation' value='" + $("#designation").val() + "'/></td><td><button type='button' class='btn btn-link btn-sm px-3' id='delete'  data-ripple-color='dark'><i class='fas fa-times'></i></button></td ></tr>";
         //alert(cols);
                                
         $("#tbldatatabletbody").append(cols);
+        var c = $("#contact").val('');
+        var p = $("#phone").val('');
+        var m = $("#mobile").val('');
+        var a = $("#address").val('');
         rowCount++;
     });
 
@@ -253,13 +258,14 @@ $(document).ready(function () {
         rowCount--;
     });
 })
-document.getElementById('submit').addEventListener('click', function () {
-    // check for and report errors here
-    document.getElementById("form1").submit();
-    document.getElementById("form2").submit();
+    document.getElementById('submit').addEventListener('click', function () {
+        // check for and report errors here
+        document.getElementById("form1").submit();
+        document.getElementById("form2").submit();
 
 
-});
+    });
 
+        
 
 </script>
