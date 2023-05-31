@@ -10,7 +10,7 @@ namespace Web_Application.Models
         private SqlConnection con;
         private void connection()
         {
-            string constring = "Data Source=.;Initial Catalog=WebAppDB;Integrated Security=True;Pooling=False";
+            string constring = "Data Source=DESKTOP-3P1U2GV\\OMSSERVER;Initial Catalog=WebAppDB;Integrated Security=True;Pooling=False";
             con = new SqlConnection(constring);
         }
 
@@ -30,7 +30,7 @@ namespace Web_Application.Models
             {
                 str.Append("set @pid = (select isnull(max(ContactId),0)+1 from ContactPerson)\n");
 
-                str.Append("INSERT INTO ContactPerson(ContactId, ContactName, PhoneNumber, MobileNumber,Designation, CompanyId ) VALUES(@pid, '" + data.ContactName + "'," + data.phoneNumber + "," + data.MobileNumber + ",'"+data.Designation+"',@cid) \n");
+                str.Append("INSERT INTO ContactPerson(ContactId, ContactName, Gender,Address, PhoneNumber, MobileNumber,Designation, CompanyId ) VALUES(@pid, '" + data.ContactName + "','" + data.Gender + "','" + data.Address + "'," + data.phoneNumber + "," + data.MobileNumber + ",'"+data.Designation+"',@cid) \n");
 
             }
 
@@ -83,10 +83,41 @@ namespace Web_Application.Models
 
 
         }
+
+        public List<ContactPersonVM> GetContactDetail()
+        {
+            connection();
+            List<ContactPersonVM> contactList= new List<ContactPersonVM>();
+            SqlCommand cmd = new SqlCommand("select * from ContactPerson", con);
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            ad.Fill(dt);
+            con.Close();
+            foreach (DataRow dr in dt.Rows)
+            {
+                contactList.Add(
+                    new ContactPersonVM
+                    {
+
+                        Id = Convert.ToInt32(dr["ContactId"]),
+                        ContactName = Convert.ToString(dr["ContactName"]),
+                        Address = Convert.ToString(dr["Address"]),
+                        phoneNumber = Convert.ToInt32(dr["PhoneNumber"]),
+                        MobileNumber = Convert.ToInt32(dr["MobileNumber"]),
+                        Gender = Convert.ToString(dr["Gender"]),
+                        Designation = Convert.ToString(dr["Designation"]),
+                        CompanyId = Convert.ToInt32(dr["CompanyId"] ),
+                            
+
+                    });
+            }
+            return contactList;
+        }
         public bool DeleteUser(int id)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("Delete FROM CompanyInfo WHERE Id =" + id, con);
+            SqlCommand cmd = new SqlCommand("Delete FROM contactperson join CompanyInfo on CompanyInfo.companyid = contactperson.companyid WHERE companyid =" + id, con);
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();
@@ -95,6 +126,65 @@ namespace Web_Application.Models
                 return true;
             else
                 return false;
+        }
+
+        public CompanyMV GetUpdateDetail( string id=null,string contactid=null)
+        {
+            connection();
+
+            CompanyMV cv=new CompanyMV ();
+            cv.contactPersonVM = new List<ContactPersonVM>();
+
+
+            string sql = @"select * from companyinfo c join contactperson p on c.companyid = p.companyid where 1=1";
+            if (!string.IsNullOrEmpty(id))
+            {
+                sql+= " and c.companyId='"+id+"'\n";
+            }
+            if (!string.IsNullOrEmpty(contactid))
+            {
+                sql += " and p.contactid='" + contactid + "'\n";
+            }
+            SqlCommand cmd = new SqlCommand(sql, con);
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            ad.Fill(dt);
+            con.Close();
+
+            int i = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (i == 0)
+                {
+                    cv.Id = Convert.ToInt32(dr["CompanyId"]);
+                    cv.CompanyName = Convert.ToString(dr["CompanyName"]);
+                    cv.Address = Convert.ToString(dr["Address"]);
+                    cv.Email = Convert.ToString(dr["Email"]);
+                    cv.PanNumber = Convert.ToInt32(dr["PanNumber"]);
+                    //Date = Convert.ToDateTime(dr["Date"]),
+                    cv.City = Convert.ToString(dr["City"]);
+                    cv.Country = Convert.ToString(dr["Country"]);
+                    cv.RegistrationDate = Convert.ToDateTime(dr["RegistrationDate"]);
+                    cv.ValidFrom = Convert.ToDateTime(dr["AchiveFrom"]);
+                    cv.ValidTo = Convert.ToDateTime(dr["AchiveTo"]);
+                }
+                cv.contactPersonVM.Add(new ContactPersonVM
+                {
+                    Id= Convert.ToInt32(dr["ContactId"]),
+                    ContactName = Convert.ToString(dr["ContactName"]),
+                    Address = Convert.ToString(dr["Address"]),
+                    phoneNumber = Convert.ToInt32(dr["PhoneNumber"]),
+                    MobileNumber = Convert.ToInt32(dr["MobileNumber"]),
+                    Gender = Convert.ToString(dr["Gender"]),
+                    Designation = Convert.ToString(dr["Designation"]),
+                    CompanyId = Convert.ToInt32(dr["CompanyId"]),
+
+                });
+
+               
+            }
+            return cv;
         }
     }
 }

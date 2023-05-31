@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Web_Application.ModelViews.ContactPersonVM>
+
+<style>
+    .rw {
+        width: 30%;
+    }
+
+   
+
+</style>
+<div class="modal fade" id="addRegister" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:130%;  margin-top: 20px; margin-left:-5%">
+            <div class="modal-header p-2">
+                <h4 class="modal-title" id="addRegisterLabel">List of Contact Person</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+
+            </div>
+            <div class="modal-body p-1">
+
+                <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 10px">Contact Person</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>Phone No.</th>
+                        <th>Mobile No.</th>
+                        <th>Designtaion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var data in Model)
+                    {
+                        <tr>
+                            <td>@data.ContactName</td>
+                            <td>@data.Gender</td>
+                            <td>@data.Address</td>
+                            <td>@data.phoneNumber</td>
+                            <td>@data.MobileNumber</td>
+                            <td>@data.Designation</td>
+                        </tr>
+                    }
+
+                </tbody>
+          </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>

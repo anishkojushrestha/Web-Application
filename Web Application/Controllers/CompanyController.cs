@@ -61,8 +61,22 @@ namespace Web_Application.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index");
             }
+        }
+
+        public IActionResult GetContact(int id)
+        {
+            CompanyDbHandle cdh = new CompanyDbHandle();
+
+
+            return PartialView("_PartialGetContact", cdh.GetContactDetail().Where(x => x.CompanyId == id));
+        }
+
+        public IActionResult EditCompany(int id) { 
+            CompanyDbHandle cdh = new CompanyDbHandle();
+
+            return PartialView("_PartialAddCompany", cdh.GetUpdateDetail(id.ToString(),""));
         }
     }
 }

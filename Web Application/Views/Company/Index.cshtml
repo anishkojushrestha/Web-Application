@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Web_Application.ModelViews.CompanyMV>
 @{
     ViewData["Title"] = "Index";
+    
 }
 <div id="PlaceHolderHere"></div>
 <button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("AddCompany")" style="width:100px;margin-left:90%; margin-bottom:5px;">Create</button>
@@ -41,9 +42,10 @@
                             <td>@data.ValidFrom.ToShortDateString()</td>
                             <td>@data.ValidTo.ToShortDateString()</td>
                             <td>
-                                <a data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"EditRegister/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
+                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"EditCompany/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
                                 @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
-                                <a asp-action="Delete" asp-controller="Company" asp-route-id="@data.Id" onclick="return confirm('Are sure wants to delete?');"><i class="fa-solid fa-delete-left fa-lg"></i></a>
+                                <a style="color:black" asp-action="Delete" asp-controller="Company" asp-route-id="@data.Id" onclick="return confirm('Are sure wants to delete?');"><i class="fa-solid fa-trash"></i></a>
+                                <button style="padding: 0;border: none;background: none;" type="button" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"GetContact/{data.Id}")"><i class="fa-solid fa-eye"></i></button>
                                 @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
                             @Html.ActionLink("Delete", "Delete", new { id = data.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
                             </td>

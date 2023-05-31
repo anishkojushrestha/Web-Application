@@ -14,7 +14,9 @@ AchiveTo date,
 
 CREATE TABLE ContactPerson(
 ContactId bigint NOT NULL primary key,
-ContactName varchar(50),       
+ContactName varchar(50), 
+Gender varchar(50),
+Address varchar(50),
 PhoneNumber int,
 MobileNumber int,
 Designation varchar(50),
