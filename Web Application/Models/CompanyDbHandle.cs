@@ -28,13 +28,10 @@ namespace Web_Application.Models
 
             foreach (var data in vm.contactPersonVM)
             {
-
-                
                 str.Append("set @pid = (select isnull(max(ContactId),0)+1 from ContactPerson)\n");
 
                 str.Append("INSERT INTO ContactPerson(ContactId, ContactName, PhoneNumber, MobileNumber, CompanyId ) VALUES(@pid, '" + data.ContactName + "'," + data.phoneNumber + "," + data.MobileNumber + ",@cid) \n");
 
-                
             }
 
            
