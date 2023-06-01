@@ -34,3 +34,14 @@ Password varchar(50),
 Profile varchar(50),
 IsActive bool,
 )
+
+
+
+
+
+
+
+
+
+query
+select * from CompanyInfo c where NOT EXISTS (select * from contactperson p where c.CompanyId = p.CompanyId)
