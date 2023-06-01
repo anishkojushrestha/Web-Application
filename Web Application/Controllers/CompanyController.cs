@@ -78,5 +78,17 @@ namespace Web_Application.Controllers
 
             return PartialView("_PartialAddCompany", cdh.GetUpdateDetail(id.ToString(),""));
         }
+
+        public IActionResult DeleteContact(int id)
+        {
+            CompanyDbHandle cdh = new CompanyDbHandle();
+            if (cdh.DeleteContact(id))
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+        
+
     }
 }

@@ -50,9 +50,11 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width:130%;  margin-top: 20px; margin-left:-5%">
             <div class="modal-header p-2">
-                @if (Model.Id == 0)
+                @if (Model == null)
                 {
-                    <h4 class="modal-title" id="addRegisterLabel" style="font-size:large">Add Company</h4>
+                   
+                        <h4 class="modal-title" id="addRegisterLabel" style="font-size:large">Add Company</h4>
+                  
                 }
                 <h4 class="modal-title" id="addRegisterLabel" style="font-size:large">Edit Company</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal">
@@ -72,6 +74,7 @@
                 </div>
                 <form asp-action="AddCompany" asp-controller="Company">
                     @Html.AntiForgeryToken()
+                    <input asp-for="Id" hidden />
                     <div class="card-body">
                         <div class="tab-content" id="custom-tabs-three-tabContent">
                             <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
@@ -175,17 +178,28 @@
                                 <button type="button" class="btn btn-primary" id="add" style="margin-left:90%; margin-top: 2px; ">Add</button>
 
 
-                                <input type="hidden" id="hidRowClicked" />
-                                <input type="hidden" id="hiddbRecid" />
-                                @if (Model.contactPersonVM != null && Model.contactPersonVM.Count > 0)
+                               
+                                @if (Model != null)
                                 {
-                                    <input type="hidden" id="hidRowCount" value="@Model.contactPersonVM.Count" />
+                                    if (Model.contactPersonVM != null && Model.contactPersonVM.Count > 0)
+                                    {
+                                        <input type="hidden" id="hidRowCount" value="@Model.contactPersonVM.Count" />
+                                    }
+                                    else
+                                    {
+
+                                        <input type="hidden" id="hidRowCount" value="0" />
+                                    }
+                                    <input type="hidden" id="hidRowClicked" value="-1" />
+                                    <input type="hidden" id="hiddbRecid" />
+
                                 }
                                 else
                                 {
-                                    <input type="hidden" id="hidRowCount" value="0" />
+                                    <input type="hidden" id="hidRowClicked" value="-1"/>
+                                    <input type="hidden" id="hiddbRecid"  />
+                                    <input type="hidden" id="hidRowCount"  />
                                 }
-
 
 
 
@@ -205,41 +219,45 @@
                                     <tbody id="tbldatatabletbody">
                                         @{
                                             int rowcount = 0;
-
-                                            if (Model.contactPersonVM != null && Model.contactPersonVM.Count > 0)
+                                            if (Model != null)
                                             {
-
-                                                foreach (var item in Model.contactPersonVM)
+                                                if (Model.contactPersonVM != null && Model.contactPersonVM.Count > 0)
                                                 {
-                                                    <tr id="tr_@rowcount">
-                                                        <td>
-                                                            <input type='hidden' class='form-control' style='height:33px;' value="@item.Id" id="txtId_@rowcount" name='contactPersonVM[@rowcount].Id' />
-                                                            <input type='text' readonly class='form-control' style='height:33px;' value="@item.ContactName" id="txtContactName_@rowcount" name='contactPersonVM[@rowcount].ContactName' />
-                                                        </td>
-                                                        <td>
-                                                            <input type='text' style='height:33px;' readonly value="@item.Gender" name='contactPersonVM[@rowcount].Gender' id="txtGender_@rowcount" class='form-control' />
-                                                        </td>
-                                                        <td>
-                                                            <input type='text' style='height:33px;' readonly value="@item.Address" class='form-control' name='contactPersonVM[@rowcount].Address' id="txtAddress_@rowcount" />
-                                                        </td>
-                                                        <td>
-                                                            <input type='text' style='height:33px;' readonly value="@item.phoneNumber" class='form-control' name='contactPersonVM[@rowcount].PhoneNumber' id="txtPhoneNumber_@rowcount" />
-                                                        </td>
-                                                        <td>
-                                                            <input style='height:33px;' type='text' readonly value="@item.MobileNumber" class='form-control' name='contactPersonVM[@rowcount].MobileNumber' id="txtMobileNumber_@rowcount" />
-                                                        </td>
-                                                        <td>
-                                                            <input style='height:33px;' type='text' readonly value="@item.Designation" class='form-control' name='contactPersonVM[@rowcount].Designation' id="txtDesignation_@rowcount" />
-                                                        </td>
-                                                        <td style="display:flex; padding-right:1px;">
-                                                            <button type='button' class='btn btn-link btn-sm px-1 btnDelete' data-rowcount="@rowcount" data-recid="@item.Id" data-ripple-color='dark'><i class="fa-solid fa-x"></i></button>
-                                                            <button type='button' class='btn btn-link btn-sm px-1 btnEdit' data-rowcount="@rowcount" data-recid="@item.Id" data-ripple-color='dark'><i class="fa-solid fa-pen"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                                //@rowcount = @rowcount + 1;
-                                                rowcount++;
 
+                                                    foreach (var item in Model.contactPersonVM)
+                                                    {
+                                                        <tr id="tr_@rowcount">
+                                                            <td>
+                                                                <input type='hidden' class='form-control' style='height:33px;' value="@item.Id" id="txtId_@rowcount" name='contactPersonVM[@rowcount].Id' />
+                                                                <input type='text' readonly class='form-control' style='height:33px;' value="@item.ContactName" id="txtContactName_@rowcount" name='contactPersonVM[@rowcount].ContactName' />
+                                                            </td>
+                                                            <td>
+                                                                <input type='text' style='height:33px;' readonly value="@item.Gender" name='contactPersonVM[@rowcount].Gender' id="txtGender_@rowcount" class='form-control' />
+                                                            </td>
+                                                            <td>
+                                                                <input type='text' style='height:33px;' readonly value="@item.Address" class='form-control' name='contactPersonVM[@rowcount].Address' id="txtAddress_@rowcount" />
+                                                            </td>
+                                                            <td>
+                                                                <input type='text' style='height:33px;' readonly value="@item.phoneNumber" class='form-control' name='contactPersonVM[@rowcount].PhoneNumber' id="txtPhoneNumber_@rowcount" />
+                                                            </td>
+                                                            <td>
+                                                                <input style='height:33px;' type='text' readonly value="@item.MobileNumber" class='form-control' name='contactPersonVM[@rowcount].MobileNumber' id="txtMobileNumber_@rowcount" />
+                                                            </td>
+                                                            <td>
+                                                                <input style='height:33px;' type='text' readonly value="@item.Designation" class='form-control' name='contactPersonVM[@rowcount].Designation' id="txtDesignation_@rowcount" />
+                                                            </td>
+                                                            <td style="display:flex; padding-right:1px;">
+                                                                <button  class='btn btn-link btn-sm px-1 btnDelete' asp-action="DeleteContact" asp-controller="Company" asp-route-id="@item.Id"  onclick="return confirm('Are sure wants to delete?')" data-rowcount="@rowcount" data-recid="@item.Id" data-ripple-color='dark'><i class="fa-solid fa-x"></i></button>
+                                                                <button type='button' class='btn btn-link btn-sm px-1 btnEdit' data-rowcount="@rowcount" data-recid="@item.Id" data-ripple-color='dark'><i class="fa-solid fa-pen"></i></button>
+                                                            </td>
+                                                        </tr>
+                                                        rowcount++;
+                                                    }
+                                                    //@rowcount = @rowcount + 1;
+                                                    
+
+                                                }
+                                                
                                             }
                                         }
 
@@ -288,11 +306,11 @@
     });
     $(document).ready(function () {
         var rowCount = parseInt($("#hidRowCount").val() == "" ? "0" : $("#hidRowCount").val());
+        
         $("#add").click(function () {
             var cols = "";
             var recid = $("#hiddbRecid").val();
             var rowid = $("#hidRowClicked").val();
-
 
             if (rowid >= 0) {
                 var contactname = $('#contact').val();
@@ -310,7 +328,7 @@
                 $("#txtDesignation_" + rowid).val(designation)
             } else {
 
-                cols = cols + "<tr id='tr_" + rowCount + "'><td><input type='text' class='form-control' style='height:33px;' name='contactPersonVM[" + rowCount + "].ContactName' id='txtContactName_" + rowCount + "' value = '" + $("#contact").val() + "' /> </td><td><input type='text' style='height:33px;' name='contactPersonVM[" + rowCount + "].Gender' class='form-control' value='" + $("#gender").val() + "'/ > </td><td><input type='text' style='height:33px;' class='form-control' name='contactPersonVM[" + rowCount + "].Address' value='" + $("#address").val() + "'/ > </td><td><input type='text' style='height:33px;' class='form-control' name='contactPersonVM[" + rowCount + "].PhoneNumber' value='" + $("#phone").val() + "'/ > </td><td><input style='height:33px;' type='text' class='form-control' name='contactPersonVM[" + rowCount + "].MobileNumber' value='" + $("#mobile").val() + "'/ > </td><td><input style='height:33px;' type='text' class='form-control' name='contactPersonVM[" + rowCount + "].Designation' value='" + $("#designation").val() + "'/ > </td><td><button type='button' class='btn btn-link btn-sm px-3' id='delete' data-recCount='" + rowCount + "' data-recid='" + rowCount + "'  data-ripple-color='dark'><i class='fas fa-times'></i > </button></td > </tr>";
+                cols = cols + "<tr id='tr_" + rowCount + "'><td><input type='text' readonly class='form-control' style='height:33px;' name='contactPersonVM[" + rowCount + "].ContactName' id='txtContactName_" + rowCount + "' value = '" + $("#contact").val() + "' /> </td><td><input type='text' style='height:33px;' name='contactPersonVM[" + rowCount + "].Gender' class='form-control' readonly id='txtGender_" + rowCount + "' value='" + $("#gender").val() + "'/ > </td><td><input type='text' style='height:33px;' readonly id='txtAddress_" + rowCount + "' class='form-control' name='contactPersonVM[" + rowCount + "].Address'  value='" + $("#address").val() + "'/ > </td><td><input type='text' readonly style='height:33px;' class='form-control' id='txtPhoneNumber_" + rowCount + "' name='contactPersonVM[" + rowCount + "].PhoneNumber' value='" + $("#phone").val() + "'/ > </td><td><input style='height:33px;' readonly type='text' class='form-control' id='txtMobileNumber_" + rowCount + "' name='contactPersonVM[" + rowCount + "].MobileNumber' value='" + $("#mobile").val() + "'/ > </td><td><input style='height:33px;' readonly type='text' class='form-control' id='txtDesignation_" + rowCount + "' name='contactPersonVM[" + rowCount + "].Designation' value='" + $("#designation").val() + "'/ > </td><td style='display: flex; readonly padding-right: 1px;'><button type='button' class='btn btn-link btn-sm px-1' id='delete' data-recCount='" + rowCount + "' data-recid='" + rowCount + "'  data-ripple-color='dark'><i class='fas fa-times'></i > </button><button readonly  type='button' class='btn btn-link btn-sm px-1 btnEdit' data-rowcount='" + rowCount + "' data-recid='" + rowCount + "' data-ripple-color='dark'><i class='fa-solid fa-pen'></i></button></<td> </tr>";
 
             }
             //alert(cols);
@@ -344,6 +362,7 @@
 
         var dataid = $(this).attr("data-recid");
         var rowid = $(this).attr("data-rowcount");
+       
 
         $("#hiddbRecid").val(dataid);
         $("#hidRowClicked").val(rowid);

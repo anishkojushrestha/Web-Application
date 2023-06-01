@@ -2,7 +2,7 @@
 {
     public class CompanyMV
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
 
         public string CompanyName { get; set; }

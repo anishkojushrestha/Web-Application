@@ -7,8 +7,8 @@ PanNumber int,
 City varchar(50),
 Country varchar(50),
 RegistrationDate date,
-AchiveFrom date,
-AchiveTo date,
+ValidFrom date,
+ValidTo date,
 
 )
 

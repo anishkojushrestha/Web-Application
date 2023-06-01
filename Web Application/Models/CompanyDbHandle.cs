@@ -23,16 +23,40 @@ namespace Web_Application.Models
             StringBuilder str = new StringBuilder();
             str.Append(" declare @cid bigint \n");
             str.Append(" set @cid = (select isnull(max(companyid), 0) + 1 from CompanyInfo) \n");
-            str.Append(" INSERT INTO CompanyInfo(CompanyId,CompanyName, Email, PanNumber, Address, City,Country, RegistrationDate, AchiveFrom, AchiveTo ) VALUES(@cid,'" +vm.CompanyName+"','" +vm.Email+"',"+vm.PanNumber+",'"+vm.Address+"','"+vm.City+"','"+vm.Country+"','"+ registerDate + "','"+ AchiveFrom + "','"+ AchiveTo + "') \n");
             str.Append("declare @pid bigint\n");
-
-            foreach (var data in vm.contactPersonVM)
+            if (vm.Id != null)
             {
-                str.Append("set @pid = (select isnull(max(ContactId),0)+1 from ContactPerson)\n");
+                str.Append("UPDATE CompanyInfo SET CompanyName = '" + vm.CompanyName + "', Address = '" + vm.Address + "',Email = '" + vm.Email + "',PanNumber = " + vm.PanNumber + ", City = '" + vm.City + "', Country = '" + vm.Country + "',RegistrationDate = '" + registerDate + "', AchiveFrom = '" + AchiveFrom + "', AchiveTo = '" + AchiveTo + "' WHERE CompanyId = " + vm.Id + "\n");
+                foreach (var data in vm.contactPersonVM)
+                {
+                    if (data.Id != 0)
+                    {
+                        str.Append(" update contactperson set ContactName = '" + data.ContactName + "',Gender = '" + data.Gender + "', Address = '" + data.Address + "',PhoneNumber = " + data.phoneNumber + ", MobileNumber = " + data.MobileNumber + ", designation = '" + data.Designation + "' where ContactId =" + data.Id + "  \n");
+                        
+                    }
+                    else
+                    {
+                        str.Append("set @pid = (select isnull(max(ContactId),0)+1 from ContactPerson)\n");
 
-                str.Append("INSERT INTO ContactPerson(ContactId, ContactName, Gender,Address, PhoneNumber, MobileNumber,Designation, CompanyId ) VALUES(@pid, '" + data.ContactName + "','" + data.Gender + "','" + data.Address + "'," + data.phoneNumber + "," + data.MobileNumber + ",'"+data.Designation+"',@cid) \n");
-
+                        str.Append("INSERT INTO ContactPerson(ContactId, ContactName, Gender,Address, PhoneNumber, MobileNumber,Designation, CompanyId ) VALUES(@pid, '" + data.ContactName + "','" + data.Gender + "','" + data.Address + "'," + data.phoneNumber + "," + data.MobileNumber + ",'" + data.Designation + "'," + vm.Id + ") \n");
+                    }
+                }
             }
+            else
+            {
+                str.Append(" INSERT INTO CompanyInfo(CompanyId,CompanyName, Email, PanNumber, Address, City,Country, RegistrationDate, AchiveFrom, AchiveTo ) VALUES(@cid,'" + vm.CompanyName + "','" + vm.Email + "'," + vm.PanNumber + ",'" + vm.Address + "','" + vm.City + "','" + vm.Country + "','" + registerDate + "','" + AchiveFrom + "','" + AchiveTo + "') \n");
+                foreach (var data in vm.contactPersonVM)
+                {
+
+                    str.Append("set @pid = (select isnull(max(ContactId),0)+1 from ContactPerson)\n");
+
+                    str.Append("INSERT INTO ContactPerson(ContactId, ContactName, Gender,Address, PhoneNumber, MobileNumber,Designation, CompanyId ) VALUES(@pid, '" + data.ContactName + "','" + data.Gender + "','" + data.Address + "'," + data.phoneNumber + "," + data.MobileNumber + ",'" + data.Designation + "',@cid) \n");
+
+                }
+            }
+            
+
+            
 
            
 //insert into[dbo].[ContactPerson] (contactname, phonenumber, mobilenumber, companyid)
@@ -178,7 +202,6 @@ namespace Web_Application.Models
                     MobileNumber = Convert.ToInt32(dr["MobileNumber"]),
                     Gender = Convert.ToString(dr["Gender"]),
                     Designation = Convert.ToString(dr["Designation"]),
-                    CompanyId = Convert.ToInt32(dr["CompanyId"]),
 
                 });
 
@@ -186,5 +209,20 @@ namespace Web_Application.Models
             }
             return cv;
         }
+        
+        public bool DeleteContact(int id)
+        {
+            connection();
+            SqlCommand cmd = new SqlCommand("DELETE FROM ContactPerson WHERE ContactId="+id,con);
+            con.Open();
+            var i = cmd.ExecuteNonQuery();  
+            con.Close();
+            if (i >= 0)
+                return true;
+            else
+                return false;
+
+        }
+        
     }
 }
