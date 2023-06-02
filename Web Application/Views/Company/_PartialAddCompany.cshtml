@@ -247,7 +247,7 @@
                                                                 <input style='height:33px;' type='text' readonly value="@item.Designation" class='form-control' name='contactPersonVM[@rowcount].Designation' id="txtDesignation_@rowcount" />
                                                             </td>
                                                             <td style="display:flex; padding-right:1px;">
-                                                                <button  class='btn btn-link btn-sm px-1 btnDelete' asp-action="DeleteContact" asp-controller="Company" asp-route-id="@item.Id"  onclick="return confirm('Are sure wants to delete?')" data-rowcount="@rowcount" data-recid="@item.Id" data-ripple-color='dark'><i class="fa-solid fa-x"></i></button>
+                                                                <button class='btn btn-link btn-sm px-1 btnDelete' data-id="@item.Id" onclick="return confirm('Are sure wants to delete?');" data-rowcount="@rowcount" data-recid="@item.Id" data-ripple-color='dark'><i class="fa-solid fa-x"></i></button>
                                                                 <button type='button' class='btn btn-link btn-sm px-1 btnEdit' data-rowcount="@rowcount" data-recid="@item.Id" data-ripple-color='dark'><i class="fa-solid fa-pen"></i></button>
                                                             </td>
                                                         </tr>
@@ -328,7 +328,7 @@
                 $("#txtDesignation_" + rowid).val(designation)
             } else {
 
-                cols = cols + "<tr id='tr_" + rowCount + "'><td><input type='text' readonly class='form-control' style='height:33px;' name='contactPersonVM[" + rowCount + "].ContactName' id='txtContactName_" + rowCount + "' value = '" + $("#contact").val() + "' /> </td><td><input type='text' style='height:33px;' name='contactPersonVM[" + rowCount + "].Gender' class='form-control' readonly id='txtGender_" + rowCount + "' value='" + $("#gender").val() + "'/ > </td><td><input type='text' style='height:33px;' readonly id='txtAddress_" + rowCount + "' class='form-control' name='contactPersonVM[" + rowCount + "].Address'  value='" + $("#address").val() + "'/ > </td><td><input type='text' readonly style='height:33px;' class='form-control' id='txtPhoneNumber_" + rowCount + "' name='contactPersonVM[" + rowCount + "].PhoneNumber' value='" + $("#phone").val() + "'/ > </td><td><input style='height:33px;' readonly type='text' class='form-control' id='txtMobileNumber_" + rowCount + "' name='contactPersonVM[" + rowCount + "].MobileNumber' value='" + $("#mobile").val() + "'/ > </td><td><input style='height:33px;' readonly type='text' class='form-control' id='txtDesignation_" + rowCount + "' name='contactPersonVM[" + rowCount + "].Designation' value='" + $("#designation").val() + "'/ > </td><td style='display: flex; readonly padding-right: 1px;'><button type='button' class='btn btn-link btn-sm px-1' id='delete' data-recCount='" + rowCount + "' data-recid='" + rowCount + "'  data-ripple-color='dark'><i class='fas fa-times'></i > </button><button readonly  type='button' class='btn btn-link btn-sm px-1 btnEdit' data-rowcount='" + rowCount + "' data-recid='" + rowCount + "' data-ripple-color='dark'><i class='fa-solid fa-pen'></i></button></<td> </tr>";
+                cols = cols + "<tr id='tr_" + rowCount + "'><td><input type='text' readonly class='form-control' style='height:33px;' name='contactPersonVM[" + rowCount + "].ContactName' id='txtContactName_" + rowCount + "' value = '" + $("#contact").val() + "' /> </td><td><input type='text' style='height:33px;' name='contactPersonVM[" + rowCount + "].Gender' class='form-control' readonly id='txtGender_" + rowCount + "' value='" + $("#gender").val() + "'/ > </td><td><input type='text' style='height:33px;' readonly id='txtAddress_" + rowCount + "' class='form-control' name='contactPersonVM[" + rowCount + "].Address'  value='" + $("#address").val() + "'/ > </td><td><input type='text' readonly style='height:33px;' class='form-control' id='txtPhoneNumber_" + rowCount + "' name='contactPersonVM[" + rowCount + "].PhoneNumber' value='" + $("#phone").val() + "'/ > </td><td><input style='height:33px;' readonly type='text' class='form-control' id='txtMobileNumber_" + rowCount + "' name='contactPersonVM[" + rowCount + "].MobileNumber' value='" + $("#mobile").val() + "'/ > </td><td><input style='height:33px;' readonly type='text' class='form-control' id='txtDesignation_" + rowCount + "' name='contactPersonVM[" + rowCount + "].Designation' value='" + $("#designation").val() + "'/ > </td><td style='display: flex; readonly padding-right: 1px;'><button type='submit' onclick='return confirm('Are sure wants to delete?');' class='btn btn-link btn-sm px-1' id='delete' data-recCount='" + rowCount + "' data-recid='" + rowCount + "'  data-ripple-color='dark'><i class='fas fa-times'></i > </button><button readonly  type='button' class='btn btn-link btn-sm px-1 btnEdit' data-rowcount='" + rowCount + "' data-recid='" + rowCount + "' data-ripple-color='dark'><i class='fa-solid fa-pen'></i></button></<td> </tr>";
 
             }
             //alert(cols);
@@ -381,4 +381,23 @@
         $("#designation").val(designation);
 
     })
+    $(".btnDelete").on("click",function(){
+        var id = $(this).attr('data-id');
+
+        //ajax
+        //company/delct
+        $.ajax({
+            url:'/Company/DeleteContact?id='+id,
+            type:"Get",
+            data:{id:id},
+            success:function(){
+                if(data != null){
+                    location.reload();
+                }
+            }
+        })
+
+      
+
+    });
 </script>

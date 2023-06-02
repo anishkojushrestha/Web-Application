@@ -141,7 +141,10 @@ namespace Web_Application.Models
         public bool DeleteUser(int id)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("Delete FROM contactperson join CompanyInfo on CompanyInfo.companyid = contactperson.companyid WHERE companyid =" + id, con);
+            StringBuilder str = new StringBuilder();  
+            str.Append(" Delete FROM contactperson WHERE CompanyId =" + id+" \n");
+            str.Append(" Delete from companyinfo where CompanyId = " + id + "\n");
+            SqlCommand cmd = new SqlCommand(str.ToString(), con);
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();
