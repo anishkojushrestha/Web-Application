@@ -24,17 +24,17 @@ CompanyId bigint foreign key References CompanyInfo(CompanyId)
 
 )
 
-CREATE TABLE User(
-UserId bigint NOT NULL primary key,,
+CREATE TABLE users(
+UserId bigint NOT NULL primary key,
 FirstName varchar(50),
 LastName varchar(50),
 UserName varchar(50),
-Address varchar(50),
+Email varchar(50),
 Password varchar(50),
 Profile varchar(50),
-IsActive bool,
+IsActive bit,
+CompanyId bigint foreign key References companyinfo(CompanyId)
 )
-
 
 
 

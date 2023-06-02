@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Web_Application.Models;
 using Web_Application.ModelViews;
 
@@ -22,7 +23,9 @@ namespace Web_Application.Controllers
         }
 
         public IActionResult Register()
-        { 
+        {
+            CompanyDbHandle cdh = new CompanyDbHandle();
+            ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
             return PartialView("_PartialRegister");
         }
         public IActionResult NewRegister()
@@ -73,7 +76,8 @@ namespace Web_Application.Controllers
         public ActionResult EditRegister(int id)
         {
             UserDbHandle sdb = new UserDbHandle();
-            //return View(sdb.GetUser().Find(vm => vm.Id == id));
+            CompanyDbHandle cdh = new CompanyDbHandle();
+            ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
             return PartialView("_PartialEditRegister", sdb.GetUser().Find(vm => vm.Id == id));
 
         }
@@ -86,7 +90,7 @@ namespace Web_Application.Controllers
 
                 UserDbHandle db = new UserDbHandle();
 
-                if (db.UpdateRegister(vm.Id, vm.FirstName, vm.LastName, vm.UserName, vm.Email))
+                if (db.UpdateRegister(vm.Id, vm.FirstName, vm.LastName, vm.UserName, vm.Email, vm.Profile, vm.CompanyId))
                 {
                     ViewBag.Message = "Register Details Edited Successfully";
                     ModelState.Clear();

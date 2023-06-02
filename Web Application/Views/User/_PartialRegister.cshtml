@@ -1,62 +1,97 @@
 ﻿@model Web_Application.ModelViews.RegisterVM
 
+<style>
+    .rw {
+        width: 48%;
+    }
+    .rw1{
+        width: 96%;
+    }
+</style>
 <div class="modal fade" id="addRegister" data-bs-backdrop="static">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="width:80%;  margin-top: 20px; margin-left:-5%">
             <div class="modal-header p-2">
-                <h4 class="modal-title" id="addRegisterLabel" style="font-size:large">New Register</h4>
+                <h4 class="modal-title" id="addRegisterLabel">Registration</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal">
-                    
                 </button>
-                
+
             </div>
             <div class="modal-body">
-                <form  method="post" asp-action="Register" asp-controller="User"  >
+                <form asp-action="Register" asp-controller="User">
+
                     @Html.AntiForgeryToken()
-                    
-                    <div class="mb-3">
-                        <input type="text" asp-for="FirstName" required class="form-control" style="height:33px; " placeholder="First Name">
-                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                    <div class="col" style="margin-left: 13px; ">
+                        <div class="row pb-1">
+                            <div class="rw">
+                                <label class="form-label">First Name:</label>
+                                <input type="text" asp-for="FirstName" style="height:33px" class="form-control" required>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Last Name:</label>
+                                <input type="text" class="form-control" style="height:33px" asp-for="LastName" required>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                        <input type="text" asp-for="LastName" class="form-control" style="height:33px" placeholder="Last Name" required>
-                        <span asp-validation-for="LastName" class="text-danger"></span>
+                        <div class="row pb-1">
+                            <div class="rw1">
+                                <label class="form-label">Username:</label>
+                                <input type="text" asp-for="UserName" style="height:33px" class="form-control" required>
+                            </div>
+                            
                         </div>
-                        <div class="mb-3">
-                        <input type="text" asp-for="UserName" class="form-control" style="height:33px" placeholder="Username" required>
-                        <span asp-validation-for="UserName" class="text-danger"></span>
+                        <div class="row pb-1">
+                            <div class="rw1 ">
+                                <label class="form-label">Email:</label>
+                                <input type="email" asp-for="Email" style="height:33px" class="form-control" style="height:65px;" required></input>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                        <input type="email" asp-for="Email" class="form-control" style="height:33px" placeholder="Email" required>
-                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <div class="row pb-1">
+                            <div class="rw1">
+                                <label class="form-label">Profile:</label>
+                                <select asp-for="Profile" style="height:33px" class="form-select">
+                                    <option>Admin</option>
+                                    <option>SuperAdmin</option>
+                                    <option>OMSUser</option>
+                                    <option>Support</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                        <select class="form-control" placeholder="select profile">
-                            <option>Admin</option>
-                            <option>Super Admin</option>
-                            <option>OMS Users</option>
-                            <option>Support Person</option>
-                        </select>
-                           <span asp-validation-for="Email" class="alert-danger"></span>
-                    </div>
-                        <div class="mb-3">
-                        <input type="password" asp-for="NewPassword" class="form-control" style="height:33px" placeholder="New password" required>
-                        <span asp-validation-for="NewPassword" class="text-danger"></span>
+                        <div class="row pb-1">
+                            <div class="rw1">
+                                <label class="form-label">Company:</label>
+                                <select type="text" asp-for="CompanyId" asp-items="ViewBag.Company"  style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required></select>
+                            </div>
+
                         </div>
-                        <div class="mb-3">
-                        <input type="password" asp-for="ConfirmPassword" class="form-control" style="height:33px" placeholder="Confirm password" required>
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        <div class="row pb-2">
+                            <div class="rw">
+                                <label class="form-label">New Passwrd:</label>
+                                <input type="password" asp-for="NewPassword" style="height:33px" class="form-control" required>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Confirm Password:</label>
+                                <input type="password" class="form-control" style="height:33px" asp-for="ConfirmPassword" required>
+                            </div>
                         </div>
-                        
-                    <div class="modal-footer p-2">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="form-check">
+                            <input type="checkbox" asp-for="IsActive" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label">Is Active</label>
+                        </div>
+                        <div class="row">
+                            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                
+                            </div>
+                        </div>
 
                     </div>
+
+
                 </form>
-                
+
+
             </div>
-            
+
         </div>
     </div>
 </div>

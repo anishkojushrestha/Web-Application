@@ -20,5 +20,9 @@ namespace Web_Application.ModelViews
         [Required]
         [MaxLength(50)]
         public string Email { get; set; }
+        public string Profile { get; set; }
+
+        public bool IsActive { get; set; }
+        public int CompanyId { get; set; }
     }
 }

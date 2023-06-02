@@ -31,10 +31,13 @@ namespace Web_Application.Models
         public bool RegisteUser(RegisterVM vm)
         {
             connection();
-            //var pass = new PasswordHasher<object>().HashPassword(null, vm.NewPassword);
-            
             string pass = hasdPassword(vm.NewPassword);
-            SqlCommand cmd = new SqlCommand("INSERT into users(FirstName, LastName, UserName, Email, Password) VALUES('"+vm.FirstName+"','"+vm.LastName+"', '"+vm.UserName+"','"+vm.Email+"','"+ pass + "')", con);
+            StringBuilder str = new StringBuilder();
+            str.Append(" declare @uid bigint \n");
+            str.Append(" set @uid = (select isnull(max(userid), 0) + 1 from users) \n");
+            str.Append(" INSERT into users(UserId, FirstName, LastName, UserName, Email, Password, Profile, IsActive, CompanyId) VALUES(@uid,'" + vm.FirstName + "','" + vm.LastName + "', '" + vm.UserName + "','" + vm.Email + "','" + pass + "','"+vm.Profile+"','"+vm.IsActive+"',"+vm.CompanyId+")\n");
+            
+            SqlCommand cmd = new SqlCommand(str.ToString(), con);
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();
@@ -74,7 +77,7 @@ namespace Web_Application.Models
         {
             connection();
             List<UpdateRegisterVM> registerList = new List<UpdateRegisterVM>();
-            SqlCommand cmd = new SqlCommand("SELECT Id, FirstName, LastName, UserName, Email from users", con);
+            SqlCommand cmd = new SqlCommand("SELECT * from users", con);
 
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
@@ -87,19 +90,23 @@ namespace Web_Application.Models
                     new UpdateRegisterVM
                     {
 
-                        Id = Convert.ToInt32(dr["Id"]),
+                        Id = Convert.ToInt32(dr["UserId"]),
                         FirstName = Convert.ToString(dr["FirstName"]),
                         LastName = Convert.ToString(dr["LastName"]),
                         UserName = Convert.ToString(dr["UserName"]),
                         Email = Convert.ToString(dr["Email"]),
+                        Profile = Convert.ToString(dr["Profile"]),
+                        IsActive= Convert.ToBoolean(dr["IsActive"]),
+                        CompanyId= Convert.ToInt32(dr["CompanyId"]),
+                        
                     });
             }
             return registerList;
         }
-        public bool UpdateRegister(int Id, string FirstName, string LastName, string UserName, string Email)
+        public bool UpdateRegister(int Id, string FirstName, string LastName, string UserName, string Email, string Profile, int CompanyId)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "' WHERE Id = "+Id+"", con);
+            SqlCommand cmd = new SqlCommand("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '"+Profile+"',CompanyId = "+CompanyId+" WHERE UserId = "+Id+"", con);
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();

@@ -28,6 +28,8 @@
                         <th scope="col">LastName</th>
                         <th scope="col">UserName</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Profile</th>
+                        <th scope="col">IsActive</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -40,11 +42,16 @@
                             <td>@data.LastName</td>
                             <td>@data.UserName</td>
                             <td>@data.Email</td>
+                            <td>@data.Profile</td>
                             <td>
-                                <button type="button" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning" data-url="@Url.Action($"EditRegister/{data.Id}")">Edit</button>
+                                <input type="checkbox" asp-for="@data.IsActive" disabled class="form-check-input">
+                            </td>
+                            <td>
+                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"EditRegister/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
                                 @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
-                                <a asp-action="Delete" asp-controller="User" asp-route-id="@data.Id" class="btn btn-danger" onclick="return confirm('Are sure wants to delete?');">Delete</a>
-                                @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
+                                <a style="color:black" asp-action="Delete" asp-controller="User" asp-route-id="@data.Id" onclick="return confirm('Are sure wants to delete?');"><i class="fa-solid fa-trash"></i></a>
+@*                                <button style="padding: 0;border: none;background: none;" type="button" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"GetContact/{data.Id}")"><i class="fa-solid fa-eye"></i></button>
+*@                                @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
                             @Html.ActionLink("Delete", "Delete", new { id = data.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
                             </td>
 

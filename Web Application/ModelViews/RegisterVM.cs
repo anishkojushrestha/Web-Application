@@ -21,6 +21,10 @@ namespace Web_Application.ModelViews
         [MaxLength(50)]
         public string Email { get; set; }
 
+        public string Profile { get; set; }
+
+        public bool IsActive { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string NewPassword { get; set; }
@@ -28,5 +32,7 @@ namespace Web_Application.ModelViews
         [Required]
         [MaxLength(50)]
         public string ConfirmPassword { get; set; }
+
+        public int CompanyId { get; set; }
     }
 }
