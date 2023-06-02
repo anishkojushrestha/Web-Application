@@ -123,7 +123,7 @@ namespace Web_Application.Models
         public bool DeleteUser(int id)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("Delete FROM users WHERE Id =" + id, con);
+            SqlCommand cmd = new SqlCommand("Delete FROM users WHERE UserId =" + id, con);
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();
