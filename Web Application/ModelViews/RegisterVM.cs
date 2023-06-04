@@ -4,6 +4,7 @@ namespace Web_Application.ModelViews
 {
     public class RegisterVM
     {
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(50)]

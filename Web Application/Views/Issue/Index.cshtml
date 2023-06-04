@@ -1,7 +1,87 @@
-﻿
+﻿@model IEnumerable<Web_Application.ModelViews.IssueVM>
 @{
     ViewData["Title"] = "Index";
 }
+<div id="PlaceHolderHere"></div>
 
-<h1>Index</h1>
 
+
+
+<button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Issue")" style="width:100px;margin-left:90%; ">Create</button>
+<div class="input-group" style="margin-left:79%;margin-top:4px;">
+    @*<div class="form-outline">
+    <input type="search" id="search" class="form-control" placeholder="Search..." />
+    </div>*@
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Issues Informations DataTables</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="display" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">FirstName</th>
+                        <th scope="col">LastName</th>
+                        <th scope="col">UserName</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Profile</th>
+                        <th scope="col">IsActive</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table">
+                   
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+
+        $(document).ready(function () {
+            $("#search").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#table tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        $(function () {
+            var PlaceHolderEleent = $('#PlaceHolderHere');
+            $('button[data-toggle="ajax-modal"]').click(function (event) {
+                var url = $(this).data('url');
+
+                var decodedUrl = decodeURIComponent(url);
+                $.get(decodedUrl).done(function (data) {
+                    PlaceHolderEleent.html(data);
+                    PlaceHolderEleent.find('.modal').modal('show');
+                })
+            })
+            PlaceHolderEleent.on('click', '[data-save="modal"]', function (event) {
+
+                //var form =$(this).parents('.modal').find('form');
+                //var actionUrl = form.attr('action');
+                //var url = '/user/'+actionUrl;
+                //var sentData = form.serialize();
+
+                //$.post(url, sentData).done(function (data) {
+                //    PlaceHolderEleent.find('.modal').modal('hide');
+                //    window.location.reload();
+                //})
+
+            })
+        })
+    </script>
+}

@@ -35,7 +35,7 @@ namespace Web_Application.Models
             StringBuilder str = new StringBuilder();
             str.Append(" declare @uid bigint \n");
             str.Append(" set @uid = (select isnull(max(userid), 0) + 1 from users) \n");
-            str.Append(" INSERT into users(UserId, FirstName, LastName, UserName, Email, Password, Profile, IsActive, CompanyId) VALUES(@uid,'" + vm.FirstName + "','" + vm.LastName + "', '" + vm.UserName + "','" + vm.Email + "','" + pass + "','"+vm.Profile+"','"+vm.IsActive+"',"+vm.CompanyId+")\n");
+            str.Append(" INSERT into users(UserId, FirstName, LastName, UserName, Email, Password, Profile, IsActive) VALUES(@uid,'" + vm.FirstName + "','" + vm.LastName + "', '" + vm.UserName + "','" + vm.Email + "','" + pass + "','"+vm.Profile+"','"+vm.IsActive+"')\n");
             
             SqlCommand cmd = new SqlCommand(str.ToString(), con);
             con.Open();
@@ -97,7 +97,6 @@ namespace Web_Application.Models
                         Email = Convert.ToString(dr["Email"]),
                         Profile = Convert.ToString(dr["Profile"]),
                         IsActive= Convert.ToBoolean(dr["IsActive"]),
-                        CompanyId= Convert.ToInt32(dr["CompanyId"]),
                         
                     });
             }
@@ -106,7 +105,7 @@ namespace Web_Application.Models
         public bool UpdateRegister(int Id, string FirstName, string LastName, string UserName, string Email, string Profile, int CompanyId)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '"+Profile+"',CompanyId = "+CompanyId+" WHERE UserId = "+Id+"", con);
+            SqlCommand cmd = new SqlCommand("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '"+Profile+"' WHERE UserId = "+Id+"", con);
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();

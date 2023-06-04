@@ -1,0 +1,139 @@
+﻿@model Web_Application.ModelViews.IssueVM
+
+<style>
+    .rw {
+        width: 32%;
+    }
+
+    .rw1 {
+        width: 48%;
+    }
+</style>
+<div class="modal fade" id="addRegister" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:125%;  margin-top: 20px; margin-left:-4%">
+            <div class="modal-header p-2">
+                <h4 class="modal-title" id="addRegisterLabel">Issue</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form asp-action="Issue" asp-controller="Issue" enctype="multipart/form-data">
+
+                    @Html.AntiForgeryToken()
+                    <div class="col" style="margin-left: 13px; ">
+                        <div class="row pb-1">
+                            <div class="rw">
+                                <label class="form-label">Issue Creator Name:</label>
+                                <input type="text" asp-for="IssueCreaterName" style="height:33px" class="form-control" required>
+                            </div>
+                            <div class="rw ">
+                                <label class="form-label">Created Date:</label>
+                                <input type="date" asp-for="CreatedDate" style="height:33px" class="form-control" style="height:65px;" required></input>
+                            </div>
+                            <div class="rw ">
+                                <label class="form-label">Status:</label>
+                                <input type="text" asp-for="Status" style="height:33px" class="form-control" style="height:65px;" required></input>
+                            </div>
+                            
+                        </div>
+                        <div class="row pb-1">
+                            <div class="rw1">
+                                <label class="form-label">Issue Descriptions:</label>
+                                <textarea type="text" class="form-control" style="height:45px" asp-for="IssueDescription" required></textarea>
+                            </div>
+                            <div class="rw1">
+                                <label class="form-label">Issue Generation Steps:</label>
+                                <textarea type="text" asp-for="IssueGenerationSteps" style="height:45px" class="form-control" required></textarea>
+                            </div>
+
+                        </div>
+                        <div class="row pb-1">
+                            
+                            
+                        </div>
+                        <div class="row pb-1">
+                        </div>
+                        <div class="row pb-1">
+                            <div class="rw1">
+                                <label class="form-label">Company:</label>
+                                <select type="text" asp-for="CompanyId" asp-items="ViewBag.Company" id="selComp" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required>
+                                    <option selected="selected" disabled>----select----</option>
+                                </select>
+                            </div>
+                            <div class="rw1">
+                                <label class="form-label">Contact Person:</label>
+                                <select type="text" asp-for="ContactId" id="selCon" style="height:34px ; color:black;" class="form-select" required></select>
+
+                            </div>
+                            
+
+                        </div>
+                        <div class="row pb-1">
+                            <div class="rw1">
+                                <label class="form-label">Assigned to:</label>
+                                <select type="text" asp-for="AssignTo" asp-items="ViewBag.Assign"  style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required></select>
+
+                            </div>
+                            <div class="rw1">
+                                <label class="form-label">Resolve By:</label>
+                                <input type="date" asp-for="ResolveBy" style="height:33px" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row pb-1">
+                            
+                            <div class="rw1">
+                                <label class="form-label">Deleted By:</label>
+                                <input type="date" asp-for="DeletedBy" style="height:33px" class="form-control" required>
+                            </div>
+                            <div class="rw1">
+                                <label class="form-label">Close By:</label>
+                                <input type="date" asp-for="CloseBy" style="height:33px" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="rw1">
+                                <label class="form-label">Attachments:</label>
+                                <input type="file" asp-for="Attachments" style="height:33px" class="form-control" multiple required>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="row">
+                            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $("#selComp").change(function(){
+            var id = $("#selComp").val();
+            $.ajax({
+                type: "post",
+                url: "/Issue/Contact?id=" + id,
+                success: function (data) {
+                    $("#selCon").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        var opt = new Option(data[i].contactName, data[i].id);
+                        $('#selCon').append(opt);
+
+                    }
+                }
+
+            });
+        });
+        
+     });
+</script>

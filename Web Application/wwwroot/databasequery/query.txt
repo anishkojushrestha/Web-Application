@@ -32,16 +32,27 @@ UserName varchar(50),
 Email varchar(50),
 Password varchar(50),
 Profile varchar(50),
-IsActive bit,
-CompanyId bigint foreign key References companyinfo(CompanyId)
+IsActive bit,)
+)
+
+CREATE TABLE Issue(
+IssueId bigint NOT NULL primary key,
+IssueNo varchar(50),
+IssueCreaterName varchar(50),
+IssueGeneratorSteps varchar(100),
+Attachments varchar(50),
+CreatedDate Date,
+Status varchar(50),
+ResolveBy Date, 
+DeletedBy Date, 
+CloseBy Date, 
+
+CompanyId bigint foreign key references CompanyInfo(CompanyId),
+UserId bigint foreign key references users(UserId),
+ContactId bigint foreign key references ContactPerson(ContactId)
 )
 
 
 
 
 
-
-
-
-query
-select * from CompanyInfo c where NOT EXISTS (select * from contactperson p where c.CompanyId = p.CompanyId)
