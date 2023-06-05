@@ -18,10 +18,11 @@ namespace Web_Application.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            IssueDbHandle idh = new IssueDbHandle();
+            return View(idh.GetIssue());
         }
 
-        public IActionResult Issue()
+        public IActionResult Issue(int id)
         {
             IssueDbHandle idh = new IssueDbHandle();
             ViewData["Assign"] = new SelectList(idh.GetUser(), "Id", "UserName");
@@ -29,36 +30,83 @@ namespace Web_Application.Controllers
             ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
             
 
-            return PartialView("_PartialIssue");
+            return PartialView("_PartialIssue", idh.GetIssue().Find(x=>x.Id ==id));
         }
 
         [HttpPost]
         public IActionResult Issue(IssueVM vm)
         {
-            UploadFile(vm.Attachments);
-            return View();
+            IssueDbHandle idh = new IssueDbHandle();
+            if (vm.Id == null)
+            {
+                if (ModelState.IsValid)
+                {
+                    
+                    if (idh.CreateIssue(vm, UploadFile(vm.Attachments)))
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+
+                }
+            }
+            
+            return RedirectToAction("Index");
         }
+        
 
         public IActionResult Contact(int id) {
             IssueDbHandle idh = new IssueDbHandle();
             var result = idh.GetContact(id);
             return Json(result);
         }
-        private string UploadFile(List<IFormFile> file)
+        public IActionResult DeletedBY(int id)
         {
+            IssueDbHandle ish = new IssueDbHandle();
+            ish.DeletedBy(id);
+            return RedirectToAction("Index");
+        }
+        public IActionResult Resolve(int id) {
+            return View("_PartialResolve");
+        }
+        [HttpPost]
+        public IActionResult Resolve(IssueVM vm)
+        {
+            if(ModelState.IsValid) {
+                IssueDbHandle ish = new IssueDbHandle();
+                if (ish.Resolve(vm))
+                {
+                    return RedirectToAction("Index");
+                }
+            
+            };
+            return View("_PartialResolve");
+        }
+        private List<string> UploadFile(List<IFormFile> file)
+        {
+            List<string> files = new List<string>();
             string uniqueFileName = "";
             var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "files");
             foreach(var data in file)
             {
+                
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + data.FileName;
                 var filePath = Path.Combine(folderPath, uniqueFileName);
                 using (FileStream fileStream = System.IO.File.Create(filePath))
                 {
                     data.CopyTo(fileStream);
                 }
-
+                
+                files.Add(uniqueFileName);
             }
-            return uniqueFileName;
+            return files;
         }
+        
+        
     }
 }
