@@ -71,7 +71,16 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark"asp-action="Index" asp-controller="Issue">Client Issue</a>
+                            <div class="dropdown">
+                                <button style="background-color:transparent;" class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Client Issue
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Issue">Issue</a></li>
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="IssueActivity">Issue Activity</a></li>
+                                </ul>
+
+                            </div>
                         </li>
                         
                         

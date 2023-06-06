@@ -1,0 +1,96 @@
+﻿@model Web_Application.ModelViews.IssueActivityVM
+
+<style>
+    .rw {
+        width: 90%;
+    }
+
+    
+</style>
+<div class="modal fade" id="addRegister" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:77%;  margin-top: 20px; margin-left:-15%">
+            <div class="modal-header p-2">
+                <h4 class="modal-title" id="addRegisterLabel">Issue Activity</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form asp-action="IssueActivity" asp-controller="IssueActivity" enctype="multipart/form-data">
+
+                    @Html.AntiForgeryToken()
+                    <div class="col" style="margin-left: 26px; ">
+                        <div class="row pb-2">
+                            <input asp-for="Id" id="txtId" hidden />
+                            @if (Model == null)
+                            {
+                                <div class="rw">
+                                    <label class="form-label">Issue Number:</label>
+                                    <select type="text" asp-for="IsseId" asp-items="ViewBag.IssueActivity" id="selComp" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required>
+                                        <option selected disabled>----select----</option>
+                                    </select>
+                                </div>
+                            }
+
+
+                        </div>
+                        <div class="row pb-2">
+                            <div class="rw ">
+                                <label class="form-label">Activity Description:</label>
+                                <textarea type="text" asp-for="ActivityDescription" style="height:55px" class="form-control" style="height:65px;" required ></textarea>
+                            </div>
+                        </div>
+                        @if(Model == null)
+                        {
+                                <div class="row pb-3">
+                                    <div class="rw ">
+                                        <label class="form-label">Attachments:</label>
+                                        <input type="file" asp-for="Attachment" style="height:33px" class="form-control" style="height:65px;" required multiple/>
+
+                                    </div>
+                                </div>
+                        }
+
+                        <div class="row">
+                            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#selComp").change(function () {
+            var id = $("#selComp").val();
+            $.ajax({
+                type: "post",
+                url: "/Issue/Contact?id=" + id,
+                success: function (data) {
+                    $("#selCon").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        var opt = new Option(data[i].contactName, data[i].id);
+                        $('#selCon').append(opt);
+
+                    }
+                }
+
+
+            });
+
+
+        });
+
+
+
+    });
+</script>

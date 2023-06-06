@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Web_Application.ModelViews.AttachmentVM>
+
+<style>
+    .rw {
+        width: 32%;
+    }
+
+    .rw1 {
+        width: 48%;
+    }
+</style>
+<div class="modal fade" id="addRegister" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:86%;  margin-top: 20px; margin-left:-15%">
+            <div class="modal-header p-2">
+                <h4 class="modal-title" id="addRegisterLabel">Attachments</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Attachment Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var data in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="~/files/@data.AttachmentName">@data.AttachmentName</a>
+                                    </td>
+                                
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#selComp").change(function () {
+            var id = $("#selComp").val();
+            $.ajax({
+                type: "post",
+                url: "/Issue/Contact?id=" + id,
+                success: function (data) {
+                    $("#selCon").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        var opt = new Option(data[i].contactName, data[i].id);
+                        $('#selCon').append(opt);
+
+                    }
+                }
+
+
+            });
+
+
+        });
+
+
+
+    });
+</script>
+@*//$("#selComp").change(function () {
+        //    var id = $("#txtId").val();
+        //    $.ajax({
+        //        type: "Get",
+
+        //        success: function (data) {
+        //            Id = data.id;
+        //            alert(data.id);
+        //            $("#selComp").val(data.id);
+        //        }
+        //    })
+        //}*@

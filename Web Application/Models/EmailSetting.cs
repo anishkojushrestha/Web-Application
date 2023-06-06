@@ -15,8 +15,8 @@ namespace Web_Application.Models
             // Note: only needed if the SMTP server requires authentication
             client.Authenticate(vm.EmailId, vm.EmailPws);
             var msg = new MimeMessage();
-            msg.From.Add(new MailboxAddress(vm.EmailId,subject));
-            msg.To.Add(new MailboxAddress(ToEmail,subject));
+            msg.From.Add(new MailboxAddress("Crm", vm.EmailId));
+            msg.To.Add(new MailboxAddress("yourclientdname",ToEmail));
             msg.Subject = subject;
             msg.Body = new TextPart("plain")
             {

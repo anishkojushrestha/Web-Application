@@ -30,6 +30,8 @@
                         <th scope="col">Assigned To</th>
                         <th scope="col">Contact Name</th>
                         <th scope="col">Phone Number</th>
+                        <th scope="col">Issue Description</th>
+                        <th scope="col">Issue Generator Steps</th>
                         <th scope="col">Status</th>
                         <th scope="col">Deleted By</th>
                         <th scope="col">Resolve By</th>
@@ -38,34 +40,41 @@
                     </tr>
                 </thead>
                 <tbody id="table">
-                    @foreach(var data in Model)
-                    {
-                        <tr>
-                            <td>@data.Id</td>
-                            <td>@data.IssueNo</td>
-                            <td>@data.CompanyName</td>
-                            <td>@data.CreatedDate.ToShortDateString()</td>
-                            <td>@data.UserName</td>
-                            <td>@data.ContactName</td>
-                            <td>@data.PhoneNumber</td>
-                            <td>@data.Status</td>
-                            <td>@data.DeletedBy</td>
-                            <td>@data.ResolveBy</td>
-                            <td>
-                                <button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Resolve/{data.Id}")">Resolve</button>
-                                <button class="btn btn-primary" id="btndeleteBy" value="@data.Id">DeleteBy</button>
-                            </td>
-                            <td>
-                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Issue/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
-                                
-                                @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
-                                <a style="color:black" asp-action="Delete" asp-controller="Company" asp-route-id="@data.Id" onclick="return confirm('Are sure wants to delete?');"><i class="fa-solid fa-trash"></i></a>
-                                @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = data.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
-                            </td>
+                    
+                        @foreach (var data in Model)
+                        {
+                            <tr>
+                                <td>@data.Id</td>
+                                <td>@data.IssueNo</td>
+                                <td>@data.CompanyName</td>
+                                <td>@data.CreatedDate.ToShortDateString()</td>
+                                <td>@data.UserName</td>
+                                <td>@data.ContactName</td>
+                                <td>@data.PhoneNumber</td>
+                                <td>@data.IssueDescription</td>
+                                <td>@data.IssueGeneratorSteps</td>
+                                <td>@data.Status</td>
+                                <td>@data.DeletedBy</td>
+                                <td>@data.ResolveBy</td>
+                                <td>
+                                    <input type="button" value="Resolve" onclick="ShowPopup();">
+                                    <button class="btn btn-primary btn-sm mb-2" type="button" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Resolve/{data.Id}")">Resolve</button>
+                                <button type="submit" class="btn btn-primary btn-sm btnDelete" id="btndeleteBy_@data.Id" data-id="@data.Id" value="@data.Id">DeleteBy</button>
+                                </td>
+                                <td>
+                                    <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Issue/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
 
-                        </tr>
-                    }
+                                    @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
+                                    <a style="color:black" asp-action="Delete" asp-controller="Issue" asp-route-id="@data.Id" onclick="return confirm('Are sure wants to delete?');"><i class="fa-solid fa-trash"></i></a>
+                                    <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
+
+                                    @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = data.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
+                                </td>
+
+                            </tr>
+                        }
+                    
 
                 </tbody>
             </table>
@@ -73,9 +82,44 @@
     </div>
 </div>
 
+<!--
+
+poupu
+-->
+<div class="modal fade" id="modalPopup" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:77%;  margin-top: 20px; margin-left:-15%">
+            <div class="modal-header p-2">
+                <h4 class="modal-title" id="addRegisterLabel">Issue Activity</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form  enctype="multipart/form-data">
+
+                  
+
+
+
+                </form>
+                <input type="button" value="close" id="btnclose" onclick="closepopup();" />
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 @section Scripts{
     <script>
+        function ShowPopup(){
+           $("#modalPopup").modal('show');
+        }
+        function closepopup() {
+            $("#modalPopup").modal('hide');
+        }
+
         $(document).ready(function () {
             $('#dataTable').DataTable();
         });
@@ -115,17 +159,17 @@
             })
         })
         $(document).ready(function () {
-            $("#btndeleteBy").on("click", function () {
-                var id = $("#btndeleteBy").val();
-           alert(id)
+            $(".btnDelete").on("click", function () {
+                var rowId = $(this).attr("data-id");
            $.ajax({
-               url:"/Issue/DeletedBY?id="+id,
+                url: "/Issue/DeletedBY?id=" + rowId,
                type:"POST",
                success: function(){
                    
                }
            });
             });
+
            
         });
     </script>

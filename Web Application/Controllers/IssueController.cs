@@ -36,26 +36,15 @@ namespace Web_Application.Controllers
         [HttpPost]
         public IActionResult Issue(IssueVM vm)
         {
-            IssueDbHandle idh = new IssueDbHandle();
-            if (vm.Id == null)
-            {
-                if (ModelState.IsValid)
+            
+            if (ModelState.IsValid){
+                IssueDbHandle idh = new IssueDbHandle();
+                if (idh.CreateIssue(vm, UploadFile(vm.Attachments)))
                 {
                     
-                    if (idh.CreateIssue(vm, UploadFile(vm.Attachments)))
-                    {
-                        return RedirectToAction("Index");
-                    }
+                    return RedirectToAction("Index");
                 }
             }
-            else
-            {
-                if (ModelState.IsValid)
-                {
-
-                }
-            }
-            
             return RedirectToAction("Index");
         }
         
@@ -85,7 +74,29 @@ namespace Web_Application.Controllers
                 }
             
             };
-            return View("_PartialResolve");
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Attachment(int id)
+        {
+            IssueDbHandle idh = new IssueDbHandle();
+            return PartialView("_PartialAttachment",idh.GetAttachments(id));
+        }
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                IssueDbHandle sdb = new IssueDbHandle();
+                if (sdb.DeleteIssue(id))
+                {
+                    ViewBag.AlertMsg = "Student Deleted Successfully";
+                }
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
         private List<string> UploadFile(List<IFormFile> file)
         {

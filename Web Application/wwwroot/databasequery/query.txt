@@ -51,12 +51,19 @@ UserId bigint foreign key references users(UserId),
 ContactId bigint foreign key references ContactPerson(ContactId)
 )
 
-
+Create TABLE IssueActivity(
+IssueActivityId bigint NOT NULL primary key,
+IssueDescription varchar(50),
+IssueId bigint foreign key references Issue(IssueId),
+)
 
 Create TABLE Attachments(
-AttachmentId bigint primary key,
+AttachmentId bigint NOT NULL primary key,
 AttachmentName varchar(50),
 
 IssueId bigint foreign key references Issue(IssueId)
+IssueActivityId bigint foreign key references IssueActivity(IssueActivityId)
 )
+
+
 

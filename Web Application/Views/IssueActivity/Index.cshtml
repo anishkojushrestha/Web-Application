@@ -1,0 +1,113 @@
+﻿@model IEnumerable<Web_Application.ModelViews.IssueActivityVM>
+@{
+    ViewData["Title"] = "Index";
+}
+<div id="PlaceHolderHere"></div>
+
+
+
+
+<button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("IssueActivity")" style="width:100px;margin-left:90%; ">Create</button>
+<div class="input-group" style="margin-left:79%;margin-top:4px;">
+    @*<div class="form-outline">
+    <input type="search" id="search" class="form-control" placeholder="Search..." />
+    </div>*@
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Issues Informations DataTables</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="display" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Activity Description</th>
+                        <th scope="col">Issue Number</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table">
+
+                    @foreach(var data in Model)
+                    {
+                        <tr>
+                            <td>@data.Id</td>
+                            <td>@data.ActivityDescription</td>
+                            <td>@data.IsseId</td>
+                            <td>
+                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"IssueActivity/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
+
+                                @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
+                                <a style="color:black" asp-action="Delete" asp-controller="Issue" asp-route-id="@data.Id" onclick="return confirm('Are sure wants to delete?');"><i class="fa-solid fa-trash"></i></a>
+                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+
+        $(document).ready(function () {
+            $("#search").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#table tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        $(function () {
+            var PlaceHolderEleent = $('#PlaceHolderHere');
+            $('button[data-toggle="ajax-modal"]').click(function (event) {
+                var url = $(this).data('url');
+
+                var decodedUrl = decodeURIComponent(url);
+                $.get(decodedUrl).done(function (data) {
+                    PlaceHolderEleent.html(data);
+                    PlaceHolderEleent.find('.modal').modal('show');
+                })
+            })
+            PlaceHolderEleent.on('click', '[data-save="modal"]', function (event) {
+
+                //var form =$(this).parents('.modal').find('form');
+                //var actionUrl = form.attr('action');
+                //var url = '/user/'+actionUrl;
+                //var sentData = form.serialize();
+
+                //$.post(url, sentData).done(function (data) {
+                //    PlaceHolderEleent.find('.modal').modal('hide');
+                //    window.location.reload();
+                //})
+
+            })
+        })
+        $(document).ready(function () {
+            $("table tr button ").on("click", function () {
+                var rowId = $(this).attr("data-id");
+                $.ajax({
+                    url: "/Issue/DeletedBY?id=" + rowId,
+                    type: "POST",
+                    success: function () {
+
+                    }
+                });
+            });
+
+
+        });
+    </script>
+}

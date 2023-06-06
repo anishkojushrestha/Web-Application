@@ -12,7 +12,7 @@ namespace Web_Application.ModelViews
 
         public string? Status { get; set; }
         public int? AssignTo { get; set; }
-        public string ResolveBy { get; set; } 
+        public string? ResolveBy { get; set; } 
 
         public string? DeletedBy { get; set; }
         public string? CloseBy { get; set; }
