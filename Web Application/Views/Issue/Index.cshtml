@@ -35,7 +35,6 @@
                         <th scope="col">Status</th>
                         <th scope="col">Deleted By</th>
                         <th scope="col">Resolve By</th>
-                        <th scope="col">Submit</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -57,15 +56,11 @@
                                 <td>@data.DeletedBy</td>
                                 <td>@data.ResolveBy</td>
                                 <td>
-                                    <input type="button" value="Resolve" onclick="ShowPopup();">
-                                    <button class="btn btn-primary btn-sm mb-2" type="button" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Resolve/{data.Id}")">Resolve</button>
-                                <button type="submit" class="btn btn-primary btn-sm btnDelete" id="btndeleteBy_@data.Id" data-id="@data.Id" value="@data.Id">DeleteBy</button>
-                                </td>
-                                <td>
+                                <button type="button" style="padding: 0;border: none;background: none;" value="Resolve" onclick="ShowPopup();"><i class="fa-solid fa-circle-exclamation-check"></i></button>
                                     <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Issue/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
-
+                                    @*<button type="submit" class="btn btn-primary btn-sm btnDelete" id="btndeleteBy_@data.Id" data-id="@data.Id" value="@data.Id"><i class="fa-solid fa-trash"></i></button>*@
                                     @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
-                                    <a style="color:black" asp-action="Delete" asp-controller="Issue" asp-route-id="@data.Id" onclick="return confirm('Are sure wants to delete?');"><i class="fa-solid fa-trash"></i></a>
+                                    <a style="color:black" asp-action="Delete" asp-controller="Issue" asp-route-id="@data.Id" onclick="return confirm('Are sure wants to delete?');"></a>
                                     <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
 
                                     @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
