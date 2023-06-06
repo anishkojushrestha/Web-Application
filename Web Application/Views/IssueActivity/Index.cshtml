@@ -16,7 +16,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Issues Informations DataTables</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Issues Activity Informations DataTables</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -41,7 +41,6 @@
                                 <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"IssueActivity/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
 
                                 @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
-                                <a style="color:black" asp-action="Delete" asp-controller="Issue" asp-route-id="@data.Id" onclick="return confirm('Are sure wants to delete?');"><i class="fa-solid fa-trash"></i></a>
                                 <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
                             </td>
                         </tr>
