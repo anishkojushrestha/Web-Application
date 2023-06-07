@@ -28,5 +28,9 @@ namespace Web_Application.ModelViews
 
         public string? AssignedDate { get; set; }
 
+        public string? TransferFrom { get; set; }
+        public string? TransferTo { get; set; }
+        public DateTime? TransferDate { get; set; }
+        public string? CurrentStage { get; set; }
     }
 }

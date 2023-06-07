@@ -261,7 +261,7 @@ namespace Web_Application.Models
             StringBuilder str = new StringBuilder();
             str.Append("declare @itid int \n");
             str.Append("set @itid = (select isnull(max(IssueTransferId), 0) + 1 from IssueTransfer) \n");
-            str.Append("insert into IssueTransfer(IssueTransferId, TransferedFrom, TransferedTo, TransferedDate, CurrentStage, IssueId) values(@itid,'"+vm.TransferFrom+"','"+vm.TransferTo+"','"+ date + "','"+vm.CurrentStage+"',"+vm.IssueId+")\n");
+            str.Append("insert into IssueTransfer(IssueTransferId, TransferedFrom, TransferedTo, TransferedDate, CurrentStage, IssueId) values(@itid,'"+vm.TransferFrom+"','"+vm.TransferTo+"','"+ date + "','"+vm.CurrentStage+"',"+vm.Id+")\n");
             SqlCommand cmd = new SqlCommand(str.ToString(),con);
             con.Open();
             var i = cmd.ExecuteNonQuery();  

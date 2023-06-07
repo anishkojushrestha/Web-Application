@@ -18,9 +18,10 @@ namespace Web_Application.Controllers
         }
         public IActionResult Index()
         {
-            IssueDbHandle idh = new IssueDbHandle();
+            IssueDbHandle idh = new IssueDbHandle(); 
+            ViewData["user"] = new SelectList(idh.GetUser(), "UserName", "UserName");
             ViewData["Assign"] = new SelectList(idh.GetUser(), "Id", "UserName");
-            
+
             return View(idh.GetIssue());
         }
 
@@ -105,8 +106,20 @@ namespace Web_Application.Controllers
             IssueDbHandle idh = new IssueDbHandle();
             return PartialView("_PartialAttachment",idh.GetAttachments(id));
         }
-        
-        
+        [HttpPost]
+        public IActionResult Transfer(IssueTransferVM vm)
+        {
+            if (ModelState.IsValid)
+            {
+                IssueDbHandle idh = new IssueDbHandle();
+                if (idh.CreateIssueTransfer(vm))
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
         private List<string> UploadFile(List<IFormFile> file)
         {
             List<string> files = new List<string>();
