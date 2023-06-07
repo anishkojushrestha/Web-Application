@@ -19,14 +19,16 @@ namespace Web_Application.Controllers
         public IActionResult Index()
         {
             IssueDbHandle idh = new IssueDbHandle();
+            ViewData["Assign"] = new SelectList(idh.GetUser(), "Id", "UserName");
+            
             return View(idh.GetIssue());
         }
 
         public IActionResult Issue(int id)
         {
-            IssueDbHandle idh = new IssueDbHandle();
-            ViewData["Assign"] = new SelectList(idh.GetUser(), "Id", "UserName");
+            
             CompanyDbHandle cdh = new CompanyDbHandle();
+            IssueDbHandle idh = new IssueDbHandle();
             ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
             
 
@@ -54,15 +56,22 @@ namespace Web_Application.Controllers
             var result = idh.GetContact(id);
             return Json(result);
         }
-        public IActionResult DeletedBY(int id)
+        public IActionResult Delete(IssueVM vm)
         {
-            IssueDbHandle ish = new IssueDbHandle();
-            ish.DeletedBy(id);
+            if (ModelState.IsValid)
+            {
+                IssueDbHandle ish = new IssueDbHandle();
+                if (ish.Delete(vm))
+                {
+                    return RedirectToAction("Index");
+                }
+
+            };
             return RedirectToAction("Index");
         }
-        public IActionResult Resolve(int id) {
-            return View("_PartialResolve");
-        }
+        //public IActionResult Resolve(int id) {
+        //    return View("_PartialResolve");
+        //}
         [HttpPost]
         public IActionResult Resolve(IssueVM vm)
         {
@@ -76,28 +85,28 @@ namespace Web_Application.Controllers
             };
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public IActionResult Assign(IssueVM vm)
+        {
+            if (ModelState.IsValid)
+            {
+                IssueDbHandle ish = new IssueDbHandle();
+                if (ish.Assigned(vm))
+                {
+                    return RedirectToAction("Index");
+                }
+
+            };
+            return RedirectToAction("Index");
+        }
 
         public IActionResult Attachment(int id)
         {
             IssueDbHandle idh = new IssueDbHandle();
             return PartialView("_PartialAttachment",idh.GetAttachments(id));
         }
-        public ActionResult Delete(int id)
-        {
-            try
-            {
-                IssueDbHandle sdb = new IssueDbHandle();
-                if (sdb.DeleteIssue(id))
-                {
-                    ViewBag.AlertMsg = "Student Deleted Successfully";
-                }
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
+        
         private List<string> UploadFile(List<IFormFile> file)
         {
             List<string> files = new List<string>();

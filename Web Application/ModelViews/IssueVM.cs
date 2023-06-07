@@ -26,5 +26,7 @@ namespace Web_Application.ModelViews
 
         public int? PhoneNumber { get; set; }
 
+        public string? AssignedDate { get; set; }
+
     }
 }

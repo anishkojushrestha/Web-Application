@@ -1,0 +1,145 @@
+﻿@model IEnumerable<Web_Application.ModelViews.IssueTransferVM>
+@{
+    ViewData["Title"] = "Index";
+}
+<button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" onclick="ShowPopupResolve()" style="width:100px;margin-left:90%; ">Create</button>
+
+<div class="input-group" style="margin-left:79%;margin-top:4px;">
+    @*<div class="form-outline">
+    <input type="search" id="search" class="form-control" placeholder="Search..." />
+    </div>*@
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Issues Transfered Informations DataTables</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="display" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Transfered From</th>
+                        <th scope="col">Transfered To</th>
+                        <th scope="col">Transfered Date</th>
+                        <th scope="col">Current Stage</th>
+                        <th scope="col">IssueNo</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table">
+                    
+                        @foreach (var data in Model)
+                        {
+                            <tr>
+                                <td>@data.Id</td>
+                                <td>@data.TransferFrom</td>
+                                <td>@data.TransferTo</td>
+                                <td>@data.TransferDate</td>
+                                <td>@data.CurrentStage</td>
+                                <td>@data.IssueId</td>
+                                <td>
+                                    <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" onclick="ShowPopupResolve(this)" data-id="@data.Id"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
+
+                                </td>
+                            </tr>
+                        }
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalPopup1" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:77%;  margin-top: 20px; margin-left:-15%">
+            <div class="modal-header p-2">
+                <h4 class="modal-title" id="addRegisterLabel">Assign</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+
+            </div>
+<div class="modal-body">
+                    <form asp-action="Transfer" asp-controller="IssueTransfer">
+
+        @Html.AntiForgeryToken()
+        <div class="col" style="margin-left: 13px; ">
+
+            <input id="txtAsId" name="Id" hidden />
+            <div class="row pb-1">
+
+                <div class="rw">
+                    <label class="form-label">Issue Number:</label>
+                    <select type="text" name="IssueId" asp-items="ViewBag.Issue" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required>
+                        <option selected disabled>Select Issue Number</option>
+                    </select>
+                </div>
+                
+            </div>
+            <div class="row pb-1">
+                <div class="rw">
+                    <label class="form-label">Transfer From:</label>
+                    <select type="text" name="TransferFrom" asp-items="ViewBag.Assign" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required>
+                                    <option selected disabled>Select Transfer From</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row pb-1">
+                <div class="rw">
+                    <label class="form-label">Transfer To:</label>
+                    <select type="text" name="TransferTo" asp-items="ViewBag.Assign" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required>
+                                    <option selected disabled>Select Transfer To</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row pb-1">
+
+                <div class="rw">
+                                <label class="form-label">Transfer Date:</label>
+                                <input type="date" name="TransferDate" style="height:34px ;" class="form-control" />
+                </div>
+            </div>
+            <div class="row pb-1">
+
+                <div class="rw">
+                    <label class="form-label">Current Stage:</label>
+                    <input type="text" name="CurrentStage" style="height:34px ;" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </form>
+    <input type="button" value="close" id="btnclose" onclick="closepopup();" />
+</div>
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+        function ShowPopupResolve(e){
+           $("#modalPopup1").modal('show');
+            var id = $(e).attr("data-id");
+            
+            
+            $("#txtAsId").val(id);
+            
+
+        }
+    </script>
+}

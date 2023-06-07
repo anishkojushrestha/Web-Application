@@ -28,6 +28,7 @@
                         <th scope="col">Company Name</th>
                         <th scope="col">Created Date</th>
                         <th scope="col">Assigned To</th>
+                        <th scope="col">Assigned Date</th>
                         <th scope="col">Contact Name</th>
                         <th scope="col">Phone Number</th>
                         <th scope="col">Issue Description</th>
@@ -48,6 +49,7 @@
                                 <td>@data.CompanyName</td>
                                 <td>@data.CreatedDate.ToShortDateString()</td>
                                 <td>@data.UserName</td>
+                                <td>@data.AssignedDate</td>
                                 <td>@data.ContactName</td>
                                 <td>@data.PhoneNumber</td>
                                 <td>@data.IssueDescription</td>
@@ -56,11 +58,12 @@
                                 <td>@data.DeletedBy</td>
                                 <td>@data.ResolveBy</td>
                                 <td>
-                                <button type="button" style="padding: 0;border: none;background: none;" value="Resolve" onclick="ShowPopup();"><i class="fa-solid fa-circle-exclamation-check"></i></button>
+                                <button id="btnResolve_@data.Id" class="btnResolve" style="padding: 0;border: none;background: none;"  data-id="@data.Id" onclick="ShowPopupResolve(this);"><i class="fab fa-resolving"></i></button>
                                     <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Issue/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
                                     @*<button type="submit" class="btn btn-primary btn-sm btnDelete" id="btndeleteBy_@data.Id" data-id="@data.Id" value="@data.Id"><i class="fa-solid fa-trash"></i></button>*@
                                     @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
-                                    <a style="color:black" asp-action="Delete" asp-controller="Issue" asp-route-id="@data.Id" onclick="return confirm('Are sure wants to delete?');"></a>
+                                <button style="padding: 0;border: none;background: none;" id="btnDelete_@data.Id" class="btnDelete" data-id="@data.Id" onclick="ShowPopupDelete(this);"><i class="fa-solid fa-trash"></i></button>
+                                <button style="padding: 0;border: none;background: none;" id="btnAssigned_@data.Id" class="btnAssigned" data-id="@data.Id" onclick="ShowPopupAssign(this);"><i class="fa-solid fa-clipboard-question"></i></button>
                                     <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
 
                                     @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
@@ -81,20 +84,38 @@
 
 poupu
 -->
-<div class="modal fade" id="modalPopup" data-bs-backdrop="static">
+<div class="modal fade" id="modalPopup1" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content" style="width:77%;  margin-top: 20px; margin-left:-15%">
             <div class="modal-header p-2">
-                <h4 class="modal-title" id="addRegisterLabel">Issue Activity</h4>
+                <h4 class="modal-title" id="addRegisterLabel">Resolve</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal">
                 </button>
 
             </div>
             <div class="modal-body">
-                <form  enctype="multipart/form-data">
+                <form asp-action="Resolve" asp-controller="Issue" >
 
-                  
+                    @Html.AntiForgeryToken()
+                    <div class="col" style="margin-left: 13px; ">
 
+                        <input id ="txtReId" name="Id" hidden/>
+                        <div class="row pb-1">
+
+                        <div class="rw">
+                        <label class="form-label">Resolve Date:</label>
+                        <input type="date" name="ResolveBy"  style="height:33px" class="form-control" required>
+                        </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                            </div>
+                        </div>
+
+                    </div>
 
 
                 </form>
@@ -104,12 +125,118 @@ poupu
         </div>
     </div>
 </div>
+<div class="modal fade" id="modalPopup2" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:77%;  margin-top: 20px; margin-left:-15%">
+            <div class="modal-header p-2">
+                <h4 class="modal-title" id="addRegisterLabel">Delete</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
 
+            </div>
+            <div class="modal-body">
+                <form asp-action="Delete" asp-controller="Issue">
+
+                    @Html.AntiForgeryToken()
+                    <div class="col" style="margin-left: 13px; ">
+
+                        <input id="txtDeId" name="Id" hidden />
+                        <div class="row pb-1">
+
+                            <div class="rw">
+                                <label class="form-label">Delete Date:</label>
+                                <input type="date" name="DeleteBy" style="height:33px" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </form>
+                <input type="button" value="close" id="btnclose" onclick="closepopup();" />
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalPopup3" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:77%;  margin-top: 20px; margin-left:-15%">
+            <div class="modal-header p-2">
+                <h4 class="modal-title" id="addRegisterLabel">Assign</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+
+            </div>
+<div class="modal-body">
+    <form asp-action="Assign" asp-controller="Issue">
+
+        @Html.AntiForgeryToken()
+        <div class="col" style="margin-left: 13px; ">
+
+            <input id="txtAsId" name="Id" hidden />
+            <div class="row pb-1">
+
+                <div class="rw">
+                    <label class="form-label">Assigned to:</label>
+                    <select type="text" name="AssignTo" asp-items="ViewBag.Assign" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required></select>
+                </div>
+            </div>
+            <div class="row pb-1">
+
+                <div class="rw">
+                    <label class="form-label">Assigned Date:</label>
+                    <input type="date" name="AssignedDate"style="height:34px ;" class="form-control"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </form>
+    <input type="button" value="close" id="btnclose" onclick="closepopup();" />
+</div>
+
+        </div>
+    </div>
+</div>
 
 @section Scripts{
     <script>
-        function ShowPopup(){
-           $("#modalPopup").modal('show');
+        function ShowPopupResolve(e){
+           $("#modalPopup1").modal('show');
+            var issueid = $(e).attr("data-id");
+            alert(issueid);
+            $("#txtReId").val(issueid);
+            
+
+        }
+        function ShowPopupDelete(e){
+           $("#modalPopup2").modal('show');
+                var issueid = $(e).attr("data-id");
+                $("#txtDeId").val(issueid);
+
+        }
+        function ShowPopupAssign(e) {
+            $("#modalPopup3").modal('show');
+            var issueid = $(e).attr("data-id");
+            alert(issueid);
+            $("#txtAsId").val(issueid);
+
         }
         function closepopup() {
             $("#modalPopup").modal('hide');

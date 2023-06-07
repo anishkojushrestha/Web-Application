@@ -37,10 +37,11 @@ IsActive bit,)
 
 CREATE TABLE Issue(
 IssueId bigint NOT NULL primary key,
-IssueNo varchar(50),
+IssueNo int,
 IssueDescription varchar(50),
 IssueGeneratorSteps varchar(100),
 CreatedDate Date,
+AssignedDate Date,
 Status varchar(50),
 ResolveBy Date, 
 DeletedBy Date, 
@@ -59,7 +60,7 @@ IssueId bigint foreign key references Issue(IssueId),
 
 Create TABLE Attachments(
 AttachmentId bigint NOT NULL primary key,
-AttachmentName varchar(50),
+AttachmentName varchar(200),
 
 IssueId bigint foreign key references Issue(IssueId)
 IssueActivityId bigint foreign key references IssueActivity(IssueActivityId)
@@ -67,3 +68,11 @@ IssueActivityId bigint foreign key references IssueActivity(IssueActivityId)
 
 
 
+Create TABLE IssueSupport(
+IssueSupportId bigint NOT NULL primary key,
+Status varchar(50),
+AssignedDate Date,
+IssueId bigint foreign key references Issue(IssueId),
+UserId bigint foreign key references users(UserId),
+
+)

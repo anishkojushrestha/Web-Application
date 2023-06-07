@@ -100,6 +100,7 @@ namespace Web_Application.Models
                         RegistrationDate = Convert.ToDateTime(dr["RegistrationDate"]),
                         ValidFrom = Convert.ToDateTime(dr["AchiveFrom"]),
                         ValidTo = Convert.ToDateTime(dr["AchiveTo"]),
+                        
 
                     });
             }

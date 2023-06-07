@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Web_Application.ModelViews.IssueSupportVM>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="input-group" style="margin-left:79%;margin-top:4px;">
+    @*<div class="form-outline">
+    <input type="search" id="search" class="form-control" placeholder="Search..." />
+    </div>*@
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Issues Support Informations DataTables</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="display" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Issue Number</th>
+            <th scope="col">Assigned To</th>
+            <th scope="col">Assigned Date</th>
+            <th scope="col">Assigned By</th>
+            <th scope="col">Status</th>
+        </tr>
+                </thead>
+                <tbody id="table">
+                    @foreach(var data in Model)
+                    {
+                        <tr>
+                            <td>@data.Id</td>
+                            <td>@data.IssueNo</td>
+                            <td>@data.AssignedTo</td>
+                            <td>@data.AssignedDate</td>
+                            <td>@data.AssignedBy</td>
+                            <td>@data.Status</td>
+                        </tr>
+                    }
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+}

@@ -20,7 +20,7 @@
             </div>
             <div class="modal-body">
                 <form asp-action="Issue" asp-controller="Issue" enctype="multipart/form-data">
-
+                    <input type="hidden" id="txtcid" value="@(Model!=null?@Model.ContactId:"")" />
                     @Html.AntiForgeryToken()
                     <div class="col" style="margin-left: 13px; ">
                         <div class="row pb-2">
@@ -52,10 +52,7 @@
                                 <select type="text" asp-for="ContactId" id="selCon" style="height:34px ; color:black;" class="form-select" required></select>
 
                             </div>
-                            <div class="rw">
-                                <label class="form-label">Assigned to:</label>
-                                <select type="text" asp-for="AssignTo" asp-items="ViewBag.Assign" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required></select>
-                            </div>
+                            
                         </div>
                         <div class="row pb-2">
                             <div class="rw1">
@@ -106,29 +103,46 @@
 </div>
 <script>
     $(document).ready(function(){
-        $("#selComp").change(function(){
-            var id = $("#selComp").val();
+        function LoadContact(){
+            var cid = $("#txtcid").val();
+            
+             var id = $("#selComp").val();
             $.ajax({
                 type: "post",
                 url: "/Issue/Contact?id=" + id,
                 success: function (data) {
                     $("#selCon").empty();
+                    var cols="";
                     for (var i = 0; i < data.length; i++) {
-                        var opt = new Option(data[i].contactName, data[i].id);
-                        $('#selCon').append(opt);
-
+                      if(cid==data[i].id){
+                        cols= cols+"<option value='"+data[i].id+"' selected>"+data[i].contactName+"</option>"; 
+                      }else{
+                            cols = cols+ "<option value='" + data[i].id + "'>" + data[i].contactName + "</option>";
+                        }
+                        
+                        
                     }
+                    
+                    $('#selCon').append(cols);
+                    $("#selCon").val(cid);
+                    $("#txtcid").val('');
                 }
+
             
 
             });
+        }
+        $(document).on("change", "#selComp", function () {
+          
+          LoadContact();
+          
             
 
         });
-        
-            
-        
-     });
+
+        LoadContact();
+
+    });
 </script>
 @*//$("#selComp").change(function () {
         //    var id = $("#txtId").val();

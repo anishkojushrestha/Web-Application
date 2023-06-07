@@ -55,7 +55,7 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <div class="dropdown">
                                 <button style="background-color:transparent;" class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Reports
@@ -69,7 +69,7 @@
                                 </ul>
 
                             </div>
-                        </li>
+                        </li>*@
                         <li class="nav-item">
                             <div class="dropdown">
                                 <button style="background-color:transparent;" class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -77,6 +77,8 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" asp-action="Index" asp-controller="Issue">Issue</a></li>
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="IssueTransfer">Issue Transfer</a></li>
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="IssueSupport">Issue Support</a></li>
                                     <li><a class="dropdown-item" asp-action="Index" asp-controller="IssueActivity">Issue Activity</a></li>
                                 </ul>
 

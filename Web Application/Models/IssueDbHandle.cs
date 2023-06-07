@@ -75,9 +75,12 @@ namespace Web_Application.Models
            
             str.Append("declare @eid bigint \n");
             str.Append("declare @isno int \n");
+            str.Append("declare @issupid int \n");
             str.Append("set @eid = (select isnull(max(IssueId), 0) + 1 from Issue) \n");
             str.Append("set @isno = (select isnull(max(IssueNo), 0) + 1 from Issue) \n");
-            str.Append("insert into Issue(IssueId,IssueNo, IssueDescription, IssueGeneratorSteps, CreatedDate, Status, CompanyId, UserId, ContactId) VALUES(@eid,@isno,'" + vm.IssueDescription +"','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "',"+vm.CompanyId+","+vm.AssignTo+","+vm.ContactId+" ) \n");
+            str.Append("set @issupid = (select isnull(max(IssueSupportId), 0) + 1 from IssueSupport) \n");
+            str.Append("insert into Issue(IssueId,IssueNo, IssueDescription, IssueGeneratorSteps, CreatedDate, Status, CompanyId,  ContactId) VALUES(@eid,@isno,'" + vm.IssueDescription +"','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "',"+vm.CompanyId+","+vm.ContactId+" ) \n");
+            str.Append("insert into IssueSupport(IssueSupportId, Status, IssueId) VALUES(@issupid,'" + vm.Status + "',@eid) \n");
             str.Append("declare @aid bigint \n");
             foreach (var data in ac)
             {
@@ -112,11 +115,13 @@ namespace Web_Application.Models
             else
                 return false;
         }
-        public bool DeletedBy(int id)
+        public bool Assigned(IssueVM vm)
         {
             connection();
-            string now = DateTime.Now.ToShortDateString();
-            SqlCommand cmd = new SqlCommand("update Issue set DeletedBy = '" + now + "' where IssueId=" + id, con);
+            StringBuilder str= new StringBuilder();
+            str.Append("update Issue set AssignedDate = '" + vm.AssignedDate + "', UserId = "+vm.AssignTo+" where IssueId=" + vm.Id+" \n");
+            str.Append("update IssueSupport set AssignedDate = '" + vm.AssignedDate + "', UserId = " + vm.AssignTo + " where IssueId=" + vm.Id + " \n");
+            SqlCommand cmd = new SqlCommand(str.ToString(), con);
             con.Open();
             var i = cmd.ExecuteNonQuery();
             con.Close();
@@ -125,6 +130,19 @@ namespace Web_Application.Models
             else
                 return false;
         }
+        public bool Delete(IssueVM vm)
+        {
+            connection();
+            SqlCommand cmd = new SqlCommand("update Issue set DeletedBy = '"+vm.DeletedBy+"' where IssueId="+vm.Id, con);
+            con.Open();
+            var i = cmd.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+                return true;
+            else
+                return false;
+        }
+        
 
         public List<AttachmentVM> GetAttachments(int id)
         {
@@ -150,12 +168,41 @@ namespace Web_Application.Models
             }
             return list;
         }
+        public List<IssueSupportVM> GetIssueSupport()
+        {
+            connection();
+            List<IssueSupportVM> list = new List<IssueSupportVM>();
+            SqlCommand cmd = new SqlCommand("select s.*, i.IssueNo, u.Username, c.ContactName from IssueSupport s left join users u on u.UserId = s.UserId join Issue i on i.IssueId = s.IssueId join ContactPerson c on c.ContactId = i.ContactId", con);
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            ad.Fill(dt);
+            con.Close();
+            foreach (DataRow dr in dt.Rows)
+            {
+                list.Add(
+                    new IssueSupportVM()
+                    {
+                        Id = Convert.ToInt32(dr["IssueSupportId"]),
+                        Status = Convert.ToString(dr["Status"]),
+                        AssignedTo = Convert.ToString(dr["UserName"]),
+                        IssueNo = Convert.ToInt32(dr["IssueNo"]),
+                        AssignedDate = Convert.ToString(dr["AssignedDate"]),
+                        AssignedBy = Convert.ToString(dr["ContactName"]),
+
+
+
+                    });
+            }
+            return list;
+        }
 
         public List<IssueVM> GetIssue()
         {
             connection();
             List<IssueVM> list = new List<IssueVM>();
-            SqlCommand cmd = new SqlCommand("Select i.*, U.UserName, c.CompanyName, p.ContactName, p.PhoneNumber from Issue i join users u on u.UserId = i.UserId join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId", con);
+            SqlCommand cmd = new SqlCommand("Select i.*, U.UserName, c.CompanyName,p.ContactId, p.ContactName, p.PhoneNumber from Issue i left join users u on u.UserId = i.UserId join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId", con);
+            //SqlCommand cmd = new SqlCommand("Select i.*,  c.CompanyName, p.ContactName, p.PhoneNumber from Issue i join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId", con);
             SqlDataAdapter ad = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             con.Open();
@@ -179,7 +226,10 @@ namespace Web_Application.Models
                         ContactName = Convert.ToString(dr["ContactName"]),
                         UserName = Convert.ToString(dr["UserName"]),
                         PhoneNumber = Convert.ToInt32(dr["PhoneNumber"]),
-                        
+                        AssignedDate = Convert.ToString(dr["AssignedDate"]),
+                        CompanyId = Convert.ToInt32(dr["CompanyId"]),
+                        ContactId = Convert.ToInt32(dr["ContactId"]),
+
 
 
                     });
@@ -201,6 +251,53 @@ namespace Web_Application.Models
                 return true;
             else
                 return false;
+        }
+
+
+        public bool CreateIssueTransfer(IssueTransferVM vm)
+        {
+            connection();
+            var date = vm.TransferDate.ToString("MM/dd/yyyy");
+            StringBuilder str = new StringBuilder();
+            str.Append("declare @itid int \n");
+            str.Append("set @itid = (select isnull(max(IssueTransferId), 0) + 1 from IssueTransfer) \n");
+            str.Append("insert into IssueTransfer(IssueTransferId, TransferedFrom, TransferedTo, TransferedDate, CurrentStage, IssueId) values(@itid,'"+vm.TransferFrom+"','"+vm.TransferTo+"','"+ date + "','"+vm.CurrentStage+"',"+vm.IssueId+")\n");
+            SqlCommand cmd = new SqlCommand(str.ToString(),con);
+            con.Open();
+            var i = cmd.ExecuteNonQuery();  
+            con.Close();
+
+            if (i >= 1)
+                return true;
+            else
+                return false;
+
+        }
+        public List<IssueTransferVM> GetIssueTransfer()
+        {
+            connection();
+            List<IssueTransferVM> list = new List<IssueTransferVM>();
+            SqlCommand cmd = new SqlCommand("select t.*, i.IssueNo from IssueTransfer t join Issue i on i.IssueId = t.IssueId", con);
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            ad.Fill(dt);
+            con.Close();
+            foreach (DataRow dr in dt.Rows)
+            {
+                list.Add(
+                    new IssueTransferVM()
+                    {
+                        Id = Convert.ToInt32(dr["IssueTransferId"]),
+                        TransferFrom = Convert.ToString(dr["TransferedFrom"]),
+                        TransferTo = Convert.ToString(dr["TransferedTo"]),
+                        TransferDate = Convert.ToDateTime(dr["TransferedDate"]),
+                        CurrentStage = Convert.ToString(dr["CurrentStage"]),
+                        IssueId = Convert.ToInt32(dr["issueNo"]),
+
+                    });
+            }
+            return list;
         }
 
         public List<EmailSetupVM> GetEmail()
