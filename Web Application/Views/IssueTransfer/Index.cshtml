@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Index";
 }
-<button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" onclick="ShowPopupResolve()" style="width:100px;margin-left:90%; ">Create</button>
 
 <div class="input-group" style="margin-left:79%;margin-top:4px;">
     @*<div class="form-outline">
@@ -25,7 +24,6 @@
                         <th scope="col">Transfered Date</th>
                         <th scope="col">Current Stage</th>
                         <th scope="col">IssueNo</th>
-                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody id="table">
@@ -39,10 +37,6 @@
                                 <td>@data.TransferDate</td>
                                 <td>@data.CurrentStage</td>
                                 <td>@data.IssueId</td>
-                                <td>
-                                    <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" onclick="ShowPopupResolve(this)" data-id="@data.Id"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
-
-                                </td>
                             </tr>
                         }
 
