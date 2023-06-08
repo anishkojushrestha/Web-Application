@@ -57,7 +57,7 @@
                     
                 }
                 <h4 class="modal-title" id="addRegisterLabel" style="font-size:large">Edit Company</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="javascript:window.location.reload()">
                 </button>
 
             </div>
@@ -397,10 +397,7 @@
             }
         })
 
-        $('#addRegister').on('hidden.bs.modal', function () {
-            location.reload();
-        })
+        
 
     });
-    
 </script>
