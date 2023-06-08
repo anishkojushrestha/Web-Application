@@ -76,3 +76,9 @@ IssueId bigint foreign key references Issue(IssueId),
 UserId bigint foreign key references users(UserId),
 
 )
+Create EmailSetting(
+EmailId varchar(50),
+EmailPws varchar(50),
+PORT varchar(50),
+SMTP varchar(50)
+)
