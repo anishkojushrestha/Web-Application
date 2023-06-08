@@ -39,15 +39,29 @@ namespace Web_Application.Controllers
         [HttpPost]
         public IActionResult Issue(IssueVM vm)
         {
-            
-            if (ModelState.IsValid){
+            if (vm.Id == null) { 
+            if (ModelState.IsValid) {
                 IssueDbHandle idh = new IssueDbHandle();
                 if (idh.CreateIssue(vm, UploadFile(vm.Attachments)))
                 {
-                    
+
                     return RedirectToAction("Index");
                 }
             }
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    IssueDbHandle idh = new IssueDbHandle();
+                    if (idh.UpdateIssue(vm, UploadFile(vm.Attachments)))
+                    {
+
+                        return RedirectToAction("Index");
+                    }
+                }
+            }
+
             return RedirectToAction("Index");
         }
         

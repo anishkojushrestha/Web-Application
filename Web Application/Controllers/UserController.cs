@@ -63,7 +63,6 @@ namespace Web_Application.Controllers
         {
             if (ModelState.IsValid)
             {
-                
                 UserDbHandle userDbHandle = new UserDbHandle();
                 if (userDbHandle.UserExist(vm.UserName, vm.Password) == true)
                 {

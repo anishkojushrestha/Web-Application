@@ -2,6 +2,16 @@
 @{
     ViewData["Title"] = "Index";
 }
+
+<style>
+    .rw {
+        width: 93%;
+    }
+
+    .rw1 {
+        width: 48%;
+    }
+</style>
 <div id="PlaceHolderHere"></div>
 
 
@@ -87,7 +97,7 @@ poupu
 -->
 <div class="modal fade" id="modalPopup1" data-bs-backdrop="static">
     <div class="modal-dialog">
-        <div class="modal-content" style="width:77%;  margin-top: 20px; margin-left:-15%">
+        <div class="modal-content" style="width:55%;  margin-top: 20px; margin-left:-15%">
             <div class="modal-header p-2">
                 <h4 class="modal-title" id="addRegisterLabel">Resolve</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal">
@@ -101,7 +111,7 @@ poupu
                     <div class="col" style="margin-left: 13px; ">
 
                         <input id ="txtReId" name="Id" hidden/>
-                        <div class="row pb-1">
+                        <div class="row pb-3">
 
                         <div class="rw">
                         <label class="form-label">Resolve Date:</label>
@@ -128,7 +138,7 @@ poupu
 </div>
 <div class="modal fade" id="modalPopup2" data-bs-backdrop="static">
     <div class="modal-dialog">
-        <div class="modal-content" style="width:77%;  margin-top: 20px; margin-left:-15%">
+        <div class="modal-content" style="width:55%;  margin-top: 20px; margin-left:-15%">
             <div class="modal-header p-2">
                 <h4 class="modal-title" id="addRegisterLabel">Delete</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal">
@@ -142,7 +152,7 @@ poupu
                     <div class="col" style="margin-left: 13px; ">
 
                         <input id="txtDeId" name="Id" hidden />
-                        <div class="row pb-1">
+                        <div class="row pb-3">
 
                             <div class="rw">
                                 <label class="form-label">Delete Date:</label>
@@ -174,7 +184,6 @@ poupu
                 <h4 class="modal-title" id="addRegisterLabel">Assign</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal">
                 </button>
-
             </div>
 <div class="modal-body">
     <form asp-action="Assign" asp-controller="Issue">
@@ -294,7 +303,6 @@ poupu
         function ShowPopupResolve(e){
            $("#modalPopup1").modal('show');
             var issueid = $(e).attr("data-id");
-            alert(issueid);
             $("#txtReId").val(issueid);
             
 

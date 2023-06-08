@@ -103,6 +103,42 @@ namespace Web_Application.Models
             else
                 return false;
         }
+        public bool UpdateIssue(IssueVM vm, List<string> ac)
+        {
+            connection();
+            StringBuilder str = new StringBuilder();
+            var createdDate = vm.CreatedDate.ToString("MM/dd/yyyy");
+            str.Append("declare @eid bigint \n");
+            str.Append("declare @isno int \n");
+            str.Append("declare @issupid int \n");
+            str.Append("set @eid = (select isnull(max(IssueId), 0) + 1 from Issue) \n");
+            str.Append("set @isno = (select isnull(max(IssueNo), 0) + 1 from Issue) \n");
+            str.Append("set @issupid = (select isnull(max(IssueSupportId), 0) + 1 from IssueSupport) \n");
+            str.Append("update Issue set IssueDescription = '" + vm.IssueDescription + "', IssueGeneratorSteps = '" + vm.IssueGeneratorSteps + "', CreatedDate = '" + createdDate + "', Status ='" + vm.Status + "', CompanyId = " + vm.CompanyId + ", ContactId = " + vm.ContactId + " where IssueId= "+vm.Id+ " \n");
+            str.Append("insert into IssueSupport(IssueSupportId, Status, IssueId) VALUES(@issupid,'" + vm.Status + "',"+vm.Id+") \n");
+            str.Append("declare @aid bigint \n");
+            
+            
+            foreach (var data in ac)
+            {
+                str.Append("set @aid = (select isnull(max(AttachmentId), 0) + 1 from Attachments) \n");
+                str.Append("insert into Attachments(AttachmentId, AttachmentName, IssueId) values(@aid, '" + data + "', " + vm.Id + ") \n");
+            }
+
+            SqlCommand cmd = new SqlCommand(str.ToString(), con);
+            con.Open();
+            var i = cmd.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+            {
+                EmailSetting em = new EmailSetting();
+                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", "anishkoju4@gmail.com", "testing", "This is simple test body."));
+
+                return true;
+            }
+            else
+                return false;
+        }
         public bool Resolve(IssueVM vm)
         {
             connection();
@@ -252,7 +288,6 @@ namespace Web_Application.Models
             else
                 return false;
         }
-
 
         public bool CreateIssueTransfer(IssueTransferVM vm)
         {
