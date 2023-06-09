@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Web_Application.Models;
 using Web_Application.ModelViews;
@@ -7,6 +9,11 @@ namespace Web_Application.Controllers
 {
     public class UserController : Controller
     {
+        private readonly ILogger<UserController> logger;
+        public UserController(ILogger<UserController> logger)
+        {
+            this.logger = logger;
+        }
         public IActionResult Index()
         {
             UserDbHandle dbhandle = new UserDbHandle();
@@ -66,7 +73,11 @@ namespace Web_Application.Controllers
                 UserDbHandle userDbHandle = new UserDbHandle();
                 if (userDbHandle.UserExist(vm.UserName, vm.Password) == true)
                 {
-                    ModelState.Clear();
+                    HttpContext.Session.SetString("Username", vm.UserName);
+                    HttpContext.Session.SetString("Password", vm.Password);
+                    var username = HttpContext.Session.GetString("Username");
+                    var password = HttpContext.Session.GetString("Password");
+                    logger.LogInformation(username, password);
                     return RedirectToAction("Index", "Company");
                 }
             }
@@ -118,9 +129,5 @@ namespace Web_Application.Controllers
                 return View();
             }
         }
-       
-
-
-
     }
 }

@@ -329,7 +329,6 @@ namespace Web_Application.Models
                         TransferDate = Convert.ToDateTime(dr["TransferedDate"]),
                         CurrentStage = Convert.ToString(dr["CurrentStage"]),
                         IssueId = Convert.ToInt32(dr["issueNo"]),
-
                     });
             }
             return list;
