@@ -74,12 +74,13 @@ namespace Web_Application.Models
             //var closeBY = vm.CloseBy.ToString("MM/dd/yyyy");
            
             str.Append("declare @eid bigint \n");
-            str.Append("declare @isno int \n");
+            str.Append("declare @Newno varchar(20) \n");
+            str.Append("declare @isno varchar(20) = 'IssNo' \n");
             str.Append("declare @issupid int \n");
             str.Append("set @eid = (select isnull(max(IssueId), 0) + 1 from Issue) \n");
-            str.Append("set @isno = (select isnull(max(IssueNo), 0) + 1 from Issue) \n");
+            str.Append("SELECT @Newno = @isno + RIGHT('0000000' + CAST(@eid AS VARCHAR(7)), 7) \n");
             str.Append("set @issupid = (select isnull(max(IssueSupportId), 0) + 1 from IssueSupport) \n");
-            str.Append("insert into Issue(IssueId,IssueNo, IssueDescription, IssueGeneratorSteps, CreatedDate, Status, CompanyId,  ContactId) VALUES(@eid,@isno,'" + vm.IssueDescription +"','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "',"+vm.CompanyId+","+vm.ContactId+" ) \n");
+            str.Append("insert into Issue(IssueId,IssueNo, IssueDescription, IssueGeneratorSteps, CreatedDate, Status, CompanyId,  ContactId) VALUES(@eid,@Newno,'" + vm.IssueDescription +"','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "',"+vm.CompanyId+","+vm.ContactId+" ) \n");
             str.Append("insert into IssueSupport(IssueSupportId, Status, IssueId) VALUES(@issupid,'" + vm.Status + "',@eid) \n");
             str.Append("declare @aid bigint \n");
             foreach (var data in ac)
@@ -124,7 +125,7 @@ namespace Web_Application.Models
                 str.Append("set @aid = (select isnull(max(AttachmentId), 0) + 1 from Attachments) \n");
                 str.Append("insert into Attachments(AttachmentId, AttachmentName, IssueId) values(@aid, '" + data + "', " + vm.Id + ") \n");
             }
-
+            
             SqlCommand cmd = new SqlCommand(str.ToString(), con);
             con.Open();
             var i = cmd.ExecuteNonQuery();
@@ -217,12 +218,12 @@ namespace Web_Application.Models
             foreach (DataRow dr in dt.Rows)
             {
                 list.Add(
-                    new IssueSupportVM()
+                    new IssueSupportVM() 
                     {
                         Id = Convert.ToInt32(dr["IssueSupportId"]),
                         Status = Convert.ToString(dr["Status"]),
                         AssignedTo = Convert.ToString(dr["UserName"]),
-                        IssueNo = Convert.ToInt32(dr["IssueNo"]),
+                        IssueNo = Convert.ToString(dr["IssueNo"]),
                         AssignedDate = Convert.ToString(dr["AssignedDate"]),
                         AssignedBy = Convert.ToString(dr["ContactName"]),
 
@@ -250,7 +251,6 @@ namespace Web_Application.Models
                     new IssueVM()
                     {
                         Id = Convert.ToInt32(dr["IssueId"]),
-
                         IssueGeneratorSteps = Convert.ToString(dr["IssueGeneratorSteps"]),
                         IssueDescription = Convert.ToString(dr["IssueDescription"]),
                         IssueNo = Convert.ToString(dr["IssueNo"]),
@@ -265,9 +265,6 @@ namespace Web_Application.Models
                         AssignedDate = Convert.ToString(dr["AssignedDate"]),
                         CompanyId = Convert.ToInt32(dr["CompanyId"]),
                         ContactId = Convert.ToInt32(dr["ContactId"]),
-
-
-
                     });
             }
             return list;
@@ -306,7 +303,6 @@ namespace Web_Application.Models
                 return true;
             else
                 return false;
-
         }
         public List<IssueTransferVM> GetIssueTransfer()
         {

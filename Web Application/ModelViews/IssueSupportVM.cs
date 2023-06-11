@@ -7,6 +7,6 @@
         public string AssignedDate { get; set; }
         public string AssignedTo { get; set; }
         public string AssignedBy { get; set; }
-        public int IssueNo { get; set; }
+        public string IssueNo { get; set; }
     }
 }
