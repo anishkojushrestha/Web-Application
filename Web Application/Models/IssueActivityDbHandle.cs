@@ -94,7 +94,7 @@ namespace Web_Application.Models
                         Id = Convert.ToInt32(dr["IssueActivityId"]),
                         ActivityDescription = Convert.ToString(dr["IssueDescription"]),
                         AttachmentName = Convert.ToString(dr["AttachmentName"]),
-                        IsseId = Convert.ToInt32(dr["IssueNo"]),
+                        IsseId = Convert.ToString(dr["IssueNo"]),
                     });
             }
             return list;

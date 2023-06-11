@@ -118,8 +118,6 @@ namespace Web_Application.Models
             str.Append("update Issue set IssueDescription = '" + vm.IssueDescription + "', IssueGeneratorSteps = '" + vm.IssueGeneratorSteps + "', CreatedDate = '" + createdDate + "', Status ='" + vm.Status + "', CompanyId = " + vm.CompanyId + ", ContactId = " + vm.ContactId + " where IssueId= "+vm.Id+ " \n");
             str.Append("insert into IssueSupport(IssueSupportId, Status, IssueId) VALUES(@issupid,'" + vm.Status + "',"+vm.Id+") \n");
             str.Append("declare @aid bigint \n");
-            
-            
             foreach (var data in ac)
             {
                 str.Append("set @aid = (select isnull(max(AttachmentId), 0) + 1 from Attachments) \n");
@@ -324,7 +322,7 @@ namespace Web_Application.Models
                         TransferTo = Convert.ToString(dr["TransferedTo"]),
                         TransferDate = Convert.ToDateTime(dr["TransferedDate"]),
                         CurrentStage = Convert.ToString(dr["CurrentStage"]),
-                        IssueId = Convert.ToInt32(dr["issueNo"]),
+                        IssueId = Convert.ToString(dr["issueNo"]),
                     });
             }
             return list;

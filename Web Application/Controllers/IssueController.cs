@@ -30,7 +30,6 @@ namespace Web_Application.Controllers
             CompanyDbHandle cdh = new CompanyDbHandle();
             IssueDbHandle idh = new IssueDbHandle();
             ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
-
             return PartialView("_PartialIssue", idh.GetIssue().Find(x => x.Id == id));
         }
 
