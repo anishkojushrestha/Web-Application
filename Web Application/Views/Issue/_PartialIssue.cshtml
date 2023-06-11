@@ -50,7 +50,7 @@
                             <div class="rw">
                                 <label class="form-label">Contact Person:</label>
                                 <select type="text" asp-for="ContactId" id="selCon" style="height:34px ; color:black;" class="form-select" required></select>
-
+                                <input type="email" asp-for="ContactEmail" id="hConEm" hidden/>
                             </div>
                             
                         </div>
@@ -118,7 +118,8 @@
                         cols= cols+"<option value='"+data[i].id+"' selected>"+data[i].contactName+"</option>"; 
                       }else{
                             cols = cols+ "<option value='" + data[i].id + "'>" + data[i].contactName + "</option>";
-                        }
+                            
+                      }
                         
                         
                     }
@@ -142,6 +143,17 @@
 
         LoadContact();
 
+    });
+    $('#selCon').on("change", function(){
+        var id= $(this).val();
+        alert(id);
+        $.ajax({
+            url: "/Issue/GetEmail?id="+id,
+            type:"post",
+            success:function(data){
+                var email = $('#hConEm').val(data.email);
+            }
+        });
     });
     $('#addRegister').on('hidden.bs.modal', function () {
         location.reload();

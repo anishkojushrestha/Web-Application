@@ -82,3 +82,5 @@ EmailPws varchar(50),
 PORT varchar(50),
 SMTP varchar(50)
 )
+
+Select i.*, U.UserName, c.CompanyName,p.ContactId, p.ContactName,p.Email as ContactEmail, p.PhoneNumber from Issue i left join users u on u.UserId = i.UserId join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId

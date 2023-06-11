@@ -62,6 +62,12 @@ namespace Web_Application.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult GetEmail(int id)
+        {
+            IssueDbHandle idh = new IssueDbHandle();
+            var result= idh.GetEmail(id);
+            return Json(result);
+        }
 
         public IActionResult Contact(int id)
         {

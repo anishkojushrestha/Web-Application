@@ -70,9 +70,6 @@ namespace Web_Application.Models
                     {
                         Id = Convert.ToInt32(dr["AttachmentId"]),
                         AttachmentName = Convert.ToString(dr["AttachmentName"]),
-
-
-
                     });
             }
             return list;

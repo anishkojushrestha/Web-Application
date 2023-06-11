@@ -145,7 +145,7 @@
                                             <input type="text" name="address" id="address" class="form-control" style="height:33px">
                                         </div>
                                     </div>
-                                    <div class="row pb-3">
+                                    <div class="row pb-1">
                                         <div class="rws">
                                             <label class="form-label">Phone Number:</label>
                                             <input type="text" name="phoneNumber" id="phone" class="form-control" style="height:33px">
@@ -154,6 +154,13 @@
                                             <label class="form-label">Mobile Number:</label>
                                             <input type="text" name="mobileNumber" id="mobile" class="form-control" style="height:33px">
                                         </div>
+                                        <div class="rws">
+                                            <label class="form-label">Email:</label>
+                                            <input type="email" class="form-control" id="email" style="height:33px" />
+                                        </div>
+                                    </div>
+                                    <div class="row pb-3">
+                                        
                                         <div class="rws">
                                             <label class="form-label">Desigation:</label>
                                             <select class="form-select" id="designation" name="designation" style="height:33px">
@@ -206,6 +213,7 @@
                                             <th scope="col">Contact Name</th>
                                             <th scope="col">Gender</th>
                                             <th scope="col">Address</th>
+                                            <th scope="col">Email</th>
                                             <th scope="col">Phone</th>
                                             <th scope="col">Mobile</th>
                                             <th scope="col">Designation</th>
@@ -234,11 +242,15 @@
                                                                 <input type='text' style='height:33px;' readonly value="@item.Address" class='form-control' name='contactPersonVM[@rowcount].Address' id="txtAddress_@rowcount" />
                                                             </td>
                                                             <td>
+                                                                <input style='height:33px;' type='email' readonly value="@item.Email" class='form-control' name='contactPersonVM[@rowcount].Email' id="txtEmail_@rowcount" />
+                                                            </td>
+                                                            <td>
                                                                 <input type='text' style='height:33px;' readonly value="@item.phoneNumber" class='form-control' name='contactPersonVM[@rowcount].PhoneNumber' id="txtPhoneNumber_@rowcount" />
                                                             </td>
                                                             <td>
                                                                 <input style='height:33px;' type='text' readonly value="@item.MobileNumber" class='form-control' name='contactPersonVM[@rowcount].MobileNumber' id="txtMobileNumber_@rowcount" />
                                                             </td>
+                                                            
                                                             <td>
                                                                 <input style='height:33px;' type='text' readonly value="@item.Designation" class='form-control' name='contactPersonVM[@rowcount].Designation' id="txtDesignation_@rowcount" />
                                                             </td>
@@ -312,6 +324,7 @@
                 var contactname = $('#contact').val();
                 var gender = $('#gender').val();
                 var address = $('#address').val();
+                var email = $('#email').val();
                 var phonenumber = $('#phone').val();
                 var mobilenumber = $('#mobile').val();
                 var designation = $('#designation').val();
@@ -319,12 +332,13 @@
                 $("#txtContactName_" + rowid).val(contactname)
                 $("#txtGender_" + rowid).val(gender)
                 $("#txtAddress_" + rowid).val(address)
+                $("#txtEmail_" + rowid).val(email)
                 $("#txtPhoneNumber_" + rowid).val(phonenumber)
                 $("#txtMobileNumber_" + rowid).val(mobilenumber)
                 $("#txtDesignation_" + rowid).val(designation)
             } else {
 
-                cols = cols + "<tr id='tr_" + rowCount + "'><td><input type='text' readonly class='form-control' style='height:33px;' name='contactPersonVM[" + rowCount + "].ContactName' id='txtContactName_" + rowCount + "' value = '" + $("#contact").val() + "' /> </td><td><input type='text' style='height:33px;' name='contactPersonVM[" + rowCount + "].Gender' class='form-control' readonly id='txtGender_" + rowCount + "' value='" + $("#gender").val() + "'/ > </td><td><input type='text' style='height:33px;' readonly id='txtAddress_" + rowCount + "' class='form-control' name='contactPersonVM[" + rowCount + "].Address'  value='" + $("#address").val() + "'/ > </td><td><input type='text' readonly style='height:33px;' class='form-control' id='txtPhoneNumber_" + rowCount + "' name='contactPersonVM[" + rowCount + "].PhoneNumber' value='" + $("#phone").val() + "'/ > </td><td><input style='height:33px;' readonly type='text' class='form-control' id='txtMobileNumber_" + rowCount + "' name='contactPersonVM[" + rowCount + "].MobileNumber' value='" + $("#mobile").val() + "'/ > </td><td><input style='height:33px;' readonly type='text' class='form-control' id='txtDesignation_" + rowCount + "' name='contactPersonVM[" + rowCount + "].Designation' value='" + $("#designation").val() + "'/ > </td><td style='display: flex; readonly padding-right: 1px;'><button type='submit' onclick='return confirm('Are sure wants to delete?');' class='btn btn-link btn-sm px-1' id='delete' data-recCount='" + rowCount + "' data-recid='" + rowCount + "'  data-ripple-color='dark'><i class='fas fa-times'></i > </button><button readonly  type='button' class='btn btn-link btn-sm px-1 btnEdit' data-rowcount='" + rowCount + "' data-recid='" + rowCount + "' data-ripple-color='dark'><i class='fa-solid fa-pen'></i></button></<td> </tr>";
+                cols = cols + "<tr id='tr_" + rowCount + "'><td><input type='text' readonly class='form-control' style='height:33px;' name='contactPersonVM[" + rowCount + "].ContactName' id='txtContactName_" + rowCount + "' value = '" + $("#contact").val() + "' /> </td><td><input type='text' style='height:33px;' name='contactPersonVM[" + rowCount + "].Gender' class='form-control' readonly id='txtGender_" + rowCount + "' value='" + $("#gender").val() + "'/ > </td><td><input type='text' style='height:33px;' readonly id='txtAddress_" + rowCount + "' class='form-control' name='contactPersonVM[" + rowCount + "].Address'  value='" + $("#address").val() + "'/ > </td><td><input type='text' style='height:33px;' readonly id='txtEmail_" + rowCount + "' class='form-control' name='contactPersonVM[" + rowCount + "].Email'  value='" + $("#email").val() + "'/ > </td><td><input type='text' readonly style='height:33px;' class='form-control' id='txtPhoneNumber_" + rowCount + "' name='contactPersonVM[" + rowCount + "].PhoneNumber' value='" + $("#phone").val() + "'/ > </td><td><input style='height:33px;' readonly type='text' class='form-control' id='txtMobileNumber_" + rowCount + "' name='contactPersonVM[" + rowCount + "].MobileNumber' value='" + $("#mobile").val() + "'/ > </td><td><input style='height:33px;' readonly type='text' class='form-control' id='txtDesignation_" + rowCount + "' name='contactPersonVM[" + rowCount + "].Designation' value='" + $("#designation").val() + "'/ > </td><td style='display: flex; readonly padding-right: 1px;'><button type='submit' onclick='return confirm('Are sure wants to delete?');' class='btn btn-link btn-sm px-1' id='delete' data-recCount='" + rowCount + "' data-recid='" + rowCount + "'  data-ripple-color='dark'><i class='fas fa-times'></i > </button><button readonly  type='button' class='btn btn-link btn-sm px-1 btnEdit' data-rowcount='" + rowCount + "' data-recid='" + rowCount + "' data-ripple-color='dark'><i class='fa-solid fa-pen'></i></button></<td> </tr>";
 
             }
             //alert(cols);
@@ -334,6 +348,7 @@
             var p = $("#phone").val('');
             var m = $("#mobile").val('');
             var a = $("#address").val('');
+            var e = $("#email").val('');
             rowCount++;
 
             $("#hiddbRecid").val('-1')
@@ -351,6 +366,7 @@
     $(document).on("click", '.btnEdit', function () {
         $("#contact").val('');
         $("#address").val('');
+        $("#email").val('');
         $("#gender").val('');
         $("#phonenumber").val('');
         $("#mobilenumber").val('');
@@ -366,12 +382,14 @@
         var contactname = $('#txtContactName_' + rowid).val();
         var gender = $('#txtGender_' + rowid).val();
         var address = $('#txtAddress_' + rowid).val();
+        var email = $('#txtEmail_' + rowid).val();
         var phonenumber = $('#txtPhoneNumber_' + rowid).val();
         var mobilenumber = $('#txtMobileNumber_' + rowid).val();
         var designation = $('#txtDesignation_' + rowid).val();
         $("#contact").val(contactname);
         $("#gender").val(gender);
         $("#address").val(address);
+        $("#email").val(email);
         $("#phone").val(phonenumber);
         $("#mobile").val(mobilenumber);
         $("#designation").val(designation);

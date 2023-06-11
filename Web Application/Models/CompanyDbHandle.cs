@@ -31,14 +31,14 @@ namespace Web_Application.Models
                 {
                     if (data.Id != 0)
                     {
-                        str.Append(" update contactperson set ContactName = '" + data.ContactName + "',Gender = '" + data.Gender + "', Address = '" + data.Address + "',PhoneNumber = " + data.phoneNumber + ", MobileNumber = " + data.MobileNumber + ", designation = '" + data.Designation + "' where ContactId =" + data.Id + "  \n");
+                        str.Append(" update contactperson set ContactName = '" + data.ContactName + "',Gender = '" + data.Gender + "', Address = '" + data.Address + "', Email = '"+data.Email+"', PhoneNumber = " + data.phoneNumber + ", MobileNumber = " + data.MobileNumber + ", designation = '" + data.Designation + "' where ContactId =" + data.Id + "  \n");
                         
                     }
                     else
                     {
                         str.Append("set @pid = (select isnull(max(ContactId),0)+1 from ContactPerson)\n");
 
-                        str.Append("INSERT INTO ContactPerson(ContactId, ContactName, Gender,Address, PhoneNumber, MobileNumber,Designation, CompanyId ) VALUES(@pid, '" + data.ContactName + "','" + data.Gender + "','" + data.Address + "'," + data.phoneNumber + "," + data.MobileNumber + ",'" + data.Designation + "'," + vm.Id + ") \n");
+                        str.Append("INSERT INTO ContactPerson(ContactId, ContactName, Gender,Address,Email, PhoneNumber, MobileNumber,Designation, CompanyId ) VALUES(@pid, '" + data.ContactName + "','" + data.Gender + "','" + data.Address + "','" + data.Email + "'," + data.phoneNumber + "," + data.MobileNumber + ",'" + data.Designation + "'," + vm.Id + ") \n");
                     }
                 }
             }
@@ -50,7 +50,7 @@ namespace Web_Application.Models
 
                     str.Append("set @pid = (select isnull(max(ContactId),0)+1 from ContactPerson)\n");
 
-                    str.Append("INSERT INTO ContactPerson(ContactId, ContactName, Gender,Address, PhoneNumber, MobileNumber,Designation, CompanyId ) VALUES(@pid, '" + data.ContactName + "','" + data.Gender + "','" + data.Address + "'," + data.phoneNumber + "," + data.MobileNumber + ",'" + data.Designation + "',@cid) \n");
+                    str.Append("INSERT INTO ContactPerson(ContactId, ContactName, Gender,Address, Email, PhoneNumber, MobileNumber,Designation, CompanyId ) VALUES(@pid, '" + data.ContactName + "','" + data.Gender + "','" + data.Address + "','" + data.Email + "'," + data.phoneNumber + "," + data.MobileNumber + ",'" + data.Designation + "',@cid) \n");
 
                 }
             }
@@ -128,6 +128,7 @@ namespace Web_Application.Models
                         Id = Convert.ToInt32(dr["ContactId"]),
                         ContactName = Convert.ToString(dr["ContactName"]),
                         Address = Convert.ToString(dr["Address"]),
+                        Email = Convert.ToString(dr["Email"]),
                         phoneNumber = Convert.ToInt32(dr["PhoneNumber"]),
                         MobileNumber = Convert.ToInt32(dr["MobileNumber"]),
                         Gender = Convert.ToString(dr["Gender"]),
@@ -202,6 +203,7 @@ namespace Web_Application.Models
                     Id= Convert.ToInt32(dr["ContactId"]),
                     ContactName = Convert.ToString(dr["ContactName"]),
                     Address = Convert.ToString(dr["Address"]),
+                    Email = Convert.ToString(dr["Email"]),
                     phoneNumber = Convert.ToInt32(dr["PhoneNumber"]),
                     MobileNumber = Convert.ToInt32(dr["MobileNumber"]),
                     Gender = Convert.ToString(dr["Gender"]),

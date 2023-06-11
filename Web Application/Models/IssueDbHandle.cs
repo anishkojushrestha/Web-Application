@@ -40,11 +40,29 @@ namespace Web_Application.Models
             }
             return list;
         }
+        public ContactPersonVM GetEmail(int id)
+        {
+            connection();
+            ContactPersonVM c = new ContactPersonVM();
+            SqlCommand cmd = new SqlCommand("select email from ContactPerson where ContactId = " + id, con);
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            DataTable dataTable = new DataTable();
+            con.Open();
+            ad.Fill(dataTable);
+            con.Close();
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                c.Email = Convert.ToString(dr["Email"]);
+            }
+                
+            return c;
+
+        }
         public List<ContactPersonVM> GetContact(int id)
         {
             connection();
             List<ContactPersonVM> list = new List<ContactPersonVM>();
-            SqlCommand cmd = new SqlCommand("select ContactId, ContactName from ContactPerson where CompanyId = "+id, con);
+            SqlCommand cmd = new SqlCommand("select ContactId, ContactName, Email from ContactPerson where CompanyId = "+id, con);
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             con.Open();
@@ -57,6 +75,7 @@ namespace Web_Application.Models
                     {
                         Id = Convert.ToInt32(dr["ContactId"]),
                         ContactName = Convert.ToString(dr["ContactName"]),
+                        Email = Convert.ToString(dr["Email"]),
 
                     }
                     );
@@ -236,7 +255,7 @@ namespace Web_Application.Models
         {
             connection();
             List<IssueVM> list = new List<IssueVM>();
-            SqlCommand cmd = new SqlCommand("Select i.*, U.UserName, c.CompanyName,p.ContactId, p.ContactName, p.PhoneNumber from Issue i left join users u on u.UserId = i.UserId join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId", con);
+            SqlCommand cmd = new SqlCommand("Select i.*, U.UserName, c.CompanyName,p.ContactId, p.ContactName,p.Email as ContactEmail, p.PhoneNumber from Issue i left join users u on u.UserId = i.UserId join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId", con);
             //SqlCommand cmd = new SqlCommand("Select i.*,  c.CompanyName, p.ContactName, p.PhoneNumber from Issue i join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId", con);
             SqlDataAdapter ad = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
@@ -263,6 +282,7 @@ namespace Web_Application.Models
                         AssignedDate = Convert.ToString(dr["AssignedDate"]),
                         CompanyId = Convert.ToInt32(dr["CompanyId"]),
                         ContactId = Convert.ToInt32(dr["ContactId"]),
+                        ContactEmail = Convert.ToString(dr["ContactEmail"]),
                     });
             }
             return list;
