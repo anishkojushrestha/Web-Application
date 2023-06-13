@@ -27,32 +27,29 @@
                             <input asp-for="Id" id="txtId" hidden/>
                             <div class="rw" >
                                 <label class="form-label">Company:</label>
-                                <select type="text" asp-for="CompanyId" asp-items="ViewBag.Company" id="selComp" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required>
-                                    <option selected disabled>----select----</option>
+                                <select asp-for="CompanyId" asp-items="ViewBag.Company" id="selComp" style="height:34px;" class="form-select" data-show-subtext="false" data-live-search="true" required>
+                                    <option selected disabled>select</option>
                                 </select>
                             </div>
                             <div class="rw " >
                                 <label class="form-label">Created Date:</label>
                                 <input type="date" asp-for="CreatedDate" style="height:33px" class="form-control" style="height:65px;" required/>
                             </div>
-                            
-                            
                         </div>
                         <div class="row pb-2">
                             <div class="rw ">
                                 <label class="form-label">Status:</label>
-                                <select type="text" asp-for="Status" style="height:33px" class="form-select" style="height:65px;" required>
+                                <select type="text" asp-for="Status" style="height:33px" class="form-select"  style="height:65px;" required>
                                     <option selected disabled>----Select Status----</option>
                                     <option>Open</option>
                                     <option>Close</option>
                                 </select>
                             </div>
                             <div class="rw">
-                                <label class="form-label">Contact Person:</label>s
+                                <label class="form-label">Contact Person:</label>
                                 <select type="text" asp-for="ContactId" id="selCon" style="height:34px ; color:black;" class="form-select" required></select>
                                 <input type="email" asp-for="ContactEmail" id="hConEm" hidden/>
                             </div>
-                            
                         </div>
                         <div class="row pb-2">
                             <div class="rw1">
@@ -88,7 +85,6 @@
                         <div class="row">
                             <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
                                 <button type="submit"  class="btn btn-primary">Submit</button>
-
                             </div>
                         </div>
 
@@ -103,6 +99,8 @@
 </div>
 <script>
     $(document).ready(function(){
+        //$('.selectpicker').selectpicker({
+        //});
         function LoadContact(){
             var cid = $("#txtcid").val();
             
@@ -115,13 +113,10 @@
                     var cols="";
                     for (var i = 0; i < data.length; i++) {
                       if(cid==data[i].id){
-                        cols= cols+"<option value='"+data[i].id+"' selected>"+data[i].contactName+"</option>"; 
-                      }else{
-                            cols = cols+ "<option value='" + data[i].id + "'>" + data[i].contactName + "</option>";
-                            
+                            cols = cols + "<option value='" + data[i].id + "'  selected>" + data[i].contactName + "</option>";
+                        }else{
+                            cols = cols + "<option  value='" + data[i].id + "'>" + data[i].contactName + "</option>";
                       }
-                        
-                        
                     }
                     
                     $('#selCon').append(cols);
@@ -142,11 +137,10 @@
         });
 
         LoadContact();
-
+        
     });
     $('#selCon').on("change", function(){
         var id= $(this).val();
-        alert(id);
         $.ajax({
             url: "/Issue/GetEmail?id="+id,
             type:"post",
@@ -155,6 +149,7 @@
             }
         });
     });
+    
     $('#addRegister').on('hidden.bs.modal', function () {
         location.reload();
 })

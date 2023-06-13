@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Plugins;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -35,8 +36,16 @@ namespace Web_Application.Models
             StringBuilder str = new StringBuilder();
             str.Append(" declare @uid bigint \n");
             str.Append(" set @uid = (select isnull(max(userid), 0) + 1 from users) \n");
-            str.Append(" INSERT into users(UserId, FirstName, LastName, UserName, Email, Password, Profile, IsActive) VALUES(@uid,'" + vm.FirstName + "','" + vm.LastName + "', '" + vm.UserName + "','" + vm.Email + "','" + pass + "','"+vm.Profile+"','"+vm.IsActive+"')\n");
-            
+            if(vm.CompanyId == 0)
+            {
+                str.Append(" INSERT into users(UserId, FirstName, LastName, UserName, Email, Password, Profile, IsActive) VALUES(@uid,'" + vm.FirstName + "','" + vm.LastName + "', '" + vm.UserName + "','" + vm.Email + "','" + pass + "','" + vm.Profile + "','" + vm.IsActive + "')\n");
+
+            }
+            else{
+                str.Append(" INSERT into users(UserId, FirstName, LastName, UserName, Email, Password, Profile, IsActive,CompanyId) VALUES(@uid,'" + vm.FirstName + "','" + vm.LastName + "', '" + vm.UserName + "','" + vm.Email + "','" + pass + "','" + vm.Profile + "','" + vm.IsActive + "'," + vm.CompanyId + ")\n");
+
+            }
+
             SqlCommand cmd = new SqlCommand(str.ToString(), con);
             con.Open();
             int i = cmd.ExecuteNonQuery();
@@ -47,14 +56,15 @@ namespace Web_Application.Models
                 return false;
         }
 
-        public bool UserExist(string username, string password) { 
+        public bool UserExist(string username, string password)
+        {
             //establish the database connection
             connection();
-            
+
             string pass = hasdPassword(password);
             //create sql cmd
-            SqlCommand cmd = new SqlCommand("SELECT UserName, Password FROM users WHERE UserName = '"+username+"' And Password = '"+ pass + "'", con);
-            
+            SqlCommand cmd = new SqlCommand("SELECT UserName, Password FROM users WHERE UserName = '" + username + "' And Password = '" + pass + "'", con);
+
             //create object and pass sql command
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
             //create database table to hold data
@@ -77,7 +87,8 @@ namespace Web_Application.Models
         {
             connection();
             List<UpdateRegisterVM> registerList = new List<UpdateRegisterVM>();
-            SqlCommand cmd = new SqlCommand("SELECT * from users", con);
+            SqlCommand cmd = new SqlCommand("Select u.UserId, u.FirstName, u.LastName, u.UserName, u.Email, u.Profile, u.IsActive , c.CompanyName from users u left join CompanyInfo c on c.CompanyId = u.CompanyId", con);
+            //SqlCommand cmd = new SqlCommand("SELECT * from users", con);
 
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
@@ -96,8 +107,9 @@ namespace Web_Application.Models
                         UserName = Convert.ToString(dr["UserName"]),
                         Email = Convert.ToString(dr["Email"]),
                         Profile = Convert.ToString(dr["Profile"]),
-                        IsActive= Convert.ToBoolean(dr["IsActive"]),
-                        
+                        IsActive = Convert.ToBoolean(dr["IsActive"]),
+                        CompanyName = Convert.ToString(dr["CompanyName"]),
+
                     });
             }
             return registerList;
@@ -105,7 +117,7 @@ namespace Web_Application.Models
         public bool UpdateRegister(int Id, string FirstName, string LastName, string UserName, string Email, string Profile, int CompanyId)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '"+Profile+"' WHERE UserId = "+Id+"", con);
+            SqlCommand cmd = new SqlCommand("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '" + Profile + "' WHERE UserId = " + Id + "", con);
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();
@@ -132,8 +144,21 @@ namespace Web_Application.Models
             else
                 return false;
         }
-        
 
+        public void SeedData()
+        {
+            connection();
+            string pass = hasdPassword("admin");
+            StringBuilder str = new StringBuilder();
+            str.Append(" declare @uid bigint \n");
+            str.Append(" set @uid = (select isnull(max(userid), 0) + 1 from users) \n");
+            str.Append(" INSERT into users(UserId, FirstName, LastName, UserName, Email, Password, Profile, IsActive) VALUES(@uid,'Super','Admin', 'admin','admin@gmail.com','" + pass + "','SuperAdmin','True')\n");
+
+            SqlCommand cmd = new SqlCommand(str.ToString(), con);
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
 
     }
 }

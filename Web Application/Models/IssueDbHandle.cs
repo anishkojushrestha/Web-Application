@@ -34,13 +34,13 @@ namespace Web_Application.Models
                     {
                         Id = Convert.ToInt32(dr["UserId"]),
                         UserName = Convert.ToString(dr["Username"]),
-
                     }
                     );
             }
             return list;
         }
-        public ContactPersonVM GetEmail(int id)
+
+        public ContactPersonVM Email(int id)
         {
             connection();
             ContactPersonVM c = new ContactPersonVM();
@@ -55,6 +55,24 @@ namespace Web_Application.Models
                 c.Email = Convert.ToString(dr["Email"]);
             }
                 
+            return c;
+
+        }
+        public RegisterVM Transfer(int id)
+        {
+            connection();
+            RegisterVM c = new RegisterVM();
+            SqlCommand cmd = new SqlCommand("select u.UserName from Issue i join users u on u.UserId = i.UserId where IssueID = " + id, con);
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            DataTable dataTable = new DataTable();
+            con.Open();
+            ad.Fill(dataTable);
+            con.Close();
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                c.UserName = Convert.ToString(dr["UserName"]);
+            }
+
             return c;
 
         }
@@ -215,13 +233,11 @@ namespace Web_Application.Models
                     {
                         Id = Convert.ToInt32(dr["AttachmentId"]),
                         AttachmentName = Convert.ToString(dr["AttachmentName"]),
-
-
-
                     });
             }
             return list;
         }
+
         public List<IssueSupportVM> GetIssueSupport()
         {
             connection();
@@ -243,9 +259,6 @@ namespace Web_Application.Models
                         IssueNo = Convert.ToString(dr["IssueNo"]),
                         AssignedDate = Convert.ToString(dr["AssignedDate"]),
                         AssignedBy = Convert.ToString(dr["ContactName"]),
-
-
-
                     });
             }
             return list;
@@ -367,7 +380,6 @@ namespace Web_Application.Models
                         EmailPws = Convert.ToString(dr["EmailPws"]),
                         PORT = Convert.ToString(dr["PORT"]),
                         SMTP = Convert.ToString(dr["SMTP"]),
-
                     });
             }
             return list;

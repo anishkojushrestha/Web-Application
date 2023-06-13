@@ -18,15 +18,15 @@ namespace Web_Application.Models
         {
             connection();
             var registerDate = vm.RegistrationDate.ToString("MM/dd/yyyy");
-            var AchiveFrom = vm.ValidFrom.ToString("MM/dd/yyyy");
-            var AchiveTo = vm.ValidTo.ToString("MM/dd/yyyy");
+            var validFrom = vm.ValidFrom.ToString("MM/dd/yyyy");
+            var validTo = vm.ValidTo.ToString("MM/dd/yyyy");
             StringBuilder str = new StringBuilder();
             str.Append(" declare @cid bigint \n");
             str.Append(" set @cid = (select isnull(max(companyid), 0) + 1 from CompanyInfo) \n");
             str.Append("declare @pid bigint\n");
             if (vm.Id != null)
             {
-                str.Append("UPDATE CompanyInfo SET CompanyName = '" + vm.CompanyName + "', Address = '" + vm.Address + "',Email = '" + vm.Email + "',PanNumber = " + vm.PanNumber + ", City = '" + vm.City + "', Country = '" + vm.Country + "',RegistrationDate = '" + registerDate + "', AchiveFrom = '" + AchiveFrom + "', AchiveTo = '" + AchiveTo + "' WHERE CompanyId = " + vm.Id + "\n");
+                str.Append("UPDATE CompanyInfo SET CompanyName = '" + vm.CompanyName + "', Address = '" + vm.Address + "',Email = '" + vm.Email + "',PanNumber = " + vm.PanNumber + ", City = '" + vm.City + "', Country = '" + vm.Country + "',RegistrationDate = '" + registerDate + "', AchiveFrom = '" + validFrom + "', AchiveTo = '" + validTo + "' WHERE CompanyId = " + vm.Id + "\n");
                 foreach (var data in vm.contactPersonVM)
                 {
                     if (data.Id != 0)
@@ -44,7 +44,7 @@ namespace Web_Application.Models
             }
             else
             {
-                str.Append(" INSERT INTO CompanyInfo(CompanyId,CompanyName, Email, PanNumber, Address, City,Country, RegistrationDate, AchiveFrom, AchiveTo ) VALUES(@cid,'" + vm.CompanyName + "','" + vm.Email + "'," + vm.PanNumber + ",'" + vm.Address + "','" + vm.City + "','" + vm.Country + "','" + registerDate + "','" + AchiveFrom + "','" + AchiveTo + "') \n");
+                str.Append(" INSERT INTO CompanyInfo(CompanyId,CompanyName, Email, PanNumber, Address, City,Country, RegistrationDate, ValidFrom, ValidTo ) VALUES(@cid,'" + vm.CompanyName + "','" + vm.Email + "'," + vm.PanNumber + ",'" + vm.Address + "','" + vm.City + "','" + vm.Country + "','" + registerDate + "','" + validFrom + "','" + validTo + "') \n");
                 foreach (var data in vm.contactPersonVM)
                 {
 
@@ -54,16 +54,7 @@ namespace Web_Application.Models
 
                 }
             }
-            
-
-            
-
-           
-//insert into[dbo].[ContactPerson] (contactname, phonenumber, mobilenumber, companyid)
-//select 'contactperson1','1111','4554555',@cid
-
-
-
+       
             SqlCommand cmd = new SqlCommand(str.ToString(), con);
             con.Open();
             var i = cmd.ExecuteNonQuery();
@@ -98,8 +89,8 @@ namespace Web_Application.Models
                         City = Convert.ToString(dr["City"]),
                         Country = Convert.ToString(dr["Country"]),
                         RegistrationDate = Convert.ToDateTime(dr["RegistrationDate"]),
-                        ValidFrom = Convert.ToDateTime(dr["AchiveFrom"]),
-                        ValidTo = Convert.ToDateTime(dr["AchiveTo"]),
+                        ValidFrom = Convert.ToDateTime(dr["ValidFrom"]),
+                        ValidTo = Convert.ToDateTime(dr["ValidTo"]),
                         
 
                     });

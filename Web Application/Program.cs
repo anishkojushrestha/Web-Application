@@ -1,3 +1,7 @@
+using System.Data.SqlClient;
+using System.Drawing;
+using Web_Application.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,7 +14,6 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -31,3 +34,9 @@ app.MapControllerRoute(
     pattern: "{controller=User}/{action=Login}/{id?}");
 
 app.Run();
+
+static void DataSedding()
+{
+    UserDbHandle udh = new UserDbHandle();
+    udh.SeedData();
+}

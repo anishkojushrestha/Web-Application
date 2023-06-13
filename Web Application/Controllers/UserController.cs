@@ -64,6 +64,7 @@ namespace Web_Application.Controllers
         {
             return View();
         }
+
         [HttpPost]
 
         public IActionResult Login(LoginVM vm)
@@ -129,5 +130,8 @@ namespace Web_Application.Controllers
                 return View();
             }
         }
+
+       
+        
     }
 }

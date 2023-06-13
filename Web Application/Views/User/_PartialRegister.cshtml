@@ -1,5 +1,4 @@
 ﻿@model Web_Application.ModelViews.RegisterVM
-
 <style>
     .rw {
         width: 48%;
@@ -48,12 +47,23 @@
                         <div class="row pb-1">
                             <div class="rw1">
                                 <label class="form-label">Profile:</label>
-                                <select asp-for="Profile" style="height:33px" class="form-select">
+                                <select asp-for="Profile" style="height:33px" id="selProf" class="form-select">
                                     <option>Admin</option>
                                     <option>SuperAdmin</option>
                                     <option>OMSUser</option>
                                     <option>Support</option>
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="row pb-1" id="selDiv" style="display:none">
+                            <div class="rw1">
+                                <label class="form-label">Company:</label>
+                                <select asp-for="CompanyId" id="selComp" st asp-items="ViewBag.Company" style="height:33px" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                            
+
                             </div>
                         </div>
                         <div class="row pb-2">
@@ -88,3 +98,12 @@
         </div>
     </div>
 </div>
+<script>
+    $("#selProf").on("change", function(){
+        if ($(this).val() === "OMSUser"){
+            document.getElementById("selDiv").style.display ="block";
+        } else{
+            document.getElementById("selDiv").style.display = "none";
+        }
+    })
+</script>

@@ -17,6 +17,7 @@ ContactId bigint NOT NULL primary key,
 ContactName varchar(50), 
 Gender varchar(50),
 Address varchar(50),
+Email varchar(50),
 PhoneNumber int,
 MobileNumber int,
 Designation varchar(50),
@@ -24,7 +25,7 @@ CompanyId bigint foreign key References CompanyInfo(CompanyId)
 
 )
 
-CREATE TABLE users(
+CREATE TABLE User(
 UserId bigint NOT NULL primary key,
 FirstName varchar(50),
 LastName varchar(50),
@@ -32,7 +33,8 @@ UserName varchar(50),
 Email varchar(50),
 Password varchar(50),
 Profile varchar(50),
-IsActive bit,)
+IsActive bit,
+CompanyId bigint foreign key References companyinfo(CompanyId)
 )
 
 CREATE TABLE Issue(
@@ -62,11 +64,18 @@ Create TABLE Attachments(
 AttachmentId bigint NOT NULL primary key,
 AttachmentName varchar(200),
 
-IssueId bigint foreign key references Issue(IssueId)
+IssueId bigint foreign key references Issue(IssueId),
 IssueActivityId bigint foreign key references IssueActivity(IssueActivityId)
 )
 
-
+Create TABLE IssueTransfer(
+IssueTransferId bigint NOT NULL primary Key,
+TransferedFrom varchar(50),
+TransferedTo varchar(50),
+TransferedDate date,
+CurrentStage varchar(50),
+IssueId bigint foreign key references Issue(IssueId)
+)
 
 Create TABLE IssueSupport(
 IssueSupportId bigint NOT NULL primary key,
@@ -76,7 +85,7 @@ IssueId bigint foreign key references Issue(IssueId),
 UserId bigint foreign key references users(UserId),
 
 )
-Create EmailSetting(
+Create Table EmailSetting(
 EmailId varchar(50),
 EmailPws varchar(50),
 PORT varchar(50),

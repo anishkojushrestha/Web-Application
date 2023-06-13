@@ -156,7 +156,7 @@ poupu
 
                             <div class="rw">
                                 <label class="form-label">Delete Date:</label>
-                                <input type="date" name="DeleteBy" style="height:33px" class="form-control" required>
+                                <input type="date" name="DeletedBy" style="height:33px" class="form-control" required>
                             </div>
                         </div>
 
@@ -248,13 +248,12 @@ poupu
                                     <option selected disabled>Select Issue Number</option>
                                 </select>
                             </div>
-
                         </div>*@
                         <div class="row pb-1">
                             <div class="rw">
                                 <label class="form-label">Transfer From:</label>
-                                <select type="text" name="TransferFrom" asp-items="ViewBag.User" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required>
-                                    <option selected disabled>Select Transfer From</option>
+                                <select type="text" name="TransferFrom" id="selTrans" asp-items="ViewBag.User" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required>
+                                    <option  selected disabled>Select Transfer From</option>
                                 </select>
                             </div>
                         </div>
@@ -289,8 +288,6 @@ poupu
                         </div>
 
                     </div>
-
-
                 </form>
 @*                <input type="button" value="close" id="btnclose" onclick="closepopup();" />
 *@            </div>
@@ -322,6 +319,16 @@ poupu
         function ShowPopupTransfer(e) {
             $("#modalPopup4").modal('show');
             var issueid = $(e).attr("data-id");
+            if(issueid != null){
+                $.ajax({
+                    url: "/Issue/GetTransfer?id=" + issueid,
+                    type: "post",
+                    success: function (data) {
+                            $("#selTrans").val(data.userName);
+                    }
+                })
+            }
+            
             $("#txtIId").val(issueid);
 
         }
