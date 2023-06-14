@@ -26,7 +26,7 @@ namespace Web_Application.Models
             str.Append("declare @pid bigint\n");
             if (vm.Id != null)
             {
-                str.Append("UPDATE CompanyInfo SET CompanyName = '" + vm.CompanyName + "', Address = '" + vm.Address + "',Email = '" + vm.Email + "',PanNumber = " + vm.PanNumber + ", City = '" + vm.City + "', Country = '" + vm.Country + "',RegistrationDate = '" + registerDate + "', AchiveFrom = '" + validFrom + "', AchiveTo = '" + validTo + "' WHERE CompanyId = " + vm.Id + "\n");
+                str.Append("UPDATE CompanyInfo SET CompanyName = '" + vm.CompanyName + "', Address = '" + vm.Address + "',Email = '" + vm.Email + "',PanNumber = " + vm.PanNumber + ", City = '" + vm.City + "', Country = '" + vm.Country + "',RegistrationDate = '" + registerDate + "', ValidFrom = '" + validFrom + "', ValidTo = '" + validTo + "' WHERE CompanyId = " + vm.Id + "\n");
                 foreach (var data in vm.contactPersonVM)
                 {
                     if (data.Id != 0)
@@ -186,8 +186,8 @@ namespace Web_Application.Models
                     cv.City = Convert.ToString(dr["City"]);
                     cv.Country = Convert.ToString(dr["Country"]);
                     cv.RegistrationDate = Convert.ToDateTime(dr["RegistrationDate"]);
-                    cv.ValidFrom = Convert.ToDateTime(dr["AchiveFrom"]);
-                    cv.ValidTo = Convert.ToDateTime(dr["AchiveTo"]);
+                    cv.ValidFrom = Convert.ToDateTime(dr["ValidFrom"]);
+                    cv.ValidTo = Convert.ToDateTime(dr["ValidTo"]);
                 }
                 cv.contactPersonVM.Add(new ContactPersonVM
                 {
