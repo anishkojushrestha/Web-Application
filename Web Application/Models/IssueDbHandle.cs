@@ -160,7 +160,6 @@ namespace Web_Application.Models
                 str.Append("set @aid = (select isnull(max(AttachmentId), 0) + 1 from Attachments) \n");
                 str.Append("insert into Attachments(AttachmentId, AttachmentName, IssueId) values(@aid, '" + data + "', " + vm.Id + ") \n");
             }
-            
             SqlCommand cmd = new SqlCommand(str.ToString(), con);
             con.Open();
             var i = cmd.ExecuteNonQuery();

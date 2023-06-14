@@ -45,8 +45,6 @@ namespace Web_Application.Controllers
                 }
             }
             return RedirectToAction("Index");
-
-
         }
         public ActionResult Delete(int id)
         {
