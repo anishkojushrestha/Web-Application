@@ -55,7 +55,12 @@
                                 <td>@data.CompanyName</td>
                                 <td>@data.CreatedDate.ToShortDateString()</td>
                                 <td>@data.UserName</td>
-                                <td>@data.AssignedDate</td>
+                           @* @{
+                                var dateString = data.AssignedDate;
+                                DateTime date = DateTime.ParseExact(dateString, "MM/dd/yyyy hh:mm:ss tt", null);
+                                DateTime dateOnly = date.Date;
+                            }*@
+                            <td>@data.AssignedDate</td>
                                 <td>@data.ContactName</td>
                                 <td>@data.PhoneNumber</td>
                                 <td>@data.IssueDescription</td>

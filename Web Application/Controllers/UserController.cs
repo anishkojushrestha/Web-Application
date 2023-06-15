@@ -83,9 +83,6 @@ namespace Web_Application.Controllers
                 var userinfo = userDbHandle.GetUser(vm.UserName, vm.Password);
                 if (userinfo.Count > 0)
                 {
-                    SessionHandler sessionHandler = new SessionHandler();
-                    //sessionHandler._userName = vm.UserName;
-                    //sessionHandler._userId = userinfo[0].Id.ToString();
                     
                     HttpContext.Session.SetString("userId", userinfo[0].Id.ToString());
                     HttpContext.Session.SetString("userFirstName", userinfo[0].FirstName.ToString());

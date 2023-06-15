@@ -250,7 +250,7 @@ namespace Web_Application.Models
         {
             connection();
             List<IssueSupportVM> list = new List<IssueSupportVM>();
-            SqlCommand cmd = new SqlCommand("select s.*, i.IssueNo, u.Username, c.ContactName from IssueSupport s left join users u on u.UserId = s.UserId join Issue i on i.IssueId = s.IssueId join ContactPerson c on c.ContactId = i.ContactId", con);
+            SqlCommand cmd = new SqlCommand("select s.*, i.IssueNo, u.UserName, c.ContactName from IssueSupport s left join users u on u.UserId = s.AssignedTo join Issue i on i.IssueId = s.IssueId join ContactPerson c on c.ContactId = i.ContactId", con);
             SqlDataAdapter ad = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             con.Open();
