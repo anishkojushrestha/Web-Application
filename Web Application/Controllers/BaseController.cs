@@ -9,7 +9,7 @@ namespace Web_Application.Controllers
         {
             string uFName = HttpContext.Session.GetString("userFirstName");
             string uLName = HttpContext.Session.GetString("userLastName");
-            ViewBag._userName = uFName.ToString() + "," + uLName.ToString();
+            ViewBag._userName = uFName + " " + uLName;
         }
 
     }
