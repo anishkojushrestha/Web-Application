@@ -3,7 +3,7 @@ using Web_Application.Models;
 
 namespace Web_Application.Controllers
 {
-    public class IssueSupportController : Controller
+    public class IssueSupportController : BaseController
     {
         public IActionResult Index()
         {

@@ -62,7 +62,15 @@ namespace Web_Application.Controllers
 
         public IActionResult Login()
         {
-            return View();
+            if (HttpContext.Session.GetString("userId") != null)
+            {
+                return RedirectToAction("Index", "Company");
+            }
+            else
+            {
+                return View();
+            }
+            
         }
 
         [HttpPost]
@@ -72,15 +80,38 @@ namespace Web_Application.Controllers
             if (ModelState.IsValid)
             {
                 UserDbHandle userDbHandle = new UserDbHandle();
-                if (userDbHandle.UserExist(vm.UserName, vm.Password) == true)
+                var userinfo = userDbHandle.GetUser(vm.UserName, vm.Password);
+                if (userinfo.Count > 0)
                 {
-                    HttpContext.Session.SetString("Username", vm.UserName);
-                    HttpContext.Session.SetString("Password", vm.Password);
-                    var username = HttpContext.Session.GetString("Username");
-                    var password = HttpContext.Session.GetString("Password");
-                    logger.LogInformation(username, password);
+                    SessionHandler sessionHandler = new SessionHandler();
+                    //sessionHandler._userName = vm.UserName;
+                    //sessionHandler._userId = userinfo[0].Id.ToString();
+                    
+                    HttpContext.Session.SetString("userId", userinfo[0].Id.ToString());
+                    HttpContext.Session.SetString("userFirstName", userinfo[0].FirstName.ToString());
+                    HttpContext.Session.SetString("userLastName", userinfo[0].LastName.ToString());
+                    HttpContext.Session.SetString("userProfile", userinfo[0].Profile.ToString());
+                    ViewBag._userName = userinfo[0].FirstName.ToString() + "," + userinfo[0].LastName.ToString();
+                    
                     return RedirectToAction("Index", "Company");
+                    
                 }
+
+
+                //if (userDbHandle.UserExist(vm.UserName, vm.Password) == true)
+                //{
+                //    var userinfo = userDbHandle.GetUser(vm.UserName);
+                //    if (userinfo.Count > 0)
+                //    {
+
+                //    }
+                //    HttpContext.Session.SetString("Username", vm.UserName);
+                //    HttpContext.Session.SetString("Password", vm.Password);
+                //    var username = HttpContext.Session.GetString("Username");
+                //    var password = HttpContext.Session.GetString("Password");
+                //    logger.LogInformation(username, password);
+                   
+                //}
             }
             return View();
         }
@@ -131,7 +162,13 @@ namespace Web_Application.Controllers
             }
         }
 
-       
-        
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
+        }
+
+
+
     }
 }

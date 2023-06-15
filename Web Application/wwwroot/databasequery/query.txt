@@ -52,6 +52,7 @@ CloseBy Date,
 CompanyId bigint foreign key references CompanyInfo(CompanyId),
 UserId bigint foreign key references users(UserId),
 ContactId bigint foreign key references ContactPerson(ContactId)
+AssignedTo bigint foreign key reference users(UserId)
 )
 
 Create TABLE IssueActivity(
@@ -82,7 +83,7 @@ IssueSupportId bigint NOT NULL primary key,
 Status varchar(50),
 AssignedDate Date,
 IssueId bigint foreign key references Issue(IssueId),
-UserId bigint foreign key references users(UserId),
+AssignedTo bigint foreign key references users(UserId),
 
 )
 Create Table EmailSetting(

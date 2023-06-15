@@ -5,11 +5,15 @@ using Web_Application.ModelViews;
 
 namespace Web_Application.Controllers
 {
-    public class CompanyController : Controller
+    public class CompanyController : BaseController
     {
         public IActionResult Index()
         {
             CompanyDbHandle cdh = new CompanyDbHandle();
+
+           
+        
+
             return View(cdh.GetCompany());
 
         }

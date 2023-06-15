@@ -6,7 +6,7 @@ using Web_Application.ModelViews;
 
 namespace Web_Application.Controllers
 {
-    public class IssueActivityController : Controller
+    public class IssueActivityController : BaseController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
 

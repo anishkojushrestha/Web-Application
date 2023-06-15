@@ -2,7 +2,7 @@
 
 namespace Web_Application.Controllers
 {
-    public class InqueryController : Controller
+    public class InqueryController : BaseController
     {
         public IActionResult Index()
         {

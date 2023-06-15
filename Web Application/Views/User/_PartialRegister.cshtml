@@ -177,7 +177,7 @@
                         <div class="row pb-1" id="selDiv" style="display:none">
                             <div class="rw1">
                                 <label class="form-label">Company:</label>
-                                <select asp-for="CompanyId" id="selComp" asp-items="ViewBag.Company" style="height:33px" class="form-select">
+                                <select asp-for="CompanyId" id="selComps" asp-items="ViewBag.Company" style="height:33px" class="form-select">
                                     <option disabled selected>Select</option>
                                 </select>
 
@@ -228,7 +228,7 @@
         }
     })
     $(document).ready(function () {
-        $("#selComp").select2({
+        $("#selComps").select2({
             dropdownParent: $(".modal-content"),
         });
     });

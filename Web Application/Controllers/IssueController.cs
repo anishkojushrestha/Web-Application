@@ -8,7 +8,7 @@ using Web_Application.ModelViews;
 
 namespace Web_Application.Controllers
 {
-    public class IssueController : Controller
+    public class IssueController : BaseController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
 
@@ -21,7 +21,7 @@ namespace Web_Application.Controllers
             IssueDbHandle idh = new IssueDbHandle();
             ViewData["user"] = new SelectList(idh.GetUser(), "UserName", "UserName");
             ViewData["Assign"] = new SelectList(idh.GetUser(), "Id", "UserName");
-
+           
             return View(idh.GetIssue());
         }
 
@@ -29,7 +29,7 @@ namespace Web_Application.Controllers
         {
             CompanyDbHandle cdh = new CompanyDbHandle();
             IssueDbHandle idh = new IssueDbHandle();
-            ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
+            ViewData["Company"] = new SelectList(idh.GetCompanyUser(), "Id", "CompanyName");
             return PartialView("_PartialIssue", idh.GetIssue().Find(x => x.Id == id));
         }
 

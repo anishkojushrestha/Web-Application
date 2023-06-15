@@ -5,7 +5,7 @@ using Web_Application.ModelViews;
 
 namespace Web_Application.Controllers
 {
-    public class IssueTransferController : Controller
+    public class IssueTransferController : BaseController
     {
         public IActionResult Index()
         {

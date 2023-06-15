@@ -13,12 +13,12 @@ namespace Web_Application.Models
             string constring = "Data Source=DESKTOP-3P1U2GV\\OMSSERVER;Initial Catalog=WebAppDB;Integrated Security=True;Pooling=False";
             con = new SqlConnection(constring);
         }
-
+        
         public bool CreateIssueActivity(IssueActivityVM vm, List<string> ac)
         {
             connection();
             StringBuilder str = new StringBuilder();
-
+            
             str.Append("declare @asid bigint \n");
             str.Append("set @asid = (select isnull(max(IssueActivityId), 0) + 1 from IssueActivity) \n");
             str.Append(" insert into IssueActivity(IssueActivityId, IssueDescription, IssueId) values(@asid,'"+vm.ActivityDescription+"',"+vm.IsseId+") \n");

@@ -1,23 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics.Eventing.Reader;
 using System.Net.Mail;
+using System.Net.NetworkInformation;
 using System.Text;
 using Web_Application.ModelViews;
+using Microsoft.AspNetCore.Http;
+using Org.BouncyCastle.Crypto.Paddings;
 
 namespace Web_Application.Models
 {
     public class IssueDbHandle
     {
         private SqlConnection con;
+
+        HttpContextAccessor accessor = new HttpContextAccessor();
+        ISession session => accessor.HttpContext.Session;
+
         private void connection()
         {
             string constring = "Data Source=DESKTOP-3P1U2GV\\OMSSERVER;Initial Catalog=WebAppDB;Integrated Security=True;Pooling=False";
             con = new SqlConnection(constring);
         }
 
+       
         public List<RegisterVM> GetUser()
         {
             connection();
@@ -117,7 +126,7 @@ namespace Web_Application.Models
             str.Append("set @eid = (select isnull(max(IssueId), 0) + 1 from Issue) \n");
             str.Append("SELECT @Newno = @isno + RIGHT('0000000' + CAST(@eid AS VARCHAR(7)), 7) \n");
             str.Append("set @issupid = (select isnull(max(IssueSupportId), 0) + 1 from IssueSupport) \n");
-            str.Append("insert into Issue(IssueId,IssueNo, IssueDescription, IssueGeneratorSteps, CreatedDate, Status, CompanyId,  ContactId) VALUES(@eid,@Newno,'" + vm.IssueDescription +"','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "',"+vm.CompanyId+","+vm.ContactId+" ) \n");
+            str.Append("insert into Issue(IssueId,IssueNo, IssueDescription, IssueGeneratorSteps, CreatedDate, Status, CompanyId,  ContactId,UserId) VALUES(@eid,@Newno,'" + vm.IssueDescription +"','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "',"+vm.CompanyId+","+vm.ContactId+","+ session.GetString("userId") + " ) \n");
             str.Append("insert into IssueSupport(IssueSupportId, Status, IssueId) VALUES(@issupid,'" + vm.Status + "',@eid) \n");
             str.Append("declare @aid bigint \n");
             foreach (var data in ac)
@@ -190,8 +199,8 @@ namespace Web_Application.Models
         {
             connection();
             StringBuilder str= new StringBuilder();
-            str.Append("update Issue set AssignedDate = '" + vm.AssignedDate + "', UserId = "+vm.AssignTo+" where IssueId=" + vm.Id+" \n");
-            str.Append("update IssueSupport set AssignedDate = '" + vm.AssignedDate + "', UserId = " + vm.AssignTo + " where IssueId=" + vm.Id + " \n");
+            str.Append("update Issue set AssignedDate = '" + vm.AssignedDate + "', AssignedTo = "+vm.AssignTo+" where IssueId=" + vm.Id+" \n");
+            str.Append("update IssueSupport set AssignedDate = '" + vm.AssignedDate + "', AssignedTo = " + vm.AssignTo + " where IssueId=" + vm.Id + " \n");
             SqlCommand cmd = new SqlCommand(str.ToString(), con);
             con.Open();
             var i = cmd.ExecuteNonQuery();
@@ -267,7 +276,22 @@ namespace Web_Application.Models
         {
             connection();
             List<IssueVM> list = new List<IssueVM>();
-            SqlCommand cmd = new SqlCommand("Select i.*, U.UserName, c.CompanyName,p.ContactId, p.ContactName,p.Email as ContactEmail, p.PhoneNumber from Issue i left join users u on u.UserId = i.UserId join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId", con);
+            StringBuilder sb = new StringBuilder();
+            //SessionHandler sd = new SessionHandler();
+            sb.Append(" Select i.*, U.UserName, c.CompanyName,p.ContactId, p.ContactName,p.Email as ContactEmail, p.PhoneNumber from Issue i left join users u on u.UserId = i.AssignedTo join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId where 1=1 ");
+
+            //if (_httpContextAccessor.HttpContext.Session.GetString("userProfile").ToString().ToLower()!="superadmin" && _httpContextAccessor. HttpContext.Session.GetString("userProfile").ToString().ToLower() != "admin")
+            //{
+            if(session.GetString("userProfile") == "OMSUser") {
+                sb.Append(" and i.userid='" + session.GetString("userId") + "'\n");
+            }else if(session.GetString("userProfile") == "Support")
+            {
+                sb.Append(" and i.AssignedTo='" + session.GetString("userId") + "'\n");
+
+            }
+            //}
+
+            SqlCommand cmd = new SqlCommand(sb.ToString(), con);
             //SqlCommand cmd = new SqlCommand("Select i.*,  c.CompanyName, p.ContactName, p.PhoneNumber from Issue i join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId", con);
             SqlDataAdapter ad = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
@@ -382,6 +406,39 @@ namespace Web_Application.Models
                     });
             }
             return list;
+        }
+
+        public List<CompanyMV> GetCompanyUser()
+        {
+            connection();
+            List<CompanyMV> com = new List<CompanyMV>();
+            StringBuilder str = new StringBuilder();
+            str.Append("SELECT c.CompanyId,c.CompanyName FROM users u join CompanyInfo c on c.CompanyId =u.CompanyId where 1=1\n");
+            if(session.GetString("userProfile") == "OMSUser")
+            {
+                if (session.GetString("userId") != null)
+                {
+                    str.Append(" and u.UserId = " + session.GetString("userId") + "  \n");
+                }
+            }
+            SqlCommand cmd = new SqlCommand(str.ToString(), con);
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            ad.Fill(dt);
+            con.Close();
+            foreach(DataRow dr in dt.Rows)
+            {
+                com.Add(
+                    new CompanyMV
+                    {
+                      Id = Convert.ToInt32(dr["CompanyId"]),
+                      CompanyName = Convert.ToString(dr["CompanyName"]),
+            });
+
+                
+            }
+            return com;
         }
     }
 }

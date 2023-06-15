@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Plugins;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -63,8 +64,8 @@ namespace Web_Application.Models
 
             string pass = hasdPassword(password);
             //create sql cmd
-            SqlCommand cmd = new SqlCommand("SELECT UserName, Password FROM users WHERE UserName = '" + username + "' And Password = '" + pass + "'", con);
-
+            SqlCommand cmd = new SqlCommand("SELECT * FROM users WHERE UserName = '" + username + "' And Password = '" + pass + "'", con);
+            
             //create object and pass sql command
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
             //create database table to hold data
@@ -83,13 +84,27 @@ namespace Web_Application.Models
             }
         }
 
-        public List<UpdateRegisterVM> GetUser()
+        public List<UpdateRegisterVM> GetUser(string username = null, string password = null, string usercode=null)
         {
             connection();
             List<UpdateRegisterVM> registerList = new List<UpdateRegisterVM>();
-            SqlCommand cmd = new SqlCommand("Select u.UserId, u.FirstName, u.LastName, u.UserName, u.Email, u.Profile, u.IsActive , c.CompanyName from users u left join CompanyInfo c on c.CompanyId = u.CompanyId", con);
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Select u.UserId, u.FirstName, u.LastName, u.UserName, u.Email, u.Profile, u.IsActive , c.CompanyName from users u left join CompanyInfo c on c.CompanyId = u.CompanyId where 1=1");
+            if (!string.IsNullOrEmpty(username))
+            {
+                sb.Append(" and u.username='"+username+"'\n");
+            }
+            if (!string.IsNullOrEmpty(password))
+            {
+                sb.Append(" and u.Password='" + hasdPassword(password) + "'\n");
+            }
+            if (!string.IsNullOrEmpty(usercode))
+            {
+                sb.Append(" and u.UserId='" + usercode + "'\n");
+            }
+            SqlCommand cmd = new SqlCommand(sb.ToString(), con);
             //SqlCommand cmd = new SqlCommand("SELECT * from users", con);
-
+            
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             con.Open();
