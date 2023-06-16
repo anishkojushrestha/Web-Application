@@ -21,7 +21,7 @@ namespace Web_Application.Controllers
             IssueDbHandle idh = new IssueDbHandle();
             ViewData["user"] = new SelectList(idh.GetUser(), "UserName", "UserName");
             ViewData["Assign"] = new SelectList(idh.GetUser(), "Id", "UserName");
-           
+            
             return View(idh.GetIssue());
         }
 
@@ -108,7 +108,6 @@ namespace Web_Application.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-
             };
             return RedirectToAction("Index");
         }
@@ -155,7 +154,6 @@ namespace Web_Application.Controllers
             var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "files");
             foreach (var data in file)
             {
-
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + data.FileName;
                 var filePath = Path.Combine(folderPath, uniqueFileName);
                 using (FileStream fileStream = System.IO.File.Create(filePath))

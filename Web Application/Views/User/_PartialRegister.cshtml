@@ -135,7 +135,7 @@
 
             </div>
             <div class="modal-body">
-                <form asp-action="Register" asp-controller="User">
+                <form asp-action="Register" name=pForm asp-controller="User">
 
                     @Html.AntiForgeryToken()
                     <div class="col" style="margin-left: 13px; ">
@@ -153,7 +153,8 @@
                         <div class="row pb-1">
                             <div class="rw1">
                                 <label class="form-label">Username:</label>
-                                <input type="text" asp-for="UserName" style="height:33px" class="form-control" required>
+                                <input type="text" id="txtUserId" asp-for="UserName" style="height:33px" class="form-control" required>
+                                <span id="error" style="color:red;"></span>
                             </div>
                             
                         </div>
@@ -181,10 +182,6 @@
                                 <select asp-for="CompanyId" id="selComps" asp-items="ViewBag.Company" style="height:33px" class="form-select">
                                     <option disabled selected>Select</option>
                                 </select>
-
-
-                               
-
                             </div>
                         </div>
                         <div class="row pb-2">
@@ -228,6 +225,37 @@
             document.getElementById("selDiv").style.display = "none";
         }
     })
+    //$("#txtUserId").on("change", function () {
+    //    var username = $(this).val();
+    //    alert(username)
+    //    $.ajax({
+    //        url: "/User/UserError?username="+username,
+    //        type:"POST",
+    //        success:function(data){
+    //            if(data != null){
+    //                alert("user already exist");
+    //            }
+    //        }
+    //    })
+    //}) 
+    $("#txtUserId").blur(function () {
+        $("#re").remove();
+        var username = $(this).val();
+            $.ajax({
+                url: "/User/UserError?username="+username,
+                type:"POST",
+                success:function(data){
+                    if(data == true){
+                        $("#error").append('<p id="re">User Already Exist</p>');
+                        $('form[name=pForm]').submit(function () {
+                            alert('Submit blocked!');
+                            return false;
+                        });
+                    }
+                    
+                }
+            })
+    });
     $(document).ready(function () {
         $("#selComps").select2({
             dropdownParent: $(".modal-content"),

@@ -26,7 +26,7 @@
             <form action="@Url.Action("Login", "User")" method="post">
                 @Html.AntiForgeryToken()
                 <div class="container" style="display:flex; flex-direction:column; justify-content:center; align-items:center; margin-top:2%; padding:50px;">
-                    
+
                     <div class="fl">
                         <input type="text" asp-for="UserName" class="form-control" placeholder="Username">
                         <span asp-validation-for="UserName" class="alert-danger"></span>
@@ -36,8 +36,9 @@
                         <span asp-validation-for="Password" class="alert-danger"></span>
                     </div>
                     <button type="submit" class="btn btn-primary" style="width: 35%;">Submit</button>
+                    <span style="color:red;">@ViewBag.UserError</span>
                 </div>
-                <h3>@ViewBag.Message</h3>
+
             </form>
 
         </main>

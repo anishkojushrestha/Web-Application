@@ -57,14 +57,13 @@ namespace Web_Application.Models
                 return false;
         }
 
-        public bool UserExist(string username, string password)
+        public bool UserExist(string username)
         {
             //establish the database connection
             connection();
 
-            string pass = hasdPassword(password);
             //create sql cmd
-            SqlCommand cmd = new SqlCommand("SELECT * FROM users WHERE UserName = '" + username + "' And Password = '" + pass + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT UserName FROM users WHERE UserName = '" + username + "'", con);
             
             //create object and pass sql command
             SqlDataAdapter sd = new SqlDataAdapter(cmd);

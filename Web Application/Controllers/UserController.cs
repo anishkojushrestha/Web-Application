@@ -37,27 +37,44 @@ namespace Web_Application.Controllers
             ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
             return PartialView("_PartialRegister");
         }
-        public IActionResult NewRegister()
+        //public IActionResult NewRegister()
+        //{
+        //    return View();
+        //}
+        public IActionResult UserError(string username)
         {
-            return View();
+            UserDbHandle userDbHandle = new UserDbHandle();
+            var result = userDbHandle.UserExist(username);
+            return Json(result);
         }
 
         [HttpPost]
         
         public IActionResult Register(RegisterVM vm)
         {
+            UserDbHandle userDbHandle = new UserDbHandle();
             if (ModelState.IsValid)
             {
-                if (vm.NewPassword == vm.ConfirmPassword)
+                if (userDbHandle.UserExist(vm.UserName) )
                 {
-                    UserDbHandle userDbHandle = new UserDbHandle();
-                    if (userDbHandle.RegisteUser(vm))
+                    ViewBag.usererror = "User Already Exis";
+                    TempData["error"] = "User Already Exis";
+                    
+                }
+                else
+                {
+                    if (vm.NewPassword == vm.ConfirmPassword)
                     {
-                        ViewBag.Message = "Register Details Added Successfully";
-                        ModelState.Clear();
-                        return RedirectToAction("Index");
+
+                        if (userDbHandle.RegisteUser(vm))
+                        {
+                            ViewBag.Message = "Register Details Added Successfully";
+                            ModelState.Clear();
+                            return RedirectToAction("Index");
+                        }
                     }
                 }
+                
             }
             return RedirectToAction("Index");
         }
@@ -96,7 +113,7 @@ namespace Web_Application.Controllers
                     return RedirectToAction("Index", "Company");
                     
                 }
-
+                ViewBag.UserError = "InCorrect credentials ";
 
                 //if (userDbHandle.UserExist(vm.UserName, vm.Password) == true)
                 //{

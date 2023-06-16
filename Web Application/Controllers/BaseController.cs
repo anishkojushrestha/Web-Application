@@ -8,13 +8,14 @@ namespace Web_Application.Controllers
         public override void OnActionExecuting(ActionExecutingContext FilterContext)
         {
             
-                string uFName = HttpContext.Session.GetString("userFirstName");
-                string uLName = HttpContext.Session.GetString("userLastName");
-                ViewBag._userName = uFName + " " + uLName;
+            string uFName = HttpContext.Session.GetString("userFirstName");
+            string uLName = HttpContext.Session.GetString("userLastName");
+            ViewBag._userName = uFName + " " + uLName;
             var result = FilterContext.HttpContext.Session.GetString("userId");
             if (result == null)
             {
                 FilterContext.Result = new RedirectToActionResult("Login", "User", null);
+                
             }
 
         }
