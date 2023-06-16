@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using System.Data.SqlClient;
 using System.Drawing;
 using Web_Application.Models;
@@ -14,6 +16,11 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly= true;  
     options.Cookie.IsEssential = true;
 });
+//builder.Services.AddMvc(options =>
+//{
+//    options.Filters.Add(new AuthorizeFilter());
+//});
+
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

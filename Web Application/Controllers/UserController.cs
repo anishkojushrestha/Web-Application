@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Amazon.SimpleSystemsManagement.Model;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -28,7 +30,7 @@ namespace Web_Application.Controllers
             var result = data.GetUser();
             return Json(result);
         }
-
+        
         public IActionResult Register()
         {
             CompanyDbHandle cdh = new CompanyDbHandle();
@@ -41,6 +43,7 @@ namespace Web_Application.Controllers
         }
 
         [HttpPost]
+        
         public IActionResult Register(RegisterVM vm)
         {
             if (ModelState.IsValid)

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Web_Application.Models;
 using Web_Application.ModelViews;
@@ -7,6 +8,7 @@ namespace Web_Application.Controllers
 {
     public class CompanyController : BaseController
     {
+        
         public IActionResult Index()
         {
             CompanyDbHandle cdh = new CompanyDbHandle();

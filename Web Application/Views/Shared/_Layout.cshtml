@@ -13,6 +13,8 @@
     <link href="~/css/bootstrapss.css" rel="stylesheet" />
     <link href="~/css/datatables.css" rel="stylesheet" />
     <link href="~/css/datatables.min.css" rel="stylesheet" />
+    <link href="~/css/_bootswatch.scss" rel="stylesheet" />
+    <link href="~/css/_variables.scss" rel="stylesheet" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- this should go after your </body> -->
@@ -41,19 +43,22 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Company" asp-action="Index">Master</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link " asp-action="Index" asp-controller="User">Registration</a>
+                        </li>
+                        @*<li class="nav-item">
                             <div class="dropdown">
                                 <button style="background-color:transparent;" class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Tranctions
                                 </button>
                                 <ul class="dropdown-menu">
-                                    @*<li><a class="dropdown-item" asp-action="Index" asp-controller="Inquery" >Inquery</a></li>
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Inquery" >Inquery</a></li>
                                     <li><a class="dropdown-item" asp-action="Index" asp-controller="Installation">Installation</a></li>
                                     <li><a class="dropdown-item" asp-action="Index" asp-controller="Support">Support</a></li>
-                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Demo">Demo</a></li>*@
-                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="User">Registration</a></li>
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Demo">Demo</a></li>
+                                    
                                 </ul>
                             </div>
-                        </li>
+                        </li>*@
                         @*<li class="nav-item">
                             <div class="dropdown">
                                 <button style="background-color:transparent;" class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -69,18 +74,13 @@
 
                             </div>
                         </li>*@
-                        <li class="nav-item">
-                            <div class="dropdown">
-                                <button style="background-color:transparent;" class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Client Issue
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Issue">Issue</a></li>
-                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="IssueTransfer">Issue Transfer</a></li>
-                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="IssueSupport">Issue Support</a></li>
-                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="IssueActivity">Issue Activity</a></li>
-                                </ul>
-
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Client Issue</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-action="Index" asp-controller="Issue">Issue</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="IssueTransfer">Issue Transfer</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="IssueSupport">Issue Support</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="IssueActivity">Issue Activity</a>
                             </div>
                         </li>
 
