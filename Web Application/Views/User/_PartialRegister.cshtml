@@ -135,7 +135,7 @@
 
             </div>
             <div class="modal-body">
-                <form asp-action="Register" name=pForm asp-controller="User">
+                <form asp-action="Register" id="form" name=pForm asp-controller="User">
 
                     @Html.AntiForgeryToken()
                     <div class="col" style="margin-left: 13px; ">
@@ -187,11 +187,12 @@
                         <div class="row pb-2">
                             <div class="rw">
                                 <label class="form-label">New Passwrd:</label>
-                                <input type="password" asp-for="NewPassword" style="height:33px" class="form-control" required>
+                                <input type="password" asp-for="NewPassword" style="height:33px" id="txtNewpass" class="form-control" required>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Confirm Password:</label>
-                                <input type="password" class="form-control" style="height:33px" asp-for="ConfirmPassword" required>
+                                <input type="password" class="form-control" style="height:33px" id="txtConfirmPass" asp-for="ConfirmPassword" required>
+                                <span id ="pss" style="color:red;"></span>
                             </div>
                         </div>
                         <div class="form-check">
@@ -247,14 +248,32 @@
                 success:function(data){
                     if(data == true){
                         $("#error").append('<p id="re">User Already Exist</p>');
-                        $('form[name=pForm]').submit(function () {
-                            alert('Submit blocked!');
-                            return false;
-                        });
+                        //$('#form').submit(function () {
+                        //    alert('open!');
+                        //    return false
+                        //});
                     }
-                    
-                }
+                },
+            
             })
+    });
+    $("#txtConfirmPass").blur(function () {
+        $("#rep").remove();
+        var confirm = $(this).val();
+        var newpass = $("#txtNewpass").val();
+        if (confirm != newpass) {
+            $("#pss").append('<p id="rep">Password does not match!</p>');
+        }
+    });
+
+    $('#form').submit(function () {
+        var confirm = $("#txtConfirmPass").val();
+        var newpass = $("#txtNewpass").val();
+        if (confirm != newpass || document.getElementById("re") != null) {
+            alert('open!');
+            return false;
+        }
+        return true;
     });
     $(document).ready(function () {
         $("#selComps").select2({
