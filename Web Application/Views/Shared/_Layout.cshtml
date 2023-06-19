@@ -26,7 +26,11 @@
     </style>
     <style>
     </style>
-    
+    @{
+        HttpContextAccessor a = new HttpContextAccessor();
+        ISession session = a.HttpContext.Session;
+        var profile = session.GetString("userProfile");
+    }
 </head>
 <body>
     <header>
@@ -38,13 +42,18 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1" >
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Company" asp-action="Index">Master</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link " asp-action="Index" asp-controller="User">Registration</a>
-                        </li>
+                        
+                        @if (profile == "SuperAdmin" || profile == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link " asp-action="Index" asp-controller="User">Registration</a>
+                            </li>
+                        }
+                        
                         @*<li class="nav-item">
                             <div class="dropdown">
                                 <button style="background-color:transparent;" class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -78,20 +87,23 @@
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Client Issue</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-action="Index" asp-controller="Issue">Issue</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="IssueTransfer">Issue Transfer</a>
+                                @if (session.GetString("userProfile") == "SuperAdmin" || session.GetString("userProfile") == "Admin" || session.GetString("userProfile") == "Support")
+                                {
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="IssueTransfer">Issue Transfer</a>
                                 <a class="dropdown-item" asp-action="Index" asp-controller="IssueSupport">Issue Support</a>
                                 <a class="dropdown-item" asp-action="Index" asp-controller="IssueActivity">Issue Activity</a>
+                                }
+                                
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown " style="margin-left: 58%;">
+                            <a class="nav-link font-weight-bold text-primary "  data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@ViewBag._userName </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-controller="User"  asp-action="Logout">Logout</a>
                             </div>
                         </li>
 
-                        <li class="nav-item pt-2 font-weight-bold text-primary" style="margin-left: 58%; ">
-                            @ViewBag._userName
-                            
-                          
-                        </li>
-                        <li class="nav-item" style="margin-left: 1%;" >
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logout" >Logout</a>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>

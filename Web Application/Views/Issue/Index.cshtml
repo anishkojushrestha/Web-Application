@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Web_Application.ModelViews.IssueVM>
+﻿@using System.Globalization;
+@model IEnumerable<Web_Application.ModelViews.IssueVM>
 @{
     ViewData["Title"] = "Index";
 }
@@ -46,8 +47,8 @@
                     </tr>
                 </thead>
                 <tbody id="table">
-                    
-                        @foreach (var data in Model)
+                    @{
+                        foreach (var data in Model)
                         {
                             <tr>
                                 <td>@data.Id</td>
@@ -55,12 +56,8 @@
                                 <td>@data.CompanyName</td>
                                 <td>@data.CreatedDate.ToShortDateString()</td>
                                 <td>@data.UserName</td>
-                           @* @{
-                                var dateString = data.AssignedDate;
-                                DateTime date = DateTime.ParseExact(dateString, "MM/dd/yyyy hh:mm:ss tt", null);
-                                DateTime dateOnly = date.Date;
-                            }*@
-                            <td>@data.AssignedDate</td>
+
+                                <td>@data.AssignedDate</td>
                                 <td>@data.ContactName</td>
                                 <td>@data.PhoneNumber</td>
                                 <td>@data.IssueDescription</td>
@@ -69,23 +66,40 @@
                                 <td>@data.DeletedBy</td>
                                 <td>@data.ResolveBy</td>
                                 <td>
-                                <button id="btnResolve_@data.Id" class="btnResolve" style="padding: 0;border: none;background: none;"  data-id="@data.Id" onclick="ShowPopupResolve(this);"><i class="fab fa-resolving"></i></button>
-                                    <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Issue/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
-                                    @*<button type="submit" class="btn btn-primary btn-sm btnDelete" id="btndeleteBy_@data.Id" data-id="@data.Id" value="@data.Id"><i class="fa-solid fa-trash"></i></button>*@
-                                    @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
-                                <button style="padding: 0;border: none;background: none;" id="btnDelete_@data.Id" class="btnDelete" data-id="@data.Id" onclick="ShowPopupDelete(this);"><i class="fa-solid fa-trash"></i></button>
-                                <button style="padding: 0;border: none;background: none;" id="btnAssigned_@data.Id" class="btnAssigned" data-id="@data.Id" onclick="ShowPopupAssign(this);"><i class="fa-solid fa-clipboard-question"></i></button>
-                                    <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
-                                <button style="padding: 0;border: none;background: none;" id="btnTransfer_@data.Id" class="btnTransfer" data-id="@data.Id" onclick="ShowPopupTransfer(this);"><i class="fas fa-people-arrows"></i></button>
+                                    @if (data.DeletedBy == "")
+                                    {
+                                        <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Issue/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
+                                        <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
+                                        HttpContextAccessor a = new HttpContextAccessor();
+                                        ISession session = a.HttpContext.Session;
+                                        @if (session.GetString("userProfile") == "SuperAdmin" || session.GetString("userProfile") == "Admin" || session.GetString("userProfile") == "Support")
+                                        {
+                                            @if (data.ResolveBy == "")
+                                            {
+                                                <button id="btnResolve_@data.Id" class="btnResolve" style="padding: 0;border: none;background: none;" data-id="@data.Id" onclick="ShowPopupResolve(this);"><i class="fab fa-resolving"></i></button>
 
-                                    @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = data.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
+                                            }
+                                            @*<button type="submit" class="btn btn-primary btn-sm btnDelete" id="btndeleteBy_@data.Id" data-id="@data.Id" value="@data.Id"><i class="fa-solid fa-trash"></i></button>*@
+                                            @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
+
+                                            <button style="padding: 0;border: none;background: none;" id="btnDelete_@data.Id" class="btnDelete" data-id="@data.Id" onclick="ShowPopupDelete(this);"><i class="fa-solid fa-trash"></i></button>
+
+                                            @if (data.AssignedDate == "")
+                                            {
+                                                <button style="padding: 0;border: none;background: none;" id="btnAssigned_@data.Id" class="btnAssigned" data-id="@data.Id" onclick="ShowPopupAssign(this);"><i class="fa-solid fa-clipboard-question"></i></button>
+
+                                            }
+                                            <button style="padding: 0;border: none;background: none;" id="btnTransfer_@data.Id" class="btnTransfer" data-id="@data.Id" onclick="ShowPopupTransfer(this);"><i class="fas fa-people-arrows"></i></button>
+                                            <button style="padding: 0;border: none;background: none;" id="btnTransfer_@data.Id" class="btnActivity" data-id="@data.Id" onclick="ShowPopupActivity(this);"><i class="fas fa-tasks"></i></button>
+
+                                        }
+                                    }
                                 </td>
+
 
                             </tr>
                         }
-                    
-
+                    }
                 </tbody>
             </table>
         </div>
@@ -296,6 +310,58 @@ poupu
         </div>
     </div>
 </div>
+<div class="modal fade" id="modalPopup5" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:77%;  margin-top: 20px; margin-left:-15%">
+            <div class="modal-header p-2">
+                <h4 class="modal-title" id="addRegisterLabel">Activity</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form asp-action="IssueActivity" asp-controller="IssueActivity" enctype="multipart/form-data">
+
+                    @Html.AntiForgeryToken()
+                    <div class="col" style="margin-left: 26px; ">
+                        <div class="row pb-2">
+                            <input name="Id" id="txtId" hidden />
+                            
+
+
+                        </div>
+                        <div class="row pb-2">
+                            <div class="rw ">
+                                <label class="form-label">Activity Description:</label>
+                                <textarea type="text" name="ActivityDescription" style="height:55px" class="form-control" style="height:65px;" required></textarea>
+                            </div>
+                        </div>
+                            <div class="row pb-3">
+                                <div class="rw ">
+                                    <label class="form-label">Attachments:</label>
+                                    <input type="file" name="Attachment" style="height:33px" class="form-control" style="height:65px;" required multiple />
+
+                                </div>
+                            </div>
+
+                        <div class="row">
+                            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </form>
+                @*                <input type="button" value="close" id="btnclose" onclick="closepopup();" />
+                *@
+            </div>
+
+        </div>
+    </div>
+</div>
 @section Scripts{
     <script>
         function ShowPopupResolve(e){
@@ -331,6 +397,14 @@ poupu
             }
             
             $("#txtIId").val(issueid);
+
+        }
+        function ShowPopupActivity(e) {
+            $("#modalPopup5").modal('show');
+            var issueid = $(e).attr("data-id");
+            
+
+            $("#txtId").val(issueid);
 
         }
         function closepopup() {

@@ -11,6 +11,7 @@ namespace Web_Application.Controllers
 {
     public class UserController : Controller
     {
+        
         private readonly ILogger<UserController> logger;
         public UserController(ILogger<UserController> logger)
         {
@@ -18,9 +19,17 @@ namespace Web_Application.Controllers
         }
         public IActionResult Index()
         {
-            UserDbHandle dbhandle = new UserDbHandle();
-            ModelState.Clear();
-            return View(dbhandle.GetUser());
+            if(HttpContext.Session.GetString("userProfile") == "SuperAdmin" || HttpContext.Session.GetString("userProfile") == "Admin")
+            {
+                UserDbHandle dbhandle = new UserDbHandle();
+                ModelState.Clear();
+                return View(dbhandle.GetUser());
+            }
+            else
+            {
+                return RedirectToAction("AccessDenied", "Error");
+            }
+            
         }
 
         [HttpGet]
@@ -33,9 +42,16 @@ namespace Web_Application.Controllers
         
         public IActionResult Register()
         {
-            CompanyDbHandle cdh = new CompanyDbHandle();
-            ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
-            return PartialView("_PartialRegister");
+            if (HttpContext.Session.GetString("userProfile") == "SuperAdmin" || HttpContext.Session.GetString("userProfile") == "Admin")
+            {
+                CompanyDbHandle cdh = new CompanyDbHandle();
+                ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
+                return PartialView("_PartialRegister");
+            }
+            else
+            {
+                return RedirectToAction("AccessDenied", "Error");
+            }
         }
         //public IActionResult NewRegister()
         //{
@@ -134,10 +150,17 @@ namespace Web_Application.Controllers
         }
         public ActionResult EditRegister(int id)
         {
-            UserDbHandle sdb = new UserDbHandle();
+            if (HttpContext.Session.GetString("userProfile") == "SuperAdmin" || HttpContext.Session.GetString("userProfile") == "Admin")
+            {
+                UserDbHandle sdb = new UserDbHandle();
             CompanyDbHandle cdh = new CompanyDbHandle();
             ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
             return PartialView("_PartialEditRegister", sdb.GetUser().Find(vm => vm.Id == id));
+            }
+            else
+            {
+                return RedirectToAction("AccessDenied", "Error");
+            }
 
         }
 

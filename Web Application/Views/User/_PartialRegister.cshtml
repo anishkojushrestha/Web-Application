@@ -226,19 +226,6 @@
             document.getElementById("selDiv").style.display = "none";
         }
     })
-    //$("#txtUserId").on("change", function () {
-    //    var username = $(this).val();
-    //    alert(username)
-    //    $.ajax({
-    //        url: "/User/UserError?username="+username,
-    //        type:"POST",
-    //        success:function(data){
-    //            if(data != null){
-    //                alert("user already exist");
-    //            }
-    //        }
-    //    })
-    //}) 
     $("#txtUserId").blur(function () {
         $("#re").remove();
         var username = $(this).val();
@@ -248,10 +235,6 @@
                 success:function(data){
                     if(data == true){
                         $("#error").append('<p id="re">User Already Exist</p>');
-                        //$('#form').submit(function () {
-                        //    alert('open!');
-                        //    return false
-                        //});
                     }
                 },
             

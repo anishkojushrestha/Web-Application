@@ -31,8 +31,6 @@ namespace Web_Application.Controllers
         public IActionResult IssueActivity(IssueActivityVM vm)
         { 
             IssueActivityDbHandle iad= new IssueActivityDbHandle();
-            if(vm.Id == null)
-            {
                 if (ModelState.IsValid)
                 {
                     if (iad.CreateIssueActivity(vm, UploadFile(vm.Attachment)))
@@ -40,17 +38,7 @@ namespace Web_Application.Controllers
                         return RedirectToAction("Index");
                     }
                 }
-            }
-            else
-            {
-                if (ModelState.IsValid)
-                {
-                    if (iad.UpdateIssueActivity(vm))
-                    {
-                        return RedirectToAction("Index");
-                    }
-                }
-            }
+            
             
             return RedirectToAction("Index");
         }

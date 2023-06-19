@@ -7,7 +7,6 @@
 
 
 
-<button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("IssueActivity")" style="width:100px;margin-left:90%; ">Create</button>
 <div class="input-group" style="margin-left:79%;margin-top:4px;">
     @*<div class="form-outline">
     <input type="search" id="search" class="form-control" placeholder="Search..." />
@@ -38,8 +37,8 @@
                             <td>@data.ActivityDescription</td>
                             <td>@data.IsseId</td>
                             <td>
-                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"IssueActivity/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
-
+@*                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"IssueActivity/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
+*@
                                 @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
                                 <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
                             </td>

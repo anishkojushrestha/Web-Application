@@ -7,12 +7,15 @@ namespace Web_Application.Models
 {
     public class IssueActivityDbHandle
     {
+         
         private SqlConnection con;
         private void connection()
         {
             string constring = "Data Source=DESKTOP-3P1U2GV\\OMSSERVER;Initial Catalog=WebAppDB;Integrated Security=True;Pooling=False";
             con = new SqlConnection(constring);
         }
+        HttpContextAccessor accessor = new HttpContextAccessor();
+        ISession session => accessor.HttpContext.Session;
         
         public bool CreateIssueActivity(IssueActivityVM vm, List<string> ac)
         {
@@ -21,7 +24,7 @@ namespace Web_Application.Models
             
             str.Append("declare @asid bigint \n");
             str.Append("set @asid = (select isnull(max(IssueActivityId), 0) + 1 from IssueActivity) \n");
-            str.Append(" insert into IssueActivity(IssueActivityId, IssueDescription, IssueId) values(@asid,'"+vm.ActivityDescription+"',"+vm.IsseId+") \n");
+            str.Append(" insert into IssueActivity(IssueActivityId, IssueDescription, IssueId) values(@asid,'"+vm.ActivityDescription+"',"+vm.Id+") \n");
             str.Append("declare @aid bigint \n");
             foreach (var data in ac)
             {
@@ -77,7 +80,14 @@ namespace Web_Application.Models
         public List<IssueActivityVM> GetIssuesActivity() {
             connection();
             List<IssueActivityVM> list = new List<IssueActivityVM>();
-            SqlCommand cmd = new SqlCommand("select ia.*,a.AttachmentName, i.IssueId, i.IssueNo from IssueActivity ia join Attachments a on a.IssueActivityId = ia.IssueActivityId join Issue i on i.IssueId = ia.IssueId ", con);
+            StringBuilder str = new StringBuilder();
+            str.Append("select ia.*,a.AttachmentName, i.IssueId, i.IssueNo,i.AssignedTo from IssueActivity ia join Attachments a on a.IssueActivityId = ia.IssueActivityId join Issue i on i.IssueId = ia.IssueId where 1=1 \n");
+            if(session.GetString("userProfile") == "Support")
+            {
+                str.Append("and i.AssignedTo = " + session.GetString("userId") + " \n");
+            }
+            
+            SqlCommand cmd = new SqlCommand(str.ToString(), con);
             SqlDataAdapter ad = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             con.Open();

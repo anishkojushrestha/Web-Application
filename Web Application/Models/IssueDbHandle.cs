@@ -142,7 +142,7 @@ namespace Web_Application.Models
             if (i >= 1)
             {
                 EmailSetting em = new EmailSetting();
-                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", "anishkoju4@gmail.com", "testing", "This is simple test body."));
+                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", "anishkoju4@gmail.com", "Issue Created", "The Issue Hasbeen Created."));
                 
                
                 return true;
@@ -278,7 +278,7 @@ namespace Web_Application.Models
             List<IssueVM> list = new List<IssueVM>();
             StringBuilder sb = new StringBuilder();
             //SessionHandler sd = new SessionHandler();
-            sb.Append(" Select i.*, U.UserName, c.CompanyName,p.ContactId, p.ContactName,p.Email as ContactEmail, p.PhoneNumber from Issue i left join users u on u.UserId = i.AssignedTo join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId where 1=1 ");
+            sb.Append(" Select i.IssueId, i.IssueNo,i.IssueDescription,i.CompanyId,i.ContactId, i.IssueGeneratorSteps,i.CreatedDate,Format(i.AssignedDate,'yyyy-MM-dd') as AssignedDate,i.Status,Format(i.DeletedBy,'yyyy-MM-dd')as DeletedBy,Format(i.ResolveBy,'yyyy-MM-dd')as ResolveBy, U.UserName, c.CompanyName,p.ContactId, p.ContactName,p.Email as ContactEmail, p.PhoneNumber from Issue i left join users u on u.UserId = i.AssignedTo join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId where 1=1 ");
 
             //if (_httpContextAccessor.HttpContext.Session.GetString("userProfile").ToString().ToLower()!="superadmin" && _httpContextAccessor. HttpContext.Session.GetString("userProfile").ToString().ToLower() != "admin")
             //{
