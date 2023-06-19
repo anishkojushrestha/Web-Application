@@ -67,11 +67,21 @@ namespace Web_Application.Models
             return c;
 
         }
-        public IssueVM UserEmail(int id)
+        public IssueVM UserEmail(int id,string username)
         {
             connection();
             IssueVM c = new IssueVM();
-            SqlCommand cmd = new SqlCommand("select email from users where UserId= " + id, con);
+            StringBuilder str = new StringBuilder();
+            str.Append("select email from users where 1=1\n");
+            if(username == null)
+            {
+                str.Append("and UserId = " + id + "\n");
+            }
+            else { 
+            str.Append("and Username = '" + username+"'\n");
+            }
+
+            SqlCommand cmd = new SqlCommand(str.ToString() , con);
             SqlDataAdapter ad = new SqlDataAdapter(cmd);
             DataTable dataTable = new DataTable();
             con.Open();
@@ -378,9 +388,15 @@ namespace Web_Application.Models
             con.Close();
 
             if (i >= 1)
+            {
+                EmailSetting em = new EmailSetting();
+                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.TransferTo, "testing", "Task hasbeen trasfer to you"));
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
         public List<IssueTransferVM> GetIssueTransfer()
         {

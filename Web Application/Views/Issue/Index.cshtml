@@ -272,7 +272,7 @@ poupu
                         <div class="row pb-1">
                             <div class="rw">
                                 <label class="form-label">Transfer From:</label>
-                                <input type="text"  id="selTrans" name="TransferFrom" style="height:34px ;" class="form-control" disabled required>
+                                <input type="text" id="selTrans" name="TransferFrom" style="height:34px ;" class="form-control" disabled required>
                                     
                             </div>
                         </div>
@@ -405,9 +405,9 @@ poupu
             var assign = $(e).attr("data-assign");
             $("#selTrans").val(assign);
             $("#selTransferTo").on("change", function () {
-                var assid = $(this).val();
+                var user = $(this).val();
                 $.ajax({
-                    url: "/Issue/GetUserEmail?id=" + assid,
+                    url: "/Issue/GetUserEmail?username=" + user,
                     type: "Post",
                     success: function (data) {
                         var email = $("#txtTEmail").val(data.assignedEmail);

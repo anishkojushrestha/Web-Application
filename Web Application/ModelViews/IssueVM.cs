@@ -34,5 +34,6 @@ namespace Web_Application.ModelViews
         public string? CurrentStage { get; set; }
         public string? ContactEmail { get; set; }
         public string? AssignedEmail { get; set; }
+        public String? IssueId { get; set; }
     }
 }

@@ -67,10 +67,10 @@ namespace Web_Application.Controllers
             var result= idh.Email(id);
             return Json(result);
         }
-        public IActionResult GetUserEmail(int id)
+        public IActionResult GetUserEmail(int id, string username)
         {
             IssueDbHandle idh = new IssueDbHandle();
-            var result = idh.UserEmail(id);
+            var result = idh.UserEmail(id, username);
             return Json(result);
         }
 
