@@ -46,6 +46,8 @@
                             HttpContextAccessor a = new HttpContextAccessor();
                             ISession session = a.HttpContext.Session;
                             var profile = session.GetString("userProfile");
+                            var fUser = session.GetString("userFirstName");
+                            var lUser = session.GetString("userLastName");
                         }
                         @if (profile == "SuperAdmin" || profile == "Admin")
                         {
@@ -99,14 +101,14 @@
                         @if (profile == "SuperAdmin" || profile == "Admin")
                         {
                             <li class="nav-item dropdown " style="margin-left: 58%;">
-                                <a class="nav-link font-weight-bold text-primary " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@ViewBag._userName </a>
+                                <a class="nav-link font-weight-bold text-primary " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@fUser @lUser </a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
                                 </div>
                             </li>
                         }else{
                         <li class="nav-item dropdown " style="margin-left: 67%;">
-                            <a class="nav-link font-weight-bold text-primary " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@ViewBag._userName </a>
+                                <a class="nav-link font-weight-bold text-primary " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@fUser @lUser </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
                             </div>
