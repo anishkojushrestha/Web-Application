@@ -67,6 +67,12 @@ namespace Web_Application.Controllers
             var result= idh.Email(id);
             return Json(result);
         }
+        public IActionResult GetUserEmail(int id)
+        {
+            IssueDbHandle idh = new IssueDbHandle();
+            var result = idh.UserEmail(id);
+            return Json(result);
+        }
 
         public IActionResult GetTransfer(int id)
         {

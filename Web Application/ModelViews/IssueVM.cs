@@ -33,5 +33,6 @@ namespace Web_Application.ModelViews
         public DateTime? TransferDate { get; set; }
         public string? CurrentStage { get; set; }
         public string? ContactEmail { get; set; }
+        public string? AssignedEmail { get; set; }
     }
 }

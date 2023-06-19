@@ -67,6 +67,23 @@ namespace Web_Application.Models
             return c;
 
         }
+        public IssueVM UserEmail(int id)
+        {
+            connection();
+            IssueVM c = new IssueVM();
+            SqlCommand cmd = new SqlCommand("select email from users where UserId= " + id, con);
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            DataTable dataTable = new DataTable();
+            con.Open();
+            ad.Fill(dataTable);
+            con.Close();
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                c.AssignedEmail = Convert.ToString(dr["Email"]);
+            }
+
+            return c;
+        }
         public RegisterVM Transfer(int id)
         {
             connection();
@@ -142,7 +159,7 @@ namespace Web_Application.Models
             if (i >= 1)
             {
                 EmailSetting em = new EmailSetting();
-                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", "anishkoju4@gmail.com", "Issue Created", "The Issue Hasbeen Created."));
+                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.ContactEmail, "Issue Created", "The Issue Hasbeen Created."));
                 
                
                 return true;
@@ -206,9 +223,15 @@ namespace Web_Application.Models
             var i = cmd.ExecuteNonQuery();
             con.Close();
             if (i >= 1)
+            {
+                EmailSetting em = new EmailSetting();
+                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.AssignedEmail, "testing", "Task hasbeen assigned to you"));
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
         public bool Delete(IssueVM vm)
         {
@@ -278,7 +301,7 @@ namespace Web_Application.Models
             List<IssueVM> list = new List<IssueVM>();
             StringBuilder sb = new StringBuilder();
             //SessionHandler sd = new SessionHandler();
-            sb.Append(" Select i.IssueId, i.IssueNo,i.IssueDescription,i.CompanyId,i.ContactId, i.IssueGeneratorSteps,i.CreatedDate,Format(i.AssignedDate,'yyyy-MM-dd') as AssignedDate,i.Status,Format(i.DeletedBy,'yyyy-MM-dd')as DeletedBy,Format(i.ResolveBy,'yyyy-MM-dd')as ResolveBy, U.UserName, c.CompanyName,p.ContactId, p.ContactName,p.Email as ContactEmail, p.PhoneNumber from Issue i left join users u on u.UserId = i.AssignedTo join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId where 1=1 ");
+            sb.Append(" Select i.IssueId, i.IssueNo,i.IssueDescription,i.CompanyId,i.ContactId, i.IssueGeneratorSteps,i.CreatedDate,Format(i.AssignedDate,'yyyy-MM-dd') as AssignedDate,i.Status,Format(i.DeletedBy,'yyyy-MM-dd')as DeletedBy,Format(i.ResolveBy,'yyyy-MM-dd')as ResolveBy, U.UserName,u.Email as AssignedEmail, c.CompanyName,p.ContactId, p.ContactName,p.Email as ContactEmail, p.PhoneNumber from Issue i left join users u on u.UserId = i.AssignedTo join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId where 1=1 ");
 
             //if (_httpContextAccessor.HttpContext.Session.GetString("userProfile").ToString().ToLower()!="superadmin" && _httpContextAccessor. HttpContext.Session.GetString("userProfile").ToString().ToLower() != "admin")
             //{
@@ -319,6 +342,7 @@ namespace Web_Application.Models
                         CompanyId = Convert.ToInt32(dr["CompanyId"]),
                         ContactId = Convert.ToInt32(dr["ContactId"]),
                         ContactEmail = Convert.ToString(dr["ContactEmail"]),
+                        AssignedEmail = Convert.ToString(dr["AssignedEmail"]),
                     });
             }
             return list;

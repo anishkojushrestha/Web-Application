@@ -89,8 +89,8 @@
                                                 <button style="padding: 0;border: none;background: none;" id="btnAssigned_@data.Id" class="btnAssigned" data-id="@data.Id" onclick="ShowPopupAssign(this);"><i class="fa-solid fa-clipboard-question"></i></button>
 
                                             }
-                                            <button style="padding: 0;border: none;background: none;" id="btnTransfer_@data.Id" class="btnTransfer" data-id="@data.Id" onclick="ShowPopupTransfer(this);"><i class="fas fa-people-arrows"></i></button>
-                                            <button style="padding: 0;border: none;background: none;" id="btnTransfer_@data.Id" class="btnActivity" data-id="@data.Id" onclick="ShowPopupActivity(this);"><i class="fas fa-tasks"></i></button>
+                                            <button style="padding: 0;border: none;background: none;" id="btnTransfer_@data.Id" class="btnTransfer" data-id="@data.Id" data-assign ="@data.UserName" onclick="ShowPopupTransfer(this);"><i class="fas fa-people-arrows"></i></button>
+                                            <button style="padding: 0;border: none;background: none;" id="btnTransfer_@data.Id" class="btnActivity" data-id="@data.Id"  onclick="ShowPopupActivity(this);"><i class="fas fa-tasks"></i></button>
 
                                         }
                                     }
@@ -207,11 +207,15 @@ poupu
         <div class="col" style="margin-left: 13px; ">
 
             <input id="txtAsId" name="Id" hidden />
+            <input name="AssignedEmail" id="txtEmail" hidden />
+
             <div class="row pb-1">
 
                 <div class="rw">
                     <label class="form-label">Assigned to:</label>
-                    <select type="text" name="AssignTo" asp-items="ViewBag.Assign" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required></select>
+                    <select type="text" name="AssignTo" id="selAssign" asp-items="ViewBag.Assign" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required>
+                        <option disabled selected>Select</option>
+                    </select>
                 </div>
             </div>
             <div class="row pb-1">
@@ -243,7 +247,7 @@ poupu
     <div class="modal-dialog">
         <div class="modal-content" style="width:77%;  margin-top: 20px; margin-left:-15%">
             <div class="modal-header p-2">
-                <h4 class="modal-title" id="addRegisterLabel">Assign</h4>
+                <h4 class="modal-title" id="addRegisterLabel">Transfer</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal">
                 </button>
 
@@ -255,6 +259,7 @@ poupu
                     <div class="col" style="margin-left: 13px; ">
 
                         <input id="txtIId" name="Id" hidden />
+                        <input name="AssignedEmail" id="txtTEmail" hidden />
                         @*<div class="row pb-1">
 
                             <div class="rw">
@@ -267,15 +272,14 @@ poupu
                         <div class="row pb-1">
                             <div class="rw">
                                 <label class="form-label">Transfer From:</label>
-                                <select type="text" name="TransferFrom" id="selTrans" asp-items="ViewBag.User" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required>
-                                    <option  selected disabled>Select Transfer From</option>
-                                </select>
+                                <input type="text"  id="selTrans" name="TransferFrom" style="height:34px ;" class="form-control" disabled required>
+                                    
                             </div>
                         </div>
                         <div class="row pb-1">
                             <div class="rw">
                                 <label class="form-label">Transfer To:</label>
-                                <select type="text" name="TransferTo" asp-items="ViewBag.User" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required>
+                                <select type="text" id="selTransferTo" name="TransferTo" asp-items="ViewBag.User" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required>
                                     <option selected disabled>Select Transfer To</option>
                                 </select>
                             </div>
@@ -375,26 +379,42 @@ poupu
            $("#modalPopup2").modal('show');
                 var issueid = $(e).attr("data-id");
                 $("#txtDeId").val(issueid);
+           
 
         }
         function ShowPopupAssign(e) {
             $("#modalPopup3").modal('show');
             var issueid = $(e).attr("data-id");
             $("#txtAsId").val(issueid);
+            $("#selAssign").on("change", function () {
+                var assid = $(this).val();
+                $.ajax({
+                    url: "/Issue/GetUserEmail?id="+assid,
+                    type:"Post",
+                    success:function(data){
+                        var email = $("#txtEmail").val(data.assignedEmail);
+                        alert(data.assignedEmail);
+                    }
+                })
+            });
 
         }
         function ShowPopupTransfer(e) {
             $("#modalPopup4").modal('show');
             var issueid = $(e).attr("data-id");
-            if(issueid != null){
+            var assign = $(e).attr("data-assign");
+            $("#selTrans").val(assign);
+            $("#selTransferTo").on("change", function () {
+                var assid = $(this).val();
                 $.ajax({
-                    url: "/Issue/GetTransfer?id=" + issueid,
-                    type: "post",
+                    url: "/Issue/GetUserEmail?id=" + assid,
+                    type: "Post",
                     success: function (data) {
-                            $("#selTrans").val(data.userName);
+                        var email = $("#txtTEmail").val(data.assignedEmail);
+                        alert(data.assignedEmail);
                     }
                 })
-            }
+            });
             
             $("#txtIId").val(issueid);
 
@@ -405,6 +425,7 @@ poupu
             
 
             $("#txtId").val(issueid);
+            $("#txtEmail").val(email);
 
         }
         function closepopup() {
