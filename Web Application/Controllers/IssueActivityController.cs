@@ -17,8 +17,15 @@ namespace Web_Application.Controllers
 
         public IActionResult Index()
         {
-            IssueActivityDbHandle iadh = new IssueActivityDbHandle();
-            return View(iadh.GetIssuesActivity());
+            if (HttpContext.Session.GetString("userProfile") == "SuperAdmin" || HttpContext.Session.GetString("userProfile") == "Admin" || HttpContext.Session.GetString("userProfile") == "Support")
+            {
+                IssueActivityDbHandle iadh = new IssueActivityDbHandle();
+                return View(iadh.GetIssuesActivity());
+            }
+            else
+            {
+                return RedirectToAction("AccessDenied", "Error");
+            }
         }
         public IActionResult IssueActivity(int id)
         {
