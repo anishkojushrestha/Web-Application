@@ -176,7 +176,7 @@ namespace Web_Application.Models
             if (i >= 1)
             {
                 EmailSetting em = new EmailSetting();
-                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", "anishkoju4@gmail.com", "testing", "This is simple test body."));
+                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "",vm.ContactEmail, "testing", "This is simple test body."));
 
                 return true;
             }
@@ -250,7 +250,7 @@ namespace Web_Application.Models
         {
             connection();
             List<IssueSupportVM> list = new List<IssueSupportVM>();
-            SqlCommand cmd = new SqlCommand("select s.*, i.IssueNo, u.UserName, c.ContactName from IssueSupport s left join users u on u.UserId = s.AssignedTo join Issue i on i.IssueId = s.IssueId join ContactPerson c on c.ContactId = i.ContactId", con);
+            SqlCommand cmd = new SqlCommand("select s.IssueSupportId,s.IssueId,Format(s.AssignedDate,'dd-MM-yyyy')as AssignedDate,s.Status,s.AssignedTo, i.IssueNo, u.UserName, c.ContactName from IssueSupport s left join users u on u.UserId = s.AssignedTo join Issue i on i.IssueId = s.IssueId join ContactPerson c on c.ContactId = i.ContactId", con);
             SqlDataAdapter ad = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             con.Open();

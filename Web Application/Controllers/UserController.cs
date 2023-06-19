@@ -75,13 +75,11 @@ namespace Web_Application.Controllers
                 {
                     ViewBag.usererror = "User Already Exis";
                     TempData["error"] = "User Already Exis";
-                    
                 }
                 else
                 {
                     if (vm.NewPassword == vm.ConfirmPassword)
                     {
-
                         if (userDbHandle.RegisteUser(vm))
                         {
                             ViewBag.Message = "Register Details Added Successfully";
@@ -119,15 +117,12 @@ namespace Web_Application.Controllers
                 var userinfo = userDbHandle.GetUser(vm.UserName, vm.Password);
                 if (userinfo.Count > 0)
                 {
-                    
                     HttpContext.Session.SetString("userId", userinfo[0].Id.ToString());
                     HttpContext.Session.SetString("userFirstName", userinfo[0].FirstName.ToString());
                     HttpContext.Session.SetString("userLastName", userinfo[0].LastName.ToString());
                     HttpContext.Session.SetString("userProfile", userinfo[0].Profile.ToString());
                     ViewBag._userName = userinfo[0].FirstName.ToString() + "," + userinfo[0].LastName.ToString();
-                    
                     return RedirectToAction("Index", "Company");
-                    
                 }
                 ViewBag.UserError = "InCorrect credentials ";
 

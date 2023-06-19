@@ -1,10 +1,16 @@
 ﻿@model IEnumerable<Web_Application.ModelViews.CompanyMV>
 @{
     ViewData["Title"] = "Index";
+    HttpContextAccessor a = new HttpContextAccessor();
+    ISession session = a.HttpContext.Session;
     
 }
 <div id="PlaceHolderHere"></div>
-<button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("AddCompany")" style="width:100px;margin-left:90%; margin-bottom:5px;">Create</button>
+@if (session.GetString("userProfile") == "SuperAdmin" || session.GetString("userProfile") == "Admin" || session.GetString("userProfile") == "Support")
+{
+    <button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("AddCompany")" style="width:100px;margin-left:90%; margin-bottom:5px;">Create</button>
+
+}
 <div class="card shadow mb-4" >
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Company Informations DataTables</h6>
@@ -44,7 +50,11 @@
                             <td>
                                 <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addRegister" data-url="@Url.Action($"EditCompany/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
                                 @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
-                                <a style="color:black" asp-action="Delete" asp-controller="Company" asp-route-id="@data.Id" onclick="return confirm('Are sure wants to delete?');"><i class="fa-solid fa-trash"></i></a>
+                                @if (session.GetString("userProfile") == "SuperAdmin" || session.GetString("userProfile") == "Admin" || session.GetString("userProfile") == "Support")
+                                {
+                                    <a style="color:black" asp-action="Delete" asp-controller="Company" asp-route-id="@data.Id" onclick="return confirm('Are sure wants to delete?');"><i class="fa-solid fa-trash"></i></a>
+                                }
+                                
                                 <button style="padding: 0;border: none;background: none;" type="button" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"GetContact/{data.Id}")"><i class="fa-solid fa-eye"></i></button>
                                 @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
                             @Html.ActionLink("Delete", "Delete", new { id = data.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })*@

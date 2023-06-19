@@ -21,7 +21,6 @@ namespace Web_Application.Controllers
             IssueDbHandle idh = new IssueDbHandle();
             ViewData["user"] = new SelectList(idh.GetUser(), "UserName", "UserName");
             ViewData["Assign"] = new SelectList(idh.GetUser(), "Id", "UserName");
-            
             return View(idh.GetIssue());
         }
 

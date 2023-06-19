@@ -96,8 +96,6 @@ namespace Web_Application.Models
                     });
             }
             return customerList;
-
-
         }
 
         public List<ContactPersonVM> GetContactDetail()
