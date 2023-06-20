@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Web_Application.Models;
 
 namespace Web_Application.Controllers
 {
@@ -11,6 +13,8 @@ namespace Web_Application.Controllers
 
         public IActionResult CreateAMCEntry()
         {
+            CompanyDbHandle idh = new CompanyDbHandle();
+            ViewData["Company"] = new SelectList(idh.GetCompany(), "Id", "CompanyName");
             return PartialView("_PartialCreateAMCEntry");
         }
     }
