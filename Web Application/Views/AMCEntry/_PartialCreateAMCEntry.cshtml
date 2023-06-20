@@ -183,7 +183,7 @@
                             <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="true">Contact Person</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-three-demo-tab" data-toggle="pill" href="#custom-tabs-three-demo" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="true">Demo</a>
+                            <a class="nav-link" id="custom-tabs-three-amc-tab" data-toggle="pill" href="#custom-tabs-three-amc" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="true">AMC Entry</a>
                         </li>
                     </ul>
                 </div>
@@ -206,14 +206,14 @@
                                     <div class="row pb-1">
                                         <div>
                                             <label class="form-label">Category:</label>
-                                            <input type="text" asp-for="Category" id="selCategory" class="form-control" style="height:33px" readonly  required/>
+                                            <input type="text" asp-for="Category" id="selCategory" class="form-control" style="height:33px" readonly required />
                                         </div>
 
                                     </div>
                                     <div class="row pb-1">
                                         <div class="rw">
                                             <label class="form-label">Registration Date:</label>
-                                            <input type="text" asp-for="RegistrationDate"  id="dateRegistration" class="form-control" style="height:33px" readonly required>
+                                            <input type="text" asp-for="RegistrationDate" id="dateRegistration" class="form-control" style="height:33px" readonly required>
                                         </div>
                                         <div class="rw">
                                             <label class="form-label">Email:</label>
@@ -234,7 +234,7 @@
 
                                         <div class="rw">
                                             <label class="form-label">District:</label>
-                                            <input type="text" asp-for="District" id="selDistrict" class="form-select" readonly  style="height:33px" required>
+                                            <input type="text" asp-for="District" id="selDistrict" class="form-select" readonly style="height:33px" required>
                                         </div>
                                         <div class="rw">
                                             <label class="form-label">Country:</label>
@@ -244,7 +244,7 @@
                                     <div class="row pb-1">
                                         <div class="rw">
                                             <label class="form-label">Valid From:</label>
-                                            <input type="text" asp-for="ValidFrom" id="dateValidFrom"  class="form-control" style="height:33px" required>
+                                            <input type="text" asp-for="ValidFrom" id="dateValidFrom" class="form-control" style="height:33px" required>
                                         </div>
                                         <div class="rw">
                                             <label class="form-label">Valid To:</label>
@@ -254,58 +254,58 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade show" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
-                               @* <div class="col" style="margin-left: 10px;">
-                                    <div class="row pb-1">
-                                        <div class="rws">
+                                @* <div class="col" style="margin-left: 10px;">
+                                <div class="row pb-1">
+                                <div class="rws">
 
-                                            <label class="form-label">Contact Name:</label>
-                                            <input type="text" id="contact" name="contactName" style="height:33px" class="form-control">
-                                        </div>
-                                        <div class="rws">
-                                            <label class="form-label">Gender:</label>
-                                            <select class="form-select" id="gender" name="gender" style="height:33px">
-                                                <option>Male</option>
-                                                <option>Female</option>
-                                            </select>
-                                        </div>
-                                        <div class="rws">
-                                            <label class="form-label">Address:</label>
-                                            <input type="text" name="address" id="address" class="form-control" style="height:33px">
-                                        </div>
-                                    </div>
-                                    <div class="row pb-1">
-                                        <div class="rws">
-                                            <label class="form-label">Phone Number:</label>
-                                            <input type="text" name="phoneNumber" id="phone" class="form-control" style="height:33px">
-                                        </div>
-                                        <div class="rws">
-                                            <label class="form-label">Mobile Number:</label>
-                                            <input type="text" name="mobileNumber" id="mobile" class="form-control" style="height:33px">
-                                        </div>
-                                        <div class="rws">
-                                            <label class="form-label">Email:</label>
-                                            <input type="email" class="form-control" id="email" style="height:33px" />
-                                        </div>
-                                    </div>
-                                    <div class="row pb-3">
+                                <label class="form-label">Contact Name:</label>
+                                <input type="text" id="contact" name="contactName" style="height:33px" class="form-control">
+                                </div>
+                                <div class="rws">
+                                <label class="form-label">Gender:</label>
+                                <select class="form-select" id="gender" name="gender" style="height:33px">
+                                <option>Male</option>
+                                <option>Female</option>
+                                </select>
+                                </div>
+                                <div class="rws">
+                                <label class="form-label">Address:</label>
+                                <input type="text" name="address" id="address" class="form-control" style="height:33px">
+                                </div>
+                                </div>
+                                <div class="row pb-1">
+                                <div class="rws">
+                                <label class="form-label">Phone Number:</label>
+                                <input type="text" name="phoneNumber" id="phone" class="form-control" style="height:33px">
+                                </div>
+                                <div class="rws">
+                                <label class="form-label">Mobile Number:</label>
+                                <input type="text" name="mobileNumber" id="mobile" class="form-control" style="height:33px">
+                                </div>
+                                <div class="rws">
+                                <label class="form-label">Email:</label>
+                                <input type="email" class="form-control" id="email" style="height:33px" />
+                                </div>
+                                </div>
+                                <div class="row pb-3">
 
-                                        <div class="rws">
-                                            <label class="form-label">Desigation:</label>
-                                            <select class="form-select" id="designation" name="designation" style="height:33px">
-                                                <option disabled selected>Select Designation</option>
-                                                <option>Sr. Accountant</option>
-                                                <option>Finance Manager</option>
-                                                <option>CEO</option>
-                                                <option>Jr. Accountant</option>
-                                                <option>Sales Team</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                <div class="rws">
+                                <label class="form-label">Desigation:</label>
+                                <select class="form-select" id="designation" name="designation" style="height:33px">
+                                <option disabled selected>Select Designation</option>
+                                <option>Sr. Accountant</option>
+                                <option>Finance Manager</option>
+                                <option>CEO</option>
+                                <option>Jr. Accountant</option>
+                                <option>Sales Team</option>
+                                </select>
+                                </div>
+                                </div>
 
                                 </div>
 
                                 <button type="button" class="btn btn-primary" id="add" style="margin-left:90%; margin-top: 2px; ">Add</button>
-*@
+                                *@
 
 
                                 @if (Model != null)
@@ -346,90 +346,71 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tbldatatabletbody">
-                                        
-                                                    
-                                                        @*<tr >
-                                                            <td>
-                                                                <input type='hidden' class='form-control' style='height:33px;'  id="txtId"  />
-                                                                <input type='text' readonly class='form-control' style='height:33px;'  id="txtContactName"  />
-                                                            </td>
-                                                            <td>
-                                                                <input type='text' style='height:33px;' readonly  id="txtGender" class='form-control' />
-                                                            </td>
-                                                            <td>
-                                                                <input type='text' style='height:33px;' readonly  class='form-control'  id="txtContactAddress" />
-                                                            </td>
-                                                            <td>
-                                                                <input style='height:33px;' type='email' readonly class='form-control'  id="txtContactEmail" />
-                                                            </td>
-                                                            <td>
-                                                                <input type='text' style='height:33px;' readonly  class='form-control'  id="txtPhoneNumber" />
-                                                            </td>
-                                                            <td>
-                                                                <input style='height:33px;' type='text' readonly  class='form-control'  id="txtMobileNumber" />
-                                                            </td>
-
-                                                            <td>
-                                                                <input style='height:33px;' type='text' readonly  class='form-control'  id="txtDesignation" />
-                                                            </td>
-                                                            
-                                                        </tr>*@
 
 
-                                     
+                                        @*<tr >
+                                        <td>
+                                        <input type='hidden' class='form-control' style='height:33px;'  id="txtId"  />
+                                        <input type='text' readonly class='form-control' style='height:33px;'  id="txtContactName"  />
+                                        </td>
+                                        <td>
+                                        <input type='text' style='height:33px;' readonly  id="txtGender" class='form-control' />
+                                        </td>
+                                        <td>
+                                        <input type='text' style='height:33px;' readonly  class='form-control'  id="txtContactAddress" />
+                                        </td>
+                                        <td>
+                                        <input style='height:33px;' type='email' readonly class='form-control'  id="txtContactEmail" />
+                                        </td>
+                                        <td>
+                                        <input type='text' style='height:33px;' readonly  class='form-control'  id="txtPhoneNumber" />
+                                        </td>
+                                        <td>
+                                        <input style='height:33px;' type='text' readonly  class='form-control'  id="txtMobileNumber" />
+                                        </td>
+
+                                        <td>
+                                        <input style='height:33px;' type='text' readonly  class='form-control'  id="txtDesignation" />
+                                        </td>
+
+                                        </tr>*@
+
+
+
 
                                     </tbody>
                                 </table>
-                                
+
                             </div>
 
-                            <div class="tab-pane fade show " id="custom-tabs-three-demo" role="tabpanel" aria-labelledby="custom-tabs-three-demo-tab">
+                            <div class="tab-pane fade show " id="custom-tabs-three-amc" role="tabpanel" aria-labelledby="custom-tabs-three-amc-tab">
                                 <div class="col" style="margin-left: 10px; ">
-                                    
-                                   
+
                                     <div class="row pb-1">
                                         <div class="rws">
-                                            <label class="form-label">Quotation price:</label>
-                                            <input type="text"   class="form-control" style="height:33px" >
+                                            <label class="form-label">Client:</label>
+                                            <input type="text" class="form-control" style="height:33px">
                                         </div>
                                         <div class="rws">
-                                            <label class="form-label">Software Type:</label>
-                                            <select type="text"  class="form-control" style="height:33px" >
-                                                <option disabled selected>Select Software Type</option>
-                                                <option>OMS Software</option>
-                                                <option>Desktop Accounting</option>
-                                            </select>
+                                            <label class="form-label">Open Date:</label>
+                                            <input type="date" class="form-control" style="height:33px">
                                         </div>
                                         <div class="rws">
-                                            <label class="form-label">Total User:</label>
-                                            <input type="text" class="form-control" style="height:33px" >
-                                        </div>
-                                    </div>
-                                    <div class="row pb-1">
-                                        
-                                        <div class="rws">
-                                            <label class="form-label">No. Of Branches</label>
-                                            <input type="text"  class="form-control" style="height:33px" >
-                                        </div>
-                                        <div class="rws">
-                                            <label class="form-label">No. Of Company:</label>
-                                            <input type="text" class="form-control" style="height:33px" >
-                                        </div>
-                                        <div class="rws">
-                                            <label class="form-label">Sale Stage:</label>
-                                            <input type="text" class="form-control" style="height:33px" >
+                                            <label class="form-label">AMC Amount:</label>
+                                            <input type="text" class="form-control" style="height:33px" />
                                         </div>
                                     </div>
                                     <div class="row pb-3">
-                                        <div class="rw">
-                                            <label class="form-label">Client FeedBack:</label>
-                                            <textarea type="text" class="form-control" style="height:33px" ></textarea>
+                                        <div class="rws">
+                                            <label class="form-label">Next Follow Up Date:</label>
+                                            <input type="date" class="form-control" style="height:33px">
                                         </div>
-                                        <div class="rw">
-                                            <label class="form-label">Attachment:</label>
-                                            <input type="file" class="form-control" style="height:33px" >
+                                        <div class="rws">
+                                            <label class="form-label">Close Date:</label>
+                                            <input type="date" class="form-control" style="height:33px">
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
@@ -438,8 +419,8 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                    </div>
+
+                        </div>
                 </form>
 
 
@@ -458,12 +439,12 @@
     $("#selCompany").select2({
         dropdownParent: $(".modal-content"),
     });
-    $("#selCompany").on("change", function(){
+    $("#selCompany").on("change", function () {
         var id = $(this).val();
         $.ajax({
-            url: "/Demo/GetCompanyDemo?id="+id,
-            type:"Post",
-            success:function(data){
+            url: "/Demo/GetCompanyDemo?id=" + id,
+            type: "Post",
+            success: function (data) {
                 $("#selCategory").val(data.category);
                 $("#dateRegistration").val(data.rDate);
                 $("#txtCompanyEmail").val(data.email);
@@ -474,7 +455,7 @@
                 $("#dateValidFrom").val(data.vFrom);
                 $("#dateValidTo").val(data.vTo);
                 for (var i = 0; i <= data.contactPersonVM.length; i++) {
-                    var cols="";
+                    var cols = "";
                     cols = cols + '<tr><td><input class="form-control" readonly value="' + data.contactPersonVM[i].contactName + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].gender + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].address + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].email + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].phoneNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].mobileNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].designation + '"/></td></tr>'
                     $("#tbldatatabletbody").append(cols);
                 }
@@ -499,7 +480,7 @@
 
         //removing active class from other selected/default tab
         $("#custom-tabs-three-home-tab").removeClass("active");
-        $("#custom-tabs-three-demo-tab").removeClass("active");
+        $("#custom-tabs-three-amc-tab").removeClass("active");
 
         //adding active class to current clicked tab
         $('#custom-tabs-three-profile-tab').addClass("active");
@@ -508,19 +489,19 @@
 
         //removing active class from other selected/default tab
         $("#custom-tabs-three-profile-tab").removeClass("active");
-        $("#custom-tabs-three-demo-tab").removeClass("active");
+        $("#custom-tabs-three-amc-tab").removeClass("active");
 
         //adding active class to current clicked tab
         $('#custom-tabs-three-home-tab').addClass("active");
     });
-    $('#custom-tabs-three-demo-tab').click(function () {
+    $('#custom-tabs-three-amc-tab').click(function () {
 
         //removing active class from other selected/default tab
         $("#custom-tabs-three-profile-tab").removeClass("active");
         $("#custom-tabs-three-home-tab").removeClass("active");
 
         //adding active class to current clicked tab
-        $('#custom-tabs-three-demo-tab').addClass("active");
+        $('#custom-tabs-three-amc-tab').addClass("active");
     });
     $(document).ready(function () {
         var rowCount = parseInt($("#hidRowCount").val() == "" ? "0" : $("#hidRowCount").val());

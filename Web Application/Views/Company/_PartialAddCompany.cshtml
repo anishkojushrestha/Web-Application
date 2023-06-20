@@ -48,9 +48,9 @@
 </style>
 <div class="modal fade" id="addRegister" data-bs-backdrop="static">
     <div class="modal-dialog">
-        <div class="modal-content" style="width:130%;  margin-top: 20px; margin-left:-5%">
-            <div class="modal-header p-2">
-                        <h4 class="modal-title" id="addRegisterLabel" style="font-size:large">Company/Contact</h4>
+        <div class="modal-content" style="width:130%;  margin-top: 20px; margin-left:-5%;">
+            <div class="modal-header p-2" style="background-color:#00806A;">
+                        <h4 class="modal-title" id="addRegisterLabel" style="font-size:large; color:black;">Company/Contact</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="javascript:window.location.reload()">
                 </button>
 
@@ -81,9 +81,25 @@
 
                                     </div>
                                     <div class="row pb-1">
+                                        <div>
+                                            <label class="form-label">Category:</label>
+                                            <select type="text" asp-for="Category" class="form-select" style="height:33px" required>
+                                                <option disabled selected>Select Category</option>
+                                                <option >Registration</option>
+                                                <option >Marketing</option>
+                                                <option >Demo</option>
+                                                <option >Installation</option>
+                                                <option >Training</option>
+                                                <option >Payment</option>
+                                                <option >R&D</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="row pb-1">
                                         <div class="rw">
                                             <label class="form-label">Registration Date:</label>
-                                            <input type="date" asp-for="RegistrationDate" class="form-control" style="height:33px" required>
+                                            <input type="date" asp-for="RegistrationDate" id="dateRegistration" class="form-control" style="height:33px" required>
                                         </div>
                                         <div class="rw">
                                             <label class="form-label">Email:</label>
@@ -101,24 +117,109 @@
                                         </div>
                                     </div>
                                     <div class="row pb-1">
-
-                                        <div class="rw">
-                                            <label class="form-label">City:</label>
-                                            <input type="text" asp-for="City" class="form-control" style="height:33px" required>
+                                        
+                                        <div class="rw" id="divDistrict">
+                                            <label class="form-label">District:</label>
+                                            
+                                            <select type="text" asp-for="District" id="selDistrict" class="form-select" style="height:33px" required>
+                                                <option disabled selected>Select District</option>
+                                                <option>Achham</option>
+                                                <option>Baitadi</option>
+                                                <option>Bajhang</option>
+                                                <option>Bajura</option>
+                                                <option>Dadeldhura</option>
+                                                <option>Darchula</option>
+                                                <option>Doti</option>
+                                                <option>kailali</option>
+                                                <option>kanchanpur</option>
+                                                <option>Bhojpur</option>
+                                                <option>Dhankuta</option>
+                                                <option>Ilam</option>
+                                                <option>Jhapa</option>
+                                                <option>Khotang</option>
+                                                <option>Morang</option>
+                                                <option>Okhaldhunga</option>
+                                                <option>Panchthar</option>
+                                                <option>Sankhuwasabha</option>
+                                                <option>Solukhumbu</option>
+                                                <option>Sunsari</option>
+                                                <option>Taplejung</option>
+                                                <option>Terhathum</option>
+                                                <option>Udayapur</option>
+                                                <option>Saptari</option>
+                                                <option>Siraha</option>
+                                                <option>Dhanusha</option>
+                                                <option>Mahottari</option>
+                                                <option>Sarlahi</option>
+                                                <option>Bara</option>
+                                                <option>Parsa</option>
+                                                <option>Rautahat</option>
+                                                <option>Chitwan</option>
+                                                <option>Dhading</option>
+                                                <option>Dolakha</option>
+                                                <option>Kathmandu</option>
+                                                <option>Kavrepalanchok</option>
+                                                <option>Lalitpur</option>
+                                                <option>Makwanpur</option>
+                                                <option>Nuwakot</option>
+                                                <option>Rasuwa</option>
+                                                <option>Sindhuli</option>
+                                                <option>Sindhupalchok</option>
+                                                <option>Baglung</option>
+                                                <option>Gorkha</option>
+                                                <option>Kaski</option>
+                                                <option>Lamjung</option>
+                                                <option>Manang</option>
+                                                <option>Mustang</option>
+                                                <option>Myagdi</option>
+                                                <option>Nawalpur</option>
+                                                <option>Parbat</option>
+                                                <option>Syangja</option>
+                                                <option>Tanahun</option>
+                                                <option>Arghakhanchi</option>
+                                                <option>Banke</option>
+                                                <option>Bardiya</option>
+                                                <option>Dang</option>
+                                                <option>Eastern Rukum</option>
+                                                <option>Gulmi</option>
+                                                <option>Kapilvastu</option>
+                                                <option>Parasi</option>
+                                                <option>Palpa</option>
+                                                <option>Pyuthan</option>
+                                                <option>Rolpa</option>
+                                                <option>Rupandehi</option>
+                                                <option>Dailekh</option>
+                                                <option>Dolpa</option>
+                                                <option>HumlaK</option>
+                                                <option>Jajarkot</option>
+                                                <option>Jumla</option>
+                                                <option>Kalikot</option>
+                                                <option>Mugu</option>
+                                                <option>Surkhet</option>
+                                                <option>Western Rukum</option>
+                                                <option>Bajura</option>
+                                                <option>Baitadi</option>
+                                                <option>Darchula</option>
+                                            </select>
                                         </div>
                                         <div class="rw">
                                             <label class="form-label">Country:</label>
-                                            <input type="text" asp-for="Country" class="form-control" style="height:33px" required>
+                                            <select type="text" asp-for="Country" class="form-select" id="selCountry" style="height:33px" required>
+                                                <option disabled selected>Select Country</option>
+                                                <option>Nepal</option>
+                                                <option>India</option>
+                                                <option>China</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row pb-1">
                                         <div class="rw">
                                             <label class="form-label">Valid From:</label>
-                                            <input type="date" asp-for="ValidFrom" class="form-control" style="height:33px" required>
+                                            <input type="date" asp-for="ValidFrom" id="dateValidFrom" class="form-control" style="height:33px" required>
                                         </div>
                                         <div class="rw">
                                             <label class="form-label">Valid To:</label>
-                                            <input type="date" asp-for="ValidTo" class="form-control" style="height:33px" required>
+                                            <input type="date" asp-for="ValidTo" id="dateValidTo" class="form-control" style="height:33px" required>
                                         </div>
                                     </div>
                                 </div>
@@ -160,12 +261,15 @@
                                     <div class="row pb-3">
                                         
                                         <div class="rws">
+                                            @*-	Designation (Sr. Accountant, Finance Manager, CEO, Jr. Accountant, Sales Team)*@
                                             <label class="form-label">Desigation:</label>
                                             <select class="form-select" id="designation" name="designation" style="height:33px">
-                                                <option>Staff</option>
-                                                <option>Assistance</option>
+                                                <option disabled selected>Select Designation</option>
+                                                <option>Sr. Accountant</option>
+                                                <option>Finance Manager</option>
                                                 <option>CEO</option>
-                                                <option>Reception</option>
+                                                <option>Jr. Accountant</option>
+                                                <option>Sales Team</option>
                                             </select>
                                         </div>
                                     </div>
@@ -294,6 +398,33 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script>
+    const currentDate = new Date();
+
+    // Format the date as YYYY-MM-DD
+    const year = currentDate.getFullYear();
+    const increaseYear = (currentDate.getFullYear()+1);
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+    const validTo = `${increaseYear}-${month}-${day}`;
+    $("#dateRegistration").val(formattedDate);
+    $("#dateValidFrom").val(formattedDate);
+    $("#dateValidTo").val(validTo);
+
+    $("#selCountry").on("change", function(){
+        $("#inDistrict").remove();
+        var country = $(this).val();
+        if(country == "India" || country == "China"){
+            $("#selDistrict").hide();
+            $("#divDistrict").append('<input type="text" name="District" id="inDistrict" class="form-control" style="height:33px" required />');
+            
+        }else{
+            $("#inDistrict").remove();
+            $("#selDistrict").show();
+        }
+        
+    });
+
     $('#custom-tabs-three-profile-tab').click(function () {
 
         //removing active class from other selected/default tab

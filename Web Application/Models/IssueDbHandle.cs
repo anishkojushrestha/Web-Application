@@ -390,7 +390,7 @@ namespace Web_Application.Models
             if (i >= 1)
             {
                 EmailSetting em = new EmailSetting();
-                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.TransferTo, "testing", "Task hasbeen trasfer to you"));
+                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.AssignedEmail, "testing", "Task hasbeen trasfer to you"));
                 return true;
             }
             else

@@ -259,7 +259,7 @@ poupu
                     <div class="col" style="margin-left: 13px; ">
 
                         <input id="txtIId" name="Id" hidden />
-                        <input name="AssignedEmail" id="txtTEmail" hidden />
+                        
                         @*<div class="row pb-1">
 
                             <div class="rw">
@@ -272,8 +272,8 @@ poupu
                         <div class="row pb-1">
                             <div class="rw">
                                 <label class="form-label">Transfer From:</label>
-                                <input type="text" id="selTrans" name="TransferFrom" style="height:34px ;" class="form-control" disabled required>
-                                    
+                                <input type="text" id="selTransfer" name="TransferFrom" style="height:34px" class="form-control" readonly  required/>
+                                <input name="AssignedEmail" id="txtTEmail" hidden />
                             </div>
                         </div>
                         <div class="row pb-1">
@@ -343,7 +343,7 @@ poupu
                             <div class="row pb-3">
                                 <div class="rw ">
                                     <label class="form-label">Attachments:</label>
-                                    <input type="file" name="Attachment" style="height:33px" class="form-control" style="height:65px;" required multiple />
+                                    <input type="file" name="Attachment" style="height:33px" class="form-control" style="height:65px;"  multiple />
 
                                 </div>
                             </div>
@@ -403,7 +403,7 @@ poupu
             $("#modalPopup4").modal('show');
             var issueid = $(e).attr("data-id");
             var assign = $(e).attr("data-assign");
-            $("#selTrans").val(assign);
+            $("#selTransfer").val(assign);
             $("#selTransferTo").on("change", function () {
                 var user = $(this).val();
                 $.ajax({

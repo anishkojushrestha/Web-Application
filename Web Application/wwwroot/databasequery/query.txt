@@ -1,10 +1,11 @@
 CREATE TABLE CompanyInfo(
 CompanyId bigint NOT NULL primary key,
 CompanyName varchar(50),
+Category varchar(50),
 Address varchar(50),
 Email varchar(50),
 PanNumber int,
-City varchar(50),
+District varchar(50),
 Country varchar(50),
 RegistrationDate date,
 ValidFrom date,
