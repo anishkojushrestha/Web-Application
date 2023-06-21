@@ -1,4 +1,4 @@
-﻿@model Web_Application.ModelViews.CompanyMV
+﻿@model Web_Application.ModelViews.AMCEntryVM
 
 
 <style>
@@ -187,9 +187,10 @@
                         </li>
                     </ul>
                 </div>
-                <form asp-action="AddCompany" asp-controller="Company">
+                <form asp-action="CreateAMCEntry" asp-controller="AMCEntry">
                     @Html.AntiForgeryToken()
-                    <input asp-for="Id" hidden />
+                    <input asp-for="Id"  hidden />
+                    <input asp-for="CompanyId" id="demoId" hidden />
                     <div class="card-body">
                         <div class="tab-content" id="custom-tabs-three-tabContent">
                             <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
@@ -197,58 +198,65 @@
                                     <div class="row pb-0">
                                         <div>
                                             <label class="form-label">Company Name:</label>
-                                            <select type="text" asp-for="CompanyName" id="selCompany" asp-items="ViewBag.Company" class="form-control" style="height:33px" required>
-                                                <option disabled selected>Select Company</option>
-                                            </select>
+                                            @if (Model == null)
+                                            {
+                                                <select type="text" asp-for="CompanyId" id="selCompany" asp-items="ViewBag.Company" class="form-control" style="height:33px" required>
+                                                    <option disabled selected>Select Company</option>
+                                                </select>
+                                            }
+                                            else
+                                            {
+                                                <input asp-for="CompanyName" class="form-control" id="txtCompany" readonly style="height:33px" />
+                                            }
                                         </div>
 
                                     </div>
                                     <div class="row pb-1">
                                         <div>
                                             <label class="form-label">Category:</label>
-                                            <input type="text" asp-for="Category" id="selCategory" class="form-control" style="height:33px" readonly required />
+                                            <input type="text"  id="selCategory" class="form-control" style="height:33px" readonly required />
                                         </div>
 
                                     </div>
                                     <div class="row pb-1">
                                         <div class="rw">
                                             <label class="form-label">Registration Date:</label>
-                                            <input type="text" asp-for="RegistrationDate" id="dateRegistration" class="form-control" style="height:33px" readonly required>
+                                            <input type="text"  id="dateRegistration" class="form-control" style="height:33px" readonly required>
                                         </div>
                                         <div class="rw">
                                             <label class="form-label">Email:</label>
-                                            <input type="email" asp-for="Email" id="txtCompanyEmail" class="form-control" style="height:33px" readonly required>
+                                            <input type="email" id="txtCompanyEmail" class="form-control" style="height:33px" readonly required>
                                         </div>
                                     </div>
                                     <div class="row pb-1">
                                         <div class="rw">
                                             <label class="form-label">Address:</label>
-                                            <input type="text" asp-for="Address" id="txtCompanyAddress" class="form-control" style="height:33px" readonly required>
+                                            <input type="text"  id="txtCompanyAddress" class="form-control" style="height:33px" readonly required>
                                         </div>
                                         <div class="rw">
                                             <label class="form-label">Pan No.</label>
-                                            <input type="text" asp-for="PanNumber" id="txtPan" class="form-control" style="height:33px" readonly required>
+                                            <input type="text"  id="txtPan" class="form-control" style="height:33px" readonly required>
                                         </div>
                                     </div>
                                     <div class="row pb-1">
 
                                         <div class="rw">
                                             <label class="form-label">District:</label>
-                                            <input type="text" asp-for="District" id="selDistrict" class="form-select" readonly style="height:33px" required>
+                                            <input type="text"  id="selDistrict" class="form-select" readonly style="height:33px" required>
                                         </div>
                                         <div class="rw">
                                             <label class="form-label">Country:</label>
-                                            <input type="text" asp-for="Country" class="form-control" id="selCountry" readonly style="height:33px" required />
+                                            <input type="text"  class="form-control" id="selCountry" readonly style="height:33px" required />
                                         </div>
                                     </div>
                                     <div class="row pb-1">
                                         <div class="rw">
                                             <label class="form-label">Valid From:</label>
-                                            <input type="text" asp-for="ValidFrom" id="dateValidFrom" class="form-control" style="height:33px" required>
+                                            <input type="text"  id="dateValidFrom" class="form-control" style="height:33px" required>
                                         </div>
                                         <div class="rw">
                                             <label class="form-label">Valid To:</label>
-                                            <input type="text" asp-for="ValidTo" id="dateValidTo" class="form-control" style="height:33px" required>
+                                            <input type="text"  id="dateValidTo" class="form-control" style="height:33px" required>
                                         </div>
                                     </div>
                                 </div>
@@ -307,28 +315,6 @@
                                 <button type="button" class="btn btn-primary" id="add" style="margin-left:90%; margin-top: 2px; ">Add</button>
                                 *@
 
-
-                                @if (Model != null)
-                                {
-                                    if (Model.contactPersonVM != null && Model.contactPersonVM.Count > 0)
-                                    {
-                                        <input type="hidden" id="hidRowCount" value="@Model.contactPersonVM.Count" />
-                                    }
-                                    else
-                                    {
-
-                                        <input type="hidden" id="hidRowCount" value="0" />
-                                    }
-                                    <input type="hidden" id="hidRowClicked" value="-1" />
-                                    <input type="hidden" id="hiddbRecid" />
-
-                                }
-                                else
-                                {
-                                    <input type="hidden" id="hidRowClicked" value="-1" />
-                                    <input type="hidden" id="hiddbRecid" />
-                                    <input type="hidden" id="hidRowCount" />
-                                }
 
 
 
@@ -389,25 +375,25 @@
                                     <div class="row pb-1">
                                         <div class="rws">
                                             <label class="form-label">Client:</label>
-                                            <input type="text" class="form-control" style="height:33px">
+                                            <input type="text" asp-for="Client" class="form-control" style="height:33px">
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">Open Date:</label>
-                                            <input type="date" class="form-control" style="height:33px">
+                                            <input type="date" asp-for="OpenDate" class="form-control" style="height:33px">
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">AMC Amount:</label>
-                                            <input type="text" class="form-control" style="height:33px" />
+                                            <input type="text" asp-for="AMCAmount" class="form-control" style="height:33px" />
                                         </div>
                                     </div>
                                     <div class="row pb-3">
                                         <div class="rws">
                                             <label class="form-label">Next Follow Up Date:</label>
-                                            <input type="date" class="form-control" style="height:33px">
+                                            <input type="date" asp-for="FollowUpDate" class="form-control" style="height:33px">
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">Close Date:</label>
-                                            <input type="date" class="form-control" style="height:33px">
+                                            <input type="date" asp-for="CloseDate" class="form-control" style="height:33px">
                                         </div>
                                     </div>
 
@@ -419,7 +405,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            </div>
                         </div>
                 </form>
 
@@ -439,7 +425,33 @@
     $("#selCompany").select2({
         dropdownParent: $(".modal-content"),
     });
+    if ($("#demoId").val() != 0) {
+        $("#tbRow").remove();
+        var id = $("#demoId").val();
+        $.ajax({
+            url: "/Demo/GetCompanyDemo?id=" + id,
+            type: "Post",
+            success: function (data) {
+                $("#selCategory").val(data.category);
+                $("#dateRegistration").val(data.rDate);
+                $("#txtCompanyEmail").val(data.email);
+                $("#txtCompanyAddress").val(data.address);
+                $("#txtPan").val(data.panNumber);
+                $("#selDistrict").val(data.district);
+                $("#selCountry").val(data.country);
+                $("#dateValidFrom").val(data.vFrom);
+                $("#dateValidTo").val(data.vTo);
+                for (var i = 0; i <= data.contactPersonVM.length; i++) {
+                    var cols = "";
+                    cols = cols + '<tr id="tbRow"><td><input class="form-control" readonly value="' + data.contactPersonVM[i].contactName + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].gender + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].address + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].email + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].phoneNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].mobileNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].designation + '"/></td></tr>'
+                    $("#tbldatatabletbody").append(cols);
+                }
+
+            }
+        })
+    }
     $("#selCompany").on("change", function () {
+        $("#tbRow").remove();
         var id = $(this).val();
         $.ajax({
             url: "/Demo/GetCompanyDemo?id=" + id,
@@ -456,7 +468,7 @@
                 $("#dateValidTo").val(data.vTo);
                 for (var i = 0; i <= data.contactPersonVM.length; i++) {
                     var cols = "";
-                    cols = cols + '<tr><td><input class="form-control" readonly value="' + data.contactPersonVM[i].contactName + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].gender + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].address + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].email + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].phoneNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].mobileNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].designation + '"/></td></tr>'
+                    cols = cols + '<tr id="tbRow"><td><input class="form-control" readonly value="' + data.contactPersonVM[i].contactName + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].gender + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].address + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].email + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].phoneNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].mobileNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].designation + '"/></td></tr>'
                     $("#tbldatatabletbody").append(cols);
                 }
 
@@ -485,7 +497,7 @@
         //adding active class to current clicked tab
         $('#custom-tabs-three-profile-tab').addClass("active");
     });
-    $('#custom-tabs-three-home-tab').click(function () {
+    $('#custom-tabs-three-amc-tab').click(function () {
 
         //removing active class from other selected/default tab
         $("#custom-tabs-three-profile-tab").removeClass("active");

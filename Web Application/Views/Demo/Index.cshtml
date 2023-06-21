@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Web_Application.ModelViews.CompanyMV>
+﻿@model IEnumerable<Web_Application.ModelViews.DemoMV>
 @{
     ViewData["Title"] = "Index";
     HttpContextAccessor a = new HttpContextAccessor();
@@ -22,19 +22,36 @@
                     <tr>
                         <th scope="col">Id</th>
                         <th scope="col">Company Name</th>
-                        <th scope="col">Registration Date</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Pan No.</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">City</th>
-                        <th scope="col">Country</th>
-                        <th scope="col">Achive From</th>
-                        <th scope="col">Achive To</th>
+                        <th scope="col">Quatation Price</th>
+                        <th scope="col">Software Type</th>
+                        <th scope="col">Total User</th>
+                        <th scope="col">No. Of Branch</th>
+                        <th scope="col">No. Of Company</th>
+                        <th scope="col">Sale Stage</th>
+                        <th scope="col">Client Feed Back</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody id="table">
-                  
+                    @foreach(var data in Model)
+                    {
+                        <tr>
+                            <td>@data.Id</td>
+                            <td>@data.CompanyName</td>
+                            <td>@data.QuatationPrice</td>
+                            <td>@data.SoftwareType</td>
+                            <td>@data.TotalUser</td>
+                            <td>@data.NoOfBranch</td>
+                            <td>@data.NoOfCompany</td>
+                            <td>@data.SaleStage</td>
+                            <td>@data.FeedBack</td>
+                            <td>
+                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addRegister" data-url="@Url.Action($"EditDemo/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
+                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
+
+                            </td>
+                        </tr>
+                    }
 
                 </tbody>
             </table>

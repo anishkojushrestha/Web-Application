@@ -26,7 +26,7 @@ namespace Web_Application.Models
             str.Append("declare @pid bigint\n");
             if (vm.Id != null)
             {
-                str.Append("UPDATE CompanyInfo SET CompanyName = '" + vm.CompanyName + "',Category='"+vm.Category+"' Address = '" + vm.Address + "',Email = '" + vm.Email + "',PanNumber = " + vm.PanNumber + ", District = '" + vm.District + "', Country = '" + vm.Country + "',RegistrationDate = '" + registerDate + "', ValidFrom = '" + validFrom + "', ValidTo = '" + validTo + "' WHERE CompanyId = " + vm.Id + "\n");
+                str.Append("UPDATE CompanyInfo SET CompanyName = '" + vm.CompanyName + "',Category='"+vm.Category+"', Address = '" + vm.Address + "',Email = '" + vm.Email + "',PanNumber = " + vm.PanNumber + ", District = '" + vm.District + "', Country = '" + vm.Country + "',RegistrationDate = '" + registerDate + "', ValidFrom = '" + validFrom + "', ValidTo = '" + validTo + "' WHERE CompanyId = " + vm.Id + "\n");
                 foreach (var data in vm.contactPersonVM)
                 {
                     if (data.Id != 0)
@@ -44,7 +44,7 @@ namespace Web_Application.Models
             }
             else
             {
-                str.Append(" INSERT INTO CompanyInfo(CompanyId,CompanyName,Category, Email, PanNumber, Address, District ,Country, RegistrationDate, ValidFrom, ValidTo ) VALUES(@cid,'" + vm.CompanyName + "','" + vm.Email + "','"+vm.Category+"'," + vm.PanNumber + ",'" + vm.Address + "','" + vm.District + "','" + vm.Country + "','" + registerDate + "','" + validFrom + "','" + validTo + "') \n");
+                str.Append(" INSERT INTO CompanyInfo(CompanyId,CompanyName,Category, Email, PanNumber, Address, District ,Country, RegistrationDate, ValidFrom, ValidTo ) VALUES(@cid,'" + vm.CompanyName + "','"+vm.Category+"','" + vm.Email + "'," + vm.PanNumber + ",'" + vm.Address + "','" + vm.District + "','" + vm.Country + "','" + registerDate + "','" + validFrom + "','" + validTo + "') \n");
                 foreach (var data in vm.contactPersonVM)
                 {
 
@@ -224,11 +224,12 @@ namespace Web_Application.Models
                 {
                     cv.Id = Convert.ToInt32(dr["CompanyId"]);
                     cv.CompanyName = Convert.ToString(dr["CompanyName"]);
+                    cv.Category = Convert.ToString(dr["Category"]);
                     cv.Address = Convert.ToString(dr["Address"]);
                     cv.Email = Convert.ToString(dr["Email"]);
                     cv.PanNumber = Convert.ToInt32(dr["PanNumber"]);
                     //Date = Convert.ToDateTime(dr["Date"]),
-                    cv.District = Convert.ToString(dr["City"]);
+                    cv.District = Convert.ToString(dr["District"]);
                     cv.Country = Convert.ToString(dr["Country"]);
                     cv.RegistrationDate = Convert.ToDateTime(dr["RegistrationDate"]);
                     cv.ValidFrom = Convert.ToDateTime(dr["ValidFrom"]);

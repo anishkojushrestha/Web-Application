@@ -23,7 +23,7 @@ namespace Web_Application.ModelViews
         public string Profile { get; set; }
 
         public bool IsActive { get; set; }
-        public int CompanyId { get; set; }
-        public string CompanyName { get; set; }
+        public int? CompanyId { get; set; }
+        public string? CompanyName { get; set; }
     }
 }

@@ -128,10 +128,10 @@ namespace Web_Application.Models
             }
             return registerList;
         }
-        public bool UpdateRegister(int Id, string FirstName, string LastName, string UserName, string Email, string Profile, int CompanyId)
+        public bool UpdateRegister(int Id, string FirstName, string LastName, string UserName, string Email, string Profile, int? CompanyId)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '" + Profile + "' WHERE UserId = " + Id + "", con);
+            SqlCommand cmd = new SqlCommand("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '" + Profile + "' WHERE UserId = " + Id +"", con);
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();

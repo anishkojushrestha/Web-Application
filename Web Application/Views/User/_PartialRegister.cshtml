@@ -136,7 +136,7 @@
             </div>
             <div class="modal-body">
                 <form asp-action="Register" id="form" name=pForm asp-controller="User">
-
+                    <input asp-for="Id" hidden />
                     @Html.AntiForgeryToken()
                     <div class="col" style="margin-left: 13px; ">
                         <div class="row pb-1">

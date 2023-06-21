@@ -67,7 +67,8 @@ AttachmentId bigint NOT NULL primary key,
 AttachmentName varchar(200),
 
 IssueId bigint foreign key references Issue(IssueId),
-IssueActivityId bigint foreign key references IssueActivity(IssueActivityId)
+IssueActivityId bigint foreign key references IssueActivity(IssueActivityId),
+DemoId bigint foreign key references Demo(DemoId)
 )
 
 Create TABLE IssueTransfer(
@@ -92,6 +93,29 @@ EmailId varchar(50),
 EmailPws varchar(50),
 PORT varchar(50),
 SMTP varchar(50)
+)
+
+Create TABLE AMCEntry(
+AMCEntryId bigint NOT NULL primary key,
+Client varchar(50),
+OpenDate date,
+AMCAmount int,
+FollowUpDate date,
+CloseDate date,
+CompanyId bigint foreign key references CompanyInfo(CompanyId)
+)
+
+CREATE TABLE Demo(
+DemoId bigint NOT NULL primary key,
+QuatationPrice int,
+SoftwareType varchar(50),
+TotalUser int,
+NoOfBranch int,
+NoOfCompany int,
+SaleStage varchar(50),
+ClientFeedBack varchar(50),
+AttachmentId bigint foreign key references Attachments(AttachmentId),
+CompanyId bigint foreign key references CompanyInfo(CompanyId)
 )
 
 Select i.*, U.UserName, c.CompanyName,p.ContactId, p.ContactName,p.Email as ContactEmail, p.PhoneNumber from Issue i left join users u on u.UserId = i.UserId join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId

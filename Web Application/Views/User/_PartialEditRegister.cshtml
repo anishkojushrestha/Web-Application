@@ -1,5 +1,4 @@
 ﻿@model Web_Application.ModelViews.UpdateRegisterVM
-
 <style>
     .rw {
         width: 48%;
@@ -8,6 +7,124 @@
     .rw1 {
         width: 96%;
     }
+
+    .select2.select2-container {
+        width: 100% !important;
+    }
+
+        .select2.select2-container .select2-selection {
+            border: 1px solid #ccc;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            height: 34px;
+            margin-bottom: 15px;
+            outline: none !important;
+            transition: all .15s ease-in-out;
+        }
+
+            .select2.select2-container .select2-selection .select2-selection__rendered {
+                color: #333;
+                line-height: 32px;
+                padding-right: 33px;
+            }
+
+            .select2.select2-container .select2-selection .select2-selection__arrow {
+                background: #f8f8f8;
+                border-left: 1px solid #ccc;
+                -webkit-border-radius: 0 3px 3px 0;
+                -moz-border-radius: 0 3px 3px 0;
+                border-radius: 0 3px 3px 0;
+                height: 32px;
+                width: 33px;
+            }
+
+        .select2.select2-container.select2-container--open .select2-selection.select2-selection--single {
+            background: #f8f8f8;
+        }
+
+            .select2.select2-container.select2-container--open .select2-selection.select2-selection--single .select2-selection__arrow {
+                -webkit-border-radius: 0 3px 0 0;
+                -moz-border-radius: 0 3px 0 0;
+                border-radius: 0 3px 0 0;
+            }
+
+        .select2.select2-container.select2-container--open .select2-selection.select2-selection--multiple {
+            border: 1px solid #34495e;
+        }
+
+        .select2.select2-container .select2-selection--multiple {
+            height: auto;
+            min-height: 34px;
+        }
+
+            .select2.select2-container .select2-selection--multiple .select2-search--inline .select2-search__field {
+                margin-top: 0;
+                height: 32px;
+            }
+
+            .select2.select2-container .select2-selection--multiple .select2-selection__rendered {
+                display: block;
+                padding: 0 4px;
+                line-height: 29px;
+            }
+
+            .select2.select2-container .select2-selection--multiple .select2-selection__choice {
+                background-color: #f8f8f8;
+                border: 1px solid #ccc;
+                -webkit-border-radius: 3px;
+                -moz-border-radius: 3px;
+                border-radius: 3px;
+                margin: 4px 4px 0 0;
+                padding: 0 6px 0 22px;
+                height: 24px;
+                line-height: 24px;
+                font-size: 12px;
+                position: relative;
+            }
+
+                .select2.select2-container .select2-selection--multiple .select2-selection__choice .select2-selection__choice__remove {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 22px;
+                    width: 22px;
+                    margin: 0;
+                    text-align: center;
+                    color: #e74c3c;
+                    font-weight: bold;
+                    font-size: 16px;
+                }
+
+    .select2-container .select2-dropdown {
+        background: transparent;
+        border: none;
+        margin-top: -5px;
+    }
+
+        .select2-container .select2-dropdown .select2-search {
+            padding: 0;
+        }
+
+            .select2-container .select2-dropdown .select2-search input {
+                outline: none !important;
+                border: 1px solid #34495e !important;
+                border-bottom: none !important;
+                padding: 4px 6px !important;
+            }
+
+        .select2-container .select2-dropdown .select2-results {
+            padding: 0;
+        }
+
+            .select2-container .select2-dropdown .select2-results ul {
+                background: #fff;
+                border: 1px solid #34495e;
+            }
+
+                .select2-container .select2-dropdown .select2-results ul .select2-results__option--highlighted[aria-selected] {
+                    background-color: #3498db;
+                }
 </style>
 <div class="modal fade" id="addRegister" data-bs-backdrop="static">
     <div class="modal-dialog">
@@ -19,15 +136,15 @@
 
             </div>
             <div class="modal-body">
-                <form asp-action="EditRegister" asp-controller="User">
-
+                <form asp-action="EditRegister" id="form" name=pForm asp-controller="User">
+                    <input asp-for="Id" hidden />
                     @Html.AntiForgeryToken()
                     <div class="col" style="margin-left: 13px; ">
                         <div class="row pb-1">
                             <div class="rw">
-                                <input asp-for="Id" hidden/>
                                 <label class="form-label">First Name:</label>
                                 <input type="text" asp-for="FirstName" style="height:33px" class="form-control" required>
+                                <span asp-validation-for="FirstName"></span>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Last Name:</label>
@@ -37,7 +154,8 @@
                         <div class="row pb-1">
                             <div class="rw1">
                                 <label class="form-label">Username:</label>
-                                <input type="text" asp-for="UserName" style="height:33px" class="form-control" required>
+                                <input type="text" id="txtUserId" asp-for="UserName" style="height:33px" class="form-control" required>
+                                <span id="error" style="color:red;"></span>
                             </div>
 
                         </div>
@@ -50,7 +168,7 @@
                         <div class="row pb-1">
                             <div class="rw1">
                                 <label class="form-label">Profile:</label>
-                                <select asp-for="Profile" style="height:33px" class="form-select">
+                                <select asp-for="Profile" style="height:33px" id="selProf" class="form-select">
                                     <option>Admin</option>
                                     <option>SuperAdmin</option>
                                     <option>OMSUser</option>
@@ -58,7 +176,15 @@
                                 </select>
                             </div>
                         </div>
-                        
+
+                        <div class="row pb-1" id="selDiv" style="display:none">
+                            <div class="rw1">
+                                <label class="form-label">Company:</label>
+                                <select asp-for="CompanyId" id="selComps" asp-items="ViewBag.Company" style="height:33px" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-check">
                             <input type="checkbox" asp-for="IsActive" class="form-check-input" id="exampleCheck1">
                             <label class="form-check-label">Is Active</label>
@@ -81,3 +207,50 @@
         </div>
     </div>
 </div>
+<script>
+
+    $("#selProf").on("change", function () {
+        if ($(this).val() === "OMSUser") {
+            document.getElementById("selDiv").style.display = "block";
+        } else {
+            document.getElementById("selDiv").style.display = "none";
+        }
+    })
+    $("#txtUserId").blur(function () {
+        $("#re").remove();
+        var username = $(this).val();
+        $.ajax({
+            url: "/User/UserError?username=" + username,
+            type: "POST",
+            success: function (data) {
+                if (data == true) {
+                    $("#error").append('<p id="re">User Already Exist</p>');
+                }
+            },
+
+        })
+    });
+    $("#txtConfirmPass").blur(function () {
+        $("#rep").remove();
+        var confirm = $(this).val();
+        var newpass = $("#txtNewpass").val();
+        if (confirm != newpass) {
+            $("#pss").append('<p id="rep">Password does not match!</p>');
+        }
+    });
+
+    $('#form').submit(function () {
+        var confirm = $("#txtConfirmPass").val();
+        var newpass = $("#txtNewpass").val();
+        if (confirm != newpass || document.getElementById("re") != null) {
+            alert('open!');
+            return false;
+        }
+        return true;
+    });
+    $(document).ready(function () {
+        $("#selComps").select2({
+            dropdownParent: $(".modal-content"),
+        });
+    });
+</script>
