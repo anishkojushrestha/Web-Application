@@ -22,9 +22,8 @@
         .fl {
             width: 35%;
             padding-bottom: 2%;
+
         }
-    </style>
-    <style>
     </style>
     
 </head>
@@ -38,6 +37,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    
                     <ul class="navbar-nav flex-grow-1" >
                         <li class="nav-item dropdown">
                             <a class="nav-link textdart dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Master</a>
@@ -46,12 +46,21 @@
                                 <a class="dropdown-item" asp-action="Index" asp-controller="Demo">Demo</a>
                                 <a class="dropdown-item" asp-action="Index" asp-controller="AMCEntry">AMC Entry</a>
                                 <a class="dropdown-item" asp-action="Index" asp-controller="user">Registration</a>
-                                
 
-
+                                <div class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">AMC Entry</a>
+                                    <div class="dropdown-menu" >
+                                        <a class="dropdown-item" href="#">Submenu item 1</a>
+                                        <a class="dropdown-item" href="#">Submenu item 2</a>
+                                    </div>
+                                </div>
                             </div>
 
                         </li>
+
+
+
+
                         @{
                             HttpContextAccessor a = new HttpContextAccessor();
                             ISession session = a.HttpContext.Session;
