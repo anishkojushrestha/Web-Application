@@ -45,8 +45,12 @@
                                 <a class="dropdown-item" asp-action="Index" asp-controller="Company">Client Generation</a>
                                 <a class="dropdown-item" asp-action="Index" asp-controller="Demo">Demo</a>
                                 <a class="dropdown-item" asp-action="Index" asp-controller="AMCEntry">AMC Entry</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="user">Registration</a>
                                 
+
+
                             </div>
+
                         </li>
                         @{
                             HttpContextAccessor a = new HttpContextAccessor();
@@ -55,12 +59,12 @@
                             var fUser = session.GetString("userFirstName");
                             var lUser = session.GetString("userLastName");
                         }
-                        @if (profile == "SuperAdmin" || profile == "Admin")
+                       @* @if (profile == "SuperAdmin" || profile == "Admin")
                         {
                             <li class="nav-item">
                                 <a class="nav-link " asp-action="Index" asp-controller="User">Registration</a>
                             </li>
-                        }
+                        }*@
                         
                         @*<li class="nav-item">
                             <div class="dropdown">
@@ -95,12 +99,9 @@
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Client Issue</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-action="Index" asp-controller="Issue">Issue</a>
-                                @if (profile == "SuperAdmin" || profile == "Admin" || profile == "Support")
-                                {
                                     <a class="dropdown-item" asp-action="Index" asp-controller="IssueTransfer">Issue Transfer</a>
                                 <a class="dropdown-item" asp-action="Index" asp-controller="IssueSupport">Issue Support</a>
                                 <a class="dropdown-item" asp-action="Index" asp-controller="IssueActivity">Issue Activity</a>
-                                }
                                 
                             </div>
                         </li>
