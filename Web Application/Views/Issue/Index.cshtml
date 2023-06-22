@@ -16,9 +16,7 @@
 <div id="PlaceHolderHere"></div>
 <button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Issue")" style="width:100px;margin-left:90%; ">Create</button>
 <div class="input-group" style="margin-left:79%;margin-top:4px;">
-    @*<div class="form-outline">
-    <input type="search" id="search" class="form-control" placeholder="Search..." />
-    </div>*@
+    
 </div>
 
 <div class="card shadow mb-4">
@@ -26,80 +24,84 @@
         <h6 class="m-0 font-weight-bold text-primary">Issues Informations DataTables</h6>
     </div>
     <div class="card-body">
+        
         <div class="table-responsive">
-            <table class="display" id="dataTable" width="100%" cellspacing="0">
+            @*<div class="form-outline">
+                <input type="search" id="search" class="form-control"  style="width:25%;margin-left: 75%;" />
+            </div>*@
+            <table class="display" id="dataTable"  width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Issue No</th>
                         <th scope="col">Company Name</th>
+                        @*<th scope="col">Days Count</th>*@
                         <th scope="col">Created Date</th>
-                        <th scope="col">Assigned To</th>
-                        <th scope="col">Assigned Date</th>
+                        <th scope="col">Support</th>
+                        @*<th scope="col">Assigned Date</th>*@
                         <th scope="col">Contact Name</th>
                         <th scope="col">Phone Number</th>
                         <th scope="col">Issue Description</th>
                         <th scope="col">Issue Generator Steps</th>
                         <th scope="col">Status</th>
-                        <th scope="col">Deleted By</th>
-                        <th scope="col">Resolve By</th>
+                        <th scope="col">Close Date</th>
+                        @*<th scope="col">Resolve By</th>*@
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody id="table">
-                    @{
-                        foreach (var data in Model)
+                    
+                        @foreach (var data in Model)
                         {
                             <tr>
                                 <td>@data.Id</td>
                                 <td>@data.IssueNo</td>
                                 <td>@data.CompanyName</td>
-                                <td>@data.CreatedDate.ToShortDateString()</td>
-                                <td>@data.UserName</td>
+                            @{
 
-                                <td>@data.AssignedDate</td>
+                                if (data.Status == "Open")
+                                {
+                                    string dateStr = data.CreatedDate.ToString("dd/MM/yyyy");
+                                    DateTime date = DateTime.ParseExact(dateStr, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                                    DateTime today = DateTime.Today;
+                                    TimeSpan diff = date.Subtract(today);
+
+                                    int days = (int)Math.Ceiling(diff.TotalDays);
+                                }
+                                
+                            }
+                                <td id="count_@data.Id" class="count" data-id="@data.CreatedDate">@data.CreatedDate.ToShortDateString()</td>
+                                <td>@data.Support</td>
+
+                                @*<td>@data.AssignedDate</td>*@
                                 <td>@data.ContactName</td>
                                 <td>@data.PhoneNumber</td>
                                 <td>@data.IssueDescription</td>
                                 <td>@data.IssueGeneratorSteps</td>
                                 <td>@data.Status</td>
-                                <td>@data.DeletedBy</td>
-                                <td>@data.ResolveBy</td>
+                                <td>@data.CloseBy</td>
+                                @*<td>@data.ResolveBy</td>*@
                                 <td>
-                                    @if (data.DeletedBy == "")
-                                    {
                                         <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Issue/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
                                         <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
-                                        HttpContextAccessor a = new HttpContextAccessor();
-                                        ISession session = a.HttpContext.Session;
-                                        @if (session.GetString("userProfile") == "SuperAdmin" || session.GetString("userProfile") == "Admin" || session.GetString("userProfile") == "Support")
-                                        {
-                                            @if (data.ResolveBy == "")
-                                            {
-                                                <button id="btnResolve_@data.Id" class="btnResolve" style="padding: 0;border: none;background: none;" data-id="@data.Id" onclick="ShowPopupResolve(this);"><i class="fab fa-resolving"></i></button>
+                                        @*<button id="btnResolve_@data.Id" class="btnResolve" style="padding: 0;border: none;background: none;" data-id="@data.Id" onclick="ShowPopupResolve(this);"><i class="fab fa-resolving"></i></button>*@
 
-                                            }
                                             @*<button type="submit" class="btn btn-primary btn-sm btnDelete" id="btndeleteBy_@data.Id" data-id="@data.Id" value="@data.Id"><i class="fa-solid fa-trash"></i></button>*@
                                             @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
 
-                                            <button style="padding: 0;border: none;background: none;" id="btnDelete_@data.Id" class="btnDelete" data-id="@data.Id" onclick="ShowPopupDelete(this);"><i class="fa-solid fa-trash"></i></button>
+                                            @*<button style="padding: 0;border: none;background: none;" id="btnDelete_@data.Id" class="btnDelete" data-id="@data.Id" onclick="ShowPopupDelete(this);"><i class="fa-solid fa-trash"></i></button>*@
 
-                                            @if (data.AssignedDate == "")
-                                            {
-                                                <button style="padding: 0;border: none;background: none;" id="btnAssigned_@data.Id" class="btnAssigned" data-id="@data.Id" onclick="ShowPopupAssign(this);"><i class="fa-solid fa-clipboard-question"></i></button>
+                                            
+                                               @* <button style="padding: 0;border: none;background: none;" id="btnAssigned_@data.Id" class="btnAssigned" data-id="@data.Id" onclick="ShowPopupAssign(this);"><i class="fa-solid fa-clipboard-question"></i></button>
 
-                                            }
                                             <button style="padding: 0;border: none;background: none;" id="btnTransfer_@data.Id" class="btnTransfer" data-id="@data.Id" data-assign ="@data.UserName" onclick="ShowPopupTransfer(this);"><i class="fas fa-people-arrows"></i></button>
-                                            <button style="padding: 0;border: none;background: none;" id="btnTransfer_@data.Id" class="btnActivity" data-id="@data.Id"  onclick="ShowPopupActivity(this);"><i class="fas fa-tasks"></i></button>
+                                            <button style="padding: 0;border: none;background: none;" id="btnTransfer_@data.Id" class="btnActivity" data-id="@data.Id"  onclick="ShowPopupActivity(this);"><i class="fas fa-tasks"></i></button>*@
 
-                                        }
-                                    }
                                 </td>
 
 
                             </tr>
                         }
-                    }
                 </tbody>
             </table>
         </div>
@@ -248,6 +250,7 @@ poupu
         <div class="modal-content" style="width:77%;  margin-top: 20px; margin-left:-15%">
             <div class="modal-header p-2">
                 <h4 class="modal-title" id="addRegisterLabel">Transfer</h4>
+                
                 <button type="button" class="btn-close" data-bs-dismiss="modal">
                 </button>
 
@@ -368,6 +371,13 @@ poupu
 </div>
 @section Scripts{
     <script>
+        
+
+        $('form').submit(function () {
+            alert($(this["options"]).val());
+            return false;
+        });
+
         function ShowPopupResolve(e){
            $("#modalPopup1").modal('show');
             var issueid = $(e).attr("data-id");

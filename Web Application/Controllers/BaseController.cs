@@ -12,11 +12,11 @@ namespace Web_Application.Controllers
             string uLName = HttpContext.Session.GetString("userLastName");
             ViewBag._userName = uFName + " " + uLName;
             var result = FilterContext.HttpContext.Session.GetString("userId");
-            if (result == null)
-            {
-                FilterContext.Result = new RedirectToActionResult("Login", "User", null);
+            //if (result == null)
+            //{
+            //    FilterContext.Result = new RedirectToActionResult("Login", "User", null);
                 
-            }
+            //}
 
         }
 

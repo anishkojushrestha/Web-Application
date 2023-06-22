@@ -4,7 +4,7 @@ namespace Web_Application.ModelViews
 {
     public class RegisterVM
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required]
         [MaxLength(50)]
@@ -34,6 +34,6 @@ namespace Web_Application.ModelViews
         [MaxLength(50)]
         public string ConfirmPassword { get; set; }
 
-        public int CompanyId { get; set; }
+        public int? CompanyId { get; set; }
     }
 }

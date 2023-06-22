@@ -12,15 +12,15 @@ namespace Web_Application.ModelViews
 
         public string? Status { get; set; }
         public int? AssignTo { get; set; }
-        public string? ResolveBy { get; set; } 
+        public int? TrasferTo { get; set; }
+        public string? TrasferName { get; set; }
 
-        public string? DeletedBy { get; set; }
         public string? CloseBy { get; set; }
 
         public int? CompanyId { get; set; }
         public string? CompanyName { get; set; }
         public int? UserId { get; set; }
-        public string? UserName { get; set; }
+        public string? Support { get; set; }
         public int? ContactId { get; set; }
         public string? ContactName { get; set; }
 
@@ -28,12 +28,8 @@ namespace Web_Application.ModelViews
 
         public string? AssignedDate { get; set; }
 
-        public string? TransferFrom { get; set; }
-        public string? TransferTo { get; set; }
-        public DateTime? TransferDate { get; set; }
-        public string? CurrentStage { get; set; }
+        public int? TransferTo { get; set; }
         public string? ContactEmail { get; set; }
         public string? AssignedEmail { get; set; }
-        public String? IssueId { get; set; }
     }
 }

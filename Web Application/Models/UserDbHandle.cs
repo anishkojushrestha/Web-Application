@@ -19,7 +19,7 @@ namespace Web_Application.Models
         private SqlConnection con;
         private void connection()
         {
-            string constring = "Data Source=DESKTOP-3P1U2GV\\OMSSERVER;Initial Catalog=WebAppDB;Integrated Security=True;Pooling=False";
+            string constring = "Data Source=DESKTOP-3P1U2GV\\OMSSERVER;Initial Catalog=SupportDB;Integrated Security=True;Pooling=False";
             con = new SqlConnection(constring);
         }
 
@@ -37,7 +37,7 @@ namespace Web_Application.Models
             StringBuilder str = new StringBuilder();
             str.Append(" declare @uid bigint \n");
             str.Append(" set @uid = (select isnull(max(userid), 0) + 1 from users) \n");
-            if(vm.CompanyId == 0)
+            if(vm.CompanyId == null)
             {
                 str.Append(" INSERT into users(UserId, FirstName, LastName, UserName, Email, Password, Profile, IsActive) VALUES(@uid,'" + vm.FirstName + "','" + vm.LastName + "', '" + vm.UserName + "','" + vm.Email + "','" + pass + "','" + vm.Profile + "','" + vm.IsActive + "')\n");
 

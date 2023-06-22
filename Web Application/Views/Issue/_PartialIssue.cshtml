@@ -9,135 +9,17 @@
         width: 48%;
     }
 
-    .select2.select2-container {
-        width: 100% !important;
-    }
-
-        .select2.select2-container .select2-selection {
-            border: 1px solid #ccc;
-            -webkit-border-radius: 3px;
-            -moz-border-radius: 3px;
-            border-radius: 3px;
-            height: 34px;
-            margin-bottom: 15px;
-            outline: none !important;
-            transition: all .15s ease-in-out;
-        }
-
-            .select2.select2-container .select2-selection .select2-selection__rendered {
-                color: #333;
-                line-height: 32px;
-                padding-right: 33px;
-            }
-
-            .select2.select2-container .select2-selection .select2-selection__arrow {
-                background: #f8f8f8;
-                border-left: 1px solid #ccc;
-                -webkit-border-radius: 0 3px 3px 0;
-                -moz-border-radius: 0 3px 3px 0;
-                border-radius: 0 3px 3px 0;
-                height: 32px;
-                width: 33px;
-            }
-
-        .select2.select2-container.select2-container--open .select2-selection.select2-selection--single {
-            background: #f8f8f8;
-        }
-
-            .select2.select2-container.select2-container--open .select2-selection.select2-selection--single .select2-selection__arrow {
-                -webkit-border-radius: 0 3px 0 0;
-                -moz-border-radius: 0 3px 0 0;
-                border-radius: 0 3px 0 0;
-            }
-
-        .select2.select2-container.select2-container--open .select2-selection.select2-selection--multiple {
-            border: 1px solid #34495e;
-        }
-
-        .select2.select2-container .select2-selection--multiple {
-            height: auto;
-            min-height: 34px;
-        }
-
-            .select2.select2-container .select2-selection--multiple .select2-search--inline .select2-search__field {
-                margin-top: 0;
-                height: 32px;
-            }
-
-            .select2.select2-container .select2-selection--multiple .select2-selection__rendered {
-                display: block;
-                padding: 0 4px;
-                line-height: 29px;
-            }
-
-            .select2.select2-container .select2-selection--multiple .select2-selection__choice {
-                background-color: #f8f8f8;
-                border: 1px solid #ccc;
-                -webkit-border-radius: 3px;
-                -moz-border-radius: 3px;
-                border-radius: 3px;
-                margin: 4px 4px 0 0;
-                padding: 0 6px 0 22px;
-                height: 24px;
-                line-height: 24px;
-                font-size: 12px;
-                position: relative;
-            }
-
-                .select2.select2-container .select2-selection--multiple .select2-selection__choice .select2-selection__choice__remove {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    height: 22px;
-                    width: 22px;
-                    margin: 0;
-                    text-align: center;
-                    color: #e74c3c;
-                    font-weight: bold;
-                    font-size: 16px;
-                }
-
-    .select2-container .select2-dropdown {
-        background: transparent;
-        border: none;
-        margin-top: -5px;
-    }
-
-        .select2-container .select2-dropdown .select2-search {
-            padding: 0;
-        }
-
-            .select2-container .select2-dropdown .select2-search input {
-                outline: none !important;
-                border: 1px solid #34495e !important;
-                border-bottom: none !important;
-                padding: 4px 6px !important;
-            }
-
-        .select2-container .select2-dropdown .select2-results {
-            padding: 0;
-        }
-
-            .select2-container .select2-dropdown .select2-results ul {
-                background: #fff;
-                border: 1px solid #34495e;
-            }
-
-                .select2-container .select2-dropdown .select2-results ul .select2-results__option--highlighted[aria-selected] {
-                    background-color: #3498db;
-                }
-
 </style>
 <div class="modal fade" id="addRegister" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content" style="width:136%;  margin-top: 20px; margin-left:-15%">
-            <div class="modal-header p-2">
+            <div class="modal-header p-1">
                 <h4 class="modal-title" id="addRegisterLabel">Issue</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal">
                 </button>
             </div>
             <div class="modal-body">
-                <form asp-action="Issue" asp-controller="Issue" enctype="multipart/form-data">
+                <form asp-action="Issue" asp-controller="Issue" id="form-issue"  enctype="multipart/form-data">
                     <input type="hidden" id="txtcid" value="@(Model!=null?@Model.ContactId:"")" />
                     @Html.AntiForgeryToken()
                     <div class="col" style="margin-left: 13px; ">
@@ -146,64 +28,72 @@
                             
                             <div class="rw" >
                                 <label class="form-label">Company:</label>
-                                <select asp-for="CompanyId" asp-items="ViewBag.Company" id="selComp" class="form-select" style="height:34px;"  required>
+                                <select asp-for="CompanyId" asp-items="ViewBag.Company" id="selComp" class="form-select" style="height:33px;"  required>
                                     <option selected disabled>select</option>
                                 </select>
                             </div>
                             <div class="rw ">
                                 <label class="form-label">Created Date:</label>
-                                <input type="date" asp-for="CreatedDate" style="height:33px" class="form-control" style="height:65px;" required/>
+                                <input type="date" asp-for="CreatedDate" style="height:33px" id="txtCreatedDate" class="form-control"  required/>
+                            </div>
+                            <div class="rw ">
+                                <label class="form-label">Close Date:</label>
+                                <input type="date" asp-for="CloseBy" style="height:33px" class="form-control" />
                             </div>
                         </div>
                         <div class="row pb-2">
                             <div class="rw ">
                                 <label class="form-label">Status:</label>
-                                <select type="text" asp-for="Status" style="height:33px" class="form-select"  style="height:65px;" required>
-                                    <option selected disabled>----Select Status----</option>
+                                <select type="text" asp-for="Status" style="height:33px" class="form-select"   required>
+                                    <option selected disabled>Select Status</option>
                                     <option>Open</option>
                                     <option>Close</option>
                                 </select>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Contact Person:</label>
-                                <select type="text" asp-for="ContactId" id="selCon" style="height:34px ; color:black;" class="form-select" required></select>
+                                <select type="text" asp-for="ContactId" id="selCon" style="height:34px ;" class="form-select" required>
+                                   
+                                </select>
                                 <input type="email" asp-for="ContactEmail" id="hConEm" hidden/>
+                            </div>
+                            <div class="rw">
+                                <label class="form-label">Support Office:</label>
+                                <select type="text" asp-for="AssignTo"  id="selAssign" asp-items="ViewBag.Support" style="height:34px ;" class="form-select" required>
+                                    <option disabled selected>Select Support Office</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row pb-2">
-                            <div class="rw1">
+                            <div class="rw">
+                                <label class="form-label">Transfer To:</label>
+                                <select type="text" asp-for="TransferTo" id="selAssign" asp-items="ViewBag.Support" style="height:34px ;" class="form-select">
+                                    <option disabled selected>Select Support Office</option>
+                                </select>
+                            </div>
+                            <div class="rw">
                                 <label class="form-label">Issue Descriptions:</label>
                                 <textarea type="text" class="form-control" style="height:48px" asp-for="IssueDescription" required></textarea>
                             </div>
-                            <div class="rw1">
+                            <div class="rw">
                                 <label class="form-label">Issue Generation Steps:</label>
                                 <textarea type="text" asp-for="IssueGeneratorSteps" style="height:48px" class="form-control" required></textarea>
                             </div>
                         </div>
                         
                         
-                        @*<div class="row pb-1">
-                            
-                            <div class="rw">
-                                <label class="form-label">Deleted By:</label>
-                                <input type="date" asp-for="DeletedBy" style="height:33px" class="form-control" required>
-                            </div>
-                            <div class="rw">
-                                <label class="form-label">Close By:</label>
-                                <input type="date" asp-for="CloseBy" style="height:33px" class="form-control" required>
-                            </div>
-                        </div>*@
+                       
                         <div class="row pb-3">
                             <div class="rw1">
                                 <label class="form-label">Attachments:</label>
                                 <input type="file" asp-for="Attachments" style="height:33px" class="form-control" multiple>
                             </div>
-                            
                         </div>
                         
                         <div class="row">
                             <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
-                                <button type="submit"  class="btn btn-primary">Submit</button>
+                                <input type="button" class="btn btn-primary" id="submitBtn" value="Submit">
+                                
                             </div>
                         </div>
                     </div>
@@ -214,9 +104,21 @@
     </div>
 </div>
 <script>
-        
+    
     $(document).ready(function(){
-        
+
+        $("#submitBtn").on("click",function(){
+            
+            $("#form-issue").submit();
+        })
+        const currentDate = new Date();
+
+        // Format the date as YYYY-MM-DD
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+        $("#txtCreatedDate").val(formattedDate);
         function LoadContact(){
             var cid = $("#txtcid").val();
             

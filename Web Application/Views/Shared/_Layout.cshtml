@@ -37,29 +37,44 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    
+                   
+
+
+
                     <ul class="navbar-nav flex-grow-1" >
+                        
+
+
                         <li class="nav-item dropdown">
-                            <a class="nav-link textdart dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Master</a>
-                            <div class="dropdown-menu">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Master</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown02">
                                 <a class="dropdown-item" asp-action="Index" asp-controller="Company">Client Generation</a>
                                 <a class="dropdown-item" asp-action="Index" asp-controller="Demo">Demo</a>
                                 <a class="dropdown-item" asp-action="Index" asp-controller="AMCEntry">AMC Entry</a>
                                 <a class="dropdown-item" asp-action="Index" asp-controller="user">Registration</a>
-
-                                <div class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle" href="#">AMC Entry</a>
-                                    <div class="dropdown-menu" >
-                                        <a class="dropdown-item" href="#">Submenu item 1</a>
-                                        <a class="dropdown-item" href="#">Submenu item 2</a>
+                                <div class="dropdown dropend">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="dropdown-layouts" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Client Issue</a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdown-layouts">
+                                        <a class="dropdown-item" asp-action="Index" asp-controller="Issue">Issue</a>
+                                        <a class="dropdown-item" asp-action="Index" asp-controller="IssueTransfer">Issue Transfer</a>
+                                        <a class="dropdown-item" asp-action="Index" asp-controller="IssueSupport">Issue Support</a>
+                                        <a class="dropdown-item" asp-action="Index" asp-controller="IssueActivity">Issue Activity</a>
+                                        @*<div class="dropdown-divider"></div>
+                                        <div class="dropdown dropend">
+                                            <a class="dropdown-item dropdown-toggle" href="#" id="dropdown-layouts" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Custom</a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdown-layouts">
+                                                <a class="dropdown-item" href="#">Fullscreen</a>
+                                                <a class="dropdown-item" href="#">Empty</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Magic</a>
+                                            </div>
+                                        </div>*@
                                     </div>
                                 </div>
+                                @*<div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>*@
                             </div>
-
                         </li>
-
-
-
 
                         @{
                             HttpContextAccessor a = new HttpContextAccessor();
@@ -104,19 +119,10 @@
 
                             </div>
                         </li>*@
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Client Issue</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Issue">Issue</a>
-                                    <a class="dropdown-item" asp-action="Index" asp-controller="IssueTransfer">Issue Transfer</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="IssueSupport">Issue Support</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="IssueActivity">Issue Activity</a>
-                                
-                            </div>
-                        </li>
+                        
                         @if (profile == "SuperAdmin" || profile == "Admin")
                         {
-                            <li class="nav-item dropdown " style="margin-left: 58%;">
+                            <li class="nav-item dropdown " style="margin-left: 74%;">
                                 <a class="nav-link font-weight-bold text-primary " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@fUser @lUser </a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
@@ -149,7 +155,51 @@
    @* <script src="//kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>*@
     <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        (function ($bs) {
+            const CLASS_NAME = 'has-child-dropdown-show';
+            $bs.Dropdown.prototype.toggle = function (_orginal) {
+                return function () {
+                    document.querySelectorAll('.' + CLASS_NAME).forEach(function (e) {
+                        e.classList.remove(CLASS_NAME);
+                    });
+                    let dd = this._element.closest('.dropdown').parentNode.closest('.dropdown');
+                    for (; dd && dd !== document; dd = dd.parentNode.closest('.dropdown')) {
+                        dd.classList.add(CLASS_NAME);
+                    }
+                    return _orginal.call(this);
+                }
+            }($bs.Dropdown.prototype.toggle);
 
+            document.querySelectorAll('.dropdown').forEach(function (dd) {
+                dd.addEventListener('hide.bs.dropdown', function (e) {
+                    if (this.classList.contains(CLASS_NAME)) {
+                        this.classList.remove(CLASS_NAME);
+                        e.preventDefault();
+                    }
+                    e.stopPropagation(); // do not need pop in multi level mode
+                });
+            });
+
+            // for hover
+            document.querySelectorAll('.dropdown-hover, .dropdown-hover-all .dropdown').forEach(function (dd) {
+                dd.addEventListener('mouseenter', function (e) {
+                    let toggle = e.target.querySelector(':scope>[data-bs-toggle="dropdown"]');
+                    if (!toggle.classList.contains('show')) {
+                        $bs.Dropdown.getOrCreateInstance(toggle).toggle();
+                        dd.classList.add(CLASS_NAME);
+                        $bs.Dropdown.clearMenus();
+                    }
+                });
+                dd.addEventListener('mouseleave', function (e) {
+                    let toggle = e.target.querySelector(':scope>[data-bs-toggle="dropdown"]');
+                    if (toggle.classList.contains('show')) {
+                        $bs.Dropdown.getOrCreateInstance(toggle).toggle();
+                    }
+                });
+            });
+        })(bootstrap);
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
