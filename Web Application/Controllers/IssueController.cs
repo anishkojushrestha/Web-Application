@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Office2019.Excel.RichData2;
+﻿using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.Office2019.Excel.RichData2;
 using Intersoft.Crosslight;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +28,8 @@ namespace Web_Application.Controllers
         public IActionResult GetValue()
         {
             IssueDbHandle idh = new IssueDbHandle();
-            var result= idh.GetIssue();
-            return Json(result);
+            var result= idh.GetIssue().ToList();
+            return Json(new { data = result });
         }
         public JsonResult GetReportDate(string DateType)
         {
@@ -265,11 +266,11 @@ namespace Web_Application.Controllers
             {
 
                 string uniqueFileName = "";
-                var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "files");
+                var folderPath = System.IO.Path.Combine(_webHostEnvironment.WebRootPath, "files");
                 foreach (var data in file)
                 {
                     uniqueFileName = Guid.NewGuid().ToString() + "_" + data.FileName;
-                    var filePath = Path.Combine(folderPath, uniqueFileName);
+                    var filePath = System.IO.Path.Combine(folderPath, uniqueFileName);
                     using (FileStream fileStream = System.IO.File.Create(filePath))
                     {
                         data.CopyTo(fileStream);

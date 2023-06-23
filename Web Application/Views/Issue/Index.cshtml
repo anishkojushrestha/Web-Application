@@ -13,8 +13,10 @@
         width: 107%;
     }
 </style>
-<div id="PlaceHolderHere"></div>
-<button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Issue")" style="width:100px;margin-left:90%; ">Create</button>
+<div id="PlaceHolderHere">
+
+</div>
+<button class="btn btn-primary" data-toggle="ajax-modal" id="btnCreate" data-target="#addregister" data-url="@Url.Action("Issue")" style="width:100px;margin-left:90%; ">Create</button>
 <div class="input-group" style="margin-left:79%;margin-top:4px;">
     
 </div>
@@ -22,12 +24,20 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">
-            Issues Informations DataTables<button type="button" class="btn btn-primary"
-                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;margin-left: 93%;" onclick="ShowPopupReport(this);">
-                Report
-            </button>
+            Issues Informations DataTables
         </h6>
        
+    </div>
+
+    <div >
+        <form asp-action="" id="" method="">
+        @Html.Partial("~/Views/Shared/_DatePicker.cshtml")
+        <select id="ddlSearchStatus">
+            <option value="Open">Open</option>
+            <option value="Close">Close</option>
+        </select>
+        <input type="submit" value="Search" />
+        </form>
     </div>
     <div class="card-body">
         
@@ -56,60 +66,7 @@
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach (var data in Model)
-                        {
-                            <tr>
-                                <td>@data.Id</td>
-                                <td>@data.IssueNo</td>
-                                <td>@data.CompanyName</td>
-                            @{
-
-                                if (data.Status == "Open")
-                                {
-                                    string dateStr = data.CreatedDate.ToString("dd/MM/yyyy");
-                                    DateTime date = DateTime.ParseExact(dateStr, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                                    DateTime today = DateTime.Today;
-                                    TimeSpan diff = date.Subtract(today);
-
-                                    int days = (int)Math.Ceiling(diff.TotalDays);
-                                }
-                                
-                            }
-                                <td id="count_@data.Id" class="count" data-id="@data.CreatedDate">@data.CreatedDate.ToShortDateString()</td>
-                                <td>@data.Support</td>
-                                <td>@data.TrasferName</td>
-
-                                @*<td>@data.AssignedDate</td>*@
-                                <td>@data.ContactName</td>
-                                <td>@data.PhoneNumber</td>
-                                <td>@data.IssueDescription</td>
-                                <td>@data.IssueGeneratorSteps</td>
-                                <td>@data.Status</td>
-                                <td>@data.CloseBy</td>
-                                @*<td>@data.ResolveBy</td>*@
-                                <td>
-                                        <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Issue/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
-                                        <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
-                                        @*<button id="btnResolve_@data.Id" class="btnResolve" style="padding: 0;border: none;background: none;" data-id="@data.Id" onclick="ShowPopupResolve(this);"><i class="fab fa-resolving"></i></button>*@
-
-                                            @*<button type="submit" class="btn btn-primary btn-sm btnDelete" id="btndeleteBy_@data.Id" data-id="@data.Id" value="@data.Id"><i class="fa-solid fa-trash"></i></button>*@
-                                            @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
-
-                                            @*<button style="padding: 0;border: none;background: none;" id="btnDelete_@data.Id" class="btnDelete" data-id="@data.Id" onclick="ShowPopupDelete(this);"><i class="fa-solid fa-trash"></i></button>*@
-
-                                            
-                                               @* <button style="padding: 0;border: none;background: none;" id="btnAssigned_@data.Id" class="btnAssigned" data-id="@data.Id" onclick="ShowPopupAssign(this);"><i class="fa-solid fa-clipboard-question"></i></button>
-
-                                            <button style="padding: 0;border: none;background: none;" id="btnTransfer_@data.Id" class="btnTransfer" data-id="@data.Id" data-assign ="@data.UserName" onclick="ShowPopupTransfer(this);"><i class="fas fa-people-arrows"></i></button>
-                                            <button style="padding: 0;border: none;background: none;" id="btnTransfer_@data.Id" class="btnActivity" data-id="@data.Id"  onclick="ShowPopupActivity(this);"><i class="fas fa-tasks"></i></button>*@
-
-                                </td>
-
-
-                            </tr>
-                        }
-                </tbody>
+                
             </table>
         </div>
     </div>
@@ -127,54 +84,21 @@
                 </button>
 
             </div>
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalPopupEdit" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:158%;  margin-top: 20px; margin-left:-46%">
+            <div class="modal-header p-0">
+               
+            </div>
             <div class="modal-body">
-                <form asp-action="" asp-controller="" >
 
-                    @Html.AntiForgeryToken()
-                    <div class="col" style="margin-left: 13px; display:flex; ">
-
-                        <input id ="txtReId" name="Id" hidden/>
-                        <div class="row pb-3">
-
-                        <div class="rw" style="display:flex;">
-                            <label class="form-label">Date:</label>
-                            <select class="form-select" id="selDate" style=" height:30px; font-size:13px; margin-left:2px">
-                                <option disabled selected>Select Date</option>
-                                <option>Today</option>
-                                <option>Yesterday</option>
-                                <option>Current Week</option>
-                                <option>Last Week</option>
-                                <option>Current Month</option>
-                                <option>last Month</option>
-                                <option>Upto Date</option>
-                                <option>Custom Date</option>
-                            </select>
-                        </div>
-                        
-                        </div>
-                        <div class="row pb-3" style="margin-left:27%;">
-                            <div class="rw" style="display:flex;">
-                            <label class="form-label">From:</label>
-                            <input type="date" class="form-control" id="txtFrom" style=" height:30px; font-size:13px; margin-left:2px"/>
-                        </div>
-                        </div>
-                        <div class="row pb-3" style="margin-left: 5px;">
-                            <div class="rw" style="display:flex;">
-                            <label class="form-label">To:</label>
-                            <input type="date" class="form-control" id="txtTo" style=" height:30px; font-size:13px; margin-left:2px"/>
-                        </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row">
-                            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
-                                <button type="submit" class="btn btn-primary btn-sm">Ok</button>
-
-                            </div>
-                        </div>
-                </form>
-          </div>
+            </div>
 
         </div>
     </div>
@@ -429,17 +353,7 @@ poupu
 </div>*@
 @section Scripts{
     <script>
-        $("#selDate").on("change", function(){
-            var date = $(this).val();
-            $.ajax({
-                url:"/Issue/GetReportDate?DateType="+date,
-                type:"Post",
-                success:function(data){
-                    $("#txtFrom").val(data[0]);
-                    $("#txtTo").val(data[1]);
-                }
-            })
-        })
+       
 
         $('form').submit(function () {
             alert($(this["options"]).val());
@@ -511,38 +425,54 @@ poupu
         //}
          ﻿var dataTable;
         $(document).ready(function () {
-            $("#dataTable").DataTable();
-            //loadDataTable();
+            //$("#dataTable").DataTable();
+            loadDataTable();
         });
-        //function loadDataTable() {
-        //    dataTable = $('#dataTable').DataTable({
-        //        "ajax": {
-        //            "url": "/Issue/GetValue"
-        //        },
-        //        "columns": [
-        //            { "data": "id" },
-        //            { "data": "issueNo"},
-        //            { "data": "companyName" },
-        //            { "data": "createDate"},
-        //            { "data": "support"},
-        //            { "data": "contactName" },
-        //            { "data": "phoneNumber"},
-        //            { "data": "issueDescription"},
-        //            { "data": "issueGeneratorSteps"},
-        //            { "data": "status" },
-        //            { "data": "closeBy" },
-        //            {
-        //                "data": "id",
-        //                "render": (data) => {
-        //                    return `
-        //                               <a class="btn btn-warning" onClick="EditClick('${data}')" >Edit</a>
-        //                                <a href="#" class="btn btn-danger" onClick="DeleteClick('${data}')">Delete</a>
-        //        `
-        //                }
-        //            },
-        //        ]
-        //     });       
-        //}
+        function loadDataTable() {
+            dataTable = $('#dataTable').DataTable({
+                "ajax": {
+                    "url": "/Issue/GetValue"
+                },
+                "columns": [
+                    { "data": "id" },
+                    { "data": "issueNo"},
+                    { "data": "companyName" },
+                    { "data": "createdDate"},
+                    { "data": "support"},
+                    { "data": "trasferName"},
+                    { "data": "contactName" },
+                    { "data": "phoneNumber"},
+                    { "data": "issueDescription"},
+                    { "data": "issueGeneratorSteps"},
+                    { "data": "status" },
+                    { "data": "closeBy" },
+                    {
+                        "data": "id",
+                        "render": (data) => {
+                            return `<a href="#"><i class="fa-solid fa-pen-to-square fa-lg"></i> </a>
+                                        <button style="padding: 0;border: none;background: none;" data-id="1" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Issue")"   ><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
+                                        <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" href="/Issue/Attachment?+${data}"><i class="fa-solid fa-paperclip"></i></button>
+                    `
+                        }
+                    },
+                ]
+             });       
+        };
+
+        $(document).on("click",".btnbp", function(){
+           
+            var id = $(this).attr("data-id");
+            var PlaceHolderEleent = $('#PlaceHolderHere');
+            var url = $(this).data('url')+"?id="+id;
+           
+                var decodedUrl = decodeURIComponent(url);
+                $.get(decodedUrl).done(function (data) {
+                    PlaceHolderEleent.html(data);
+                    PlaceHolderEleent.find('.modal').modal('show');
+                })
+           
+        })
+
         $(document).ready(function () {
             $("#search").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
