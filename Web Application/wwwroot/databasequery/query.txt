@@ -26,7 +26,7 @@ CompanyId bigint foreign key References CompanyInfo(CompanyId)
 
 )
 
-CREATE TABLE User(
+CREATE TABLE users(
 UserId bigint NOT NULL primary key,
 FirstName varchar(50),
 LastName varchar(50),
@@ -40,54 +40,29 @@ CompanyId bigint foreign key References companyinfo(CompanyId)
 
 CREATE TABLE Issue(
 IssueId bigint NOT NULL primary key,
-IssueNo int,
+IssueNo varchar(50),
 IssueDescription varchar(50),
 IssueGeneratorSteps varchar(100),
 CreatedDate Date,
 AssignedDate Date,
 Status varchar(50),
-ResolveBy Date, 
-DeletedBy Date, 
-CloseBy Date, 
+CloseDate Date, 
 
 CompanyId bigint foreign key references CompanyInfo(CompanyId),
-UserId bigint foreign key references users(UserId),
-ContactId bigint foreign key references ContactPerson(ContactId)
-AssignedTo bigint foreign key reference users(UserId)
+ContactId bigint foreign key references ContactPerson(ContactId),
+SupportId bigint foreign key references users(UserId),
+TransferId bignit foreign key references users(userId)
 )
 
-Create TABLE IssueActivity(
-IssueActivityId bigint NOT NULL primary key,
-IssueDescription varchar(50),
-IssueId bigint foreign key references Issue(IssueId),
-)
 
 Create TABLE Attachments(
 AttachmentId bigint NOT NULL primary key,
 AttachmentName varchar(200),
 
 IssueId bigint foreign key references Issue(IssueId),
-IssueActivityId bigint foreign key references IssueActivity(IssueActivityId),
 DemoId bigint foreign key references Demo(DemoId)
 )
 
-Create TABLE IssueTransfer(
-IssueTransferId bigint NOT NULL primary Key,
-TransferedFrom varchar(50),
-TransferedTo varchar(50),
-TransferedDate date,
-CurrentStage varchar(50),
-IssueId bigint foreign key references Issue(IssueId)
-)
-
-Create TABLE IssueSupport(
-IssueSupportId bigint NOT NULL primary key,
-Status varchar(50),
-AssignedDate Date,
-IssueId bigint foreign key references Issue(IssueId),
-AssignedTo bigint foreign key references users(UserId),
-
-)
 Create Table EmailSetting(
 EmailId varchar(50),
 EmailPws varchar(50),
@@ -114,8 +89,92 @@ NoOfBranch int,
 NoOfCompany int,
 SaleStage varchar(50),
 ClientFeedBack varchar(50),
-AttachmentId bigint foreign key references Attachments(AttachmentId),
 CompanyId bigint foreign key references CompanyInfo(CompanyId)
 )
 
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+Create TABLE IssueActivity(
+IssueActivityId bigint NOT NULL primary key,
+IssueDescription varchar(50),
+IssueId bigint foreign key references Issue(IssueId),
+)
+
+Create TABLE IssueTransfer(
+IssueTransferId bigint NOT NULL primary Key,
+TransferedFrom varchar(50),
+TransferedTo varchar(50),
+TransferedDate date,
+CurrentStage varchar(50),
+IssueId bigint foreign key references Issue(IssueId)
+)
+
+Create TABLE IssueSupport(
+IssueSupportId bigint NOT NULL primary key,
+Status varchar(50),
+AssignedDate Date,
+IssueId bigint foreign key references Issue(IssueId),
+AssignedTo bigint foreign key references users(UserId),
+
+)
 Select i.*, U.UserName, c.CompanyName,p.ContactId, p.ContactName,p.Email as ContactEmail, p.PhoneNumber from Issue i left join users u on u.UserId = i.UserId join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId
+
+
+
+
+<tbody>
+                    @foreach (var data in Model)
+                        {
+                            <tr>
+                                <td>@data.Id</td>
+                                <td>@data.IssueNo</td>
+                                <td>@data.CompanyName</td>
+                            @{
+
+                                if (data.Status == "Open")
+                                {
+                                    string dateStr = data.CreatedDate.ToString("dd/MM/yyyy");
+                                    DateTime date = DateTime.ParseExact(dateStr, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                                    DateTime today = DateTime.Today;
+                                    TimeSpan diff = date.Subtract(today);
+
+                                    int days = (int)Math.Ceiling(diff.TotalDays);
+                                }
+                                
+                            }
+                                <td id="count_@data.Id" class="count" data-id="@data.CreatedDate">@data.CreatedDate.ToShortDateString()</td>
+                                <td>@data.Support</td>
+                                <td>@data.TrasferName</td>
+
+                                @*<td>@data.AssignedDate</td>*@
+                                <td>@data.ContactName</td>
+                                <td>@data.PhoneNumber</td>
+                                <td>@data.IssueDescription</td>
+                                <td>@data.IssueGeneratorSteps</td>
+                                <td>@data.Status</td>
+                                <td>@data.CloseBy</td>
+                                @*<td>@data.ResolveBy</td>*@
+                                <td>
+                                        <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Issue/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
+                                        <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
+                                        @*<button id="btnResolve_@data.Id" class="btnResolve" style="padding: 0;border: none;background: none;" data-id="@data.Id" onclick="ShowPopupResolve(this);"><i class="fab fa-resolving"></i></button>*@
+
+                                            @*<button type="submit" class="btn btn-primary btn-sm btnDelete" id="btndeleteBy_@data.Id" data-id="@data.Id" value="@data.Id"><i class="fa-solid fa-trash"></i></button>*@
+                                            @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
+
+                                            @*<button style="padding: 0;border: none;background: none;" id="btnDelete_@data.Id" class="btnDelete" data-id="@data.Id" onclick="ShowPopupDelete(this);"><i class="fa-solid fa-trash"></i></button>*@
+
+                                            
+                                               @* <button style="padding: 0;border: none;background: none;" id="btnAssigned_@data.Id" class="btnAssigned" data-id="@data.Id" onclick="ShowPopupAssign(this);"><i class="fa-solid fa-clipboard-question"></i></button>
+
+                                            <button style="padding: 0;border: none;background: none;" id="btnTransfer_@data.Id" class="btnTransfer" data-id="@data.Id" data-assign ="@data.UserName" onclick="ShowPopupTransfer(this);"><i class="fas fa-people-arrows"></i></button>
+                                            <button style="padding: 0;border: none;background: none;" id="btnTransfer_@data.Id" class="btnActivity" data-id="@data.Id"  onclick="ShowPopupActivity(this);"><i class="fas fa-tasks"></i></button>*@
+
+                                </td>
+
+
+                            </tr>
+                        }
+                </tbody>

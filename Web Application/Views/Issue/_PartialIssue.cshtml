@@ -67,7 +67,7 @@
                         <div class="row pb-2">
                             <div class="rw">
                                 <label class="form-label">Transfer To:</label>
-                                <select type="text" asp-for="TransferTo" id="selAssign" asp-items="ViewBag.Support" style="height:34px ;" class="form-select">
+                                <select type="text" asp-for="TrasferTo" id="selAssign" asp-items="ViewBag.Support" style="height:34px ;" class="form-select">
                                     <option disabled selected>Select Support Office</option>
                                 </select>
                             </div>
@@ -90,11 +90,13 @@
                             </div>
                         </div>
                         
-                        <div class="row">
-                            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
-                                <input type="button" class="btn btn-primary" id="submitBtn" value="Submit">
-                                
-                            </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                            @*<input type="button" class="btn btn-primary" id="submitBtn" value="Submit">*@
+                            <button type="submit" class="btn btn-primary">Submit</button>
+
                         </div>
                     </div>
                 </form>
@@ -111,6 +113,7 @@
             
             $("#form-issue").submit();
         })
+        if ($("#txtcid").val() == 0){
         const currentDate = new Date();
 
         // Format the date as YYYY-MM-DD
@@ -119,6 +122,7 @@
         const day = String(currentDate.getDate()).padStart(2, '0');
         const formattedDate = `${year}-${month}-${day}`;
         $("#txtCreatedDate").val(formattedDate);
+        }
         function LoadContact(){
             var cid = $("#txtcid").val();
             

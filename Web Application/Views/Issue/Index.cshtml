@@ -6,11 +6,11 @@
 
 <style>
     .rw {
-        width: 93%;
+        width: 107%;
     }
 
     .rw1 {
-        width: 48%;
+        width: 107%;
     }
 </style>
 <div id="PlaceHolderHere"></div>
@@ -21,7 +21,13 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Issues Informations DataTables</h6>
+        <h6 class="m-0 font-weight-bold text-primary">
+            Issues Informations DataTables<button type="button" class="btn btn-primary"
+                                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;margin-left: 93%;" onclick="ShowPopupReport(this);">
+                Report
+            </button>
+        </h6>
+       
     </div>
     <div class="card-body">
         
@@ -38,6 +44,7 @@
                         @*<th scope="col">Days Count</th>*@
                         <th scope="col">Created Date</th>
                         <th scope="col">Support</th>
+                        <th scope="col">Transfer</th>
                         @*<th scope="col">Assigned Date</th>*@
                         <th scope="col">Contact Name</th>
                         <th scope="col">Phone Number</th>
@@ -49,9 +56,8 @@
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
-                <tbody id="table">
-                    
-                        @foreach (var data in Model)
+                <tbody>
+                    @foreach (var data in Model)
                         {
                             <tr>
                                 <td>@data.Id</td>
@@ -72,6 +78,7 @@
                             }
                                 <td id="count_@data.Id" class="count" data-id="@data.CreatedDate">@data.CreatedDate.ToShortDateString()</td>
                                 <td>@data.Support</td>
+                                <td>@data.TrasferName</td>
 
                                 @*<td>@data.AssignedDate</td>*@
                                 <td>@data.ContactName</td>
@@ -108,11 +115,75 @@
     </div>
 </div>
 
+
+
+
+<div class="modal fade" id="modalPopup0" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:158%;  margin-top: 20px; margin-left:-46%">
+            <div class="modal-header p-0">
+                <h4 class="modal-title" id="addRegisterLabel">Report</h4>
+                <button type="button" class="btn-close"  data-bs-dismiss="modal">
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form asp-action="" asp-controller="" >
+
+                    @Html.AntiForgeryToken()
+                    <div class="col" style="margin-left: 13px; display:flex; ">
+
+                        <input id ="txtReId" name="Id" hidden/>
+                        <div class="row pb-3">
+
+                        <div class="rw" style="display:flex;">
+                            <label class="form-label">Date:</label>
+                            <select class="form-select" id="selDate" style=" height:30px; font-size:13px; margin-left:2px">
+                                <option disabled selected>Select Date</option>
+                                <option>Today</option>
+                                <option>Yesterday</option>
+                                <option>Current Week</option>
+                                <option>Last Week</option>
+                                <option>Current Month</option>
+                                <option>last Month</option>
+                                <option>Upto Date</option>
+                                <option>Custom Date</option>
+                            </select>
+                        </div>
+                        
+                        </div>
+                        <div class="row pb-3" style="margin-left:27%;">
+                            <div class="rw" style="display:flex;">
+                            <label class="form-label">From:</label>
+                            <input type="date" class="form-control" id="txtFrom" style=" height:30px; font-size:13px; margin-left:2px"/>
+                        </div>
+                        </div>
+                        <div class="row pb-3" style="margin-left: 5px;">
+                            <div class="rw" style="display:flex;">
+                            <label class="form-label">To:</label>
+                            <input type="date" class="form-control" id="txtTo" style=" height:30px; font-size:13px; margin-left:2px"/>
+                        </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                            <div class="btnn" style="display:flex; flex-direction:column; align-items:center;">
+                                <button type="submit" class="btn btn-primary btn-sm">Ok</button>
+
+                            </div>
+                        </div>
+                </form>
+          </div>
+
+        </div>
+    </div>
+</div>
 <!--
 
 poupu
 -->
-<div class="modal fade" id="modalPopup1" data-bs-backdrop="static">
+@*<div class="modal fade" id="modalPopup1" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content" style="width:55%;  margin-top: 20px; margin-left:-15%">
             <div class="modal-header p-2">
@@ -147,8 +218,7 @@ poupu
 
 
                 </form>
-@*                <input type="button" value="close" id="btnclose" onclick="closepopup();" />
-*@            </div>
+          </div>
 
         </div>
     </div>
@@ -188,8 +258,7 @@ poupu
 
 
                 </form>
-@*                <input type="button" value="close" id="btnclose" onclick="closepopup();" />
-*@            </div>
+      </div>
 
         </div>
     </div>
@@ -239,8 +308,7 @@ poupu
 
 
     </form>
-@*    <input type="button" value="close" id="btnclose" onclick="closepopup();" />
-*@</div>
+    </div>
 
         </div>
     </div>
@@ -263,15 +331,7 @@ poupu
 
                         <input id="txtIId" name="Id" hidden />
                         
-                        @*<div class="row pb-1">
-
-                            <div class="rw">
-                                <label class="form-label">Issue Number:</label>
-                                <select type="text" name="IssueId" asp-items="ViewBag.Issue" style="height:34px ;" class="form-select" data-show-subtext="true" data-live-search="true" required>
-                                    <option selected disabled>Select Issue Number</option>
-                                </select>
-                            </div>
-                        </div>*@
+                       
                         <div class="row pb-1">
                             <div class="rw">
                                 <label class="form-label">Transfer From:</label>
@@ -311,8 +371,7 @@ poupu
 
                     </div>
                 </form>
-@*                <input type="button" value="close" id="btnclose" onclick="closepopup();" />
-*@            </div>
+           </div>
 
         </div>
     </div>
@@ -362,90 +421,128 @@ poupu
 
 
                 </form>
-                @*                <input type="button" value="close" id="btnclose" onclick="closepopup();" />
-                *@
+               
             </div>
 
         </div>
     </div>
-</div>
+</div>*@
 @section Scripts{
     <script>
-        
+        $("#selDate").on("change", function(){
+            var date = $(this).val();
+            $.ajax({
+                url:"/Issue/GetReportDate?DateType="+date,
+                type:"Post",
+                success:function(data){
+                    $("#txtFrom").val(data[0]);
+                    $("#txtTo").val(data[1]);
+                }
+            })
+        })
 
         $('form').submit(function () {
             alert($(this["options"]).val());
             return false;
         });
 
-        function ShowPopupResolve(e){
-           $("#modalPopup1").modal('show');
-            var issueid = $(e).attr("data-id");
-            $("#txtReId").val(issueid);
+        function ShowPopupReport(e){
+          $("#modalPopup0").modal('show');
+           var issueid = $(e).attr("data-id");
+           $("#txtReId").val(issueid);
             
 
         }
-        function ShowPopupDelete(e){
-           $("#modalPopup2").modal('show');
-                var issueid = $(e).attr("data-id");
-                $("#txtDeId").val(issueid);
+        //function ShowPopupDelete(e){
+        //   $("#modalPopup2").modal('show');
+        //        var issueid = $(e).attr("data-id");
+        //        $("#txtDeId").val(issueid);
            
 
-        }
-        function ShowPopupAssign(e) {
-            $("#modalPopup3").modal('show');
-            var issueid = $(e).attr("data-id");
-            $("#txtAsId").val(issueid);
-            $("#selAssign").on("change", function () {
-                var assid = $(this).val();
-                $.ajax({
-                    url: "/Issue/GetUserEmail?id="+assid,
-                    type:"Post",
-                    success:function(data){
-                        var email = $("#txtEmail").val(data.assignedEmail);
-                        alert(data.assignedEmail);
-                    }
-                })
-            });
+        //}
+        //function ShowPopupAssign(e) {
+        //    $("#modalPopup3").modal('show');
+        //    var issueid = $(e).attr("data-id");
+        //    $("#txtAsId").val(issueid);
+        //    $("#selAssign").on("change", function () {
+        //        var assid = $(this).val();
+        //        $.ajax({
+        //            url: "/Issue/GetUserEmail?id="+assid,
+        //            type:"Post",
+        //            success:function(data){
+        //                var email = $("#txtEmail").val(data.assignedEmail);
+        //                alert(data.assignedEmail);
+        //            }
+        //        })
+        //    });
 
-        }
-        function ShowPopupTransfer(e) {
-            $("#modalPopup4").modal('show');
-            var issueid = $(e).attr("data-id");
-            var assign = $(e).attr("data-assign");
-            $("#selTransfer").val(assign);
-            $("#selTransferTo").on("change", function () {
-                var user = $(this).val();
-                $.ajax({
-                    url: "/Issue/GetUserEmail?username=" + user,
-                    type: "Post",
-                    success: function (data) {
-                        var email = $("#txtTEmail").val(data.assignedEmail);
-                        alert(data.assignedEmail);
-                    }
-                })
-            });
+        //}
+        //function ShowPopupTransfer(e) {
+        //    $("#modalPopup4").modal('show');
+        //    var issueid = $(e).attr("data-id");
+        //    var assign = $(e).attr("data-assign");
+        //    $("#selTransfer").val(assign);
+        //    $("#selTransferTo").on("change", function () {
+        //        var user = $(this).val();
+        //        $.ajax({
+        //            url: "/Issue/GetUserEmail?username=" + user,
+        //            type: "Post",
+        //            success: function (data) {
+        //                var email = $("#txtTEmail").val(data.assignedEmail);
+        //                alert(data.assignedEmail);
+        //            }
+        //        })
+        //    });
             
-            $("#txtIId").val(issueid);
+        //    $("#txtIId").val(issueid);
 
-        }
-        function ShowPopupActivity(e) {
-            $("#modalPopup5").modal('show');
-            var issueid = $(e).attr("data-id");
+        //}
+        //function ShowPopupActivity(e) {
+        //    $("#modalPopup5").modal('show');
+        //    var issueid = $(e).attr("data-id");
             
 
-            $("#txtId").val(issueid);
-            $("#txtEmail").val(email);
+        //    $("#txtId").val(issueid);
+        //    $("#txtEmail").val(email);
 
-        }
-        function closepopup() {
-            $("#modalPopup").modal('hide');
-        }
-
+        //}
+        //function closepopup() {
+        //    $("#modalPopup").modal('hide');
+        //}
+         ﻿var dataTable;
         $(document).ready(function () {
-            $('#dataTable').DataTable();
+            $("#dataTable").DataTable();
+            //loadDataTable();
         });
-
+        //function loadDataTable() {
+        //    dataTable = $('#dataTable').DataTable({
+        //        "ajax": {
+        //            "url": "/Issue/GetValue"
+        //        },
+        //        "columns": [
+        //            { "data": "id" },
+        //            { "data": "issueNo"},
+        //            { "data": "companyName" },
+        //            { "data": "createDate"},
+        //            { "data": "support"},
+        //            { "data": "contactName" },
+        //            { "data": "phoneNumber"},
+        //            { "data": "issueDescription"},
+        //            { "data": "issueGeneratorSteps"},
+        //            { "data": "status" },
+        //            { "data": "closeBy" },
+        //            {
+        //                "data": "id",
+        //                "render": (data) => {
+        //                    return `
+        //                               <a class="btn btn-warning" onClick="EditClick('${data}')" >Edit</a>
+        //                                <a href="#" class="btn btn-danger" onClick="DeleteClick('${data}')">Delete</a>
+        //        `
+        //                }
+        //            },
+        //        ]
+        //     });       
+        //}
         $(document).ready(function () {
             $("#search").on("keyup", function () {
                 var value = $(this).val().toLowerCase();

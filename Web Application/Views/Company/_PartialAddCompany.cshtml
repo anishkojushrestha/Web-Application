@@ -68,7 +68,7 @@
                 </div>
                 <form asp-action="AddCompany" asp-controller="Company">
                     @Html.AntiForgeryToken()
-                    <input asp-for="Id" hidden />
+                    <input asp-for="Id" id="txtComId" hidden />
                     <div class="card-body">
                         <div class="tab-content" id="custom-tabs-three-tabContent">
                             <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
@@ -407,6 +407,7 @@
     //    }
     //    return true;
     //});
+    if ($("#txtComId").val() == 0){
     const currentDate = new Date();
 
     // Format the date as YYYY-MM-DD
@@ -419,7 +420,7 @@
     $("#dateRegistration").val(formattedDate);
     $("#dateValidFrom").val(formattedDate);
     $("#dateValidTo").val(validTo);
-
+    }
     $("#selCountry").on("change", function(){
         $("#inDistrict").remove();
         var country = $(this).val();
