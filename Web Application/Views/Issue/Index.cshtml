@@ -31,7 +31,6 @@
 
     <div >
         <form>
-            @Html.AntiForgeryToken()
             <div class="col" style="margin-left: 13px; display:flex; ">
             @Html.Partial("~/Views/Shared/_DatePicker.cshtml")
             <div class="row pb-3" style="margin-left: 5px;">
@@ -373,13 +372,13 @@ poupu
         //    return false;
         //});
 
-        function ShowPopupReport(e){
-          $("#modalPopup0").modal('show');
-           var issueid = $(e).attr("data-id");
-           $("#txtReId").val(issueid);
+        //function ShowPopupReport(e){
+        //  $("#modalPopup0").modal('show');
+        //   var issueid = $(e).attr("data-id");
+        //   $("#txtReId").val(issueid);
             
 
-        }
+        //}
         //function ShowPopupDelete(e){
         //   $("#modalPopup2").modal('show');
         //        var issueid = $(e).attr("data-id");
@@ -488,59 +487,46 @@ poupu
 
         //     });       
         //};
-        var dataTable = $('#dataTable').DataTable({
-            "ajax": {
-                "url": "/Issue/GetValue",
-                "data": function () {
-                    var status = $("#selStatus").val();
-                    var from = $("#txtFrom").val();
-                    var to = $("#txtTo").val();
-                    return {
-                        Status: status,
-                        FromD: from,
-                        To: to
-                    };
-                },
-            },
-            "columns": [
-                { "data": "id" },
-                { "data": "issueNo" },
-                { "data": "companyName" },
-                { "data": "createdDate" },
-                { "data": "support" },
-                { "data": "trasferName" },
-                { "data": "contactName" },
-                { "data": "phoneNumber" },
-                { "data": "issueDescription" },
-                { "data": "issueGeneratorSteps" },
-                { "data": "status" },
-                { "data": "closeBy" },
-                {
-                    "data": "id",
-                    "render": (data) => {
-                        return `
-                  <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Issue")" id="btnEdits_${data}"  ><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
-                  <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Attachment")" id="btnAttachment_${data}"><i class="fa-solid fa-paperclip"></i></button>
-                `
-                    }
-                },
-            ]
-        });
-
-        
-
         $(document).ready(function () {
-            loadDataTable();
-            
-        });
+            var dataTable = $('#dataTable').DataTable({
+                ajax: {
+                    url: '/Issue/GetValue',
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'issueNo' },
+                    { data: 'companyName' },
+                    { data: 'createdDate' },
+                    { data: 'support' },
+                    { data: 'trasferName' },
+                    { data: 'contactName' },
+                    { data: 'phoneNumber' },
+                    { data: 'issueDescription' },
+                    { data: 'issueGeneratorSteps' },
+                    { data: 'status' },
+                    { data: 'closeBy' },
+                    {
+                        data: 'id',
+                        render: (data) => {
+                            return `
+                    <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Issue")" id="btnEdits_${data}"  ><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
+                    <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Attachment")" id="btnAttachment_${data}"><i class="fa-solid fa-paperclip"></i></button>
+                  `
+                        }
+                    },
+                ]
+            });
 
-        $("#btnSubmit").on("click", function () {
+
+
+            $("#btnSubmit").on("click", function (event) {
+                event.preventDefault();
                 var status = $("#selStatus").val();
-                alert(status);
                 var from = $("#txtFrom").val();
                 var to = $("#txtTo").val();
                 dataTable.ajax.url("/Issue/GetValue?Status=" + status + "&FromD=" + from + "&To=" + to).load();
             });
+        });
 
         $(document).on("click",".btnbp", function(){
            

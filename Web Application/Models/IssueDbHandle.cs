@@ -308,13 +308,19 @@ namespace Web_Application.Models
 
             //if (_httpContextAccessor.HttpContext.Session.GetString("userProfile").ToString().ToLower()!="superadmin" && _httpContextAccessor. HttpContext.Session.GetString("userProfile").ToString().ToLower() != "admin")
             //{
-            if (FromD != null || To != null || Status != null)
-            {
-                sb.Append(" and i.status = '" + Status + "' or i.createddate between '" + FromD + "' and '" + To + "'\n");
-            }
-            else if (FromD != null || To != null && Status != null)
+            //if (FromD != null || To != null || Status != null)
+            //{
+            //    sb.Append(" and i.status = '" + Status + "' or i.createddate between '" + FromD + "' and '" + To + "'\n");
+            //}
+            //else 
+            if (FromD != null && To != null && Status != null)
             {
                 sb.Append(" and i.status = '" + Status + "' and i.createddate between '" + FromD + "' and '" + To + "'\n");
+
+            }
+            else if(FromD != null || To != null || Status != null)
+            {
+                sb.Append(" and i.status = '" + Status + "' or i.createddate between '" + FromD + "' and '" + To + "'\n");
 
             }
 
