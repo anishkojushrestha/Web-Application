@@ -22,7 +22,7 @@
 </div>
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
+    <div class="card-header py-3 mb-3">
         <h6 class="m-0 font-weight-bold text-primary">
             Issues Informations DataTables
         </h6>
@@ -30,13 +30,26 @@
     </div>
 
     <div >
-        <form asp-action="" id="" method="">
-        @Html.Partial("~/Views/Shared/_DatePicker.cshtml")
-        <select id="ddlSearchStatus">
-            <option value="Open">Open</option>
-            <option value="Close">Close</option>
-        </select>
-        <input type="submit" value="Search" />
+        <form>
+            @Html.AntiForgeryToken()
+            <div class="col" style="margin-left: 13px; display:flex; ">
+            @Html.Partial("~/Views/Shared/_DatePicker.cshtml")
+            <div class="row pb-3" style="margin-left: 5px;">
+                <div class="rw" style="display:flex;">
+                <label>Status:</label>
+                <select id="selStatus" class="form-select" style=" height:30px; width: 72%;font-size:13px; margin-left:2px" name="Status">
+                <option disabled selected>Select Status</option>
+                <option value="Open">Open</option>
+                <option value="Close">Close</option>
+                
+            </select>
+            </div>
+            </div>
+             <div class="row pb-3" style="margin-left: 5px;">
+                    <input type="submit"  class="btn btn-success" style=" height:30px; font-size:13px; margin-left:2px" id="btnSubmit" value="Search" />
+             </div>
+            
+            </div>
         </form>
     </div>
     <div class="card-body">
@@ -355,10 +368,10 @@ poupu
     <script>
        
 
-        $('form').submit(function () {
-            alert($(this["options"]).val());
-            return false;
-        });
+        //$('form').submit(function () {
+        //    alert($(this["options"]).val());
+        //    return false;
+        //});
 
         function ShowPopupReport(e){
           $("#modalPopup0").modal('show');
@@ -423,41 +436,111 @@ poupu
         //function closepopup() {
         //    $("#modalPopup").modal('hide');
         //}
-         ﻿var dataTable;
-        $(document).ready(function () {
-            //$("#dataTable").DataTable();
-            loadDataTable();
-        });
-        function loadDataTable() {
-            dataTable = $('#dataTable').DataTable({
-                "ajax": {
-                    "url": "/Issue/GetValue"
+        // ﻿var dataTable;
+        //$(document).ready(function () {
+        //    //$("#dataTable").DataTable();
+        
+        //    loadDataTable();
+            
+          
+            
+        //});
+
+       
+        //$("#btnSubmit").on("click", function () {
+        //    loadDataTable();
+        //  });
+
+        //function loadDataTable() {
+        //    var status = $("#selStatus").val();
+        //    console.log(status);
+        //    var from = $("#txtFrom").val();
+        //    var to = $("#txtTo").val();
+        //    dataTable = $('#dataTable').DataTable({
+        //        "ajax": {
+        //            "url": "/Issue/GetValue",
+        //            "data":{Status:status, FromD:from, To:to}
+        //        },
+        //        "columns": [
+        //            { "data": "id" },
+        //            { "data": "issueNo"},
+        //            { "data": "companyName" },
+        //            { "data": "createdDate"},
+        //            { "data": "support"},
+        //            { "data": "trasferName"},
+        //            { "data": "contactName" },
+        //            { "data": "phoneNumber"},
+        //            { "data": "issueDescription"},
+        //            { "data": "issueGeneratorSteps"},
+        //            { "data": "status" },
+        //            { "data": "closeBy" },
+        //            {
+        //                "data": "id",
+        //                "render": (data) => {
+        //                    return `
+        //                                <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Issue")" id="btnEdits_${data}"  ><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
+        //                                <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Attachment")" id="btnAttachment_${data}"><i class="fa-solid fa-paperclip"></i></button>
+        //            `
+        //                }
+        //            },
+        //        ],
+        //       "bDestroy": true
+
+        //     });       
+        //};
+        var dataTable = $('#dataTable').DataTable({
+            "ajax": {
+                "url": "/Issue/GetValue",
+                "data": function () {
+                    var status = $("#selStatus").val();
+                    var from = $("#txtFrom").val();
+                    var to = $("#txtTo").val();
+                    return {
+                        Status: status,
+                        FromD: from,
+                        To: to
+                    };
                 },
-                "columns": [
-                    { "data": "id" },
-                    { "data": "issueNo"},
-                    { "data": "companyName" },
-                    { "data": "createdDate"},
-                    { "data": "support"},
-                    { "data": "trasferName"},
-                    { "data": "contactName" },
-                    { "data": "phoneNumber"},
-                    { "data": "issueDescription"},
-                    { "data": "issueGeneratorSteps"},
-                    { "data": "status" },
-                    { "data": "closeBy" },
-                    {
-                        "data": "id",
-                        "render": (data) => {
-                            return `<a href="#"><i class="fa-solid fa-pen-to-square fa-lg"></i> </a>
-                                        <button style="padding: 0;border: none;background: none;" data-id="1" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Issue")"   ><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
-                                        <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" href="/Issue/Attachment?+${data}"><i class="fa-solid fa-paperclip"></i></button>
-                    `
-                        }
-                    },
-                ]
-             });       
-        };
+            },
+            "columns": [
+                { "data": "id" },
+                { "data": "issueNo" },
+                { "data": "companyName" },
+                { "data": "createdDate" },
+                { "data": "support" },
+                { "data": "trasferName" },
+                { "data": "contactName" },
+                { "data": "phoneNumber" },
+                { "data": "issueDescription" },
+                { "data": "issueGeneratorSteps" },
+                { "data": "status" },
+                { "data": "closeBy" },
+                {
+                    "data": "id",
+                    "render": (data) => {
+                        return `
+                  <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Issue")" id="btnEdits_${data}"  ><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
+                  <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Attachment")" id="btnAttachment_${data}"><i class="fa-solid fa-paperclip"></i></button>
+                `
+                    }
+                },
+            ]
+        });
+
+        
+
+        $(document).ready(function () {
+            loadDataTable();
+            
+        });
+
+        $("#btnSubmit").on("click", function () {
+                var status = $("#selStatus").val();
+                alert(status);
+                var from = $("#txtFrom").val();
+                var to = $("#txtTo").val();
+                dataTable.ajax.url("/Issue/GetValue?Status=" + status + "&FromD=" + from + "&To=" + to).load();
+            });
 
         $(document).on("click",".btnbp", function(){
            
@@ -470,7 +553,6 @@ poupu
                     PlaceHolderEleent.html(data);
                     PlaceHolderEleent.find('.modal').modal('show');
                 })
-           
         })
 
         $(document).ready(function () {

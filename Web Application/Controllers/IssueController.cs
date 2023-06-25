@@ -23,12 +23,12 @@ namespace Web_Application.Controllers
         {
             IssueDbHandle idh = new IssueDbHandle();
             
-            return View(idh.GetIssue());
+            return View();
         }
-        public IActionResult GetValue()
+        public IActionResult GetValue(string Status, string FromD, string To)
         {
             IssueDbHandle idh = new IssueDbHandle();
-            var result= idh.GetIssue().ToList();
+            var result= idh.FilterDate(Status, FromD, To).ToList();
             return Json(new { data = result });
         }
         public JsonResult GetReportDate(string DateType)

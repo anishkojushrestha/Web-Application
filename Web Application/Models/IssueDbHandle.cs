@@ -194,11 +194,17 @@ namespace Web_Application.Models
             str.Append("set @eid = (select isnull(max(IssueId), 0) + 1 from Issue) \n");
             //str.Append("set @isno = (select isnull(max(IssueNo), 0) + 1 from Issue) \n");
             //str.Append("set @issupid = (select isnull(max(IssueSupportId), 0) + 1 from IssueSupport) \n");
-            if(vm.TrasferTo != null)
+            if(vm.TrasferTo != null )
             {
-                str.Append("update Issue set IssueDescription='" + vm.IssueDescription + "', IssueGeneratorSteps='" + vm.IssueGeneratorSteps + "', CreatedDate='" + createdDate + "', Status='" + vm.Status + "',CloseDate='" + vm.CloseBy + "', CompanyId=" + vm.CompanyId + ",  ContactId=" + vm.ContactId + ",SupportId=" + vm.AssignTo + " TransferId= "+vm.TrasferTo+" where IssueId= " + vm.Id + " \n");
+                str.Append("update Issue set IssueDescription='" + vm.IssueDescription + "', IssueGeneratorSteps='" + vm.IssueGeneratorSteps + "', CreatedDate='" + createdDate + "', Status='" + vm.Status + "',CloseDate='" + vm.CloseBy + "', CompanyId=" + vm.CompanyId + ",  ContactId=" + vm.ContactId + ",SupportId=" + vm.AssignTo + " , TransferId= "+vm.TrasferTo+" where IssueId= " + vm.Id + " \n");
 
             }
+            else
+            {
+                str.Append("update Issue set IssueDescription='" + vm.IssueDescription + "', IssueGeneratorSteps='" + vm.IssueGeneratorSteps + "', CreatedDate='" + createdDate + "', Status='" + vm.Status + "',CloseDate='" + vm.CloseBy + "', CompanyId=" + vm.CompanyId + ",  ContactId=" + vm.ContactId + ",SupportId=" + vm.AssignTo + " where IssueId= " + vm.Id + " \n");
+
+            }
+
             //str.Append("insert into IssueSupport(IssueSupportId, Status, IssueId) VALUES(@issupid,'" + vm.Status + "',"+vm.Id+") \n");
             str.Append("declare @aid bigint \n");
             foreach (var data in ac)
@@ -292,7 +298,74 @@ namespace Web_Application.Models
             }
             return list;
         }
+        public List<IssueVM> FilterDate(string Status, string FromD, string To)
+        {
+            connection();
+            List<IssueVM> list = new List<IssueVM>();
+            StringBuilder sb = new StringBuilder();
+            //SessionHandler sd = new SessionHandler();
+            sb.Append(" Select i.IssueId, i.IssueNo,i.Status,i.IssueDescription,i.CompanyId,i.ContactId, u.UserName as support,u.UserId, i.TransferId, t.UserName as TrasferName , i.IssueGeneratorSteps,i.CreatedDate,Format(i.CloseDate,'yyyy-MM-dd')as CloseDate,  c.CompanyName,p.ContactId, p.ContactName,p.Email as ContactEmail, p.PhoneNumber from Issue i  join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId join users u on u.UserId = i.SupportId left join users t on t.UserId = i.TransferId where 1=1 ");
 
+            //if (_httpContextAccessor.HttpContext.Session.GetString("userProfile").ToString().ToLower()!="superadmin" && _httpContextAccessor. HttpContext.Session.GetString("userProfile").ToString().ToLower() != "admin")
+            //{
+            if (FromD != null || To != null || Status != null)
+            {
+                sb.Append(" and i.status = '" + Status + "' or i.createddate between '" + FromD + "' and '" + To + "'\n");
+            }
+            else if (FromD != null || To != null && Status != null)
+            {
+                sb.Append(" and i.status = '" + Status + "' and i.createddate between '" + FromD + "' and '" + To + "'\n");
+
+            }
+
+            if (session.GetString("userProfile") == "OMSUser")
+            {
+                sb.Append(" and i.userid='" + session.GetString("userId") + "'\n");
+            }
+            else if (session.GetString("userProfile") == "Support")
+            {
+                sb.Append(" and i.Support='" + session.GetString("userId") + "'\n");
+
+            }
+            //}
+
+            SqlCommand cmd = new SqlCommand(sb.ToString(), con);
+            //SqlCommand cmd = new SqlCommand("Select i.*,  c.CompanyName, p.ContactName, p.PhoneNumber from Issue i join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId", con);
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            ad.Fill(dt);
+            con.Close();
+            foreach (DataRow dr in dt.Rows)
+            {
+                list.Add(
+                    new IssueVM()
+                    {
+                        Id = Convert.ToInt32(dr["IssueId"]),
+                        IssueGeneratorSteps = Convert.ToString(dr["IssueGeneratorSteps"]),
+                        IssueDescription = Convert.ToString(dr["IssueDescription"]),
+                        IssueNo = Convert.ToString(dr["IssueNo"]),
+                        CreatedDate = Convert.ToDateTime(dr["CreatedDate"]),
+                        Status = Convert.ToString(dr["Status"]),
+                        //ResolveBy = Convert.ToString(dr["ResolveBy"]),
+                        CloseBy = Convert.ToString(dr["CloseDate"]),
+                        CompanyName = Convert.ToString(dr["CompanyName"]),
+                        ContactName = Convert.ToString(dr["ContactName"]),
+                        Support = Convert.ToString(dr["support"]),
+
+                        AssignTo = Convert.ToInt32(dr["UserId"]),
+                        PhoneNumber = Convert.ToInt32(dr["PhoneNumber"]),
+                        //AssignedDate = Convert.ToString(dr["AssignedDate"]),
+                        CompanyId = Convert.ToInt32(dr["CompanyId"]),
+                        ContactId = Convert.ToInt32(dr["ContactId"]),
+                        ContactEmail = Convert.ToString(dr["ContactEmail"]),
+                        TrasferTo = string.IsNullOrEmpty(dr["TransferId"].ToString()) ? null : Convert.ToInt32(dr["TransferId"].ToString()),
+                        TrasferName = Convert.ToString(dr["TrasferName"]),
+                        //AssignedEmail = Convert.ToString(dr["AssignedEmail"]),
+                    });
+            }
+            return list;
+        }
         public List<IssueVM> GetIssue()
         {
             connection();
@@ -303,7 +376,9 @@ namespace Web_Application.Models
 
             //if (_httpContextAccessor.HttpContext.Session.GetString("userProfile").ToString().ToLower()!="superadmin" && _httpContextAccessor. HttpContext.Session.GetString("userProfile").ToString().ToLower() != "admin")
             //{
-            if(session.GetString("userProfile") == "OMSUser") {
+           
+            
+            if (session.GetString("userProfile") == "OMSUser") {
                 sb.Append(" and i.userid='" + session.GetString("userId") + "'\n");
             }else if(session.GetString("userProfile") == "Support")
             {

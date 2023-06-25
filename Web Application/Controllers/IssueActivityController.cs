@@ -29,8 +29,6 @@ namespace Web_Application.Controllers
         }
         public IActionResult IssueActivity(int id)
         {
-            IssueDbHandle ish = new IssueDbHandle();
-            ViewData["IssueActivity"] = new SelectList(ish.GetIssue(), "Id", "IssueNo");
             IssueActivityDbHandle iadh = new IssueActivityDbHandle();
             return PartialView("_PartialIssueActivity",iadh.GetIssuesActivity().Find(x => x.Id == id));
         }
