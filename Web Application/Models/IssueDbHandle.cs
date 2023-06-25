@@ -313,9 +313,9 @@ namespace Web_Application.Models
             //    sb.Append(" and i.status = '" + Status + "' or i.createddate between '" + FromD + "' and '" + To + "'\n");
             //}
             //else 
-            if (FromD != null && To != null && Status != null)
+            if (FromD != null && To != null  && Status != null)
             {
-                sb.Append(" and i.status = '" + Status + "' and i.createddate between '" + FromD + "' and '" + To + "'\n");
+                sb.Append(" and  i.status = '" + Status + "' and i.createddate between '" + FromD + "' and '" + To + "'\n");
 
             }
             else if(FromD != null || To != null || Status != null)

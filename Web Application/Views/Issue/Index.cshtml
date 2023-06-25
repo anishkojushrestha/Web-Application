@@ -47,7 +47,9 @@
              <div class="row pb-3" style="margin-left: 5px;">
                     <input type="submit"  class="btn btn-success" style=" height:30px; font-size:13px; margin-left:2px" id="btnSubmit" value="Search" />
              </div>
-            
+                <div class="row pb-3" style="margin-left: 19px;">
+                <input type="submit" class="btn btn-danger" style=" height:30px; font-size:13px; margin-left:2px" id="btnCancel" value="Cancel" />
+                </div>
             </div>
         </form>
     </div>
@@ -487,6 +489,9 @@ poupu
 
         //     });       
         //};
+        $("#btncancel").click(function () {
+            location.reload();
+        });
         $(document).ready(function () {
             var dataTable = $('#dataTable').DataTable({
                 ajax: {
@@ -514,7 +519,7 @@ poupu
                   `
                         }
                     },
-                ]
+                ],
             });
 
 
