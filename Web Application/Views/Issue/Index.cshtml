@@ -530,8 +530,8 @@ poupu
                 var status = $("#selStatus").val() == "" ? "All" : $("#selStatus").val();
                 var from = $("#txtFrom").val();
                 var to = $("#txtTo").val();
-                alert(status);
-                alert("/Issue/GetValue?Istatus=" + (status==""?"All":status) + "&FromD=" + from + "&To=" + to);
+                //alert(status);
+                //alert("/Issue/GetValue?Istatus=" + (status==""?"All":status) + "&FromD=" + from + "&To=" + to);
                 dataTable.ajax.url("/Issue/GetValue?Istatus=" + (status == "" ? "All" : status) + "&FromD=" + from + "&To=" + to).load();
             });
         });

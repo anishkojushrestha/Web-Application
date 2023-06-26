@@ -248,11 +248,11 @@
                                     <div class="row pb-1">
                                         <div class="rws">
                                             <label class="form-label">Phone Number:</label>
-                                            <input type="text" name="phoneNumber" id="phone" class="form-control" style="height:33px">
+                                            <input type="text" name="phoneNumber" id="phone" class="form-control num" style="height:33px">
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">Mobile Number:</label>
-                                            <input type="text" name="mobileNumber" id="mobile" class="form-control" style="height:33px">
+                                            <input type="text" name="mobileNumber" id="mobile" class="form-control num" style="height:33px">
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">Email:</label>
@@ -407,6 +407,19 @@
     //    }
     //    return true;
     //});
+    $('.num').keypress
+        (
+            function (event) {
+                if (event.keyCode == 46 || event.keyCode == 8) {
+                    //do nothing
+                }
+                else {
+                    if (event.keyCode < 48 || event.keyCode > 57) {
+                        event.preventDefault();
+                    }
+                }
+            }
+        );
     if ($("#txtComId").val() == 0){
     const currentDate = new Date();
 

@@ -377,7 +377,7 @@
                                     <div class="row pb-1">
                                         <div class="rws">
                                             <label class="form-label">Quotation price:</label>
-                                            <input type="text" asp-for="QuatationPrice"  class="form-control" style="height:33px" >
+                                            <input type="text" asp-for="QuatationPrice"  class="form-control num" style="height:33px" >
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">Software Type:</label>
@@ -389,18 +389,18 @@
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">Total User:</label>
-                                            <input type="text" asp-for="TotalUser" class="form-control" style="height:33px" >
+                                            <input type="text" asp-for="TotalUser" class="form-control num" style="height:33px" >
                                         </div>
                                     </div>
                                     <div class="row pb-1">
                                         
                                         <div class="rws">
                                             <label class="form-label">No. Of Branches</label>
-                                            <input type="text" asp-for="NoOfBranch"  class="form-control" style="height:33px" >
+                                            <input type="text" asp-for="NoOfBranch"  class="form-control num" style="height:33px" >
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">No. Of Company:</label>
-                                            <input type="text" asp-for="NoOfCompany" class="form-control" style="height:33px">
+                                            <input type="text" asp-for="NoOfCompany" class="form-control num" style="height:33px">
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">Sale Stage:</label>
@@ -442,6 +442,19 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script>
+    $('.num').keypress
+        (
+            function (event) {
+                if (event.keyCode == 46 || event.keyCode == 8) {
+                    //do nothing
+                }
+                else {
+                    if (event.keyCode < 48 || event.keyCode > 57) {
+                        event.preventDefault();
+                    }
+                }
+            }
+        );
     $("#selCompany").select2({
         dropdownParent: $(".modal-content"),
     });
