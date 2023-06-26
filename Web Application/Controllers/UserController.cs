@@ -53,10 +53,7 @@ namespace Web_Application.Controllers
               //  return RedirectToAction("AccessDenied", "Error");
             //}
         }
-        //public IActionResult NewRegister()
-        //{
-        //    return View();
-        //
+        
         public IActionResult UserError(string username)
         {
                 UserDbHandle userDbHandle = new UserDbHandle();
@@ -88,7 +85,6 @@ namespace Web_Application.Controllers
                         }
                     }
                 }
-                
             }
             return RedirectToAction("Index");
         }
