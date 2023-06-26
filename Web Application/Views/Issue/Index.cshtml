@@ -37,7 +37,7 @@
                 <div class="rw" style="display:flex;">
                 <label>Status:</label>
                 <select id="selStatus" class="form-select" style=" height:30px; width: 72%;font-size:13px; margin-left:2px" name="Status">
-                <option disabled selected>Select Status</option>
+                <option value="">All</option>
                 <option value="Open">Open</option>
                 <option value="Close">Close</option>
                 
@@ -526,10 +526,13 @@ poupu
 
             $("#btnSubmit").on("click", function (event) {
                 event.preventDefault();
-                var status = $("#selStatus").val();
+                
+                var status = $("#selStatus").val() == "" ? "All" : $("#selStatus").val();
                 var from = $("#txtFrom").val();
                 var to = $("#txtTo").val();
-                dataTable.ajax.url("/Issue/GetValue?Status=" + status + "&FromD=" + from + "&To=" + to).load();
+                alert(status);
+                alert("/Issue/GetValue?Istatus=" + (status==""?"All":status) + "&FromD=" + from + "&To=" + to);
+                dataTable.ajax.url("/Issue/GetValue?Istatus=" + (status == "" ? "All" : status) + "&FromD=" + from + "&To=" + to).load();
             });
         });
 

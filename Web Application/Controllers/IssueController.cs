@@ -25,10 +25,10 @@ namespace Web_Application.Controllers
             
             return View();
         }
-        public IActionResult GetValue(string Status, string FromD, string To)
+        public IActionResult GetValue(string Istatus=null, string FromD=null, string To=null)
         {
             IssueDbHandle idh = new IssueDbHandle();
-            var result= idh.FilterDate(Status, FromD, To).ToList();
+            var result= idh.FilterDate(Istatus, FromD, To).ToList();
             return Json(new { data = result });
         }
         public JsonResult GetReportDate(string DateType)

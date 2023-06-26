@@ -298,7 +298,7 @@ namespace Web_Application.Models
             }
             return list;
         }
-        public List<IssueVM> FilterDate(string Status, string FromD, string To)
+        public List<IssueVM> FilterDate(string Istatus=null, string FromD=null, string To=null)
         {
             connection();
             List<IssueVM> list = new List<IssueVM>();
@@ -313,16 +313,28 @@ namespace Web_Application.Models
             //    sb.Append(" and i.status = '" + Status + "' or i.createddate between '" + FromD + "' and '" + To + "'\n");
             //}
             //else 
-            if (FromD != null && To != null  && Status != null)
+            if (!string.IsNullOrEmpty(FromD))
             {
-                sb.Append(" and  i.status = '" + Status + "' and i.createddate between '" + FromD + "' and '" + To + "'\n");
-
+                sb.Append(" and  i.createddate >= '" + FromD + "'\n");
             }
-            else if(FromD != null || To != null || Status != null)
+
+            if (!string.IsNullOrEmpty(To))
             {
-                sb.Append(" and i.status = '" + Status + "' or i.createddate between '" + FromD + "' and '" + To + "'\n");
-
+                sb.Append(" and  i.createddate <= '" + To + "'\n");
             }
+
+            if (!string.IsNullOrEmpty(Istatus))
+            {
+                if (Istatus != "All")
+                {
+                    sb.Append(" and  i.status = '" + Istatus + "'\n");
+                }
+            }
+            //else if(FromD != null || To != null || Istatus != null)
+            //{
+            //    sb.Append(" and i.status = '" + Istatus + "' or i.createddate between '" + FromD + "' and '" + To + "'\n");
+
+            //}
 
             if (session.GetString("userProfile") == "OMSUser")
             {
