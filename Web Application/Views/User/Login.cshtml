@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="~/Web_Application.styles.css" asp-append-version="true" />
     <style>
         .fl {
-            width: 35%;
-            padding-bottom: 2%;
+            width: 103%;
+            padding-bottom: 10%;
         }
     </style>
 </head>
@@ -23,9 +23,12 @@
 
     <div class="container">
         <main role="main" class="pb-3">
-            <form action="@Url.Action("Login", "User")" method="post">
+            <div class="card shadow mb-4" style="width: 32%; margin-top: 11%; margin-left: 32%;">
+
+                <h2 style="display:flex; justify-content:center; align-items: center; margin-top:10%">Login</h2>
+                <form action="@Url.Action("Login", "User")" method="post" style="height: 41vh;">
                 @Html.AntiForgeryToken()
-                <div class="container" style="display:flex; flex-direction:column; justify-content:center; align-items:center; margin-top:2%; padding:50px;">
+                    <div class="container" style="display:flex; flex-direction:column; justify-content:center; align-items: center;  margin-top:-1%; padding: 50px;">
 
                     <div class="fl">
                         <input type="text" asp-for="UserName" class="form-control" placeholder="Username">
@@ -36,11 +39,12 @@
                         <span asp-validation-for="Password" class="alert-danger"></span>
                     </div>
                     <button type="submit" class="btn btn-primary" style="width: 35%;">Submit</button>
+                           
                     <span style="color:red;">@ViewBag.UserError</span>
                 </div>
 
             </form>
-
+            </div>
         </main>
     </div>
 

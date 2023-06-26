@@ -54,7 +54,6 @@
         </form>
     </div>
     <div class="card-body">
-        
         <div class="table-responsive">
             @*<div class="form-outline">
                 <input type="search" id="search" class="form-control"  style="width:25%;margin-left: 75%;" />
@@ -80,7 +79,6 @@
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
-                
             </table>
         </div>
     </div>
@@ -243,8 +241,6 @@ poupu
             </div>
 
         </div>
-
-
     </form>
     </div>
 
@@ -472,11 +468,8 @@ poupu
                 ],
             });
 
-
-
             $("#btnSubmit").on("click", function (event) {
                 event.preventDefault();
-                
                 var status = $("#selStatus").val() == "" ? "All" : $("#selStatus").val();
                 var from = $("#txtFrom").val();
                 var to = $("#txtTo").val();
