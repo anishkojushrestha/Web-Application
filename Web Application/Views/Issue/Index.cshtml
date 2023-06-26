@@ -437,62 +437,12 @@ poupu
         //function closepopup() {
         //    $("#modalPopup").modal('hide');
         //}
-        // ﻿var dataTable;
-        //$(document).ready(function () {
-        //    //$("#dataTable").DataTable();
         
-        //    loadDataTable();
-            
-          
-            
-        //});
-
-       
-        //$("#btnSubmit").on("click", function () {
-        //    loadDataTable();
-        //  });
-
-        //function loadDataTable() {
-        //    var status = $("#selStatus").val();
-        //    console.log(status);
-        //    var from = $("#txtFrom").val();
-        //    var to = $("#txtTo").val();
-        //    dataTable = $('#dataTable').DataTable({
-        //        "ajax": {
-        //            "url": "/Issue/GetValue",
-        //            "data":{Status:status, FromD:from, To:to}
-        //        },
-        //        "columns": [
-        //            { "data": "id" },
-        //            { "data": "issueNo"},
-        //            { "data": "companyName" },
-        //            { "data": "createdDate"},
-        //            { "data": "support"},
-        //            { "data": "trasferName"},
-        //            { "data": "contactName" },
-        //            { "data": "phoneNumber"},
-        //            { "data": "issueDescription"},
-        //            { "data": "issueGeneratorSteps"},
-        //            { "data": "status" },
-        //            { "data": "closeBy" },
-        //            {
-        //                "data": "id",
-        //                "render": (data) => {
-        //                    return `
-        //                                <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Issue")" id="btnEdits_${data}"  ><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
-        //                                <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Attachment")" id="btnAttachment_${data}"><i class="fa-solid fa-paperclip"></i></button>
-        //            `
-        //                }
-        //            },
-        //        ],
-        //       "bDestroy": true
-
-        //     });       
-        //};
         $("#btncancel").click(function () {
             location.reload();
         });
         $(document).ready(function () {
+           
             var dataTable = $('#dataTable').DataTable({
                 ajax: {
                     url: '/Issue/GetValue',
@@ -501,7 +451,7 @@ poupu
                     { data: 'id' },
                     { data: 'issueNo' },
                     { data: 'companyName' },
-                    { data: 'createdDate' },
+                    { data: 'created' },
                     { data: 'support' },
                     { data: 'trasferName' },
                     { data: 'contactName' },

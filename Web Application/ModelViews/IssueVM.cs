@@ -9,6 +9,7 @@ namespace Web_Application.ModelViews
         public string? IssueGeneratorSteps { get; set; }
         public List<IFormFile>? Attachments { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string? Created { get; set; }
 
         public string? Status { get; set; }
         public int? AssignTo { get; set; }

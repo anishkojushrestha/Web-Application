@@ -138,15 +138,28 @@ namespace Web_Application.Controllers
 
                 //if (DAL.GlobalSessionCls._DateMiti == 'D')
                 //{
-               
+
                 //}
                 //else
                 //{
                 //    FromDate = DAL.Database.GetSqlData("Select m_miti from datemiti where m_date='" + Startdate.ToString("yyyy/MM/dd") + "'");
                 //    ToDate = DAL.Database.GetSqlData("Select m_miti from datemiti where m_date='" + Enddate.ToString("yyyy/MM/dd") + "'");
                 //}
-
-
+                
+                Startdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                Enddate = Startdate.AddMonths(1).AddDays(-1);
+            }
+            else if (DateType == "last Month")
+            {
+                DateTime lastMonthDate = DateTime.Now.AddMonths(-1);
+                Startdate = new DateTime(lastMonthDate.Year, lastMonthDate.Month, 1);
+                Enddate = Startdate.AddMonths(1).AddDays(-1);
+            }
+            else if (DateType == "Upto Date")
+            {
+                DateTime lastMonthDate = DateTime.Now.AddMonths(-1);
+                Startdate = new DateTime(lastMonthDate.Year, lastMonthDate.Month, 1);
+                Enddate = Startdate.AddMonths(1).AddDays(-1);
             }
             FromDate = Startdate.ToString("yyyy-MM-dd");
             ToDate = Enddate.ToString("yyyy-MM-dd");
