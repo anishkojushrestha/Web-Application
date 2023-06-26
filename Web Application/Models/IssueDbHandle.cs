@@ -188,6 +188,7 @@ namespace Web_Application.Models
             else
                 return false;
         }
+
         public bool UpdateIssue(IssueVM vm, List<string> ac)
         {
             connection();
