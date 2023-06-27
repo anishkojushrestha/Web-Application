@@ -25,9 +25,10 @@
     </style>
     
 </head>
-<body>
+<body style="padding:0px;">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">*@
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-2 " style="background:#569A75">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Company" asp-action="Index">Support</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -122,14 +123,14 @@
                         @if (profile == "SuperAdmin" || profile == "Admin")
                         {
                             <li class="nav-item dropdown " style="margin-left: 74%;">
-                                <a class="nav-link font-weight-bold text-primary " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@fUser @lUser </a>
+                                <a class="nav-link font-weight-bold text-white " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@fUser @lUser </a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
                                 </div>
                             </li>
                         }else{
                         <li class="nav-item dropdown " style="margin-left: 67%;">
-                                <a class="nav-link font-weight-bold text-primary " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@fUser @lUser </a>
+                                <a class="nav-link font-weight-bold text-white " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@fUser @lUser </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
                             </div>
