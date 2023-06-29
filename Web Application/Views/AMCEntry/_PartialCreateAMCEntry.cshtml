@@ -221,7 +221,6 @@
                                             <label class="form-label">Category:</label>
                                             <input type="text"  id="selCategory" class="form-control" style="height:33px" readonly required />
                                         </div>
-
                                     </div>
                                     <div class="row pb-1">
                                         <div class="rw">
@@ -380,21 +379,21 @@
                                     <div class="row pb-1">
                                         <div class="rws">
                                             <label class="form-label">Client:</label>
-                                            <input type="text" asp-for="Client" class="form-control" style="height:33px">
+                                            <input type="text" asp-for="Client" class="form-control" style="height:33px" required/>
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">Open Date:</label>
-                                            <input type="date" asp-for="OpenDate" class="form-control" style="height:33px">
+                                            <input type="date" asp-for="OpenDate" class="form-control" style="height:33px" required />
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">AMC Amount:</label>
-                                            <input type="text" asp-for="AMCAmount" class="form-control num" style="height:33px" />
+                                            <input type="text" asp-for="AMCAmount" class="form-control num" style="height:33px" required />
                                         </div>
                                     </div>
                                     <div class="row pb-3">
                                         <div class="rws">
                                             <label class="form-label">Next Follow Up Date:</label>
-                                            <input type="date" asp-for="FollowUpDate" class="form-control" style="height:33px">
+                                            <input type="date" asp-for="FollowUpDate" class="form-control" style="height:33px" required/>
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">Close Date:</label>
@@ -448,7 +447,7 @@
         dropdownParent: $(".modal-content"),
     });
     if ($("#demoId").val() != 0) {
-        $("#tbRow").remove();
+        
         var id = $("#demoId").val();
         $.ajax({
             url: "/Demo/GetCompanyDemo?id=" + id,
@@ -463,18 +462,22 @@
                 $("#selCountry").val(data.country);
                 $("#dateValidFrom").val(data.vFrom);
                 $("#dateValidTo").val(data.vTo);
+                var cols = "";
                 for (var i = 0; i <= data.contactPersonVM.length; i++) {
-                    var cols = "";
-                    cols = cols + '<tr id="tbRow"><td><input class="form-control" readonly value="' + data.contactPersonVM[i].contactName + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].gender + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].address + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].email + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].phoneNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].mobileNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].designation + '"/></td></tr>'
+                    
+                    cols = cols + '<tr ><td><input class="form-control" readonly value="' + data.contactPersonVM[i].contactName + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].gender + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].address + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].email + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].phoneNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].mobileNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].designation + '"/></td></tr>'
                     $("#tbldatatabletbody").append(cols);
                 }
 
             }
         })
     }
+
     $("#selCompany").on("change", function () {
-        $("#tbRow").remove();
+        //$("#tbRow").remove();
+        $('tr[id="tbRow"]').remove();
         var id = $(this).val();
+        
         $.ajax({
             url: "/Demo/GetCompanyDemo?id=" + id,
             type: "Post",
@@ -488,6 +491,7 @@
                 $("#selCountry").val(data.country);
                 $("#dateValidFrom").val(data.vFrom);
                 $("#dateValidTo").val(data.vTo);
+                
                 for (var i = 0; i <= data.contactPersonVM.length; i++) {
                     var cols = "";
                     cols = cols + '<tr id="tbRow"><td><input class="form-control" readonly value="' + data.contactPersonVM[i].contactName + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].gender + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].address + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].email + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].phoneNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].mobileNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].designation + '"/></td></tr>'
@@ -519,7 +523,7 @@
         //adding active class to current clicked tab
         $('#custom-tabs-three-profile-tab').addClass("active");
     });
-    $('#custom-tabs-three-amc-tab').click(function () {
+    $('#custom-tabs-three-home-tab').click(function () {
 
         //removing active class from other selected/default tab
         $("#custom-tabs-three-profile-tab").removeClass("active");

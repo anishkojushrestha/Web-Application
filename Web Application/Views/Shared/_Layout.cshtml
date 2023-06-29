@@ -120,22 +120,13 @@
                             </div>
                         </li>*@
                         
-                        @if (profile == "SuperAdmin" || profile == "Admin")
-                        {
+                        
                             <li class="nav-item dropdown " style="margin-left: 74%;">
                                 <a class="nav-link font-weight-bold text-white " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@fUser @lUser </a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
                                 </div>
                             </li>
-                        }else{
-                        <li class="nav-item dropdown " style="margin-left: 67%;">
-                                <a class="nav-link font-weight-bold text-white " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@fUser @lUser </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
-                            </div>
-                        </li>
-                        }
                     </ul>
                 </div>
             </div>

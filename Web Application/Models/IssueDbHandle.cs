@@ -143,10 +143,6 @@ namespace Web_Application.Models
             connection();
             StringBuilder str = new StringBuilder();
             var createdDate = vm.CreatedDate.ToString("MM/dd/yyyy");
-            //var resolveBy = vm.ResolveBy.ToString("MM/dd/yyyy");
-            //var deleteBY = vm.DeletedBy.ToString("MM/dd/yyyy");
-            //var closeBY = vm.CloseBy.ToString("MM/dd/yyyy");
-           
             str.Append("declare @eid bigint \n");
             str.Append("declare @Newno varchar(20) \n");
             str.Append("declare @isno varchar(20) = 'IssNo' \n");
@@ -179,8 +175,8 @@ namespace Web_Application.Models
             con.Close();
             if (i >= 1)
             {
-                EmailSetting em = new EmailSetting();
-                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.ContactEmail, "Issue Created", "The Issue Hasbeen Created."));
+                //EmailSetting em = new EmailSetting();
+                //Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.ContactEmail, "Issue Created", "The Issue Hasbeen Created."));
                 
                
                 return true;
@@ -224,8 +220,8 @@ namespace Web_Application.Models
             con.Close();
             if (i >= 1)
             {
-                EmailSetting em = new EmailSetting();
-                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "",vm.ContactEmail, "testing", "This is simple test body."));
+                //EmailSetting em = new EmailSetting();
+                //Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "",vm.ContactEmail, "testing", "This is simple test body."));
 
                 return true;
             }
@@ -254,7 +250,6 @@ namespace Web_Application.Models
                 return false;
             }
         }
-        
         
 
         public List<AttachmentVM> GetAttachments(int id)
@@ -339,7 +334,6 @@ namespace Web_Application.Models
             //else if(FromD != null || To != null || Istatus != null)
             //{
             //    sb.Append(" and i.status = '" + Istatus + "' or i.createddate between '" + FromD + "' and '" + To + "'\n");
-
             //}
 
             if (session.GetString("userProfile") == "OMSUser")
@@ -349,7 +343,6 @@ namespace Web_Application.Models
             else if (session.GetString("userProfile") == "Support")
             {
                 sb.Append(" and i.Support='" + session.GetString("userId") + "'\n");
-
             }
             //}
 
@@ -376,7 +369,6 @@ namespace Web_Application.Models
                         CompanyName = Convert.ToString(dr["CompanyName"]),
                         ContactName = Convert.ToString(dr["ContactName"]),
                         Support = Convert.ToString(dr["support"]),
-
                         AssignTo = Convert.ToInt32(dr["UserId"]),
                         PhoneNumber = Convert.ToInt32(dr["PhoneNumber"]),
                         //AssignedDate = Convert.ToString(dr["AssignedDate"]),
@@ -400,14 +392,12 @@ namespace Web_Application.Models
 
             //if (_httpContextAccessor.HttpContext.Session.GetString("userProfile").ToString().ToLower()!="superadmin" && _httpContextAccessor. HttpContext.Session.GetString("userProfile").ToString().ToLower() != "admin")
             //{
-           
             
             if (session.GetString("userProfile") == "OMSUser") {
                 sb.Append(" and i.userid='" + session.GetString("userId") + "'\n");
             }else if(session.GetString("userProfile") == "Support")
             {
                 sb.Append(" and i.Support='" + session.GetString("userId") + "'\n");
-
             }
             //}
 
@@ -434,7 +424,6 @@ namespace Web_Application.Models
                         CompanyName = Convert.ToString(dr["CompanyName"]),
                         ContactName = Convert.ToString(dr["ContactName"]),
                         Support = Convert.ToString(dr["support"]),
-
                         AssignTo = Convert.ToInt32(dr["UserId"]),
                         PhoneNumber = Convert.ToInt32(dr["PhoneNumber"]),
                         //AssignedDate = Convert.ToString(dr["AssignedDate"]),

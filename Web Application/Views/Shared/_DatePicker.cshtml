@@ -1,9 +1,14 @@
-﻿     
+﻿@*<style >
+    @@media (min-width: 992px) {
+        .sel {
+            width: 120%;
+        }
+    }
+</style>*@
 
             <input id="txtReId" name="Id" hidden />
-            <div class="row pb-3">
-
-                <div class="rw" style="display:flex;">
+            <div class="col pb-3">
+                <div class="sel" style="display:flex;width:200%;">
                     <label class="form-label">Date:</label>
                     <select class="form-select"  id="selDate" style=" height:30px; font-size:13px; margin-left:2px">
                         <option disabled selected>Select Date</option>
@@ -19,13 +24,13 @@
                 </div>
             </div>
 
-            <div class="row pb-3" style="margin-left:22%;">
+            <div class="col pb-3" style="margin-left:32%;">
                 <div class="rw" style="display:flex;">
                     <label class="form-label">From:</label>
                     <input type="date" class="form-control" name="FromD" id="txtFrom" style=" height:30px; font-size:13px; margin-left:2px" />
                 </div>
             </div>
-            <div class="row pb-3" style="margin-left: 5px;">
+            <div class="col pb-3" style="margin-left: 5px;">
                 <div class="rw" style="display:flex;">
                     <label class="form-label">To:</label>
                     <input type="date" class="form-control" name="To" id="txtTo" style=" height:30px; font-size:13px; margin-left:2px" />

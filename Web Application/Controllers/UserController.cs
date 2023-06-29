@@ -163,7 +163,7 @@ namespace Web_Application.Controllers
 
                 UserDbHandle db = new UserDbHandle();
 
-                if (db.UpdateRegister(vm.Id, vm.FirstName, vm.LastName, vm.UserName, vm.Email, vm.Profile, vm.CompanyId))
+                if (db.UpdateRegister(vm.Id, vm.FirstName, vm.LastName, vm.UserName, vm.Email, vm.Profile, vm.CompanyId, vm.IsActive))
                 {
                     ViewBag.Message = "Register Details Edited Successfully";
                     ModelState.Clear();

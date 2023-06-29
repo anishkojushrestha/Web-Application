@@ -157,7 +157,7 @@ namespace Web_Application.Controllers
             }
             else if (DateType == "Upto Date")
             {
-                DateTime lastMonthDate = DateTime.Now.AddMonths(-1);
+                DateTime lastMonthDate = DateTime.Now;
                 Startdate = new DateTime(lastMonthDate.Year, lastMonthDate.Month, 1);
                 Enddate = Startdate.AddMonths(1).AddDays(-1);
             }

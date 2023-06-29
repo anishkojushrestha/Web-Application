@@ -171,7 +171,9 @@
                                 <select asp-for="Profile" style="height:33px" id="selProf" class="form-select">
                                     <option>Admin</option>
                                     <option>SuperAdmin</option>
-                                    @*<option>OMSUser</option>*@
+                                    <option>Adminstration</option>
+                                    <option>Sales</option>
+                                    <option>OMSUser</option>
                                     <option>Support</option>
                                 </select>
                             </div>
@@ -181,7 +183,7 @@
                             <div class="rw1">
                                 <label class="form-label">Company:</label>
                                 <select asp-for="CompanyId" id="selComps" asp-items="ViewBag.Company" style="height:33px" class="form-select">
-                                    <option disabled selected>Select</option>
+                                    <option disabled selected>Select Company</option>
                                 </select>
                             </div>
                         </div>
@@ -208,7 +210,12 @@
     </div>
 </div>
 <script>
+    if ($("#selProf").val() === "OMSUser") {
+            document.getElementById("selDiv").style.display = "block";
+           
+        } 
 
+    
     $("#selProf").on("change", function () {
         if ($(this).val() === "OMSUser") {
             document.getElementById("selDiv").style.display = "block";

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using NuGet.Protocol.Plugins;
 using Org.BouncyCastle.Bcpg.OpenPgp;
 using System.Configuration;
@@ -88,7 +89,7 @@ namespace Web_Application.Models
             connection();
             List<UpdateRegisterVM> registerList = new List<UpdateRegisterVM>();
             StringBuilder sb = new StringBuilder();
-            sb.Append("Select u.UserId, u.FirstName, u.LastName, u.UserName, u.Email, u.Profile, u.IsActive , c.CompanyName from users u left join CompanyInfo c on c.CompanyId = u.CompanyId where 1=1");
+            sb.Append("Select u.UserId, u.FirstName, u.LastName, u.UserName, u.Email, u.Profile, u.IsActive ,c.CompanyId, c.CompanyName from users u left join CompanyInfo c on c.CompanyId = u.CompanyId where 1=1");
             if (!string.IsNullOrEmpty(username))
             {
                 sb.Append(" and u.username='"+username+"'\n");
@@ -116,6 +117,7 @@ namespace Web_Application.Models
                     {
 
                         Id = Convert.ToInt32(dr["UserId"]),
+                        CompanyId = string.IsNullOrEmpty(dr["CompanyId"].ToString())? null : Convert.ToInt32(dr["CompanyId"]),
                         FirstName = Convert.ToString(dr["FirstName"]),
                         LastName = Convert.ToString(dr["LastName"]),
                         UserName = Convert.ToString(dr["UserName"]),
@@ -128,10 +130,20 @@ namespace Web_Application.Models
             }
             return registerList;
         }
-        public bool UpdateRegister(int Id, string FirstName, string LastName, string UserName, string Email, string Profile, int? CompanyId)
+        public bool UpdateRegister(int Id, string FirstName, string LastName, string UserName, string Email, string Profile, int? CompanyId,bool IsActive)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '" + Profile + "' WHERE UserId = " + Id +"", con);
+            StringBuilder str = new StringBuilder();
+            if(CompanyId != null)
+            {
+                str.Append("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '" + Profile + "', IsActive='"+ IsActive + "', CompanyId="+CompanyId+" WHERE UserId = " + Id +" \n");
+
+            }
+            else
+            {
+                str.Append("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '" + Profile + "', IsActive='" + IsActive + "' WHERE UserId = " + Id + " \n");
+            }
+            SqlCommand cmd = new SqlCommand(str.ToString(), con);
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();

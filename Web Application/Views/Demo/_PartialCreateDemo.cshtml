@@ -484,7 +484,9 @@
         })
         }
     $("#selCompany").on("change", function(){
-        $("#tbRow").remove();
+        //$("#tbRow").remove();
+        $('tr[id="tbRow"]').remove();
+
         var id = $(this).val();
         $.ajax({
             url: "/Demo/GetCompanyDemo?id="+id,
