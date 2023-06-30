@@ -18,7 +18,7 @@ namespace Web_Application.Models
         {
             connection();
             List<DemoMV> list =new List<DemoMV>();
-            SqlCommand cmd = new SqlCommand("select d.*,c.CompanyName from Demo d join CompanyInfo c on c.CompanyId = d.CompanyId", con);
+            SqlCommand cmd = new SqlCommand("select d.DemoId,d.QuatationPrice,d.SoftwareType,d.TotalUser,d.NoOfBranch,d.NoOfCompany,d.SaleStage,d.ClientFeedBack,MarketedBy,d.implementedBy,FORMAT(d.FollowUpDate, 'yyyy-MM-dd') as FollowUpDate,c.CompanyId, c.CompanyName from Demo d join CompanyInfo c on c.CompanyId = d.CompanyId", con);
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             DataTable st = new DataTable();
             con.Open();
@@ -39,6 +39,9 @@ namespace Web_Application.Models
                         NoOfCompany = Convert.ToInt32(dr["NoOfCompany"]),
                         SaleStage = Convert.ToString(dr["SaleStage"]),
                         FeedBack = Convert.ToString(dr["ClientFeedBack"]),
+                        MarketedBy = Convert.ToString(dr["MarketedBy"]),
+                        ImplementedBy = Convert.ToString(dr["ImplementedBy"]),
+                        FollowUpDate = Convert.ToString(dr["FollowUpDate"]),
                     }
                 );
             }
@@ -54,12 +57,21 @@ namespace Web_Application.Models
             str.Append(" set @did = (select isnull(max(demoid), 0) + 1 from Demo) \n");
             if (vm.Id != null)
             {
-                str.Append("update Demo set  QuatationPrice=" + vm.QuatationPrice + ", SoftwareType='" + vm.SoftwareType + "', TotalUser=" + vm.TotalUser + ", NoOfBranch=" + vm.NoOfBranch + ", NoOfCompany = " + vm.NoOfCompany + ", SaleStage = '" + vm.SaleStage + "', ClientFeedBack = '" + vm.FeedBack + "' where DemoId =" + vm.Id + " \n");
+                if (vm.FollowUpDate != null)
+                {
+                    str.Append("update Demo set  QuatationPrice=" + vm.QuatationPrice + ", SoftwareType='" + vm.SoftwareType + "', TotalUser=" + vm.TotalUser + ", NoOfBranch=" + vm.NoOfBranch + ", NoOfCompany = " + vm.NoOfCompany + ", SaleStage = '" + vm.SaleStage + "', ClientFeedBack = '" + vm.FeedBack + "', MarketedBy = '" + vm.MarketedBy + "', ImplementedBy='" + vm.ImplementedBy + "', FollowUpDate='" + vm.FollowUpDate + "' where DemoId =" + vm.Id + " \n");
+
+                }
+                str.Append("update Demo set  QuatationPrice=" + vm.QuatationPrice + ", SoftwareType='" + vm.SoftwareType + "', TotalUser=" + vm.TotalUser + ", NoOfBranch=" + vm.NoOfBranch + ", NoOfCompany = " + vm.NoOfCompany + ", SaleStage = '" + vm.SaleStage + "', ClientFeedBack = '" + vm.FeedBack + "', MarketedBy = '"+vm.MarketedBy+"', ImplementedBy='"+vm.ImplementedBy+"' where DemoId =" + vm.Id + " \n");
             }
             else
             {
+                if(vm.FollowUpDate != null)
+                {
+                    str.Append("insert into Demo(DemoId, QuatationPrice, SoftwareType, TotalUser, NoOfBranch, NoOfCompany, SaleStage, ClientFeedBack,MarketedBy, ImplementedBy, FollowUpDate, CompanyId) values(@did, " + vm.QuatationPrice + ",'" + vm.SoftwareType + "'," + vm.TotalUser + "," + vm.NoOfBranch + "," + vm.NoOfCompany + ",'" + vm.SaleStage + "','" + vm.FeedBack + "','" + vm.MarketedBy + "','" + vm.ImplementedBy + "','" + vm.FollowUpDate + "'," + vm.CompanyId + ")\n");
+                }
 
-                str.Append("insert into Demo(DemoId, QuatationPrice, SoftwareType, TotalUser, NoOfBranch, NoOfCompany, SaleStage, ClientFeedBack, CompanyId) values(@did, " + vm.QuatationPrice + ",'" + vm.SoftwareType + "'," + vm.TotalUser + "," + vm.NoOfBranch + "," + vm.NoOfCompany + ",'" + vm.SaleStage + "','" + vm.FeedBack + "'," + vm.CompanyId + ")\n");
+                str.Append("insert into Demo(DemoId, QuatationPrice, SoftwareType, TotalUser, NoOfBranch, NoOfCompany, SaleStage, ClientFeedBack,MarketedBy, ImplementedBy, CompanyId) values(@did, " + vm.QuatationPrice + ",'" + vm.SoftwareType + "'," + vm.TotalUser + "," + vm.NoOfBranch + "," + vm.NoOfCompany + ",'" + vm.SaleStage + "','" + vm.FeedBack + "','" + vm.MarketedBy + "','" +vm.ImplementedBy+ "'," + vm.CompanyId + ")\n");
             }
             foreach(var data in ac)
             {

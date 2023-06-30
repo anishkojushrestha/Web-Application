@@ -8,7 +8,7 @@
 <div id="PlaceHolderHere"></div>
     <button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("CreateDemo")" style="width:100px;margin-left:90%; margin-bottom:5px;">Create</button>
 
-<div class="card shadow mb-4">
+<div class="card shadow mb-4" style="width: 112%; margin-left: -6%;">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Demo Informations DataTables</h6>
     </div>
@@ -24,6 +24,9 @@
                         <th scope="col">Total User</th>
                         <th scope="col">No. Of Branch</th>
                         <th scope="col">No. Of Company</th>
+                        <th scope="col">Market By</th>
+                        <th scope="col">Implemented By</th>
+                        <th scope="col">Follow Up Date</th>
                         <th scope="col">Sale Stage</th>
                         <th scope="col">Client Feed Back</th>
                         <th scope="col">Actions</th>
@@ -40,6 +43,9 @@
                             <td>@data.TotalUser</td>
                             <td>@data.NoOfBranch</td>
                             <td>@data.NoOfCompany</td>
+                            <td>@data.MarketedBy</td>
+                            <td>@data.ImplementedBy</td>
+                            <td>@data.FollowUpDate</td>
                             <td>@data.SaleStage</td>
                             <td>@data.FeedBack</td>
                             <td>

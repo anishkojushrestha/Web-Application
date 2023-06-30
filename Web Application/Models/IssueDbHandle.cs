@@ -151,6 +151,7 @@ namespace Web_Application.Models
             str.Append("set @eid = (select isnull(max(IssueId), 0) + 1 from Issue) \n");
             str.Append("SELECT @Newno = @isno + RIGHT('0000000' + CAST(@eid AS VARCHAR(7)), 7) \n");
             //str.Append("set @issupid = (select isnull(max(IssueSupportId), 0) + 1 from IssueSupport) \n");
+
             if (vm.TrasferTo != null)
             {
                 str.Append("insert into Issue(IssueId,IssueNo, IssueDescription, IssueGeneratorSteps, CreatedDate, Status,CloseDate, CompanyId,  ContactId,SupportId, TransferId) VALUES(@eid,@Newno,'" + vm.IssueDescription + "','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "','" + vm.CloseBy + "'," + vm.CompanyId + "," + vm.ContactId + "," + vm.AssignTo + "," + vm.TrasferTo + ") \n");
@@ -348,14 +349,10 @@ namespace Web_Application.Models
 
             //if (_httpContextAccessor.HttpContext.Session.GetString("userProfile").ToString().ToLower()!="superadmin" && _httpContextAccessor. HttpContext.Session.GetString("userProfile").ToString().ToLower() != "admin")
             //{
-            //if (FromD != null || To != null || Status != null)
-            //{
-            //    sb.Append(" and i.status = '" + Status + "' or i.createddate between '" + FromD + "' and '" + To + "'\n");
-            //}
-            //else 
+            
             if (!string.IsNullOrEmpty(FromD))
             {
-                sb.Append(" and  i.createddate >= '" + FromD + "'\n");
+                sb.Append(" and  i.createddate >= '" + FromD + "'\n");  
             }
 
             if (!string.IsNullOrEmpty(To))
@@ -370,10 +367,7 @@ namespace Web_Application.Models
                     sb.Append(" and  i.status = '" + Istatus + "'\n");
                 }
             }
-            //else if(FromD != null || To != null || Istatus != null)
-            //{
-            //    sb.Append(" and i.status = '" + Istatus + "' or i.createddate between '" + FromD + "' and '" + To + "'\n");
-            //}
+            
 
             if (session.GetString("userProfile") == "OMSUser")
             {
@@ -397,7 +391,7 @@ namespace Web_Application.Models
                 list.Add(
                     new IssueVM()
                     {
-                        Id = Convert.ToInt32(dr["IssueId"]),
+                        Id = Convert.ToInt32(dr["IssueId"]),                                    
                         IssueGeneratorSteps = Convert.ToString(dr["IssueGeneratorSteps"]),
                         IssueDescription = Convert.ToString(dr["IssueDescription"]),
                         IssueNo = Convert.ToString(dr["IssueNo"]),

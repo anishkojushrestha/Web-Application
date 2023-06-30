@@ -13,5 +13,8 @@
         public List<IFormFile>? Attechment { get; set; }
         public int CompanyId { get; set; }
         public string? CompanyName { get; set;}
+        public string? MarketedBy { get; set; }
+        public string? ImplementedBy { get; set; }
+        public string? FollowUpDate { get; set; }
     }
 }

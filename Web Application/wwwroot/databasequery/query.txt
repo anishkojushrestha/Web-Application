@@ -88,6 +88,9 @@ TotalUser int,
 NoOfBranch int,
 NoOfCompany int,
 SaleStage varchar(50),
+MarketBy varchar(50),
+ImplementedBy varchar(50),
+FollowUpDate varchar(50),
 ClientFeedBack varchar(50),
 CompanyId bigint foreign key references CompanyInfo(CompanyId)
 )

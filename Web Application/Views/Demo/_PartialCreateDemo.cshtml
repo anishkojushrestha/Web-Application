@@ -381,7 +381,7 @@
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">Software Type:</label>
-                                            <select type="text" asp-for="SoftwareType"  class="form-select" style="height:33px" required >
+                                            <select type="text" asp-for="SoftwareType" class="form-select" style="height:33px;font-size: 90%;" required>
                                                 <option disabled selected>Select Software Type</option>
                                                 <option>OMS Software</option>
                                                 <option>Desktop Accounting</option>
@@ -404,13 +404,37 @@
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">Sale Stage:</label>
-                                            <input type="text" asp-for="SaleStage" class="form-control" style="height:33px" >
+                                            <select type="text" asp-for="SaleStage" class="form-select" style="height:33px;font-size: 96%;">
+                                                <option disabled selected>Select Stages</option>
+                                                <option>Demo</option>
+                                                <option>Follow Up</option>
+                                                <option>Installation</option>
+                                                <option>Training</option>
+                                                <option>payment</option>
+                                                <option>Completed</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row pb-1">
+
+                                        <div class="rws">
+                                            <label class="form-label">Marketed By:</label>
+                                            <input type="text" asp-for="MarketedBy" class="form-control " style="height:33px">
+                                        </div>
+                                        <div class="rws">
+                                            <label class="form-label">Implemented By:</label>
+                                            <input type="text" asp-for="ImplementedBy" class="form-control " style="height:33px">
+                                        </div>
+                                        <div class="rws">
+                                            <label class="form-label">Follow Up Date:</label>
+                                            <input type="date" asp-for="FollowUpDate" class="form-control " style="height:33px">
+
                                         </div>
                                     </div>
                                     <div class="row pb-3">
                                         <div class="rw">
                                             <label class="form-label">Client FeedBack:</label>
-                                            <textarea type="text" asp-for="FeedBack" class="form-control" style="height:33px"></textarea>
+                                            <textarea type="text" asp-for="FeedBack" class="form-control" style="height:60px"></textarea>
                                         </div>
                                         <div class="rw">
                                             <label class="form-label">Attachment:</label>

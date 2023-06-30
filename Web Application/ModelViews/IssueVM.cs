@@ -33,5 +33,6 @@ namespace Web_Application.ModelViews
         public string? ContactEmail { get; set; }
         public string? AssignedEmail { get; set; }
         public int? Count { get; set; }
+        
     }
 }
