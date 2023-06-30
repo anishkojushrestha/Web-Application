@@ -157,9 +157,9 @@ namespace Web_Application.Controllers
             }
             else if (DateType == "Upto Date")
             {
-                DateTime lastMonthDate = DateTime.Now;
-                Startdate = new DateTime(lastMonthDate.Year, lastMonthDate.Month, 1);
-                Enddate = Startdate.AddMonths(1).AddDays(-1);
+                IssueDbHandle ish = new IssueDbHandle();
+                Startdate = Convert.ToDateTime( ish.Min());
+                Enddate = Convert.ToDateTime(ish.Max());
             }
             FromDate = Startdate.ToString("yyyy-MM-dd");
             ToDate = Enddate.ToString("yyyy-MM-dd");

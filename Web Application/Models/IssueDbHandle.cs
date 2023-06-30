@@ -32,7 +32,9 @@ namespace Web_Application.Models
         {
             connection();
             List<RegisterVM>  list= new List<RegisterVM>();
-            SqlCommand cmd = new SqlCommand("select UserId, UserName from users where Profile = 'support'", con);
+            StringBuilder str = new StringBuilder();
+            str.Append("select UserId, UserName from users where Profile = 'support' \n");
+            SqlCommand cmd = new SqlCommand(str.ToString(), con);
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);  
             DataTable dt = new DataTable();
             con.Open();
@@ -44,8 +46,7 @@ namespace Web_Application.Models
                     {
                         Id = Convert.ToInt32(dr["UserId"]),
                         UserName = Convert.ToString(dr["Username"]),
-                    }
-                    );
+                    });
             }
             return list;
         }
@@ -113,6 +114,7 @@ namespace Web_Application.Models
             return c;
 
         }
+
         public List<ContactPersonVM> GetContact(int id)
         {
             connection();
@@ -131,7 +133,6 @@ namespace Web_Application.Models
                         Id = Convert.ToInt32(dr["ContactId"]),
                         ContactName = Convert.ToString(dr["ContactName"]),
                         Email = Convert.ToString(dr["Email"]),
-
                     }
                     );
             }
@@ -157,7 +158,6 @@ namespace Web_Application.Models
             if(vm.CloseBy != null)
             {
                 str.Append("insert into Issue(IssueId,IssueNo, IssueDescription, IssueGeneratorSteps, CreatedDate, Status,CloseDate, CompanyId,  ContactId,SupportId) VALUES(@eid,@Newno,'" + vm.IssueDescription + "','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "','" + vm.CloseBy + "'," + vm.CompanyId + "," + vm.ContactId + "," + vm.AssignTo + ") \n");
-
             }
             str.Append("insert into Issue(IssueId,IssueNo, IssueDescription, IssueGeneratorSteps, CreatedDate, Status, CompanyId,  ContactId,SupportId) VALUES(@eid,@Newno,'" + vm.IssueDescription + "','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "'," + vm.CompanyId + "," + vm.ContactId + "," + vm.AssignTo + ") \n");
 
@@ -185,6 +185,43 @@ namespace Web_Application.Models
                 return false;
         }
 
+        public string Min()
+        {
+            connection();
+            string minimum ="";
+            SqlCommand cmd = new SqlCommand("select min(CreatedDate) as minimum from issue", con);
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open() ;    
+            ad.Fill(dt);
+            con.Close();
+            foreach (DataRow dr in dt.Rows)
+            {
+                minimum = Convert.ToString(dr["minimum"]);
+                //to = Convert.ToString(dr["maximum"]);
+
+            }
+            return minimum;
+        }
+        public string Max()
+        {
+            connection();
+            string to = "";
+            SqlCommand cmd = new SqlCommand("select max(CreatedDate) as maximum from issue", con);
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Open();
+            ad.Fill(dt);
+            con.Close();
+            foreach (DataRow dr in dt.Rows)
+            {
+                //from = Convert.ToString(dr["minimum"]);
+                to = Convert.ToString(dr["maximum"]);
+
+            }
+            return to;
+        }
+
         public bool UpdateIssue(IssueVM vm, List<string> ac)
         {
             connection();
@@ -199,14 +236,16 @@ namespace Web_Application.Models
             if(vm.TrasferTo != null )
             {
                 str.Append("update Issue set IssueDescription='" + vm.IssueDescription + "', IssueGeneratorSteps='" + vm.IssueGeneratorSteps + "', CreatedDate='" + createdDate + "', Status='" + vm.Status + "',CloseDate='" + vm.CloseBy + "', CompanyId=" + vm.CompanyId + ",  ContactId=" + vm.ContactId + ",SupportId=" + vm.AssignTo + " , TransferId= "+vm.TrasferTo+" where IssueId= " + vm.Id + " \n");
-
             }
             else
+            {
+                str.Append("update Issue set IssueDescription='" + vm.IssueDescription + "', IssueGeneratorSteps='" + vm.IssueGeneratorSteps + "', CreatedDate='" + createdDate + "', Status='" + vm.Status + "', CompanyId=" + vm.CompanyId + ",  ContactId=" + vm.ContactId + ",SupportId=" + vm.AssignTo + " where IssueId= " + vm.Id + " \n");
+            }
+            if(vm.CloseBy != null)
             {
                 str.Append("update Issue set IssueDescription='" + vm.IssueDescription + "', IssueGeneratorSteps='" + vm.IssueGeneratorSteps + "', CreatedDate='" + createdDate + "', Status='" + vm.Status + "',CloseDate='" + vm.CloseBy + "', CompanyId=" + vm.CompanyId + ",  ContactId=" + vm.ContactId + ",SupportId=" + vm.AssignTo + " where IssueId= " + vm.Id + " \n");
 
             }
-
             //str.Append("insert into IssueSupport(IssueSupportId, Status, IssueId) VALUES(@issupid,'" + vm.Status + "',"+vm.Id+") \n");
             str.Append("declare @aid bigint \n");
             foreach (var data in ac)
@@ -305,7 +344,7 @@ namespace Web_Application.Models
             List<IssueVM> list = new List<IssueVM>();
             StringBuilder sb = new StringBuilder();
             //SessionHandler sd = new SessionHandler();
-            sb.Append(" Select i.IssueId, i.IssueNo,i.Status,i.IssueDescription,i.CompanyId,i.ContactId, u.UserName as support,u.UserId, i.TransferId, t.UserName as TrasferName , i.IssueGeneratorSteps,Format(i.CreatedDate,'yyyy-MM-dd') as CreatedDate,Format(i.CloseDate,'yyyy-MM-dd')as CloseDate,  c.CompanyName,p.ContactId, p.ContactName,p.Email as ContactEmail, p.PhoneNumber from Issue i  join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId join users u on u.UserId = i.SupportId left join users t on t.UserId = i.TransferId where 1=1 ");
+            sb.Append(" Select i.IssueId,DATEDIFF(day, i.CreatedDate, ISNULL(i.CloseDate, GETDATE())  ) AS count, i.IssueNo,i.Status,i.IssueDescription,i.CompanyId,i.ContactId, u.UserName as support,u.UserId, i.TransferId, t.UserName as TrasferName , i.IssueGeneratorSteps,Format(i.CreatedDate,'yyyy-MM-dd') as CreatedDate,Format(i.CloseDate,'yyyy-MM-dd')as CloseDate,  c.CompanyName,p.ContactId, p.ContactName,p.Email as ContactEmail, p.PhoneNumber from Issue i  join CompanyInfo c on c.CompanyId = i.CompanyId join ContactPerson p on p.ContactId = i.ContactId join users u on u.UserId = i.SupportId left join users t on t.UserId = i.TransferId where 1=1 ");
 
             //if (_httpContextAccessor.HttpContext.Session.GetString("userProfile").ToString().ToLower()!="superadmin" && _httpContextAccessor. HttpContext.Session.GetString("userProfile").ToString().ToLower() != "admin")
             //{
@@ -377,6 +416,7 @@ namespace Web_Application.Models
                         ContactEmail = Convert.ToString(dr["ContactEmail"]),
                         TrasferTo = string.IsNullOrEmpty(dr["TransferId"].ToString()) ? null : Convert.ToInt32(dr["TransferId"].ToString()),
                         TrasferName = Convert.ToString(dr["TrasferName"]),
+                        Count = Convert.ToInt32(dr["count"]),
                         //AssignedEmail = Convert.ToString(dr["AssignedEmail"]),
                     });
             }

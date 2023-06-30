@@ -49,10 +49,9 @@
                     <button type="submit" class="btn btn-success" style=" height:30px; font-size:13px; margin-left:2px" id="btnSubmit"><i class=" fa-solid fa-magnifying-glass"></i></button>
                     @*<input type="submit" class="btn btn-success" style=" height:30px; font-size:13px; margin-left:2px" id="btnSubmit" value="Search" />*@
              </div>
-                <div class="col pb-3" style="margin-left: -35px;">
-                    <button class="btn btn-danger" style=" height:30px; font-size:13px; margin-left:2px" id="btnCancel"><i class="fa-solid fa-xmark"></i></button>
-                @*<input type="submit" class="btn btn-danger" style=" height:30px; font-size:13px; margin-left:2px" id="btnCancel" value="Cancel" />*@
-                </div>
+                @*<div class="col pb-3" style="margin-left: -35px;">
+                    <button type="submit" class="btn btn-danger" style=" height:30px; font-size:13px; margin-left:2px" id="btnCancel"><i class="fa-solid fa-xmark"></i></button>
+                </div>*@
             </div>
         </form>
     </div>
@@ -67,7 +66,7 @@
                         <th scope="col">ID</th>
                         <th scope="col">Issue No</th>
                         <th scope="col">Company Name</th>
-                        @*<th scope="col">Days Count</th>*@
+                        <th scope="col">Days Count</th>
                         <th scope="col">Created Date</th>
                         <th scope="col">Support</th>
                         <th scope="col">Transfer</th>
@@ -422,7 +421,6 @@ poupu
         //    $("#modalPopup5").modal('show');
         //    var issueid = $(e).attr("data-id");
             
-
         //    $("#txtId").val(issueid);
         //    $("#txtEmail").val(email);
 
@@ -433,7 +431,6 @@ poupu
 
         $("#btnCancel").click(function () {
             $('#dataTable').DataTable().ajax.reload(true);
-
         });
         $(document).ready(function () {
            
@@ -445,6 +442,7 @@ poupu
                     { data: 'id' },
                     { data: 'issueNo' },
                     { data: 'companyName' },
+                    { data: 'count' },
                     { data: 'created' },
                     { data: 'support' },
                     { data: 'trasferName' },
@@ -478,7 +476,6 @@ poupu
         });
 
         $(document).on("click",".btnbp", function(){
-           
             var id = $(this).attr("data-id");
             var PlaceHolderEleent = $('#PlaceHolderHere');
             var url = $(this).data('url')+"?id="+id;

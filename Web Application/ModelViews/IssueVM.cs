@@ -32,5 +32,6 @@ namespace Web_Application.ModelViews
         public int? TransferTo { get; set; }
         public string? ContactEmail { get; set; }
         public string? AssignedEmail { get; set; }
+        public int? Count { get; set; }
     }
 }

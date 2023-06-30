@@ -64,7 +64,7 @@ namespace Web_Application.Models
             foreach(var data in ac)
             {
                 str.Append("set @aid = (select isnull(max(AttachmentId), 0) + 1 from Attachments) \n");
-                str.Append("insert into Attachments(AttachmentId, AttachmentName, DemoId) values(@aid, '" + data + "', "+vm.Id+") \n");
+                str.Append("insert into Attachments(AttachmentId, AttachmentName, DemoId) values(@aid, '" + data + "', @did) \n");
             }
             SqlCommand cmd = new SqlCommand(str.ToString(),con);
             con.Open();

@@ -18,13 +18,13 @@
                         <option>Last Week</option>
                         <option>Current Month</option>
                         <option>last Month</option>
-                        <option>Upto Date</option>
-                        @*<option>Custom Date</option>*@
+                        <option >Upto Date</option>
+                        <option>Custom Date</option>
                     </select>
                 </div>
             </div>
 
-            <div class="col pb-3" style="margin-left:32%;">
+            <div class="col pb-3" style="margin-left:36%;">
                 <div class="rw" style="display:flex;">
                     <label class="form-label">From:</label>
                     <input type="date" class="form-control" name="FromD" id="txtFrom" style=" height:30px; font-size:13px; margin-left:2px" />
@@ -43,6 +43,10 @@
         <script>
             $("#selDate").on("change", function(){
              var date = $(this).val();
+            if (date == "Custom Date"){
+                $("#txtFrom").val("");
+                $("#txtTo").val("");
+            }else{
                 $.ajax({
                     url:"/Issue/GetReportDate?DateType="+date,
                     type:"Post",
@@ -51,6 +55,7 @@
                         $("#txtTo").val(data[1]);
                     }
                 })
+            }
             })
        </script>
    
