@@ -151,7 +151,6 @@ namespace Web_Application.Models
             str.Append("set @eid = (select isnull(max(IssueId), 0) + 1 from Issue) \n");
             str.Append("SELECT @Newno = @isno + RIGHT('0000000' + CAST(@eid AS VARCHAR(7)), 7) \n");
             //str.Append("set @issupid = (select isnull(max(IssueSupportId), 0) + 1 from IssueSupport) \n");
-
             if (vm.TrasferTo != null)
             {
                 str.Append("insert into Issue(IssueId,IssueNo, IssueDescription, IssueGeneratorSteps, CreatedDate, Status,CloseDate, CompanyId,  ContactId,SupportId, TransferId) VALUES(@eid,@Newno,'" + vm.IssueDescription + "','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "','" + vm.CloseBy + "'," + vm.CompanyId + "," + vm.ContactId + "," + vm.AssignTo + "," + vm.TrasferTo + ") \n");
@@ -171,15 +170,13 @@ namespace Web_Application.Models
             }
             
             SqlCommand cmd = new SqlCommand(str.ToString(), con);
-            con.Open() ;
+            con.Open();
             var i = cmd.ExecuteNonQuery();
             con.Close();
             if (i >= 1)
             {
                 //EmailSetting em = new EmailSetting();
                 //Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.ContactEmail, "Issue Created", "The Issue Hasbeen Created."));
-                
-               
                 return true;
             }
             else

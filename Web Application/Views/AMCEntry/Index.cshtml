@@ -34,10 +34,10 @@
                             <td>@data.Id</td>
                             <td>@data.CompanyName</td>
                             <td>@data.Client</td>
-                            <td>@data.OpenDate.ToShortDateString()</td>
+                            <td>@data.OpenDate</td>
                             <td>@data.AMCAmount</td>
-                            <td>@data.FollowUpDate.ToShortDateString()</td>
-                            <td>@data.CloseDate.ToShortDateString()</td>
+                            <td>@data.FollowUpDate</td>
+                            <td>@data.CloseDate</td>
                             <td>
                                 <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addRegister" data-url="@Url.Action($"EditAMCEntry/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
 

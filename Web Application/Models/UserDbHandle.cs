@@ -172,20 +172,36 @@ namespace Web_Application.Models
                 return false;
         }
 
+        
+
         public void SeedData()
         {
             connection();
-            string pass = hasdPassword("admin");
+            string pass = hasdPassword("superadmin");
             StringBuilder str = new StringBuilder();
             str.Append(" declare @uid bigint \n");
             str.Append(" set @uid = (select isnull(max(userid), 0) + 1 from users) \n");
-            str.Append(" INSERT into users(UserId, FirstName, LastName, UserName, Email, Password, Profile, IsActive) VALUES(@uid,'Super','Admin', 'admin','admin@gmail.com','" + pass + "','SuperAdmin','True')\n");
+            str.Append(" INSERT into users(UserId, FirstName, LastName, UserName, Email, Password, Profile, IsActive) VALUES(@uid,'Super','Admin', 'superadmin','superadmin@gmail.com','" + pass + "','SuperAdmin','True')\n");
 
-            SqlCommand cmd = new SqlCommand(str.ToString(), con);
+            // Check if data has already been seeded
+            bool isSeeded = false;
+            SqlCommand checkCmd = new SqlCommand("SELECT COUNT(*) FROM users", con);
             con.Open();
-            cmd.ExecuteNonQuery();
+            int count = (int)checkCmd.ExecuteScalar();
+            if (count > 0)
+            {
+                isSeeded = true;
+            }
             con.Close();
-        }
 
+            // Seed data only if it hasn't been seeded before
+            if (!isSeeded)
+            {
+                SqlCommand cmd = new SqlCommand(str.ToString(), con);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
     }
 }

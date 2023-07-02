@@ -9,7 +9,7 @@ using Web_Application.ModelViews;
 
 namespace Web_Application.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         
         private readonly ILogger<UserController> logger;
@@ -90,55 +90,55 @@ namespace Web_Application.Controllers
         }
 
 
-        public IActionResult Login()
-        {
-            if (HttpContext.Session.GetString("userId") != null)
-            {
-                return RedirectToAction("Index", "Company");
-            }
-            else
-            {
-                return View();
-            }
+        //public IActionResult Login()
+        //{
+        //    if (HttpContext.Session.GetString("userId") != null)
+        //    {
+        //        return RedirectToAction("Index", "Company");
+        //    }
+        //    else
+        //    {
+        //        return View();
+        //    }
             
-        }
+        //}
 
-        [HttpPost]
+        //[HttpPost]
 
-        public IActionResult Login(LoginVM vm)
-        {
-            if (ModelState.IsValid)
-            {
-                UserDbHandle userDbHandle = new UserDbHandle();
-                var userinfo = userDbHandle.GetUser(vm.UserName, vm.Password);
-                if (userinfo.Count > 0)
-                {
-                    HttpContext.Session.SetString("userId", userinfo[0].Id.ToString());
-                    HttpContext.Session.SetString("userFirstName", userinfo[0].FirstName.ToString());
-                    HttpContext.Session.SetString("userLastName", userinfo[0].LastName.ToString());
-                    HttpContext.Session.SetString("userProfile", userinfo[0].Profile.ToString());
-                    ViewBag._userName = userinfo[0].FirstName.ToString() + "," + userinfo[0].LastName.ToString();
-                    return RedirectToAction("Index", "Company");
-                }
-                ViewBag.UserError = "InCorrect credentials ";
+        //public IActionResult Login(LoginVM vm)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        UserDbHandle userDbHandle = new UserDbHandle();
+        //        var userinfo = userDbHandle.GetUser(vm.UserName, vm.Password);
+        //        if (userinfo.Count > 0)
+        //        {
+        //            HttpContext.Session.SetString("userId", userinfo[0].Id.ToString());
+        //            HttpContext.Session.SetString("userFirstName", userinfo[0].FirstName.ToString());
+        //            HttpContext.Session.SetString("userLastName", userinfo[0].LastName.ToString());
+        //            HttpContext.Session.SetString("userProfile", userinfo[0].Profile.ToString());
+        //            ViewBag._userName = userinfo[0].FirstName.ToString() + "," + userinfo[0].LastName.ToString();
+        //            return RedirectToAction("Index", "Company");
+        //        }
+        //        ViewBag.UserError = "InCorrect credentials ";
 
-                //if (userDbHandle.UserExist(vm.UserName, vm.Password) == true)
-                //{
-                //    var userinfo = userDbHandle.GetUser(vm.UserName);
-                //    if (userinfo.Count > 0)
-                //    {
+        //        //if (userDbHandle.UserExist(vm.UserName, vm.Password) == true)
+        //        //{
+        //        //    var userinfo = userDbHandle.GetUser(vm.UserName);
+        //        //    if (userinfo.Count > 0)
+        //        //    {
 
-                //    }
-                //    HttpContext.Session.SetString("Username", vm.UserName);
-                //    HttpContext.Session.SetString("Password", vm.Password);
-                //    var username = HttpContext.Session.GetString("Username");
-                //    var password = HttpContext.Session.GetString("Password");
-                //    logger.LogInformation(username, password);
+        //        //    }
+        //        //    HttpContext.Session.SetString("Username", vm.UserName);
+        //        //    HttpContext.Session.SetString("Password", vm.Password);
+        //        //    var username = HttpContext.Session.GetString("Username");
+        //        //    var password = HttpContext.Session.GetString("Password");
+        //        //    logger.LogInformation(username, password);
                    
-                //}
-            }
-            return View();
-        }
+        //        //}
+        //    }
+        //    return View();
+        //}
         public ActionResult EditRegister(int id)
         {
            // if (HttpContext.Session.GetString("userProfile") == "SuperAdmin" || HttpContext.Session.GetString("userProfile") == "Admin")
@@ -196,7 +196,7 @@ namespace Web_Application.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Login");
+            return RedirectToAction("Login","Login");
         }
 
 

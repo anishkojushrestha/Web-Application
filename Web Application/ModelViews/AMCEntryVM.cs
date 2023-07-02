@@ -4,10 +4,10 @@
     {
         public int? Id { get; set; }
         public string? Client { get; set; }
-        public DateTime OpenDate { get; set; }
+        public string OpenDate { get; set; }
         public int AMCAmount { get; set; }
-        public DateTime FollowUpDate { get; set; }
-        public DateTime CloseDate { get; set; }
+        public string? FollowUpDate { get; set; }
+        public string? CloseDate { get; set; }
         public int? CompanyId { get; set; }
         public string? CompanyName { get; set; }
     }

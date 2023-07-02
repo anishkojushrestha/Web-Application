@@ -5,7 +5,7 @@ using Web_Application.ModelViews;
 
 namespace Web_Application.Controllers
 {
-    public class AMCEntryController : Controller
+    public class AMCEntryController : BaseController
     {
         public IActionResult Index()
         {

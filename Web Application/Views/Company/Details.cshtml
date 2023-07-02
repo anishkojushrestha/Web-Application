@@ -1,0 +1,108 @@
+﻿@model Web_Application.ModelViews.CompanyMV
+@{
+    ViewData["Title"] = "Details";
+}
+<input asp-for="@Model.Id" type="text" id="txtId" hidden/>
+<div style="display:flex;width: 106%;" class="mb-2">
+        <h2 >@Model.CompanyName Details</h2>
+    <a class="btn btn-success " asp-action="Index" style="margin-left:71%; height:10% " asp-controller="Company">Back</a>
+    
+</div>
+
+<div class="card shadow mb-4" >
+    <div class="card-header py-3 mb-3">
+        <h6 class="m-0 font-weight-bold text-primary">Demo Informations DataTables</h6>
+    </div>
+
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="display" id="dataTableDemo" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Quatation Price</th>
+                        <th scope="col">Software Type</th>
+                        <th scope="col">Total User</th>
+                        <th scope="col">No. Of Branch</th>
+                        <th scope="col">No. Of Company</th>
+                        <th scope="col">Market By</th>
+                        <th scope="col">Implemented By</th>
+                        <th scope="col">Follow Up Date</th>
+                        <th scope="col">Sale Stage</th>
+                        <th scope="col">Client Feed Back</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3 mb-3">
+        <h6 class="m-0 font-weight-bold text-primary">AMC Informations DataTables</h6>
+    </div>
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="display" id="dataTableAmc" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Client</th>
+                    <th scope="col">Open Date</th>
+                    <th scope="col">AMC Amount</th>
+                    <th scope="col">Follow Up Date</th>
+                    <th scope="col">Close Date</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var demoId = $("#txtId").val();
+            $('#dataTableDemo').DataTable({
+                ajax: {
+                    url: '/Company/GetDemos?id=' + demoId,
+                    type: 'POST',
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'quatationPrice' },
+                    { data: 'softwareType' },
+                    { data: 'totalUser' },
+                    { data: 'noOfBranch' },
+                    { data: 'noOfCompany' },
+                    { data: 'marketedBy' },
+                    { data: 'implementedBy' },
+                    { data: 'followUpDate' },
+                    { data: 'saleStage' },
+                    { data: 'feedBack' },
+                ],
+            });
+            $('#dataTableAmc').DataTable({
+                ajax: {
+                    url: '/Company/GetAMC?id=' + demoId,
+                    type: 'POST',
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'client' },
+                    { data: 'openDate' },
+                    { data: 'amcAmount' },
+                    { data: 'followUpDate' },
+                    { data: 'closeDate' },
+                ],
+            });
+        });
+        
+
+       
+
+    </script>
+}
+
+
+

@@ -17,7 +17,7 @@ namespace Web_Application.Models
         {
             connection();
             List<AMCEntryVM> list = new List<AMCEntryVM>();
-            SqlCommand cmd = new SqlCommand("select a.*,c.CompanyName from AMCEntry a join CompanyInfo c on c.CompanyId = a.CompanyId", con);
+            SqlCommand cmd = new SqlCommand("select a.AMCEntryId,a.Client,FORMAT(a.OpenDate,'yyyy-MM-dd') as OpenDate,AMCAmount,FORMAT(a.FollowUpDate,'yyyy-MM-dd') as FollowUpDate,FORMAT(a.CloseDate,'yyyy-MM-dd') as CloseDate,a.CompanyId,c.CompanyName from AMCEntry a join CompanyInfo c on c.CompanyId = a.CompanyId", con);
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             DataTable st = new DataTable();
             con.Open();
@@ -32,10 +32,10 @@ namespace Web_Application.Models
                         CompanyId = Convert.ToInt32(dr["CompanyId"]),
                         CompanyName = Convert.ToString(dr["CompanyName"]),
                         Client = Convert.ToString(dr["Client"]),
-                        OpenDate = Convert.ToDateTime(dr["OpenDate"]),
+                        OpenDate = Convert.ToString(dr["OpenDate"]),
                         AMCAmount = Convert.ToInt32(dr["AMCAmount"]),
-                        FollowUpDate = Convert.ToDateTime(dr["FollowUpDate"]),
-                        CloseDate = Convert.ToDateTime(dr["CloseDate"]),
+                        FollowUpDate = Convert.ToString(dr["FollowUpDate"]),
+                        CloseDate = Convert.ToString(dr["CloseDate"]),
                     }
                 );
             }
@@ -44,20 +44,34 @@ namespace Web_Application.Models
         public bool CreateAMC(AMCEntryVM vm)
         {
             connection();
-            var openDate = vm.OpenDate.ToString("MM/dd/yyyy");
-            var closeDate = vm.CloseDate.ToString("MM/dd/yyyy");
-            var follow = vm.FollowUpDate.ToString("MM/dd/yyyy");
+            var openDate = vm.OpenDate;
             StringBuilder str = new StringBuilder();
             str.Append(" declare @amcid bigint \n");
             str.Append(" set @amcid = (select isnull(max(AMCEntryId), 0) + 1 from AMCEntry) \n");
             if (vm.Id != null)
             {
-                str.Append("update AMCEntry set  Client='"+vm.Client+"', OpenDate='"+openDate + "', AMCAmount="+vm.AMCAmount+", FollowUpDate='"+ follow + "', CloseDate='"+ closeDate + "' where AMCEntryId =" + vm.Id + " \n");
+                if(vm.CloseDate != null)
+                {
+                    str.Append("update AMCEntry set  Client='" + vm.Client + "', OpenDate='" + openDate + "', AMCAmount=" + vm.AMCAmount + ", FollowUpDate='" + vm.FollowUpDate + "', CloseDate='" + vm.CloseDate + "' where AMCEntryId =" + vm.Id + " \n");
+
+                }
+                else
+                {
+                    str.Append("update AMCEntry set  Client='" + vm.Client + "', OpenDate='" + openDate + "', AMCAmount=" + vm.AMCAmount + ", FollowUpDate='" + vm.FollowUpDate + "' where AMCEntryId =" + vm.Id + " \n");
+
+                }
             }
             else
             {
+                if (vm.CloseDate != null)
+                {
+                    str.Append("insert into AMCEntry(AMCEntryId, Client, OpenDate, AMCAmount, FollowUpDate, CloseDate, CompanyId) values(@amcid, '" + vm.Client + "','" + openDate + "'," + vm.AMCAmount + ",'" + vm.FollowUpDate + "','" + vm.CloseDate + "'," + vm.CompanyId + ")\n");
+                }
+                else
+                {
+                    str.Append("insert into AMCEntry(AMCEntryId, Client, OpenDate, AMCAmount, FollowUpDate, CompanyId) values(@amcid, '" + vm.Client + "','" + openDate + "'," + vm.AMCAmount + ",'" + vm.FollowUpDate + "'," + vm.CompanyId + ")\n");
 
-                str.Append("insert into AMCEntry(AMCEntryId, Client, OpenDate, AMCAmount, FollowUpDate, CloseDate, CompanyId) values(@amcid, '" + vm.Client + "','" + openDate + "'," + vm.AMCAmount + ",'" + follow + "','" + closeDate + "'," + vm.CompanyId + ")\n");
+                }
             }
             SqlCommand cmd = new SqlCommand(str.ToString(), con);
             con.Open();

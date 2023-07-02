@@ -20,7 +20,7 @@ builder.Services.AddSession(options =>
 //{
 //    options.Filters.Add(new AuthorizeFilter());
 //});
-
+DataSedding();
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -39,7 +39,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=User}/{action=Login}/{id?}");
+    pattern: "{controller=Login}/{action=Login}/{id?}");
 
 app.Run();
 

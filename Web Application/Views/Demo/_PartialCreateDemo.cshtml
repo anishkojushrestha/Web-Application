@@ -377,7 +377,7 @@
                                     <div class="row pb-1">
                                         <div class="rws">
                                             <label class="form-label">Quotation price:</label>
-                                            <input type="text" asp-for="QuatationPrice"  class="form-control num" style="height:33px" >
+                                            <input type="text" asp-for="QuatationPrice"  class="form-control num" style="height:33px" required/>
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">Software Type:</label>
@@ -389,22 +389,22 @@
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">Total User:</label>
-                                            <input type="text" asp-for="TotalUser" class="form-control num" style="height:33px" >
+                                            <input type="text" asp-for="TotalUser" class="form-control num" style="height:33px" required/>
                                         </div>
                                     </div>
                                     <div class="row pb-1">
                                         
                                         <div class="rws">
                                             <label class="form-label">No. Of Branches</label>
-                                            <input type="text" asp-for="NoOfBranch"  class="form-control num" style="height:33px" >
+                                            <input type="text" asp-for="NoOfBranch"  class="form-control num" style="height:33px" required/>
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">No. Of Company:</label>
-                                            <input type="text" asp-for="NoOfCompany" class="form-control num" style="height:33px">
+                                            <input type="text" asp-for="NoOfCompany" class="form-control num" style="height:33px" required/>
                                         </div>
                                         <div class="rws">
                                             <label class="form-label">Sale Stage:</label>
-                                            <select type="text" asp-for="SaleStage" class="form-select" style="height:33px;font-size: 96%;">
+                                            <select type="text" asp-for="SaleStage" class="form-select" style="height:33px;font-size: 96%;" required>
                                                 <option disabled selected>Select Stages</option>
                                                 <option>Demo</option>
                                                 <option>Follow Up</option>

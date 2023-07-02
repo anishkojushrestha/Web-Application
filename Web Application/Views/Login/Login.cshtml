@@ -1,0 +1,59 @@
+﻿@model Web_Application.ModelViews.LoginVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] Support</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Web_Application.styles.css" asp-append-version="true" />
+    <style>
+        .fl {
+            width: 103%;
+            padding-bottom: 10%;
+        }
+    </style>
+</head>
+<body style="background: #569A75;">
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            <div class="card shadow mb-4" style="width: 32%; margin-top: 11%; margin-left: 32%;">
+
+                <h2 style="display:flex; justify-content:center; align-items: center; margin-top:10%; font-family:  Gill Sans, sans-serif;">Login</h2>
+                <form action="@Url.Action("Login", "Login")" method="post" style="height: 41vh;">
+                    @Html.AntiForgeryToken()
+                    <div class="container" style="display:flex; flex-direction:column; justify-content:center; align-items: center;  margin-top:-3%; padding: 50px;">
+
+                        <div class="fl">
+                            <input type="text" asp-for="UserName" class="form-control" placeholder="Username">
+                            <span asp-validation-for="UserName" class="alert-danger"></span>
+                        </div>
+                        <div class="fl">
+                            <input type="password" asp-for="Password" class="form-control" placeholder="Password">
+                            <span asp-validation-for="Password" class="alert-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 35%;">Submit</button>
+
+                        <span style="color:red;">@ViewBag.UserError</span>
+                    </div>
+
+                </form>
+            </div>
+        </main>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

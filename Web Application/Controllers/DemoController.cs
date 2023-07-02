@@ -6,7 +6,7 @@ using Web_Application.ModelViews;
 
 namespace Web_Application.Controllers
 {
-    public class DemoController : Controller
+    public class DemoController : BaseController
     {
 
     private readonly IWebHostEnvironment _webHostEnvironment;
@@ -20,6 +20,7 @@ namespace Web_Application.Controllers
             DemoDbHandle ddh = new DemoDbHandle();
             return View(ddh.GetDemoDetail());
         }
+        
         public IActionResult CreateDemo()
         {
             CompanyDbHandle idh = new CompanyDbHandle();

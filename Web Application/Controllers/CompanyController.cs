@@ -83,6 +83,29 @@ namespace Web_Application.Controllers
             return PartialView("_PartialAddCompany", cdh.GetUpdateDetail(id.ToString(),""));
         }
 
+        
+        public IActionResult Details(int id, string name)
+        {
+            var data = new CompanyMV
+            {
+                Id = id,
+                CompanyName=name,
+            };
+            return View(data);
+        }
+        public IActionResult GetDemos(int id)
+        {
+            DemoDbHandle ddh = new DemoDbHandle();
+            var result = ddh.GetDemoDetail().Where(x => x.CompanyId == id).ToList();
+            return Json(new {data = result });
+        }
+        public IActionResult GetAMC(int id)
+        {
+            AMCEntryDdHandle ddh = new AMCEntryDdHandle();
+            var result = ddh.GetAMCDetail().Where(x => x.CompanyId == id).ToList();
+            return Json(new { data = result });
+        }
+
         public IActionResult DeleteContact(int id)
         {
             CompanyDbHandle cdh = new CompanyDbHandle();

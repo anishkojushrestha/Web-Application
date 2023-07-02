@@ -62,7 +62,11 @@ namespace Web_Application.Models
                     str.Append("update Demo set  QuatationPrice=" + vm.QuatationPrice + ", SoftwareType='" + vm.SoftwareType + "', TotalUser=" + vm.TotalUser + ", NoOfBranch=" + vm.NoOfBranch + ", NoOfCompany = " + vm.NoOfCompany + ", SaleStage = '" + vm.SaleStage + "', ClientFeedBack = '" + vm.FeedBack + "', MarketedBy = '" + vm.MarketedBy + "', ImplementedBy='" + vm.ImplementedBy + "', FollowUpDate='" + vm.FollowUpDate + "' where DemoId =" + vm.Id + " \n");
 
                 }
-                str.Append("update Demo set  QuatationPrice=" + vm.QuatationPrice + ", SoftwareType='" + vm.SoftwareType + "', TotalUser=" + vm.TotalUser + ", NoOfBranch=" + vm.NoOfBranch + ", NoOfCompany = " + vm.NoOfCompany + ", SaleStage = '" + vm.SaleStage + "', ClientFeedBack = '" + vm.FeedBack + "', MarketedBy = '"+vm.MarketedBy+"', ImplementedBy='"+vm.ImplementedBy+"' where DemoId =" + vm.Id + " \n");
+                else
+                {
+                    str.Append("update Demo set  QuatationPrice=" + vm.QuatationPrice + ", SoftwareType='" + vm.SoftwareType + "', TotalUser=" + vm.TotalUser + ", NoOfBranch=" + vm.NoOfBranch + ", NoOfCompany = " + vm.NoOfCompany + ", SaleStage = '" + vm.SaleStage + "', ClientFeedBack = '" + vm.FeedBack + "', MarketedBy = '" + vm.MarketedBy + "', ImplementedBy='" + vm.ImplementedBy + "' where DemoId =" + vm.Id + " \n");
+
+                }
             }
             else
             {
@@ -70,8 +74,11 @@ namespace Web_Application.Models
                 {
                     str.Append("insert into Demo(DemoId, QuatationPrice, SoftwareType, TotalUser, NoOfBranch, NoOfCompany, SaleStage, ClientFeedBack,MarketedBy, ImplementedBy, FollowUpDate, CompanyId) values(@did, " + vm.QuatationPrice + ",'" + vm.SoftwareType + "'," + vm.TotalUser + "," + vm.NoOfBranch + "," + vm.NoOfCompany + ",'" + vm.SaleStage + "','" + vm.FeedBack + "','" + vm.MarketedBy + "','" + vm.ImplementedBy + "','" + vm.FollowUpDate + "'," + vm.CompanyId + ")\n");
                 }
+                else
+                {
+                    str.Append("insert into Demo(DemoId, QuatationPrice, SoftwareType, TotalUser, NoOfBranch, NoOfCompany, SaleStage, ClientFeedBack,MarketedBy, ImplementedBy, CompanyId) values(@did, " + vm.QuatationPrice + ",'" + vm.SoftwareType + "'," + vm.TotalUser + "," + vm.NoOfBranch + "," + vm.NoOfCompany + ",'" + vm.SaleStage + "','" + vm.FeedBack + "','" + vm.MarketedBy + "','" + vm.ImplementedBy + "'," + vm.CompanyId + ")\n");
 
-                str.Append("insert into Demo(DemoId, QuatationPrice, SoftwareType, TotalUser, NoOfBranch, NoOfCompany, SaleStage, ClientFeedBack,MarketedBy, ImplementedBy, CompanyId) values(@did, " + vm.QuatationPrice + ",'" + vm.SoftwareType + "'," + vm.TotalUser + "," + vm.NoOfBranch + "," + vm.NoOfCompany + ",'" + vm.SaleStage + "','" + vm.FeedBack + "','" + vm.MarketedBy + "','" +vm.ImplementedBy+ "'," + vm.CompanyId + ")\n");
+                }
             }
             foreach(var data in ac)
             {
