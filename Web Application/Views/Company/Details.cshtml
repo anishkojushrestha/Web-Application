@@ -14,7 +14,6 @@
         <h6 class="m-0 font-weight-bold text-primary">Demo Informations DataTables</h6>
     </div>
 
-
     <div class="card-body">
         <div class="table-responsive">
             <table class="display" id="dataTableDemo" width="100%" cellspacing="0">
@@ -58,14 +57,63 @@
     </div>
 </div>
 </div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3 mb-3">
+        <h6 class="m-0 font-weight-bold text-primary">Registration Informations DataTables</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="display" id="dataTableRegister" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">FirstName</th>
+                        <th scope="col">LastName</th>
+                        <th scope="col">UserName</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Profile</th>
+                        <th scope="col">IsActive</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3 mb-3">
+        <h6 class="m-0 font-weight-bold text-primary">Issue Informations DataTables</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="display" id="dataTableIssues" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Issue No</th>
+                        <th scope="col">Days Count</th>
+                        <th scope="col">Created Date</th>
+                        <th scope="col">Support</th>
+                        <th scope="col">Transfer</th>
+                        <th scope="col">Contact Name</th>
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Issue Description</th>
+                        <th scope="col">Issue Generator Steps</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Close Date</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
 
 @section Scripts{
     <script>
         $(document).ready(function () {
-            var demoId = $("#txtId").val();
+            var id = $("#txtId").val();
             $('#dataTableDemo').DataTable({
                 ajax: {
-                    url: '/Company/GetDemos?id=' + demoId,
+                    url: '/Company/GetDemos?id=' + id,
                     type: 'POST',
                 },
                 columns: [
@@ -84,7 +132,7 @@
             });
             $('#dataTableAmc').DataTable({
                 ajax: {
-                    url: '/Company/GetAMC?id=' + demoId,
+                    url: '/Company/GetAMC?id=' + id,
                     type: 'POST',
                 },
                 columns: [
@@ -94,6 +142,46 @@
                     { data: 'amcAmount' },
                     { data: 'followUpDate' },
                     { data: 'closeDate' },
+                ],
+            });
+            $('#dataTableRegister').DataTable({
+                ajax: {
+                    url: '/Company/GetUsers?id=' + id,
+                    type: 'POST',
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'firstName' },
+                    { data: 'lastName' },
+                    { data: 'userName' },
+                    { data: 'email' },
+                    { data: 'profile' },
+                    {
+                      data: 'isActive',
+                      render: function(data, type, row) {
+                            return '<input type="checkbox" onClick="return false" ' + (data ? 'checked' : '') + '>';
+                      }
+                    }
+                ],
+            });
+            $('#dataTableIssues').DataTable({
+                ajax: {
+                    url: '/Company/GetIssues?id='+id,
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'issueNo' },
+                    { data: 'count' },
+                    { data: 'created' },
+                    { data: 'support' },
+                    { data: 'trasferName' },
+                    { data: 'contactName' },
+                    { data: 'phoneNumber' },
+                    { data: 'issueDescription' },
+                    { data: 'issueGeneratorSteps' },
+                    { data: 'status' },
+                    { data: 'closeBy' },
+                    
                 ],
             });
         });

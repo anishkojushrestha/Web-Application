@@ -40,7 +40,6 @@
                             <td>@data.CloseDate</td>
                             <td>
                                 <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addRegister" data-url="@Url.Action($"EditAMCEntry/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
-
                             </td>
                         </tr>
                     }
@@ -68,7 +67,6 @@
             var PlaceHolderEleent = $('#PlaceHolderHere');
             $('button[data-toggle="ajax-modal"]').click(function (event) {
                 var url = $(this).data('url');
-
                 var decodedUrl = decodeURIComponent(url);
                 $.get(decodedUrl).done(function (data) {
                     PlaceHolderEleent.html(data);

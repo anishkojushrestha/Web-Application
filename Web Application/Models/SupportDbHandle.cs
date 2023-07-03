@@ -28,7 +28,6 @@ namespace Web_Application.Models
                 SupportList.Add(
                     new SupportMV
                     {
-
                         Id = Convert.ToInt32(dr["Id"]),
                         CompanyName = Convert.ToString(dr["CompanyName"]),
                         ClientName = Convert.ToString(dr["ClientName"]),

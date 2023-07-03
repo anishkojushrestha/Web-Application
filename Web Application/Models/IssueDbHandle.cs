@@ -65,7 +65,6 @@ namespace Web_Application.Models
             {
                 c.Email = Convert.ToString(dr["Email"]);
             }
-                
             return c;
 
         }

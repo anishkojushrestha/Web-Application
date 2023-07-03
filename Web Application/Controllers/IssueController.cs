@@ -172,9 +172,9 @@ namespace Web_Application.Controllers
         }
         public IActionResult Issue(int id)
         {
-            CompanyDbHandle cdh = new CompanyDbHandle();
             IssueDbHandle idh = new IssueDbHandle();
-            ViewData["Company"] = new SelectList(idh.GetCompanyUser(), "Id", "CompanyName");
+            CompanyDbHandle cdh = new CompanyDbHandle();
+            ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
             ViewData["Support"] = new SelectList(idh.GetUser(), "Id", "UserName");
             return PartialView("_PartialIssue", idh.GetIssue().Find(x => x.Id == id));
         }

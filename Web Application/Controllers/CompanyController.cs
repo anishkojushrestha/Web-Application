@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using Humanizer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Web_Application.Models;
@@ -105,7 +107,18 @@ namespace Web_Application.Controllers
             var result = ddh.GetAMCDetail().Where(x => x.CompanyId == id).ToList();
             return Json(new { data = result });
         }
-
+        public IActionResult GetUsers(int id)
+        {
+            UserDbHandle data = new UserDbHandle();
+            var result = data.GetUser().Where(x=>x.CompanyId == id).ToList();
+            return Json(new { data = result});
+        }
+        public IActionResult GetIssues(int id)
+        {
+            IssueDbHandle idh = new IssueDbHandle();
+            var result = idh.FilterDate().Where(x=>x.CompanyId == id).ToList();
+            return Json(new { data = result });
+        }
         public IActionResult DeleteContact(int id)
         {
             CompanyDbHandle cdh = new CompanyDbHandle();
