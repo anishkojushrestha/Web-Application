@@ -146,7 +146,7 @@
                             
                             <div class="rw">
                                 <label class="form-label">Company:</label>
-                                <select asp-for="CompanyId" asp-items="ViewBag.Company" id="search" class="form-select" style="height:33px;" required>
+                                <select asp-for="CompanyId" asp-items="ViewBag.Company" id="selComp" class="form-select" style="height:33px;" required>
                                     <option selected disabled>select</option>
                                 </select>
                             </div>
@@ -222,7 +222,7 @@
 <script>
    
     $(document).ready(function(){
-        $("#search").select2({
+        $("#selComp").select2({
             dropdownParent: $("#addRegister"),
         });
 
