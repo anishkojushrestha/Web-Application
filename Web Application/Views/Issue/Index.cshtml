@@ -70,14 +70,12 @@
                         <th scope="col">Created Date</th>
                         <th scope="col">Support</th>
                         <th scope="col">Transfer</th>
-                        @*<th scope="col">Assigned Date</th>*@
                         <th scope="col">Contact Name</th>
                         <th scope="col">Phone Number</th>
                         <th scope="col">Issue Description</th>
                         <th scope="col">Issue Generator Steps</th>
                         <th scope="col">Status</th>
                         <th scope="col">Close Date</th>
-                        @*<th scope="col">Resolve By</th>*@
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -323,9 +321,6 @@ poupu
                     <div class="col" style="margin-left: 26px; ">
                         <div class="row pb-2">
                             <input name="Id" id="txtId" hidden />
-                            
-
-
                         </div>
                         <div class="row pb-2">
                             <div class="rw ">
@@ -479,7 +474,7 @@ poupu
             var id = $(this).attr("data-id");
             var PlaceHolderEleent = $('#PlaceHolderHere');
             var url = $(this).data('url')+"?id="+id;
-           
+            
                 var decodedUrl = decodeURIComponent(url);
                 $.get(decodedUrl).done(function (data) {
                     PlaceHolderEleent.html(data);
@@ -500,7 +495,6 @@ poupu
             var PlaceHolderEleent = $('#PlaceHolderHere');
             $('button[data-toggle="ajax-modal"]').click(function (event) {
                 var url = $(this).data('url');
-
                 var decodedUrl = decodeURIComponent(url);
                 $.get(decodedUrl).done(function (data) {
                     PlaceHolderEleent.html(data);

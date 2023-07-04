@@ -33,7 +33,7 @@ namespace Web_Application.Models
             connection();
             List<RegisterVM>  list= new List<RegisterVM>();
             StringBuilder str = new StringBuilder();
-            str.Append("select UserId, UserName from users where Profile = 'support' \n");
+            str.Append("select UserId, UserName from users where Profile = 'support' \n"); 
             SqlCommand cmd = new SqlCommand(str.ToString(), con);
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);  
             DataTable dt = new DataTable();

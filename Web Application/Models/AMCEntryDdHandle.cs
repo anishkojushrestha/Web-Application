@@ -53,12 +53,10 @@ namespace Web_Application.Models
                 if(vm.CloseDate != null)
                 {
                     str.Append("update AMCEntry set  Client='" + vm.Client + "', OpenDate='" + openDate + "', AMCAmount=" + vm.AMCAmount + ", FollowUpDate='" + vm.FollowUpDate + "', CloseDate='" + vm.CloseDate + "' where AMCEntryId =" + vm.Id + " \n");
-
                 }
                 else
                 {
                     str.Append("update AMCEntry set  Client='" + vm.Client + "', OpenDate='" + openDate + "', AMCAmount=" + vm.AMCAmount + ", FollowUpDate='" + vm.FollowUpDate + "' where AMCEntryId =" + vm.Id + " \n");
-
                 }
             }
             else
@@ -70,7 +68,6 @@ namespace Web_Application.Models
                 else
                 {
                     str.Append("insert into AMCEntry(AMCEntryId, Client, OpenDate, AMCAmount, FollowUpDate, CompanyId) values(@amcid, '" + vm.Client + "','" + openDate + "'," + vm.AMCAmount + ",'" + vm.FollowUpDate + "'," + vm.CompanyId + ")\n");
-
                 }
             }
             SqlCommand cmd = new SqlCommand(str.ToString(), con);

@@ -125,7 +125,6 @@ namespace Web_Application.Models
                 customerList.Add(
                     new CompanyMV
                     {
-
                         Id = Convert.ToInt32(dr["CompanyId"]),
                         CompanyName = Convert.ToString(dr["CompanyName"]),
                         Category = Convert.ToString(dr["Category"]),
@@ -138,8 +137,6 @@ namespace Web_Application.Models
                         RegistrationDate = Convert.ToDateTime(dr["RegistrationDate"]),
                         ValidFrom = Convert.ToDateTime(dr["ValidFrom"]),
                         ValidTo = Convert.ToDateTime(dr["ValidTo"]),
-                        
-
                     });
             }
             return customerList;
@@ -199,8 +196,6 @@ namespace Web_Application.Models
 
             CompanyMV cv=new CompanyMV ();
             cv.contactPersonVM = new List<ContactPersonVM>();
-
-
             string sql = @"select * from companyinfo c join contactperson p on c.companyid = p.companyid where 1=1";
             if (!string.IsNullOrEmpty(id))
             {
@@ -228,7 +223,6 @@ namespace Web_Application.Models
                     cv.Address = Convert.ToString(dr["Address"]);
                     cv.Email = Convert.ToString(dr["Email"]);
                     cv.PanNumber = Convert.ToInt32(dr["PanNumber"]);
-                    //Date = Convert.ToDateTime(dr["Date"]),
                     cv.District = Convert.ToString(dr["District"]);
                     cv.Country = Convert.ToString(dr["Country"]);
                     cv.RegistrationDate = Convert.ToDateTime(dr["RegistrationDate"]);
@@ -247,8 +241,6 @@ namespace Web_Application.Models
                     Designation = Convert.ToString(dr["Designation"]),
 
                 });
-
-               
             }
             return cv;
         }

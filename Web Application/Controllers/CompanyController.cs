@@ -81,7 +81,6 @@ namespace Web_Application.Controllers
 
         public IActionResult EditCompany(int id) { 
             CompanyDbHandle cdh = new CompanyDbHandle();
-
             return PartialView("_PartialAddCompany", cdh.GetUpdateDetail(id.ToString(),""));
         }
 
