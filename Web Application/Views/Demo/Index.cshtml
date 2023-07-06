@@ -12,11 +12,12 @@
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Demo Informations DataTables</h6>
     </div>
-    <div class="card-body">
+    <div class="card-body" style="font-size: 80%;">
         <div class="table-responsive">
             <table class="display" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th scope="col">Actions</th>
                         <th scope="col">Id</th>
                         <th scope="col">Company Name</th>
                         <th scope="col">Quatation Price</th>
@@ -29,13 +30,18 @@
                         <th scope="col">Follow Up Date</th>
                         <th scope="col">Sale Stage</th>
                         <th scope="col">Client Feed Back</th>
-                        <th scope="col">Actions</th>
+                        
                     </tr>
                 </thead>
                 <tbody id="table">
                     @foreach(var data in Model)
                     {
                         <tr>
+                            <td>
+                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addRegister" data-url="@Url.Action($"EditDemo/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
+                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
+
+                            </td>
                             <td>@data.Id</td>
                             <td>@data.CompanyName</td>
                             <td>@data.QuatationPrice</td>
@@ -48,11 +54,7 @@
                             <td>@data.FollowUpDate</td>
                             <td>@data.SaleStage</td>
                             <td>@data.FeedBack</td>
-                            <td>
-                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addRegister" data-url="@Url.Action($"EditDemo/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
-                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
-
-                            </td>
+                            
                         </tr>
                     }
 
@@ -65,7 +67,10 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-            $('#dataTable').DataTable();
+            $('#dataTable').DataTable({
+                scrollX: true,
+                scrollY: 200,
+            });
         });
         $(document).ready(function () {
             $("#search").on("keyup", function () {

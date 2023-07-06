@@ -11,5 +11,6 @@
         public int? MobileNumber { get; set; }
         public string? Designation { get; set; }
         public int? CompanyId { get; set; } 
+        public string? CompanyName { get; set; } 
     }
 }

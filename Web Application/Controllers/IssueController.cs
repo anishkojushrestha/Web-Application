@@ -170,6 +170,14 @@ namespace Web_Application.Controllers
             Array convertedDate = arrayData.ToArray();
             return Json(convertedDate);
         }
+        public IActionResult Ticket()
+        {
+            IssueDbHandle idh = new IssueDbHandle();
+            var result =  idh.maxId();
+            result++;
+            var tick = "IssueNo" + result;
+            return Json(tick);
+        }
         public IActionResult Issue(int id)
         {
             IssueDbHandle idh = new IssueDbHandle();

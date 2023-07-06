@@ -7,8 +7,10 @@ namespace Web_Application.Controllers
 {
     public class AMCEntryController : BaseController
     {
+
         public IActionResult Index()
         {
+
             AMCEntryDdHandle ddh = new AMCEntryDdHandle();
             return View(ddh.GetAMCDetail());
         }

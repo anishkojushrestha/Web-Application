@@ -14,11 +14,12 @@
     </div>
     
     
-    <div class="card-body">
+    <div class="card-body" style="font-size: 80%;">
         <div class="table-responsive">
             <table class="display" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th scope="col">Actions</th>
                         <th scope="col">Id</th>
                         <th scope="col">Company Name</th>
                         <th scope="col">Category</th>
@@ -30,24 +31,13 @@
                         <th scope="col">Country</th>
                         <th scope="col">Achive From</th>
                         <th scope="col">Achive To</th>
-                        <th scope="col">Actions</th>
+                        
                     </tr>
                 </thead>
                 <tbody id="table">
                     @foreach (var data in Model)
                     {
                         <tr>
-                            <td>@data.Id</td>
-                            <td>@data.CompanyName</td>
-                            <td>@data.Category</td>
-                            <td>@data.RegistrationDate.ToShortDateString()</td>
-                            <td>@data.Email</td>
-                            <td>@data.PanNumber</td>
-                            <td>@data.Address</td>
-                            <td>@data.District</td>
-                            <td>@data.Country</td>
-                            <td>@data.ValidFrom.ToShortDateString()</td>
-                            <td>@data.ValidTo.ToShortDateString()</td>
                             <td>
                                 <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addRegister" data-url="@Url.Action($"EditCompany/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
                                 @*<a asp-action="EditRegister" asp-controller="User" asp-route-id="@data.Id" data-toggle="ajax-modal" data-target="#addregister" class="btn btn-warning">Edit</a>*@
@@ -60,6 +50,18 @@
                                 @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
                             @Html.ActionLink("Delete", "Delete", new { id = data.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
                             </td>
+                            <td>@data.Id</td>
+                            <td>@data.CompanyName</td>
+                            <td>@data.Category</td>
+                            <td>@data.RegistrationDate.ToShortDateString()</td>
+                            <td>@data.Email</td>
+                            <td>@data.PanNumber</td>
+                            <td>@data.Address</td>
+                            <td>@data.District</td>
+                            <td>@data.Country</td>
+                            <td>@data.ValidFrom.ToShortDateString()</td>
+                            <td>@data.ValidTo.ToShortDateString()</td>
+                            
 
                         </tr>
 
@@ -75,7 +77,10 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-            $('#dataTable').DataTable();
+            $('#dataTable').DataTable({
+                scrollX: true,
+                scrollY: 200,
+            });
         });
         $(document).ready(function () {
             $("#search").on("keyup", function () {

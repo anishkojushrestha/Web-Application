@@ -5,6 +5,7 @@ namespace Web_Application.ModelViews
     {
         public int? Id { get; set; }
         public string? IssueNo { get; set; }
+        public string? SupportType { get; set; }
         public string? IssueDescription { get; set; }
         public string? IssueGeneratorSteps { get; set; }
         public List<IFormFile>? Attachments { get; set; }

@@ -13,7 +13,6 @@ namespace Web_Application.Models
             string constring = "Data Source=DESKTOP-3P1U2GV\\OMSSERVER;Initial Catalog=SupportDB;Integrated Security=True;Pooling=False";
             con = new SqlConnection(constring);
         }
-
         public List<SupportMV> GetSupport() { 
             connection();
             List<SupportMV> SupportList = new List<SupportMV>();

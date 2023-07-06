@@ -14,7 +14,6 @@ namespace Web_Application.Controllers
         {
             _webHostEnvironment = webHostEnvironment;
         }
-
         public IActionResult Index()
         {
             DemoDbHandle ddh = new DemoDbHandle();

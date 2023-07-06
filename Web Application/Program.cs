@@ -1,15 +1,19 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Drawing;
 using Web_Application.Models;
+using Web_Application.ModelViews;
+using static Web_Application.ModelViews.AppSetting;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddHttpContextAccessor();
+builder.Configuration.GetConnectionString("ConnectionString");
 builder.Services.AddSession(options =>
 {
     //options.IdleTimeout = TimeSpan.FromSeconds(190);

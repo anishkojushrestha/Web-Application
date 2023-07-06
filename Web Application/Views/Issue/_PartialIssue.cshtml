@@ -142,42 +142,60 @@
                     @Html.AntiForgeryToken()
                     <div class="col" style="margin-left: 13px; ">
                         <div class="row pb-2">
+                            <div style="width:29%;">
+                                <label class="form-label">Ticket No:</label>
+                                <input type="text" asp-for="IssueNo" id="txtTicket" style="height: 30px;font-size: 87%;" readonly class="form-control" required />
+
+                            </div>
+                            <div style="margin-left:38%;width:29%;">
+                               
+                                <label class="form-label">Created Date:</label>
+                                <input type="date" asp-for="CreatedDate" style="height: 30px;font-size: 87%;" readonly id="txtCreatedDate" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="row pb-2">
                             <input asp-for="Id" id="txtId" hidden/>
                             
                             <div class="rw">
-                                <label class="form-label">Company:</label>
-                                <select asp-for="CompanyId" asp-items="ViewBag.Company" id="selComp" class="form-select" style="height:33px;" required>
+                                <input asp-for="CompanyName" id="textCompanyName" hidden />
+                                <label class="form-label">Client Name:</label>
+                                <select asp-for="CompanyId" asp-items="ViewBag.Company" id="selComp" class="form-select" style="height: 30px;font-size: 87%; width:100%" required>
                                     <option selected disabled>select</option>
                                 </select>
                             </div>
                             <div class="rw">
-                                <label class="form-label">Created Date:</label>
-                                <input type="date" asp-for="CreatedDate" style="height:33px" id="txtCreatedDate" class="form-control" required/>
+                                <label class="form-label">Support Type:</label>
+                                <select class="form-select" asp-for="SupportType" style="height: 30px;font-size: 87%; width:100%" required>
+                                    <option selected disabled>select</option>
+                                    <option>On Site</option>
+                                    <option>Visit</option>
+                                </select>
                             </div>
                             <div class="rw ">
                                 <label class="form-label">Close Date:</label>
-                                <input type="date" asp-for="CloseBy" style="height:33px" class="form-control"/>
+                                <input type="date" asp-for="CloseBy" style="height: 30px;font-size: 87%;" class="form-control"/>
                             </div>
                         </div>
                         <div class="row pb-2">
                             <div class="rw">
                                 <label class="form-label">Status:</label>
-                                <select type="text" asp-for="Status" style="height:33px" class="form-select" required>
+                                <select type="text" asp-for="Status" style="height: 30px;font-size: 87%;" class="form-select" required>
                                     <option selected disabled>Select Status</option>
                                     <option>Open</option>
                                     <option>Close</option>
                                 </select>
                             </div>
                             <div class="rw">
+                                <input id="textContact" asp-for="ContactName" hidden />
                                 <label class="form-label">Contact Person:</label>
-                                <select type="text" asp-for="ContactId" id="selCon" style="height:34px ;" class="form-select" required>
+                                <select type="text" asp-for="ContactId" id="selCon" style="height: 30px;font-size: 87%;" class="form-select" required>
                                    
                                 </select>
                                 <input type="email" asp-for="ContactEmail" id="hConEm" hidden/>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Support Office:</label>
-                                <select type="text" asp-for="AssignTo"  id="selAssign" asp-items="ViewBag.Support" style="height:34px ;" class="form-select" required>
+                                <select type="text" asp-for="AssignTo" id="selAssign" asp-items="ViewBag.Support" style="height: 30px;font-size: 87%;" class="form-select" required>
                                     <option disabled selected>Select Support</option>
                                 </select>
                             </div>
@@ -185,24 +203,24 @@
                         <div class="row pb-2">
                             <div class="rw">
                                 <label class="form-label">Transfer To:</label>
-                                <select type="text" asp-for="TrasferTo" id="selAssign" asp-items="ViewBag.Support" style="height:34px ;" class="form-select">
+                                <select type="text" asp-for="TrasferTo" id="selAssign" asp-items="ViewBag.Support" style="height: 30px;font-size: 87%;" class="form-select">
                                     <option disabled selected>Select Support</option>
                                 </select>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Issue Descriptions:</label>
-                                <textarea type="text" class="form-control" style="height:48px" asp-for="IssueDescription" required></textarea>
+                                <textarea type="text" class="form-control" style="height: 30px;font-size: 87%;" asp-for="IssueDescription" required></textarea>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Issue Generation Steps:</label>
-                                <textarea type="text" asp-for="IssueGeneratorSteps" style="height:48px" class="form-control" required></textarea>
+                                <textarea type="text" asp-for="IssueGeneratorSteps" style="height: 30px;font-size: 87%;" class="form-control" required></textarea>
                             </div>
                         </div>
                         
                         <div class="row pb-3">
                             <div class="rw1">
                                 <label class="form-label">Attachments:</label>
-                                <input type="file" asp-for="Attachments" style="height:33px" class="form-control" multiple>
+                                <input type="file" asp-for="Attachments" style="height: 30px;font-size: 87%;" class="form-control" multiple>
                             </div>
                         </div>
                     </div>
@@ -222,6 +240,17 @@
 <script>
    
     $(document).ready(function(){
+        var tid = $("#txtcid").val();
+        if(tid == 0){
+        $.ajax({
+            url:"/Issue/Ticket",
+            success: function(data){
+                var ticket = data;
+                $('#txtTicket').val(ticket);
+                
+            }
+        })
+        }
         $("#selComp").select2({
             dropdownParent: $("#addRegister"),
         });
@@ -252,11 +281,14 @@
                     var cols="";
                     for (var i = 0; i < data.length; i++) {
                       if(cid==data[i].id){
-                            cols = cols + "<option value='" + data[i].id + "'  selected>" + data[i].contactName + "</option>";
+                            cols = cols + "<option value='" + data[i].id + "'   selected>" + data[i].contactName + "</option>";
                       }else{
-                            cols = cols + "<option  value='" + data[i].id + "'>" + data[i].contactName + "</option>";
+                            cols = cols + "<option  value='" + data[i].id + "' data-name='"+ data[i].contactName+"'>" + data[i].contactName + "</option>";
                       }
+                        
                     }
+                    $("#textCompanyName").val(data[0].companyName);
+
                     $('#selCon').append(cols);
                     $("#selCon").val(cid);
                     $("#txtcid").val('');
@@ -265,21 +297,29 @@
         }
         $(document).on("change", "#selComp", function () {
           LoadContact();
+            
         });
 
         LoadContact();
         //$("#selComp").select2({
         //    dropdownParent: $(".modal-content"),
         //})
-        
+        //$("#selAssign").on("change",function(){
+        //    $.ajax({
+        //        url:,
+
+        //    })
+        //});
     });
     $('#selCon').on("change", function(){
         var id= $(this).val();
+        var cname = $('#selCon option').attr("data-name");
+        $("#textContact").val(cname);
         $.ajax({
             url: "/Issue/GetEmail?id="+id,
             type:"post",
             success:function(data){
-                var email = $('#hConEm').val(data.email);
+                var email = $('#hConEm ').val(data.email);
             }
         });
     });

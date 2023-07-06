@@ -12,11 +12,12 @@
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">AMC Entry Informations DataTables</h6>
     </div>
-    <div class="card-body">
+    <div class="card-body" style="font-size: 80%;">
         <div class="table-responsive">
             <table class="display" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th scope="col">Actions</th>
                         <th scope="col">Id</th>
                         <th scope="col">Company Name</th>
                         <th scope="col">Client</th>
@@ -24,13 +25,16 @@
                         <th scope="col">AMC Amount</th>
                         <th scope="col">Follow Up Date</th>
                         <th scope="col">Close Date</th>
-                        <th scope="col">Actions</th>
+                        
                     </tr>
                 </thead>
                 <tbody id="table">
                     @foreach(var data in Model)
                     {
                         <tr>
+                            <td>
+                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addRegister" data-url="@Url.Action($"EditAMCEntry/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
+                            </td>
                             <td>@data.Id</td>
                             <td>@data.CompanyName</td>
                             <td>@data.Client</td>
@@ -38,9 +42,7 @@
                             <td>@data.AMCAmount</td>
                             <td>@data.FollowUpDate</td>
                             <td>@data.CloseDate</td>
-                            <td>
-                                <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addRegister" data-url="@Url.Action($"EditAMCEntry/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
-                            </td>
+                            
                         </tr>
                     }
                 </tbody>
@@ -52,7 +54,10 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-            $('#dataTable').DataTable();
+            $('#dataTable').DataTable({
+                scrollX: true,
+                scrollY: 200,
+            });
         });
         $(document).ready(function () {
             $("#search").on("keyup", function () {

@@ -55,16 +55,18 @@
             </div>
         </form>
     </div>
-    <div class="card-body">
+    <div class="card-body" style="font-size: 80%;">
         <div class="table-responsive">
             @*<div class="form-outline">
                 <input type="search" id="search" class="form-control"  style="width:25%;margin-left: 75%;" />
             </div>*@
-            <table class="display" id="dataTable"  width="100%" cellspacing="0">
+            <table class="display " id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th scope="col">Actions</th>
                         <th scope="col">ID</th>
                         <th scope="col">Issue No</th>
+                        <th scope="col">Support Type</th>
                         <th scope="col">Company Name</th>
                         <th scope="col">Days Count</th>
                         <th scope="col">Created Date</th>
@@ -76,7 +78,6 @@
                         <th scope="col">Issue Generator Steps</th>
                         <th scope="col">Status</th>
                         <th scope="col">Close Date</th>
-                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
             </table>
@@ -434,8 +435,18 @@ poupu
                     url: '/Issue/GetValue',
                 },
                 columns: [
+                    {
+                        data: 'id',
+                        render: (data) => {
+                            return `
+                            <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Issue")" id="btnEdits_${data}"  ><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
+                            <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Attachment")" id="btnAttachment_${data}"><i class="fa-solid fa-paperclip"></i></button>
+                          `
+                        }
+                    },
                     { data: 'id' },
                     { data: 'issueNo' },
+                    { data: 'supportType' },
                     { data: 'companyName' },
                     { data: 'count' },
                     { data: 'created' },
@@ -447,16 +458,11 @@ poupu
                     { data: 'issueGeneratorSteps' },
                     { data: 'status' },
                     { data: 'closeBy' },
-                    {
-                        data: 'id',
-                        render: (data) => {
-                            return `
-                    <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Issue")" id="btnEdits_${data}"  ><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
-                    <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Attachment")" id="btnAttachment_${data}"><i class="fa-solid fa-paperclip"></i></button>
-                  `
-                        }
-                    },
+                    
                 ],
+                scrollX: true,
+                scrollY: 200,
+
             });
 
             $("#btnSubmit").on("click", function (event) {
