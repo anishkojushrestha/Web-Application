@@ -14,7 +14,6 @@ namespace Web_Application.Controllers
             if (result == null)
             {
                 FilterContext.Result = new RedirectToActionResult("Login", "Login", null);
-
             }
 
         }

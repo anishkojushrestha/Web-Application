@@ -74,8 +74,8 @@
                         <th scope="col">Transfer</th>
                         <th scope="col">Contact Name</th>
                         <th scope="col">Phone Number</th>
-                        <th scope="col">Issue Description</th>
-                        <th scope="col">Issue Generator Steps</th>
+                        @*<th scope="col">Issue Description</th>
+                        <th scope="col">Issue Generator Steps</th>*@
                         <th scope="col">Status</th>
                         <th scope="col">Close Date</th>
                     </tr>
@@ -111,6 +111,7 @@
         </div>
     </div>
 </div>
+
 <!--
 
 poupu
@@ -429,20 +430,39 @@ poupu
             $('#dataTable').DataTable().ajax.reload(true);
         });
         $(document).ready(function () {
-           
-            var dataTable = $('#dataTable').DataTable({
+            function format(d) {
+                // `d` is the original data object for the row
+                return (
+                    '<dl>' +
+                    '<dt>Issue Descrption:</dt>' +
+                    '<dd>' +
+                    d.issueDescription +
+                    '</dd>' +
+                    '<dt>Issue Generation Steps:</dt>' +
+                    '<dd>' +
+                    d.issueGeneratorSteps +
+                    '</dl>'
+                );
+            }
+            let dataTable = $('#dataTable').DataTable({
                 ajax: {
                     url: '/Issue/GetValue',
                 },
                 columns: [
                     {
+                        className: 'dt-control',
+                        orderable: false,
+                        data: null,
+                        defaultContent: '',
                         data: 'id',
                         render: (data) => {
                             return `
                             <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Issue")" id="btnEdits_${data}"  ><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
                             <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Attachment")" id="btnAttachment_${data}"><i class="fa-solid fa-paperclip"></i></button>
                           `
-                        }
+                            
+                        },
+                        
                     },
                     { data: 'id' },
                     { data: 'issueNo' },
@@ -454,15 +474,30 @@ poupu
                     { data: 'trasferName' },
                     { data: 'contactName' },
                     { data: 'phoneNumber' },
-                    { data: 'issueDescription' },
-                    { data: 'issueGeneratorSteps' },
+                    //{ data: 'issueDescription' },
+                    //{ data: 'issueGeneratorSteps' },
                     { data: 'status' },
                     { data: 'closeBy' },
-                    
                 ],
                 scrollX: true,
-                scrollY: 200,
+                scrollY: 250,
+                fixedColumns: {
+                    leftColumns: 1,
+                }
 
+            });
+            dataTable.on('click', 'td.dt-control', function (e) {
+                let tr = e.target.closest('tr');
+                let row = dataTable.row(tr);
+ 
+                if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                }
+                else {
+                // Open this row
+                row.child(format(row.data())).show();
+                }
             });
 
             $("#btnSubmit").on("click", function (event) {

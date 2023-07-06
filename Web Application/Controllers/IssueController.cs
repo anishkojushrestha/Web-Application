@@ -228,6 +228,12 @@ namespace Web_Application.Controllers
             var result = idh.UserEmail(id, username);
             return Json(result);
         }
+        public IActionResult GetAssigedEmail(int id)
+        {
+            IssueDbHandle idh = new IssueDbHandle();
+            var result = idh.AssignedEmail(id);
+            return Json(result);
+        }
 
         public IActionResult GetTransfer(int id)
         {

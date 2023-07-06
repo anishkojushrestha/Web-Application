@@ -13,7 +13,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddHttpContextAccessor();
-builder.Configuration.GetConnectionString("ConnectionString");
+builder.Host.ConfigureAppConfiguration((ctx, config) =>
+{
+    config.AddJsonFile("appsettings.json",
+                       optional: false,
+                       reloadOnChange: true)
+          .AddJsonFile($"appsettings.{ctx.HostingEnvironment.EnvironmentName}.json", optional: true);
+});
 builder.Services.AddSession(options =>
 {
     //options.IdleTimeout = TimeSpan.FromSeconds(190);

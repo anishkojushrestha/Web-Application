@@ -30,7 +30,6 @@
                         <th scope="col">Follow Up Date</th>
                         <th scope="col">Sale Stage</th>
                         <th scope="col">Client Feed Back</th>
-                        
                     </tr>
                 </thead>
                 <tbody id="table">
@@ -70,6 +69,9 @@
             $('#dataTable').DataTable({
                 scrollX: true,
                 scrollY: 200,
+                fixedColumns: {
+                    leftColumns: 1,
+                }
             });
         });
         $(document).ready(function () {

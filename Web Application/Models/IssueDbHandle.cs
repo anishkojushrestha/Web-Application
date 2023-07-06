@@ -98,7 +98,7 @@ namespace Web_Application.Models
                 str.Append("and UserId = " + id + "\n");
             }
             else { 
-            str.Append("and Username = '" + username+"'\n");
+                str.Append("and Username = '" + username+"'\n");
             }
 
             SqlCommand cmd = new SqlCommand(str.ToString() , con);
@@ -113,6 +113,23 @@ namespace Web_Application.Models
             }
 
             return c;
+        }
+
+        public string AssignedEmail(int id)
+        {
+            connection();
+            string email = "";
+            SqlCommand cmd = new SqlCommand("select Email from users where UserId="+id+"", con);
+            SqlDataAdapter ad = new SqlDataAdapter(cmd);
+            DataTable dataTable = new DataTable();
+            con.Open();
+            ad.Fill(dataTable);
+            con.Close();
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                email = Convert.ToString(dr["Email"]);
+            }
+            return email;
         }
         public RegisterVM Transfer(int id)
         {
@@ -153,9 +170,7 @@ namespace Web_Application.Models
                         ContactName = Convert.ToString(dr["ContactName"]),
                         Email = Convert.ToString(dr["Email"]),
                         CompanyName = Convert.ToString(dr["CompanyName"]),
-                        
-                    }
-                    );
+                    });
             }
             return list;
         }
@@ -200,6 +215,7 @@ namespace Web_Application.Models
             {
                 EmailSetting em = new EmailSetting();
                 Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.ContactEmail, "Issue Generated", "Ticket NO. "+vm.IssueNo+ "\n\nIssue Date: " + vm.CreatedDate.ToString("MM/dd/yyyy")+ " \n\n Client Name: " + vm.CompanyName+ " \n\nContact Person: "+vm.ContactName+"\n\n Designation: Accountant \n\nSupport Type:"+vm.SupportType+" \n\nIssue: Reinstall."));
+                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.AssignedEmail, "Issue Assigend", "Ticket NO. "+vm.IssueNo+ "\n\nIssue Date: " + vm.CreatedDate.ToString("MM/dd/yyyy")+ " \n\n Client Name: " + vm.CompanyName+ " \n\nContact Person: "+vm.ContactName+"\n\n Designation: Accountant \n\nSupport Type:"+vm.SupportType+" \n\nIssue: Reinstall."));
                 return true;
             }
             else
@@ -280,8 +296,9 @@ namespace Web_Application.Models
             con.Close();
             if (i >= 1)
             {
-                //EmailSetting em = new EmailSetting();
-                //Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "",vm.ContactEmail, "testing", "This is simple test body."));
+                EmailSetting em = new EmailSetting();
+                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.ContactEmail, "Issue Updated", "Ticket NO. " + vm.IssueNo + "\n\nIssue Date: " + vm.CreatedDate.ToString("MM/dd/yyyy") + " \n\n Client Name: " + vm.CompanyName + " \n\nContact Person: " + vm.ContactName + "\n\n Designation: Accountant \n\nSupport Type:" + vm.SupportType + " \n\nIssue: Reinstall."));
+                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.AssignedEmail, "Issue Assigend", "Ticket NO. " + vm.IssueNo + "\n\nIssue Date: " + vm.CreatedDate.ToString("MM/dd/yyyy") + " \n\n Client Name: " + vm.CompanyName + " \n\nContact Person: " + vm.ContactName + "\n\n Designation: Accountant \n\nSupport Type:" + vm.SupportType + " \n\nIssue: Reinstall."));
 
                 return true;
             }

@@ -6,7 +6,7 @@
     }
 
     .rw1 {
-        width: 48%;
+        width: 38%;
     }
 
     .select2.select2-container {
@@ -194,6 +194,7 @@
                                 <input type="email" asp-for="ContactEmail" id="hConEm" hidden/>
                             </div>
                             <div class="rw">
+                                <input type="text" asp-for="AssignedEmail" id="textAssigendEmail" hidden />
                                 <label class="form-label">Support Office:</label>
                                 <select type="text" asp-for="AssignTo" id="selAssign" asp-items="ViewBag.Support" style="height: 30px;font-size: 87%;" class="form-select" required>
                                     <option disabled selected>Select Support</option>
@@ -203,17 +204,17 @@
                         <div class="row pb-2">
                             <div class="rw">
                                 <label class="form-label">Transfer To:</label>
-                                <select type="text" asp-for="TrasferTo" id="selAssign" asp-items="ViewBag.Support" style="height: 30px;font-size: 87%;" class="form-select">
+                                <select type="text" asp-for="TrasferTo" id="selTransfer" asp-items="ViewBag.Support" style="height: 30px;font-size: 87%;" class="form-select">
                                     <option disabled selected>Select Support</option>
                                 </select>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Issue Descriptions:</label>
-                                <textarea type="text" class="form-control" style="height: 30px;font-size: 87%;" asp-for="IssueDescription" required></textarea>
+                                <textarea type="text" class="form-control" style="height: 63px;font-size: 87%;" asp-for="IssueDescription" required></textarea>
                             </div>
                             <div class="rw">
                                 <label class="form-label">Issue Generation Steps:</label>
-                                <textarea type="text" asp-for="IssueGeneratorSteps" style="height: 30px;font-size: 87%;" class="form-control" required></textarea>
+                                <textarea type="text" asp-for="IssueGeneratorSteps" style="height: 63px;font-size: 87%;" class="form-control" required></textarea>
                             </div>
                         </div>
                         
@@ -240,6 +241,7 @@
 <script>
    
     $(document).ready(function(){
+        
         var tid = $("#txtcid").val();
         if(tid == 0){
         $.ajax({
@@ -247,7 +249,6 @@
             success: function(data){
                 var ticket = data;
                 $('#txtTicket').val(ticket);
-                
             }
         })
         }
@@ -304,9 +305,24 @@
         //$("#selComp").select2({
         //    dropdownParent: $(".modal-content"),
         //})
-        //$("#selAssign").on("change",function(){
+        $("#selAssign").on("change",function(){
+            var id = $(this).val();
+            alert(id);
+            $.ajax({
+                url: "/Issue/GetAssigedEmail?id=" + id,
+                success:function(data){
+                    $("#textAssigendEmail").val(data);
+                }
+
+            })
+        });
+        //$("#selTransfer").on("change", function () {
+        //    var id = $(this).val();
+        //    alert(id);
         //    $.ajax({
-        //        url:,
+        //        url: "/Issue/GetAssigedEmail?id=" + id,
+        //        success: function (data) {
+        //        }
 
         //    })
         //});
