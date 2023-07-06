@@ -63,7 +63,9 @@
             <table class="display " id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th scope="col"></th>
                         <th scope="col">Actions</th>
+                        
                         <th scope="col">ID</th>
                         <th scope="col">Issue No</th>
                         <th scope="col">Support Type</th>
@@ -454,6 +456,9 @@ poupu
                         orderable: false,
                         data: null,
                         defaultContent: '',
+                    },
+                    {
+                        
                         data: 'id',
                         render: (data) => {
                             return `
@@ -464,7 +469,10 @@ poupu
                         },
                         
                     },
-                    { data: 'id' },
+                    
+                    {
+                        data: 'id',
+                    },
                     { data: 'issueNo' },
                     { data: 'supportType' },
                     { data: 'companyName' },
