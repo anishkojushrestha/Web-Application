@@ -171,7 +171,6 @@
                 <h4 class="modal-title" id="addRegisterLabel" style="font-size:large; color:white">AMC Entry</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="javascript:window.location.reload()">
                 </button>
-
             </div>
             <div class="modal-body p-1">
                 <div class="card-header p-0 pt-1 border-bottom-0">
@@ -189,7 +188,7 @@
                 </div>
                 <form asp-action="CreateAMCEntry" asp-controller="AMCEntry">
                     @Html.AntiForgeryToken()
-                    <input asp-for="Id"  hidden />
+                    <input asp-for="Id"  hidden/>
                     <div class="card-body">
                         <div class="tab-content" id="custom-tabs-three-tabContent">
                             <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
@@ -204,7 +203,6 @@
                                                     <input asp-for="CompanyId" id="demoId" hidden />
 
                                                     <input asp-for="CompanyName" class="form-control" id="txtCompany" readonly style="height:33px" />
-
                                                 }
 
                                                 
@@ -461,7 +459,6 @@
                 $("#dateValidTo").val(data.vTo);
                 var cols = "";
                 for (var i = 0; i <= data.contactPersonVM.length; i++) {
-                    
                     cols = cols + '<tr ><td><input class="form-control" readonly value="' + data.contactPersonVM[i].contactName + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].gender + '"/></td><td><input class="form-control" readonly value="' + data.contactPersonVM[i].address + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].email + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].phoneNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].mobileNumber + '"/></td><td><input readonly class="form-control" value="' + data.contactPersonVM[i].designation + '"/></td></tr>'
                     $("#tbldatatabletbody").append(cols);
                 }
@@ -499,7 +496,6 @@
         })
     })
     //const currentDate = new Date();
-
     //// Format the date as YYYY-MM-DD
     //const year = currentDate.getFullYear();
     //const increaseYear = (currentDate.getFullYear() + 1);
