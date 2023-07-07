@@ -6,7 +6,7 @@
 
 }
 <div id="PlaceHolderHere"></div>
-    <button class="btn btn-primary" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("CreateDemo")" style="width:100px;margin-left:90%; margin-bottom:5px;">Create</button>
+<button class="btn btn-primary btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("CreateDemo")" style="width:100px;margin-left:90%; margin-bottom:5px;">Create</button>
 
 <div class="card shadow mb-4" style="width: 112%; margin-left: -6%;">
     <div class="card-header py-3">
@@ -39,7 +39,6 @@
                             <td>
                                 <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addRegister" data-url="@Url.Action($"EditDemo/{data.Id}")"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
                                 <button style="padding: 0;border: none;background: none;" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"Attachment/{data.Id}")"><i class="fa-solid fa-paperclip"></i></button>
-
                             </td>
                             <td>@data.Id</td>
                             <td>@data.CompanyName</td>
@@ -53,7 +52,6 @@
                             <td>@data.FollowUpDate</td>
                             <td>@data.SaleStage</td>
                             <td>@data.FeedBack</td>
-                            
                         </tr>
                     }
 
@@ -85,7 +83,10 @@
 
         $(function () {
             var PlaceHolderEleent = $('#PlaceHolderHere');
-            $('button[data-toggle="ajax-modal"]').click(function (event) {
+            
+           // $('.btnbp').click(function (event) {
+           $(document).on("click",'.btnbp',function(){
+           // $('button[data-toggle="ajax-modal"]').click(function (event) {
                 var url = $(this).data('url');
 
                 var decodedUrl = decodeURIComponent(url);
