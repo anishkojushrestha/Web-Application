@@ -12,8 +12,6 @@
     .rw1 {
         width: 107%;
     }
-    
-    
 </style>
 <div id="PlaceHolderHere">
 
@@ -65,7 +63,6 @@
                     <tr>
                         <th scope="col"></th>
                         <th scope="col">Actions</th>
-                        
                         <th scope="col">ID</th>
                         <th scope="col">Issue No</th>
                         <th scope="col">Support Type</th>
@@ -360,7 +357,6 @@ poupu
 @section Scripts{
     <script>
        
-
         //$('form').submit(function () {
         //    alert($(this["options"]).val());
         //    return false;
@@ -378,6 +374,7 @@ poupu
         //        var issueid = $(e).attr("data-id");
         //        $("#txtDeId").val(issueid);
         //}
+
         //function ShowPopupAssign(e) {
         //    $("#modalPopup3").modal('show');
         //    var issueid = $(e).attr("data-id");
@@ -458,7 +455,6 @@ poupu
                         defaultContent: '',
                     },
                     {
-                        
                         data: 'id',
                         render: (data) => {
                             return `
@@ -488,11 +484,11 @@ poupu
                     { data: 'closeBy' },
                 ],
                 scrollX: true,
+                paging:false,
                 scrollY: 250,
                 fixedColumns: {
                     leftColumns: 1,
                 }
-
             });
             dataTable.on('click', 'td.dt-control', function (e) {
                 let tr = e.target.closest('tr');
@@ -551,7 +547,6 @@ poupu
                 })
             })
             PlaceHolderEleent.on('click', '[data-save="modal"]', function (event) {
-
                 //var form =$(this).parents('.modal').find('form');
                 //var actionUrl = form.attr('action');
                 //var url = '/user/'+actionUrl;

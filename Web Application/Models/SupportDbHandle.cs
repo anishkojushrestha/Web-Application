@@ -10,7 +10,10 @@ namespace Web_Application.Models
         private SqlConnection con;
         private void connection()
         {
-            string constring = "Data Source=DESKTOP-3P1U2GV\\OMSSERVER;Initial Catalog=SupportDB;Integrated Security=True;Pooling=False";
+            IConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.AddJsonFile("appsettings.json", optional: false);
+            IConfiguration configuration = builder.Build();
+            string constring = configuration.GetValue<string>("ConnectionStrings:DefaultConnection");
             con = new SqlConnection(constring);
         }
         public List<SupportMV> GetSupport() { 

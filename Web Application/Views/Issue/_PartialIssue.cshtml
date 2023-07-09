@@ -192,6 +192,7 @@
                                    
                                 </select>
                                 <input type="email" asp-for="ContactEmail" id="hConEm" hidden/>
+                                <input type="text" asp-for="Designation" id="txtDes" hidden/>
                             </div>
                             <div class="rw">
                                 <input type="text" asp-for="AssignedEmail" id="textAssigendEmail" hidden />
@@ -272,7 +273,6 @@
         }
         function LoadContact(){
             var cid = $("#txtcid").val();
-            
              var id = $("#selComp").val();
             $.ajax({
                 type: "post",
@@ -285,11 +285,9 @@
                             cols = cols + "<option value='" + data[i].id + "'   selected>" + data[i].contactName + "</option>";
                       }else{
                             cols = cols + "<option  value='" + data[i].id + "' data-name='"+ data[i].contactName+"'>" + data[i].contactName + "</option>";
-                      }
-                        
+                      } 
                     }
                     $("#textCompanyName").val(data[0].companyName);
-
                     $('#selCon').append(cols);
                     $("#selCon").val(cid);
                     $("#txtcid").val('');
@@ -307,7 +305,6 @@
         //})
         $("#selAssign").on("change",function(){
             var id = $(this).val();
-            alert(id);
             $.ajax({
                 url: "/Issue/GetAssigedEmail?id=" + id,
                 success:function(data){
@@ -336,6 +333,7 @@
             type:"post",
             success:function(data){
                 var email = $('#hConEm ').val(data.email);
+                var designation = $('#txtDes ').val(data.designation);
             }
         });
     });

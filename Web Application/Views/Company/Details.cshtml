@@ -88,6 +88,8 @@
             <table class="display" id="dataTableIssues" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        
+                        <th scope="col"></th>
                         <th scope="col">ID</th>
                         <th scope="col">Issue No</th>
                         <th scope="col">Days Count</th>
@@ -96,8 +98,8 @@
                         <th scope="col">Transfer</th>
                         <th scope="col">Contact Name</th>
                         <th scope="col">Phone Number</th>
-                        <th scope="col">Issue Description</th>
-                        <th scope="col">Issue Generator Steps</th>
+                        @*<th scope="col">Issue Description</th>
+                        <th scope="col">Issue Generator Steps</th>*@
                         <th scope="col">Status</th>
                         <th scope="col">Close Date</th>
                     </tr>
@@ -170,11 +172,31 @@
                 scrollX: true,
                 scrollY: 100,
             });
-            $('#dataTableIssues').DataTable({
+            function format(d) {
+                // `d` is the original data object for the row
+                return (
+                    '<dl>' +
+                    '<dt>Issue Descrption:</dt>' +
+                    '<dd>' +
+                    d.issueDescription +
+                    '</dd>' +
+                    '<dt>Issue Generation Steps:</dt>' +
+                    '<dd>' +
+                    d.issueGeneratorSteps +
+                    '</dl>'
+                );
+            }
+            var dataTable = $('#dataTableIssues').DataTable({
                 ajax: {
                     url: '/Company/GetIssues?id='+id,
                 },
                 columns: [
+                    {
+                        className: 'dt-control',
+                        orderable: false,
+                        data: null,
+                        defaultContent: '',
+                    },
                     { data: 'id' },
                     { data: 'issueNo' },
                     { data: 'count' },
@@ -183,12 +205,27 @@
                     { data: 'trasferName' },
                     { data: 'contactName' },
                     { data: 'phoneNumber' },
-                    { data: 'issueDescription' },
-                    { data: 'issueGeneratorSteps' },
+                    //{ data: 'issueDescription' },
+                    //{ data: 'issueGeneratorSteps' },
                     { data: 'status' },
                     { data: 'closeBy' },
                     
                 ],
+                scrollX: true,
+                scrollY: 200,
+            });
+            dataTable.on('click', 'td.dt-control', function (e) {
+                let tr = e.target.closest('tr');
+                let row = dataTable.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                }
+                else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                }
             });
         });
         

@@ -250,7 +250,6 @@ namespace Web_Application.Controllers
         }
       
        
-
         [HttpPost]
         public IActionResult Assign(IssueVM vm)
         {
@@ -261,7 +260,6 @@ namespace Web_Application.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-
             };
             return RedirectToAction("Index");
         }

@@ -61,8 +61,6 @@
                             <td>@data.Country</td>
                             <td>@data.ValidFrom.ToShortDateString()</td>
                             <td>@data.ValidTo.ToShortDateString()</td>
-                            
-
                         </tr>
 
 
@@ -79,7 +77,8 @@
         $(document).ready(function () {
             $('#dataTable').DataTable({
                 scrollX: true,
-                scrollY: 200,
+                paging:false,
+                scrollY: 300,
                 fixedColumns: {
                     leftColumns: 1,
                 }

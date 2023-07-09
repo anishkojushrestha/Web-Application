@@ -48,7 +48,7 @@
                 $("#txtTo").val("");
             }else{
                 $.ajax({
-                    url:"/Issue/GetReportDate?DateType="+date,
+                url: "/Issue/GetReportDate?DateType=" + date,
                     type:"Post",
                     success:function(data){
                         $("#txtFrom").val(data[0]);

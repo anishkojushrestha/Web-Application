@@ -74,7 +74,7 @@ namespace Web_Application.Models
         {
             connection();
             ContactPersonVM c = new ContactPersonVM();
-            SqlCommand cmd = new SqlCommand("select email from ContactPerson where ContactId = " + id, con);
+            SqlCommand cmd = new SqlCommand("select email,Designation from ContactPerson where ContactId = " + id, con);
             SqlDataAdapter ad = new SqlDataAdapter(cmd);
             DataTable dataTable = new DataTable();
             con.Open();
@@ -83,6 +83,7 @@ namespace Web_Application.Models
             foreach (DataRow dr in dataTable.Rows)
             {
                 c.Email = Convert.ToString(dr["Email"]);
+                c.Designation = Convert.ToString(dr["Designation"]);
             }
             return c;
 
@@ -214,8 +215,8 @@ namespace Web_Application.Models
             if (i >= 1)
             {
                 EmailSetting em = new EmailSetting();
-                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.ContactEmail, "Issue Generated", "Ticket NO. "+vm.IssueNo+ "\n\nIssue Date: " + vm.CreatedDate.ToString("MM/dd/yyyy")+ " \n\n Client Name: " + vm.CompanyName+ " \n\nContact Person: "+vm.ContactName+"\n\n Designation: Accountant \n\nSupport Type:"+vm.SupportType+" \n\nIssue: Reinstall."));
-                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.AssignedEmail, "Issue Assigend", "Ticket NO. "+vm.IssueNo+ "\n\nIssue Date: " + vm.CreatedDate.ToString("MM/dd/yyyy")+ " \n\n Client Name: " + vm.CompanyName+ " \n\nContact Person: "+vm.ContactName+"\n\n Designation: Accountant \n\nSupport Type:"+vm.SupportType+" \n\nIssue: Reinstall."));
+                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.ContactEmail, "Issue Generated", "Ticket NO. "+vm.IssueNo+ "\n\nIssue Date: " + vm.CreatedDate.ToString("MM/dd/yyyy")+ " \n\n Client Name: " + vm.CompanyName+ " \n\nContact Person: "+vm.ContactName+"\n\n Designation: "+vm.Designation+" \n\nSupport Type:"+vm.SupportType+" \n\nIssue: Reinstall."));
+                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.AssignedEmail, "Issue Assigend", "Ticket NO. "+vm.IssueNo+ "\n\nIssue Date: " + vm.CreatedDate.ToString("MM/dd/yyyy")+ " \n\n Client Name: " + vm.CompanyName+ " \n\nContact Person: "+vm.ContactName+"\n\n Designation: "+vm.Designation+" \n\nSupport Type:"+vm.SupportType+" \n\nIssue: Reinstall."));
                 return true;
             }
             else
@@ -229,7 +230,7 @@ namespace Web_Application.Models
             SqlCommand cmd = new SqlCommand("select min(CreatedDate) as minimum from issue", con);
             SqlDataAdapter ad = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
-            con.Open() ;    
+            con.Open();    
             ad.Fill(dt);
             con.Close();
             foreach (DataRow dr in dt.Rows)
@@ -297,8 +298,8 @@ namespace Web_Application.Models
             if (i >= 1)
             {
                 EmailSetting em = new EmailSetting();
-                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.ContactEmail, "Issue Updated", "Ticket NO. " + vm.IssueNo + "\n\nIssue Date: " + vm.CreatedDate.ToString("MM/dd/yyyy") + " \n\n Client Name: " + vm.CompanyName + " \n\nContact Person: " + vm.ContactName + "\n\n Designation: Accountant \n\nSupport Type:" + vm.SupportType + " \n\nIssue: Reinstall."));
-                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.AssignedEmail, "Issue Assigend", "Ticket NO. " + vm.IssueNo + "\n\nIssue Date: " + vm.CreatedDate.ToString("MM/dd/yyyy") + " \n\n Client Name: " + vm.CompanyName + " \n\nContact Person: " + vm.ContactName + "\n\n Designation: Accountant \n\nSupport Type:" + vm.SupportType + " \n\nIssue: Reinstall."));
+                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.ContactEmail, "Issue Updated", "Ticket NO. " + vm.IssueNo + "\n\nIssue Date: " + vm.CreatedDate.ToString("MM/dd/yyyy") + " \n\n Client Name: " + vm.CompanyName + " \n\nContact Person: " + vm.ContactName + "\n\n Designation: "+vm.Designation+" \n\nSupport Type:" + vm.SupportType + " \n\nIssue: Reinstall."));
+                Task.Factory.StartNew(() => em.SendEmail(GetEmail().First(), "", vm.AssignedEmail, "Issue Assigend", "Ticket NO. " + vm.IssueNo + "\n\nIssue Date: " + vm.CreatedDate.ToString("MM/dd/yyyy") + " \n\n Client Name: " + vm.CompanyName + " \n\nContact Person: " + vm.ContactName + "\n\n Designation: "+vm.Designation+" \n\nSupport Type:" + vm.SupportType + " \n\nIssue: Reinstall."));
 
                 return true;
             }
