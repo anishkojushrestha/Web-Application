@@ -67,7 +67,6 @@ namespace Web_Application.Controllers
             List<string> files = new List<string>();
             if (file != null)
             {
-                
                 string uniqueFileName = "";
                 var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "files");
                 foreach (var data in file)

@@ -118,7 +118,6 @@ namespace Web_Application.Models
                 registerList.Add(
                     new UpdateRegisterVM
                     {
-
                         Id = Convert.ToInt32(dr["UserId"]),
                         CompanyId = string.IsNullOrEmpty(dr["CompanyId"].ToString())? null : Convert.ToInt32(dr["CompanyId"]),
                         FirstName = Convert.ToString(dr["FirstName"]),
@@ -174,8 +173,6 @@ namespace Web_Application.Models
             else
                 return false;
         }
-
-        
 
         public void SeedData()
         {

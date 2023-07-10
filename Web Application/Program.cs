@@ -6,7 +6,6 @@ using System.Data.SqlClient;
 using System.Drawing;
 using Web_Application.Models;
 using Web_Application.ModelViews;
-using static Web_Application.ModelViews.AppSetting;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.

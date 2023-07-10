@@ -52,17 +52,9 @@ CloseDate Date,
 CompanyId bigint foreign key references CompanyInfo(CompanyId),
 ContactId bigint foreign key references ContactPerson(ContactId),
 SupportId bigint foreign key references users(UserId),
-TransferId bignit foreign key references users(userId)
+TransferId bigint foreign key references users(userId)
 )
 
-
-Create TABLE Attachments(
-AttachmentId bigint NOT NULL primary key,
-AttachmentName varchar(200),
-
-IssueId bigint foreign key references Issue(IssueId),
-DemoId bigint foreign key references Demo(DemoId)
-)
 
 Create Table EmailSetting(
 EmailId varchar(50),
@@ -89,13 +81,20 @@ TotalUser int,
 NoOfBranch int,
 NoOfCompany int,
 SaleStage varchar(50),
-MarketBy varchar(50),
+MarketedBy varchar(50),
 ImplementedBy varchar(50),
-FollowUpDate varchar(50),
+FollowUpDate date,
 ClientFeedBack varchar(50),
 CompanyId bigint foreign key references CompanyInfo(CompanyId)
 )
 
+Create TABLE Attachments(
+AttachmentId bigint NOT NULL primary key,
+AttachmentName varchar(200),
+
+IssueId bigint foreign key references Issue(IssueId),
+DemoId bigint foreign key references Demo(DemoId)
+)
 
 
 

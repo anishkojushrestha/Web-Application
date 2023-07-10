@@ -282,7 +282,7 @@
                     var cols="";
                     for (var i = 0; i < data.length; i++) {
                       if(cid==data[i].id){
-                            cols = cols + "<option value='" + data[i].id + "'   selected>" + data[i].contactName + "</option>";
+                            cols = cols + "<option value='" + data[i].id + "'  data-name='" + data[i].contactName + "' selected>" + data[i].contactName + "</option>";
                       }else{
                             cols = cols + "<option  value='" + data[i].id + "' data-name='"+ data[i].contactName+"'>" + data[i].contactName + "</option>";
                       } 
@@ -291,6 +291,20 @@
                     $('#selCon').append(cols);
                     $("#selCon").val(cid);
                     $("#txtcid").val('');
+
+                    if ($('#selCon') != null) {
+                        var id = $('#selCon').val();
+                        var cname = $('#selCon option').attr("data-name");
+                        $("#textContact").val(cname);
+                        $.ajax({
+                            url: "/Issue/GetEmail?id=" + id,
+                            type: "post",
+                            success: function (data) {
+                                var email = $('#hConEm ').val(data.email);
+                                var designation = $('#txtDes ').val(data.designation);
+                            }
+                        });
+                    }
                 }
             });
         }
@@ -324,6 +338,7 @@
         //    })
         //});
     });
+    
     $('#selCon').on("change", function(){
         var id= $(this).val();
         var cname = $('#selCon option').attr("data-name");

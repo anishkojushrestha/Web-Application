@@ -21,7 +21,7 @@ namespace Web_Application.Models
         {
             connection();
             List<DemoMV> list =new List<DemoMV>();
-            SqlCommand cmd = new SqlCommand("select d.DemoId,d.QuatationPrice,d.SoftwareType,d.TotalUser,d.NoOfBranch,d.NoOfCompany,d.SaleStage,d.ClientFeedBack,MarketedBy,d.implementedBy,FORMAT(d.FollowUpDate, 'yyyy-MM-dd') as FollowUpDate,c.CompanyId, c.CompanyName from Demo d join CompanyInfo c on c.CompanyId = d.CompanyId", con);
+            SqlCommand cmd = new SqlCommand("select d.DemoId,d.QuatationPrice,d.SoftwareType,d.TotalUser,d.NoOfBranch,d.NoOfCompany,d.SaleStage,d.ClientFeedBack,d.MarketedBy,d.implementedBy,FORMAT(d.FollowUpDate, 'yyyy-MM-dd') as FollowUpDate,c.CompanyId, c.CompanyName from Demo d join CompanyInfo c on c.CompanyId = d.CompanyId", con);
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             DataTable st = new DataTable();
             con.Open();
