@@ -5,7 +5,7 @@
         public int? Id { get; set; }
         public string? Client { get; set; }
         public string OpenDate { get; set; }
-        public int AMCAmount { get; set; }
+        public long AMCAmount { get; set; }
         public string? FollowUpDate { get; set; }
         public string? CloseDate { get; set; }
         public int? CompanyId { get; set; }

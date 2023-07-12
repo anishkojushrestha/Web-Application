@@ -158,13 +158,13 @@
                             
                             <div class="rw">
                                 <input asp-for="CompanyName" id="textCompanyName" hidden />
-                                <label class="form-label">Client Name:</label>
+                                <label class="form-label" style="display:flex">Client Name:<h5 style="color:red">*</h5></label>
                                 <select asp-for="CompanyId" asp-items="ViewBag.Company" id="selComp" class="form-select" style="height: 30px;font-size: 87%; width:100%" required>
                                     <option selected disabled>select</option>
                                 </select>
                             </div>
                             <div class="rw">
-                                <label class="form-label">Support Type:</label>
+                                <label class="form-label" style="display:flex">Support Type:<h5 style="color:red">*</h5></label>
                                 <select class="form-select" asp-for="SupportType" style="height: 30px;font-size: 87%; width:100%" required>
                                     <option selected disabled>select</option>
                                     <option>On Site</option>
@@ -178,7 +178,7 @@
                         </div>
                         <div class="row pb-2">
                             <div class="rw">
-                                <label class="form-label">Status:</label>
+                                <label class="form-label" style="display:flex">Status:<h5 style="color:red">*</h5></label>
                                 <select type="text" asp-for="Status" style="height: 30px;font-size: 87%;" class="form-select" required>
                                     <option selected disabled>Select Status</option>
                                     <option>Open</option>
@@ -187,7 +187,7 @@
                             </div>
                             <div class="rw">
                                 <input id="textContact" asp-for="ContactName" hidden />
-                                <label class="form-label">Contact Person:</label>
+                                <label class="form-label" style="display:flex">Contact Person:<h5 style="color:red">*</h5></label>
                                 <select type="text" asp-for="ContactId" id="selCon" style="height: 30px;font-size: 87%;" class="form-select" required>
                                    
                                 </select>
@@ -196,7 +196,7 @@
                             </div>
                             <div class="rw">
                                 <input type="text" asp-for="AssignedEmail" id="textAssigendEmail" hidden />
-                                <label class="form-label">Support Office:</label>
+                                <label class="form-label" style="display:flex">Support Office:<h5 style="color:red">*</h5></label>
                                 <select type="text" asp-for="AssignTo" id="selAssign" asp-items="ViewBag.Support" style="height: 30px;font-size: 87%;" class="form-select" required>
                                     <option disabled selected>Select Support</option>
                                 </select>
@@ -210,11 +210,11 @@
                                 </select>
                             </div>
                             <div class="rw">
-                                <label class="form-label">Issue Descriptions:</label>
+                                <label class="form-label" style="display:flex">Issue Descriptions:<h5 style="color:red">*</h5></label>
                                 <textarea type="text" class="form-control" style="height: 63px;font-size: 87%;" asp-for="IssueDescription" required></textarea>
                             </div>
                             <div class="rw">
-                                <label class="form-label">Issue Generation Steps:</label>
+                                <label class="form-label" style="display:flex">Issue Generation Steps:<h5 style="color:red">*</h5></label>
                                 <textarea type="text" asp-for="IssueGeneratorSteps" style="height: 63px;font-size: 87%;" class="form-control" required></textarea>
                             </div>
                         </div>
@@ -324,7 +324,6 @@
                 success:function(data){
                     $("#textAssigendEmail").val(data);
                 }
-
             })
         });
         //$("#selTransfer").on("change", function () {

@@ -65,7 +65,7 @@ namespace Web_Application.Models
             con.Close();
             foreach(DataRow dr in dataTable.Rows)
             {
-                ticket = Convert.ToInt32(dr["ticket"]);
+                ticket = string.IsNullOrEmpty(dr["ticket"].ToString()) ? 0 : Convert.ToInt32(dr["ticket"]);
             }
             return ticket;
         }
@@ -170,7 +170,7 @@ namespace Web_Application.Models
                         Id = Convert.ToInt32(dr["ContactId"]),
                         ContactName = Convert.ToString(dr["ContactName"]),
                         Email = Convert.ToString(dr["Email"]),
-                        CompanyName = Convert.ToString(dr["CompanyName"]),
+                        CompanyName = Convert.ToString(dr["CompanyName"]),  
                     });
             }
             return list;
@@ -629,9 +629,7 @@ namespace Web_Application.Models
                     {
                       Id = Convert.ToInt32(dr["CompanyId"]),
                       CompanyName = Convert.ToString(dr["CompanyName"]),
-            });
-
-                
+            });  
             }
             return com;
         }

@@ -66,16 +66,16 @@
                         </li>
                     </ul>
                 </div>
-                <form asp-action="AddCompany" asp-controller="Company">
+                <form id="form" asp-action="AddCompany" asp-controller="Company">
                     @Html.AntiForgeryToken()
                     <input asp-for="Id" id="txtComId" hidden />
                     <div class="card-body">
                         <div class="tab-content" id="custom-tabs-three-tabContent">
                             <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
                                 <div class="col" style="margin-left: 10px; ">
-                                    <div class="row pb-1">
+                                    <div class="input-group row pb-1">
                                         <div>
-                                            <label class="form-label">Company Name:</label>
+                                            <label class="form-label" style="display:flex">Company Name:<h5 style="color:red">*</h5></label>
                                             
                                             <input type="text" asp-for="CompanyName" class="form-control" style="height:33px" required>
                                         </div>
@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="row pb-1">
                                         <div>
-                                            <label class="form-label">Category:</label>
+                                            <label class="form-label" style="display:flex">Category:<h5 style="color:red">*</h5></label>
                                             <select type="text" asp-for="Category" class="form-select" style="height:33px; font-size: 96%;" required>
                                                 <option disabled selected>Select Category</option>
                                                 <option >Registration</option>
@@ -98,28 +98,28 @@
                                     </div>
                                     <div class="row pb-1">
                                         <div class="rw">
-                                            <label class="form-label">Registration Date:</label>
+                                            <label class="form-label" style="display:flex">Registration Date:<h5 style="color:red">*</h5></label>
                                             <input type="date" asp-for="RegistrationDate" id="dateRegistration" class="form-control" style="height:33px" required>
                                         </div>
                                         <div class="rw">
                                             <label class="form-label">Email:</label>
-                                            <input type="email" asp-for="Email" class="form-control" style="height:33px" required>
+                                            <input type="email" asp-for="Email" class="form-control" style="height:33px" >
                                         </div>
                                     </div>
                                     <div class="row pb-1">
                                         <div class="rw">
-                                            <label class="form-label">Address:</label>
+                                            <label class="form-label" style="display:flex">Address:<h5 style="color:red">*</h5></label>
                                             <input type="text" asp-for="Address" class="form-control" style="height:33px" required>
                                         </div>
                                         <div class="rw">
-                                            <label class="form-label">Pan No.</label>
-                                            <input type="text" asp-for="PanNumber" class="form-control num" style="height:33px" required>
+                                            <label class="form-label" >Pan No.</label>
+                                            <input type="text" asp-for="PanNumber" class="form-control num" style="height:33px">
                                         </div>
                                     </div>
                                     <div class="row pb-1">
                                         
                                         <div class="rw" id="divDistrict">
-                                            <label class="form-label">District:</label>
+                                            <label class="form-label" style="display:flex">District:<h5 style="color:red">*</h5></label>
                                             
                                             <select type="text" asp-for="District" id="selDistrict" class="form-select" style="height:33px" required>
                                                 <option disabled selected>Select District</option>
@@ -203,7 +203,7 @@
                                             </select>
                                         </div>
                                         <div class="rw">
-                                            <label class="form-label">Country:</label>
+                                            <label class="form-label" style="display:flex">Country:<h5 style="color:red">*</h5></label>
                                             <select type="text" asp-for="Country" class="form-select" id="selCountry" style="height:33px" required>
                                                 <option disabled selected>Select Country</option>
                                                 <option>Nepal</option>
@@ -214,11 +214,11 @@
                                     </div>
                                     <div class="row pb-1">
                                         <div class="rw">
-                                            <label class="form-label">Valid From:</label>
+                                            <label class="form-label" style="display:flex">Valid From:<h5 style="color:red">*</h5></label>
                                             <input type="date" asp-for="ValidFrom" id="dateValidFrom" class="form-control" style="height:33px" required>
                                         </div>
                                         <div class="rw">
-                                            <label class="form-label">Valid To:</label>
+                                            <label class="form-label" style="display:flex">Valid To:<h5 style="color:red">*</h5></label>
                                             <input type="date" asp-for="ValidTo" id="dateValidTo" class="form-control" style="height:33px" required>
                                         </div>
                                     </div>
@@ -229,38 +229,38 @@
                                     <div class="row pb-1">
                                         <div class="rws">
 
-                                            <label class="form-label">Contact Name:</label>
+                                            <label class="form-label" style="display:flex">Contact Name:<h5 style="color:red">*</h5></label>
                                             <input type="text" id="contact" name="contactName" style="height:33px" class="form-control">
                                         </div>
                                         <div class="rws">
-                                            <label class="form-label">Gender:</label>
+                                            <label class="form-label" style="display:flex">Gender:<h5 style="color:red">*</h5></label>
                                             <select class="form-select" id="gender" name="gender" style="height:33px">
                                                 <option>Male</option>
                                                 <option>Female</option>
                                             </select>
                                         </div>
                                         <div class="rws">
-                                            <label class="form-label">Address:</label>
+                                            <label class="form-label" style="display:flex">Address:<h5 style="color:red">*</h5></label>
                                             <input type="text" name="address" id="address" class="form-control" style="height:33px">
                                         </div>
                                     </div>
                                     <div class="row pb-1">
                                         <div class="rws">
-                                            <label class="form-label">Phone Number:</label>
+                                            <label class="form-label" >Phone Number:</label>
                                             <input type="text" name="phoneNumber" id="phone" class="form-control num" style="height:33px">
                                         </div>
                                         <div class="rws">
-                                            <label class="form-label">Mobile Number:</label>
+                                            <label class="form-label" style="display:flex">Mobile Number:<h5 style="color:red">*</h5></label>
                                             <input type="text" name="mobileNumber" id="mobile" class="form-control num" style="height:33px">
                                         </div>
                                         <div class="rws">
-                                            <label class="form-label">Email:</label>
+                                            <label class="form-label" style="display:flex">Email:<h5 style="color:red">*</h5></label>
                                             <input type="email" class="form-control" id="email" style="height:33px" />
                                         </div>
                                     </div>
                                     <div class="row pb-3">
                                         <div class="rws">
-                                            <label class="form-label">Desigation:</label>
+                                            <label class="form-label" style="display:flex">Desigation:<h5 style="color:red">*</h5></label>
                                             <select class="form-select" id="designation" name="designation" style="height:33px; font-size: 96%;">
                                                 <option disabled selected>Select Designation</option>
                                                 <option>Sr. Accountant</option>
@@ -277,10 +277,11 @@
                                     <input type="text" asp-for="MobileNumber" class="form-control" required>
                                     </div>*@
                                 </div>
-
+                                
                                 <button type="button" class="btn btn-primary" id="add" style="margin-left:90%; margin-top: 2px; height:30px; font-size:13px; ">Add</button>
 
-
+                                <div id="addmsg">
+                                </div>
                                
                                 @if (Model != null)
                                 {
@@ -508,8 +509,21 @@
             rowCount--;
         });
     });
+    
+        $("#form").submit(function (event) {
+        if ($("#tbldatatabletbody tr").length == 0) {
+            $("#addmsg").append('<div class="alert alert-danger p-1" role="alert">Add Contact Data </div>');
+            setTimeout(function () {
+                $(".alert").remove();
+            }, 1000);
 
+            /*event.preventDefault();*/ // Prevent form submission
 
+            // Form validation logic
+
+            return false;
+        }// Prevent form submission
+        });
 
     $(document).on("click", '.btnEdit', function () {
         $("#contact").val('');

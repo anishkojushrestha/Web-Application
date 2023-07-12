@@ -195,7 +195,7 @@
                                 <div class="col" style="margin-left: 10px; ">
                                     <div class="row pb-0">
                                         <div>
-                                            <label class="form-label">Company Name:</label>
+                                            <label class="form-label" style="display:flex">Company Name:<h5 style="color:red">*</h5></label>
                                             @if (Model != null)
                                             {
                                                 if(Model.Id != null)
@@ -374,21 +374,21 @@
 
                                     <div class="row pb-1">
                                         <div class="rws">
-                                            <label class="form-label">Client:</label>
+                                            <label class="form-label" style="display:flex;">Client:<h5 style="color:red">*</h5></label>
                                             <input type="text" asp-for="Client" class="form-control" style="height:33px" required/>
                                         </div>
                                         <div class="rws">
-                                            <label class="form-label">Open Date:</label>
+                                            <label class="form-label" style="display:flex;">Open Date:<h5 style="color:red">*</h5></label>
                                             <input type="date" asp-for="OpenDate" class="form-control" style="height:33px" required />
                                         </div>
                                         <div class="rws">
-                                            <label class="form-label">AMC Amount:</label>
+                                            <label class="form-label" style="display:flex;">AMC Amount:<h5 style="color:red">*</h5></label>
                                             <input type="text" asp-for="AMCAmount" class="form-control num" style="height:33px" required />
                                         </div>
                                     </div>
                                     <div class="row pb-3">
                                         <div class="rws">
-                                            <label class="form-label">Next Follow Up Date:</label>
+                                            <label class="form-label" style="display:flex;">Next Follow Up Date:<h5 style="color:red">*</h5></label>
                                             <input type="date" asp-for="FollowUpDate" class="form-control" style="height:33px" required/>
                                         </div>
                                         <div class="rws">

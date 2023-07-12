@@ -3,7 +3,7 @@
     public class DemoMV
     {
         public int? Id { get; set; }
-        public int? QuatationPrice { get; set; }
+        public long? QuatationPrice { get; set; }
         public string? SoftwareType { get; set; }
         public int? TotalUser { get; set; }
         public int? NoOfBranch { get; set; }

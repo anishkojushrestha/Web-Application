@@ -11,7 +11,7 @@ namespace Web_Application.Models
         private void connection()
         {
             IConfigurationBuilder builder = new ConfigurationBuilder();
-            builder.AddJsonFile("appsettings.json", optional: false);
+            builder.AddJsonFile("appsettings.json", optional: false); 
             IConfiguration configuration = builder.Build();
             string constring = configuration.GetValue<string>("ConnectionStrings:DefaultConnection");
             con = new SqlConnection(constring);
@@ -80,7 +80,6 @@ namespace Web_Application.Models
                 else
                 {
                     str.Append("insert into Demo(DemoId, QuatationPrice, SoftwareType, TotalUser, NoOfBranch, NoOfCompany, SaleStage, ClientFeedBack,MarketedBy, ImplementedBy, CompanyId) values(@did, " + vm.QuatationPrice + ",'" + vm.SoftwareType + "'," + vm.TotalUser + "," + vm.NoOfBranch + "," + vm.NoOfCompany + ",'" + vm.SaleStage + "','" + vm.FeedBack + "','" + vm.MarketedBy + "','" + vm.ImplementedBy + "'," + vm.CompanyId + ")\n");
-
                 }
             }
             foreach(var data in ac)

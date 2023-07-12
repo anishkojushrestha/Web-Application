@@ -29,12 +29,12 @@ namespace Web_Application.Models
             str.Append("declare @pid bigint\n");
             if (vm.Id != null)
             {
-                str.Append("UPDATE CompanyInfo SET CompanyName = '" + vm.CompanyName + "',Category='"+vm.Category+"', Address = '" + vm.Address + "',Email = '" + vm.Email + "',PanNumber = " + vm.PanNumber + ", District = '" + vm.District + "', Country = '" + vm.Country + "',RegistrationDate = '" + registerDate + "', ValidFrom = '" + validFrom + "', ValidTo = '" + validTo + "' WHERE CompanyId = " + vm.Id + "\n");
+                str.Append("UPDATE CompanyInfo SET CompanyName = '" + vm.CompanyName + "',Category='"+vm.Category+"', Address = '" + vm.Address + "',Email = '" + vm.Email + "',PanNumber = '" + vm.PanNumber + "', District = '" + vm.District + "', Country = '" + vm.Country + "',RegistrationDate = '" + registerDate + "', ValidFrom = '" + validFrom + "', ValidTo = '" + validTo + "' WHERE CompanyId = " + vm.Id + "\n");
                 foreach (var data in vm.contactPersonVM)
                 {
                     if (data.Id != 0)
                     {
-                        str.Append(" update contactperson set ContactName = '" + data.ContactName + "',Gender = '" + data.Gender + "', Address = '" + data.Address + "', Email = '"+data.Email+"', PhoneNumber = " + data.phoneNumber + ", MobileNumber = " + data.MobileNumber + ", designation = '" + data.Designation + "' where ContactId =" + data.Id + "  \n");
+                        str.Append(" update contactperson set ContactName = '" + data.ContactName + "',Gender = '" + data.Gender + "', Address = '" + data.Address + "', Email = '"+data.Email+"', PhoneNumber = '" + data.phoneNumber + "', MobileNumber = '" + data.MobileNumber + "', designation = '" + data.Designation + "' where ContactId =" + data.Id + "  \n");
                         
                     }
                     else
@@ -47,14 +47,17 @@ namespace Web_Application.Models
             }
             else
             {
-                str.Append(" INSERT INTO CompanyInfo(CompanyId,CompanyName,Category, Email, PanNumber, Address, District ,Country, RegistrationDate, ValidFrom, ValidTo ) VALUES(@cid,'" + vm.CompanyName + "','"+vm.Category+"','" + vm.Email + "'," + vm.PanNumber + ",'" + vm.Address + "','" + vm.District + "','" + vm.Country + "','" + registerDate + "','" + validFrom + "','" + validTo + "') \n");
+                
+                    str.Append(" INSERT INTO CompanyInfo(CompanyId,CompanyName,Category, Email, PanNumber, Address, District ,Country, RegistrationDate, ValidFrom, ValidTo ) VALUES(@cid,'" + vm.CompanyName + "','" + vm.Category + "','" + vm.Email + "','" + vm.PanNumber + "','" + vm.Address + "','" + vm.District + "','" + vm.Country + "','" + registerDate + "','" + validFrom + "','" + validTo + "') \n");
+
+                
                 foreach (var data in vm.contactPersonVM)
                 {
 
                     str.Append("set @pid = (select isnull(max(ContactId),0)+1 from ContactPerson)\n");
-
-                    str.Append("INSERT INTO ContactPerson(ContactId, ContactName, Gender,Address, Email, PhoneNumber, MobileNumber,Designation, CompanyId ) VALUES(@pid, '" + data.ContactName + "','" + data.Gender + "','" + data.Address + "','" + data.Email + "'," + data.phoneNumber + "," + data.MobileNumber + ",'" + data.Designation + "',@cid) \n");
-
+                    
+                        str.Append("INSERT INTO ContactPerson(ContactId, ContactName, Gender,Address, Email, PhoneNumber, MobileNumber,Designation, CompanyId ) VALUES(@pid, '" + data.ContactName + "','" + data.Gender + "','" + data.Address + "','" + data.Email + "','" + data.phoneNumber + "','" + data.MobileNumber + "','" + data.Designation + "',@cid) \n");
+                    
                 }
             }
        
@@ -88,7 +91,7 @@ namespace Web_Application.Models
                     customerList.Category = Convert.ToString(dr["Category"]);
                     customerList.Address = Convert.ToString(dr["CompanyAddress"]);
                     customerList.Email = Convert.ToString(dr["CompanyEmail"]);
-                    customerList.PanNumber = Convert.ToInt32(dr["PanNumber"]);
+                    customerList.PanNumber = Convert.ToString(dr["PanNumber"]);
                     customerList.District = Convert.ToString(dr["District"]);
                     customerList.Country = Convert.ToString(dr["Country"]);
                     customerList.RDate = Convert.ToString(dr["RegistrationDate"]);
@@ -102,14 +105,11 @@ namespace Web_Application.Models
                     ContactName = Convert.ToString(dr["ContactName"]),
                     Gender = Convert.ToString(dr["Gender"]),
                     Address = Convert.ToString(dr["Address"]),
-                    phoneNumber = Convert.ToInt32(dr["phoneNumber"]),
-                    MobileNumber = Convert.ToInt32(dr["MobileNumber"]),
+                    phoneNumber = Convert.ToString(dr["phoneNumber"]),
+                    MobileNumber = Convert.ToString(dr["MobileNumber"]),
                     Designation = Convert.ToString(dr["Designation"]),
                     Email = Convert.ToString(dr["Email"]),
                 });
-                    
-                
-                
             }
             return customerList;
         }
@@ -133,7 +133,7 @@ namespace Web_Application.Models
                         Category = Convert.ToString(dr["Category"]),
                         Address = Convert.ToString(dr["Address"]),
                         Email = Convert.ToString(dr["Email"]),
-                        PanNumber = Convert.ToInt32(dr["PanNumber"]),
+                        PanNumber =Convert.ToString(dr["PanNumber"]),
                         //Date = Convert.ToDateTime(dr["Date"]),
                         District = Convert.ToString(dr["District"]),
                         Country = Convert.ToString(dr["Country"]),
@@ -159,14 +159,13 @@ namespace Web_Application.Models
             {
                 contactList.Add(
                     new ContactPersonVM
-                    {
-
+                    { 
                         Id = Convert.ToInt32(dr["ContactId"]),
                         ContactName = Convert.ToString(dr["ContactName"]),
                         Address = Convert.ToString(dr["Address"]),
                         Email = Convert.ToString(dr["Email"]),
-                        phoneNumber = Convert.ToInt32(dr["PhoneNumber"]),
-                        MobileNumber = Convert.ToInt32(dr["MobileNumber"]),
+                        phoneNumber =  Convert.ToString(dr["PhoneNumber"]),
+                        MobileNumber = Convert.ToString(dr["MobileNumber"]),
                         Gender = Convert.ToString(dr["Gender"]),
                         Designation = Convert.ToString(dr["Designation"]),
                         CompanyId = Convert.ToInt32(dr["CompanyId"] ),
@@ -199,7 +198,7 @@ namespace Web_Application.Models
 
             CompanyMV cv=new CompanyMV ();
             cv.contactPersonVM = new List<ContactPersonVM>();
-            string sql = @"select * from companyinfo c join contactperson p on c.companyid = p.companyid where 1=1";
+            string sql = @"select c.CompanyId,c.CompanyName,c.Category,c.Address,c.Email as CompanyEmail, c.PanNumber,c.District,c.Country,c.RegistrationDate,c.ValidFrom,c.ValidTo,p.ContactId,p.ContactName,p.Gender,p.Address as ContactAddress,p.Email as ContactEmail,p.PhoneNumber,p.MobileNumber,p.Designation  from companyinfo c join contactperson p on c.companyid = p.companyid where 1=1 ";
             if (!string.IsNullOrEmpty(id))
             {
                 sql+= " and c.companyId='"+id+"'\n";
@@ -224,8 +223,8 @@ namespace Web_Application.Models
                     cv.CompanyName = Convert.ToString(dr["CompanyName"]);
                     cv.Category = Convert.ToString(dr["Category"]);
                     cv.Address = Convert.ToString(dr["Address"]);
-                    cv.Email = Convert.ToString(dr["Email"]);
-                    cv.PanNumber = Convert.ToInt32(dr["PanNumber"]);
+                    cv.Email = Convert.ToString(dr["CompanyEmail"]);
+                    cv.PanNumber = Convert.ToString(dr["PanNumber"]);
                     cv.District = Convert.ToString(dr["District"]);
                     cv.Country = Convert.ToString(dr["Country"]);
                     cv.RegistrationDate = Convert.ToDateTime(dr["RegistrationDate"]);
@@ -236,10 +235,10 @@ namespace Web_Application.Models
                 {
                     Id= Convert.ToInt32(dr["ContactId"]),
                     ContactName = Convert.ToString(dr["ContactName"]),
-                    Address = Convert.ToString(dr["Address"]),
-                    Email = Convert.ToString(dr["Email"]),
-                    phoneNumber = Convert.ToInt32(dr["PhoneNumber"]),
-                    MobileNumber = Convert.ToInt32(dr["MobileNumber"]),
+                    Address = Convert.ToString(dr["ContactAddress"]),
+                    Email = Convert.ToString(dr["ContactEmail"]),
+                    phoneNumber = Convert.ToString(dr["PhoneNumber"]),
+                    MobileNumber = Convert.ToString(dr["MobileNumber"]),
                     Gender = Convert.ToString(dr["Gender"]),
                     Designation = Convert.ToString(dr["Designation"]),
 

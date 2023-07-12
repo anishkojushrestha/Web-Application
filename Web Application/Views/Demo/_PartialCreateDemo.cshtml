@@ -196,7 +196,7 @@
                                 <div class="col" style="margin-left: 10px; ">
                                     <div class="row pb-0">
                                         <div>
-                                            <label class="form-label">Company Name:</label>
+                                            <label class="form-label" style="display:flex">Company Name:<h5 style="color:red">*</h5></label>
                                             @if (Model == null)
                                             {
                                                 <select type="text" asp-for="CompanyId" id="selCompany" asp-items="ViewBag.Company" class="form-control" style="height:33px" required>
@@ -376,11 +376,11 @@
                                    
                                     <div class="row pb-1">
                                         <div class="rws">
-                                            <label class="form-label">Quotation price:</label>
+                                            <label class="form-label" style="display:flex">Quotation price:<h5 style="color:red">*</h5></label>
                                             <input type="text" asp-for="QuatationPrice"  class="form-control num" style="height:33px" required/>
                                         </div>
                                         <div class="rws">
-                                            <label class="form-label">Software Type:</label>
+                                            <label class="form-label" style="display:flex">Software Type:<h5 style="color:red">*</h5></label>
                                             <select type="text" asp-for="SoftwareType" class="form-select" style="height:33px;font-size: 90%;" required>
                                                 <option disabled selected>Select Software Type</option>
                                                 <option>OMS Software</option>
@@ -388,22 +388,22 @@
                                             </select>
                                         </div>
                                         <div class="rws">
-                                            <label class="form-label">Total User:</label>
+                                            <label class="form-label" style="display:flex">Total User:<h5 style="color:red">*</h5></label>
                                             <input type="text" asp-for="TotalUser" class="form-control num" style="height:33px" required/>
                                         </div>
                                     </div>
                                     <div class="row pb-1">
                                         
                                         <div class="rws">
-                                            <label class="form-label">No. Of Branches</label>
+                                            <label class="form-label" style="display:flex">No. Of Branches:<h5 style="color:red">*</h5></label>
                                             <input type="text" asp-for="NoOfBranch"  class="form-control num" style="height:33px" required/>
                                         </div>
                                         <div class="rws">
-                                            <label class="form-label">No. Of Company:</label>
+                                            <label class="form-label" style="display:flex">No. Of Company:<h5 style="color:red">*</h5></label>
                                             <input type="text" asp-for="NoOfCompany" class="form-control num" style="height:33px" required/>
                                         </div>
                                         <div class="rws">
-                                            <label class="form-label">Sale Stage:</label>
+                                            <label class="form-label" style="display:flex">Sale Stage:<h5 style="color:red">*</h5></label>
                                             <select type="text" asp-for="SaleStage" class="form-select" style="height:33px;font-size: 96%;" required>
                                                 <option disabled selected>Select Stages</option>
                                                 <option>Demo</option>
@@ -426,18 +426,18 @@
                                             <input type="text" asp-for="ImplementedBy" class="form-control " style="height:33px">
                                         </div>
                                         <div class="rws">
-                                            <label class="form-label">Follow Up Date:</label>
+                                            <label class="form-label" style="display:flex">Follow Up Date:<h5 style="color:red">*</h5></label>
                                             <input type="date" asp-for="FollowUpDate" class="form-control " style="height:33px">
 
                                         </div>
                                     </div>
                                     <div class="row pb-3">
                                         <div class="rw">
-                                            <label class="form-label">Client FeedBack:</label>
+                                            <label class="form-label" style="display:flex">Client FeedBack:<h5 style="color:red">*</h5></label>
                                             <textarea type="text" asp-for="FeedBack" class="form-control" style="height:60px"></textarea>
                                         </div>
                                         <div class="rw">
-                                            <label class="form-label">Attachment:</label>
+                                            <label class="form-label" >Attachment:</label>
                                             <input type="file" asp-for="Attechment" class="form-control" style="height:33px" multiple>
                                         </div>
                                     </div>

@@ -9,7 +9,8 @@
         public string? Category { get; set; }
         public string? Email { get; set; }
 
-        public int? PanNumber { get; set; }
+        public string? PanNumber { get; set; }
+        public string? Pan { get; set; }
 
         public string? Address { get; set; }
         //public string? City { get; set; }

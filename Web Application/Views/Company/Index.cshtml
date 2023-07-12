@@ -45,7 +45,7 @@
                                 {
                                     <a style="color:black" asp-action="Delete" asp-controller="Company" asp-route-id="@data.Id" onclick="return confirm('Are sure wants to delete?');"><i class="fa-solid fa-trash"></i></a>
                                 }
-                                <button style="padding: 0;border: none;background: none;" type="button" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action($"GetContact/{data.Id}")"><i class="fa-solid fa-eye"></i></button>
+                                <button style="padding: 0;border: none;background: none;" type="button" data-toggle="ajax-modal" class="btnbp" data-target="#addregister" data-url="@Url.Action($"GetContact/{data.Id}")"><i class="fa-solid fa-eye"></i></button>
                                 <a asp-action="Details" style="color:black" asp-controller="Company" asp-route-id="@data.Id" asp-route-name="@data.CompanyName"><i class="fa-solid fa-list"></i></a>
                                 @* @Html.ActionLink("Edit", "EditRegister", new { id = data.Id }) |
                             @Html.ActionLink("Delete", "Delete", new { id = data.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
