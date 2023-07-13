@@ -25,5 +25,6 @@ namespace Web_Application.ModelViews
         public bool IsActive { get; set; }
         public int? CompanyId { get; set; }
         public string? CompanyName { get; set; }
+        public string? NewPassword { get; set; }
     }
 }

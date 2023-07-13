@@ -29,6 +29,7 @@ namespace Web_Application.Models
 
         public string hasdPassword(string password)
         {
+            
             var sha = SHA256.Create();
             var asByteArray = Encoding.Default.GetBytes(password);
             var hashedPassword = sha.ComputeHash(asByteArray);
@@ -132,18 +133,34 @@ namespace Web_Application.Models
             }
             return registerList;
         }
-        public bool UpdateRegister(int Id, string FirstName, string LastName, string UserName, string Email, string Profile, int? CompanyId,bool IsActive)
+        public bool UpdateRegister(int Id, string FirstName, string LastName, string UserName, string Email, string Profile,string? NewPassword, int? CompanyId,bool IsActive)
         {
             connection();
             StringBuilder str = new StringBuilder();
+            var newpass = string.IsNullOrEmpty(NewPassword)?"": hasdPassword(NewPassword);
             if(CompanyId != null)
             {
-                str.Append("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '" + Profile + "', IsActive='"+ IsActive + "', CompanyId="+CompanyId+" WHERE UserId = " + Id +" \n");
+                if (NewPassword != null)
+                {
+                    str.Append("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '" + Profile + "', Password = '" + newpass + "', IsActive='" + IsActive + "', CompanyId=" + CompanyId + " WHERE UserId = " + Id + " \n");
+                }
+                else
+                {
+                    str.Append("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '" + Profile + "', IsActive='" + IsActive + "', CompanyId=" + CompanyId + " WHERE UserId = " + Id + " \n");
 
+                }
             }
             else
             {
-                str.Append("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '" + Profile + "', IsActive='" + IsActive + "' WHERE UserId = " + Id + " \n");
+                if (NewPassword != null)
+                {
+                    str.Append("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '" + Profile + "',Password = '" + newpass + "', IsActive='" + IsActive + "' WHERE UserId = " + Id + " \n");
+                }
+                else
+                {
+                    str.Append("Update users SET FirstName = '" + FirstName + "', LastName = '" + LastName + "', UserName = '" + UserName + "', Email = '" + Email + "',Profile = '" + Profile + "', IsActive='" + IsActive + "' WHERE UserId = " + Id + " \n");
+
+                }
             }
             SqlCommand cmd = new SqlCommand(str.ToString(), con);
             con.Open();

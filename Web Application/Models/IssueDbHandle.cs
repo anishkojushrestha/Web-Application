@@ -188,6 +188,7 @@ namespace Web_Application.Models
             str.Append("set @eid = (select isnull(max(IssueId), 0) + 1 from Issue) \n");
             str.Append("SELECT @Newno = @isno + RIGHT( CAST(@eid AS VARCHAR(7)), 7) \n");
             //str.Append("set @issupid = (select isnull(max(IssueSupportId), 0) + 1 from IssueSupport) \n");
+
             if (vm.TrasferTo != null)
             {
                 str.Append("insert into Issue(IssueId,IssueNo,SupportType, IssueDescription, IssueGeneratorSteps, CreatedDate, Status,CloseDate, CompanyId,  ContactId,SupportId, TransferId) VALUES(@eid,'" + vm.IssueNo + "','" + vm.SupportType + "','" + vm.IssueDescription + "','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "','" + vm.CloseBy + "'," + vm.CompanyId + "," + vm.ContactId + "," + vm.AssignTo + "," + vm.TrasferTo + ") \n");
@@ -407,14 +408,14 @@ namespace Web_Application.Models
             }
             
 
-            if (session.GetString("userProfile") == "OMSUser")
-            {
-                sb.Append(" and i.userid='" + session.GetString("userId") + "'\n");
-            }
-            else if (session.GetString("userProfile") == "Support")
-            {
-                sb.Append(" and i.Support='" + session.GetString("userId") + "'\n");
-            }
+            //if (session.GetString("userProfile") == "OMSUser")
+            //{
+            //    sb.Append(" and i.userid='" + session.GetString("userId") + "'\n");
+            //}
+            //else if (session.GetString("userProfile") == "Support")
+            //{
+            //    sb.Append(" and i.Support='" + session.GetString("userId") + "'\n");
+            //}
             //}
 
             SqlCommand cmd = new SqlCommand(sb.ToString(), con);
@@ -441,12 +442,12 @@ namespace Web_Application.Models
                         ContactName = Convert.ToString(dr["ContactName"]),
                         Support = Convert.ToString(dr["support"]),
                         AssignTo = Convert.ToInt32(dr["UserId"]),
-                        PhoneNumber = Convert.ToInt32(dr["PhoneNumber"]),
+                        PhoneNumber = Convert.ToString(dr["PhoneNumber"]),
                         //AssignedDate = Convert.ToString(dr["AssignedDate"]),
                         CompanyId = Convert.ToInt32(dr["CompanyId"]),
                         ContactId = Convert.ToInt32(dr["ContactId"]),
                         ContactEmail = Convert.ToString(dr["ContactEmail"]),
-                        TrasferTo = string.IsNullOrEmpty(dr["TransferId"].ToString()) ? null : Convert.ToInt32(dr["TransferId"].ToString()),
+                        TrasferTo = string.IsNullOrEmpty(dr["TransferId"].ToString()) ? null : Convert.ToInt32(dr["TransferId"]),
                         TrasferName = Convert.ToString(dr["TrasferName"]),
                         Count = Convert.ToInt32(dr["count"]),
                         SupportType = Convert.ToString(dr["SupportType"]),
@@ -498,7 +499,7 @@ namespace Web_Application.Models
                         ContactName = Convert.ToString(dr["ContactName"]),
                         Support = Convert.ToString(dr["support"]),
                         AssignTo = Convert.ToInt32(dr["UserId"]),
-                        PhoneNumber = Convert.ToInt32(dr["PhoneNumber"]),
+                        PhoneNumber = Convert.ToString(dr["PhoneNumber"]),
                         //AssignedDate = Convert.ToString(dr["AssignedDate"]),
                         CompanyId = Convert.ToInt32(dr["CompanyId"]),
                         ContactId = Convert.ToInt32(dr["ContactId"]),

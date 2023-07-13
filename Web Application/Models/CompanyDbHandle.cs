@@ -85,7 +85,6 @@ namespace Web_Application.Models
             foreach (DataRow dr in dt.Rows)
             {
                 if (i == 0) {
-
                     customerList.Id = Convert.ToInt32(dr["CompanyId"]);
                     customerList.CompanyName = Convert.ToString(dr["CompanyName"]);
                     customerList.Category = Convert.ToString(dr["Category"]);

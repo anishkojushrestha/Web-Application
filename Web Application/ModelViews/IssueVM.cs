@@ -26,7 +26,7 @@ namespace Web_Application.ModelViews
         public int? ContactId { get; set; }
         public string? ContactName { get; set; }
 
-        public int? PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
 
         public string? AssignedDate { get; set; }
 
