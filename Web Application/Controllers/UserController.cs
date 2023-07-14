@@ -56,8 +56,9 @@ namespace Web_Application.Controllers
         
         public IActionResult UserError(string username)
         {
-                UserDbHandle userDbHandle = new UserDbHandle();
+            UserDbHandle userDbHandle = new UserDbHandle();
             var result = userDbHandle.UserExist(username);
+
             return Json(result);
         }
 

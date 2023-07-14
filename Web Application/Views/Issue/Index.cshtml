@@ -16,7 +16,7 @@
 <div id="PlaceHolderHere">
 
 </div>
-<button class="btn btn-primary" data-toggle="ajax-modal" id="btnCreate" data-target="#addregister" data-url="@Url.Action("Issue")" style="width:100px;margin-left:90%; ">Create</button>
+<button class="btn btn-primary btnbp" data-toggle="ajax-modal" id="btnCreate" data-target="#addregister" data-url="@Url.Action("Issue")" style="width:100px;margin-left:90%; ">Create</button>
 <div class="input-group" style="margin-left:79%;margin-top:4px;">
     
 </div>
@@ -458,8 +458,8 @@ poupu
                         data: 'id',
                         render: (data) => {
                             return `
-                            <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Issue")" id="btnEdits_${data}"  ><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
-                            <button style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Attachment")" id="btnAttachment_${data}"><i class="fa-solid fa-paperclip"></i></button>
+                                            <button type="submit" style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp"   data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("updateIssue")" id="btnEdits_${data}"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
+                                    <button type="submit" style="padding: 0;border: none;background: none;" data-id="${data}" class="btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Attachment")" id="btnAttachment_${data}"><i class="fa-solid fa-paperclip"></i></button>
                           `
                             
                         },
@@ -515,17 +515,19 @@ poupu
             });
         });
 
-        $(document).on("click",".btnbp", function(){
-            var id = $(this).attr("data-id");
-            var PlaceHolderEleent = $('#PlaceHolderHere');
-            var url = $(this).data('url')+"?id="+id;
+        //$(document).on("click",".btnbp", function(){
+        //    var id = $(this).attr("data-id");
+        //    var placeholdereleent = $('#placeholderhere');
+        //    var url = $(this).data('url')+"?id="+id;
             
-                var decodedUrl = decodeURIComponent(url);
-                $.get(decodedUrl).done(function (data) {
-                    PlaceHolderEleent.html(data);
-                    PlaceHolderEleent.find('.modal').modal('show');
-                })
-        })
+        //        var decodedurl = decodeuricomponent(url);
+        //        $.get(decodedurl).done(function (data) {
+        //            placeholdereleent.html(data);
+        //            placeholdereleent.find('.modal').modal('show');
+                
+        //        })
+        //})
+
 
         $(document).ready(function () {
             $("#search").on("keyup", function () {
@@ -536,15 +538,24 @@ poupu
             });
         });
 
-        $(function () {
+        $(document).on("click",".btnbp",function () {
             var PlaceHolderEleent = $('#PlaceHolderHere');
-            $('button[data-toggle="ajax-modal"]').click(function (event) {
+            //$('.btnbp').click(function (event) {
+
                 var url = $(this).data('url');
-                var decodedUrl = decodeURIComponent(url);
+                var id = $(this).attr("data-id");
+                if(id != null){
+                var urls = url + "?id=" + id;
+                }else{
+
+                    var urls = url;
+
+                }
+                var decodedUrl = decodeURIComponent(urls);
                 $.get(decodedUrl).done(function (data) {
                     PlaceHolderEleent.html(data);
                     PlaceHolderEleent.find('.modal').modal('show');
-                })
+                //})
             })
             PlaceHolderEleent.on('click', '[data-save="modal"]', function (event) {
                 //var form =$(this).parents('.modal').find('form');

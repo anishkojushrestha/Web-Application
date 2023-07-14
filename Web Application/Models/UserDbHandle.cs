@@ -29,7 +29,6 @@ namespace Web_Application.Models
 
         public string hasdPassword(string password)
         {
-            
             var sha = SHA256.Create();
             var asByteArray = Encoding.Default.GetBytes(password);
             var hashedPassword = sha.ComputeHash(asByteArray);
@@ -42,12 +41,12 @@ namespace Web_Application.Models
             StringBuilder str = new StringBuilder();
             str.Append(" declare @uid bigint \n");
             str.Append(" set @uid = (select isnull(max(userid), 0) + 1 from users) \n");
-            if(vm.CompanyId == null)
+            if (vm.CompanyId == null)
             {
                 str.Append(" INSERT into users(UserId, FirstName, LastName, UserName, Email, Password, Profile, IsActive) VALUES(@uid,'" + vm.FirstName + "','" + vm.LastName + "', '" + vm.UserName + "','" + vm.Email + "','" + pass + "','" + vm.Profile + "','" + vm.IsActive + "')\n");
 
             }
-            else{
+            else {
                 str.Append(" INSERT into users(UserId, FirstName, LastName, UserName, Email, Password, Profile, IsActive,CompanyId) VALUES(@uid,'" + vm.FirstName + "','" + vm.LastName + "', '" + vm.UserName + "','" + vm.Email + "','" + pass + "','" + vm.Profile + "','" + vm.IsActive + "'," + vm.CompanyId + ")\n");
 
             }
@@ -61,8 +60,41 @@ namespace Web_Application.Models
             else
                 return false;
         }
+        public string UserEror(string username)
+        {
+            //establish the database connection
+            connection();
 
-        public bool UserExist(string username)
+            //create sql cmd
+            StringBuilder sb = new StringBuilder();
+            sb.Append(" declare @username nvarchar(50)\n");
+            sb.Append(" set @username='" + username + "'\n");
+            sb.Append(" if(exists(select * from users where username=@username)) begin\n");
+            sb.Append(" select username from users where username=@username\n");
+            sb.Append(" end\n");
+            sb.Append(" else \n");
+            sb.Append(" begin\n");
+            sb.Append(" select 'notfound'\n");
+            sb.Append(" end\n");
+
+            SqlCommand cmd = new SqlCommand("SELECT UserName FROM users WHERE UserName = '" + username + "'", con);
+            string user = "";
+            //create object and pass sql command
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            //create database table to hold data
+            DataTable dt = new DataTable();
+            con.Open();
+            //fills datatable and with data retrieved by executing the sql cmd 
+            sd.Fill(dt);
+            con.Close();
+            foreach (DataRow dr in dt.Rows)
+            {
+                user = Convert.ToString(dr["UserName"]);
+            }
+            return user;
+        }
+    
+            public bool UserExist(string username)
         {
             //establish the database connection
             connection();

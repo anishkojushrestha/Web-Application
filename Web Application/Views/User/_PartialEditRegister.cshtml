@@ -155,7 +155,7 @@
                         <div class="row pb-1">
                             <div class="rw1">
                                 <label class="form-label">Username:</label>
-                                <input type="text" id="txtUserId" asp-for="UserName" style="height:33px" class="form-control" required>
+                                <input type="text" id="txtUserId" asp-for="UserName" style="height:33px" readonly class="form-control" required>
                                 <span id="error" style="color:red;"></span>
                             </div>
 
@@ -227,20 +227,22 @@
             document.getElementById("selDiv").style.display = "none";
         }
     })
-    $("#txtUserId").blur(function () {
-        $("#re").remove();
-        var username = $(this).val();
-        $.ajax({
-            url: "/User/UserError?username=" + username,
-            type: "POST",
-            success: function (data) {
-                if (data == true) {
-                    $("#error").append('<p id="re">User Already Exist</p>');
-                }
-            },
+    //$(document).on("blur","#txtUserId",function () {
+    //    $("#re").remove();
+    //    var username = $(this).val();
+    //    $.ajax({
+    //        url: "/User/UserError?username=" + username,
+    //        type: "POST",
+    //        success: function (data) {
+    //            if (data == true) {
+    //                $("#error").append('<p id="re">User Already Exist</p>');
+    //            }
 
-        })
-    });
+               
+    //        },
+
+    //    })
+    //});
     $("#txtConfirmPass").blur(function () {
         $("#rep").remove();
         var confirm = $(this).val();
@@ -254,7 +256,7 @@
         var confirm = $("#txtConfirmPass").val();
         var newpass = $("#txtNewpass").val();
         if (confirm != newpass || document.getElementById("re") != null) {
-            alert('open!');
+
             return false;
         }
         return true;

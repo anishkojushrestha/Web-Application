@@ -178,13 +178,21 @@ namespace Web_Application.Controllers
             var tick = "IssueNo" + result;
             return Json(tick);
         }
-        public IActionResult Issue(int id)
+        public IActionResult UpdateIssue(int id)
         {
             IssueDbHandle idh = new IssueDbHandle();
             CompanyDbHandle cdh = new CompanyDbHandle();
             ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
             ViewData["Support"] = new SelectList(idh.GetUser(), "Id", "UserName");
             return PartialView("_PartialIssue", idh.GetIssue().Find(x => x.Id == id));
+        }
+        public IActionResult Issue(int id)
+        {
+            IssueDbHandle idh = new IssueDbHandle();
+            CompanyDbHandle cdh = new CompanyDbHandle();
+            ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
+            ViewData["Support"] = new SelectList(idh.GetUser(), "Id", "UserName");
+            return PartialView("_PartialIssue");
         }
 
         [HttpPost]

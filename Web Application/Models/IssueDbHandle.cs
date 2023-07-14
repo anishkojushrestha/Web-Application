@@ -188,13 +188,22 @@ namespace Web_Application.Models
             str.Append("set @eid = (select isnull(max(IssueId), 0) + 1 from Issue) \n");
             str.Append("SELECT @Newno = @isno + RIGHT( CAST(@eid AS VARCHAR(7)), 7) \n");
             //str.Append("set @issupid = (select isnull(max(IssueSupportId), 0) + 1 from IssueSupport) \n");
-
+            
             if (vm.TrasferTo != null)
             {
-                str.Append("insert into Issue(IssueId,IssueNo,SupportType, IssueDescription, IssueGeneratorSteps, CreatedDate, Status,CloseDate, CompanyId,  ContactId,SupportId, TransferId) VALUES(@eid,'" + vm.IssueNo + "','" + vm.SupportType + "','" + vm.IssueDescription + "','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "','" + vm.CloseBy + "'," + vm.CompanyId + "," + vm.ContactId + "," + vm.AssignTo + "," + vm.TrasferTo + ") \n");
+                if (vm.CloseBy != null) {
+                    str.Append("insert into Issue(IssueId,IssueNo,SupportType, IssueDescription, IssueGeneratorSteps, CreatedDate, Status,CloseDate, CompanyId,  ContactId,SupportId, TransferId) VALUES(@eid,'" + vm.IssueNo + "','" + vm.SupportType + "','" + vm.IssueDescription + "','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "','" + vm.CloseBy + "'," + vm.CompanyId + "," + vm.ContactId + "," + vm.AssignTo + "," + vm.TrasferTo + ") \n");
+
+                }
+                else
+                {
+                    str.Append("insert into Issue(IssueId,IssueNo,SupportType, IssueDescription, IssueGeneratorSteps, CreatedDate, Status,CompanyId,  ContactId,SupportId, TransferId) VALUES(@eid,'" + vm.IssueNo + "','" + vm.SupportType + "','" + vm.IssueDescription + "','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "'," + vm.CompanyId + "," + vm.ContactId + "," + vm.AssignTo + "," + vm.TrasferTo + ") \n");
+
+                }
             }
             else if (vm.CloseBy != null)
             {
+
                 str.Append("insert into Issue(IssueId,IssueNo,SupportType, IssueDescription, IssueGeneratorSteps, CreatedDate, Status,CloseDate, CompanyId,  ContactId,SupportId) VALUES(@eid,'" + vm.IssueNo + "','" + vm.SupportType + "','" + vm.IssueDescription + "','" + vm.IssueGeneratorSteps + "','" + createdDate + "','" + vm.Status + "','" + vm.CloseBy + "'," + vm.CompanyId + "," + vm.ContactId + "," + vm.AssignTo + ") \n");
             }
             else

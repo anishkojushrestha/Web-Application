@@ -47,7 +47,6 @@ namespace Web_Application.Models
             }
             else
             {
-                
                     str.Append(" INSERT INTO CompanyInfo(CompanyId,CompanyName,Category, Email, PanNumber, Address, District ,Country, RegistrationDate, ValidFrom, ValidTo ) VALUES(@cid,'" + vm.CompanyName + "','" + vm.Category + "','" + vm.Email + "','" + vm.PanNumber + "','" + vm.Address + "','" + vm.District + "','" + vm.Country + "','" + registerDate + "','" + validFrom + "','" + validTo + "') \n");
 
                 
