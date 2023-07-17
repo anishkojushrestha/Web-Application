@@ -1,6 +1,9 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using NToastNotify;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -18,6 +21,12 @@ builder.Host.ConfigureAppConfiguration((ctx, config) =>
                        optional: false,
                        reloadOnChange: true)
           .AddJsonFile($"appsettings.{ctx.HostingEnvironment.EnvironmentName}.json", optional: true);
+});
+builder.Services.AddNotyf(config =>
+{
+    config.DurationInSeconds = 5;
+    config.IsDismissable = true;
+    config.Position = NotyfPosition.TopRight;
 });
 builder.Services.AddSession(options =>
 {
@@ -43,7 +52,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();   
 app.UseRouting();
-
+app.UseNotyf();
 app.UseAuthorization();
 
 app.MapControllerRoute(

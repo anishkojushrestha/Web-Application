@@ -1,9 +1,13 @@
 ﻿using Amazon.SimpleSystemsManagement.Model;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NToastNotify;
+using System.Security.Cryptography;
+using System.Text;
 using Web_Application.Models;
 using Web_Application.ModelViews;
 
@@ -13,9 +17,11 @@ namespace Web_Application.Controllers
     {
         
         private readonly ILogger<UserController> logger;
-        public UserController(ILogger<UserController> logger)
+        private readonly INotyfService _toastNotification;
+        public UserController(ILogger<UserController> logger, INotyfService _toastNotification)
         {
             this.logger = logger;
+            this._toastNotification = _toastNotification;
         }
         public IActionResult Index()
         {
@@ -199,7 +205,68 @@ namespace Web_Application.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Login","Login");
         }
+        public string hasdPassword(string password)
+        {
+            var sha = SHA256.Create();
+            var asByteArray = Encoding.Default.GetBytes(password);
+            var hashedPassword = sha.ComputeHash(asByteArray);
+            return Convert.ToBase64String(hashedPassword);
+        }
+        public IActionResult Profile()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Profile(string OldPassword,string NewPassword, string ConfirmPassword)
+        {
+            if (ModelState.IsValid)
+            {
+                var check = HttpContext.Session.GetString("password");
+                var password = hasdPassword(OldPassword);
+                if (password == check)
+                {
+                    if(NewPassword == ConfirmPassword)
+                    {
+                        UserDbHandle udh = new UserDbHandle();
+                        string Id = HttpContext.Session.GetString("userId");
+                        udh.ChangePassword(NewPassword, Id);
+                        _toastNotification.Success("Password hasbeen changed Successfully");
+                        SessionHandle session = new SessionHandle();
+                        session.Session(password:NewPassword);
+                    }
+                    else
+                    {
+                        ViewBag.nErr = "Password doesnot match!!";
 
+                    }
+                }
+                else
+                {
+                    ViewBag.Err = "Old Password Incorrect";
+                }
+            }
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditProfile(string? FirstName,string? LastName, string? Email, string? UserName)
+        {
+            if (ModelState.IsValid)
+            {
+                UserDbHandle udh = new UserDbHandle();
+                string Id = HttpContext.Session.GetString("userId");
+                udh.EditProfile(FirstName,LastName,Email,UserName, Id);
+
+                _toastNotification.Success("Profile hasbeen Edited Successfully");
+                SessionHandle handle = new SessionHandle();
+                handle.Session(userFirstName: FirstName, userLastName:LastName, userEmail:Email,userName:UserName);
+            }
+
+
+            return RedirectToAction("Profile");
+
+        }
 
 
     }

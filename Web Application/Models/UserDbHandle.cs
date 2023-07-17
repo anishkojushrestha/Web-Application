@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+﻿using Amazon.SimpleSystemsManagement.Model;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
@@ -18,6 +20,8 @@ namespace Web_Application.Models
     public class UserDbHandle
     {
         private SqlConnection con;
+        HttpContextAccessor accessor = new HttpContextAccessor();
+        ISession session => accessor.HttpContext.Session;
         private void connection()
         {
             IConfigurationBuilder builder = new ConfigurationBuilder();
@@ -38,7 +42,7 @@ namespace Web_Application.Models
         {
             connection();
             string pass = hasdPassword(vm.NewPassword);
-            StringBuilder str = new StringBuilder();
+            StringBuilder str = new StringBuilder(); 
             str.Append(" declare @uid bigint \n");
             str.Append(" set @uid = (select isnull(max(userid), 0) + 1 from users) \n");
             if (vm.CompanyId == null)
@@ -120,12 +124,42 @@ namespace Web_Application.Models
             }
         }
 
-        public List<UpdateRegisterVM> GetUser(string username = null, string password = null, string usercode=null)
+        public bool EditProfile(string? FirstName, string? LastName, string? Email, string? UserName, string Id)
         {
             connection();
-            List<UpdateRegisterVM> registerList = new List<UpdateRegisterVM>();
+            var fname = string.IsNullOrEmpty(FirstName) ? session.GetString("userFirstName") : FirstName;
+            var lname = string.IsNullOrEmpty(LastName) ? session.GetString("userLastName") : LastName;
+            var uname = string.IsNullOrEmpty(UserName) ? session.GetString("userName") : UserName;
+            var email = string.IsNullOrEmpty(Email) ? session.GetString("userEmail") : Email;
+            SqlCommand cmd = new SqlCommand("Update users set FirstName = '"+ fname + "', LastName = '"+ lname + "', Email = '"+ email + "', UserName = '"+ uname + "' where UserId = " + Id + "", con);
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+                return true;
+            else
+                return false;
+        }
+        public bool ChangePassword(string? NewPassword, string? Id)
+        {
+            connection();
+            var pass = hasdPassword(NewPassword);
+            SqlCommand cmd = new SqlCommand("Update users set Password = '"+ pass + "' where UserId = "+Id+"", con);
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+                return true;
+            else
+                return false;
+        }
+
+        public List<UserVM> GetUser(string username = null, string password = null, string usercode=null)
+        {
+            connection();
+            List<UserVM> registerList = new List<UserVM>();
             StringBuilder sb = new StringBuilder();
-            sb.Append("Select u.UserId, u.FirstName, u.LastName, u.UserName, u.Email, u.Profile, u.IsActive ,c.CompanyId, c.CompanyName from users u left join CompanyInfo c on c.CompanyId = u.CompanyId where 1=1");
+            sb.Append("Select u.UserId, u.FirstName, u.LastName, u.UserName, u.Email, u.Profile,u.Password, u.IsActive ,c.CompanyId, c.CompanyName,Format(c.RegistrationDate,'dd-MM-yyyy') as RegistrationDate, c.Address, c.Email as CompanyEmail,Format(c.ValidFrom,'dd-MM-yyyy') as ValidFrom,Format(c.ValidTo,'dd-MM-yyyy') as ValidTo from users u left join CompanyInfo c on c.CompanyId = u.CompanyId where 1=1");
             if (!string.IsNullOrEmpty(username))
             {
                 sb.Append(" and u.username='"+username+"'\n");
@@ -149,7 +183,7 @@ namespace Web_Application.Models
             foreach (DataRow dr in dt.Rows)
             {
                 registerList.Add(
-                    new UpdateRegisterVM
+                    new UserVM
                     {
                         Id = Convert.ToInt32(dr["UserId"]),
                         CompanyId = string.IsNullOrEmpty(dr["CompanyId"].ToString())? null : Convert.ToInt32(dr["CompanyId"]),
@@ -158,10 +192,18 @@ namespace Web_Application.Models
                         UserName = Convert.ToString(dr["UserName"]),
                         Email = Convert.ToString(dr["Email"]),
                         Profile = Convert.ToString(dr["Profile"]),
+                        NewPassword = Convert.ToString(dr["Password"]),
                         IsActive = Convert.ToBoolean(dr["IsActive"]),
                         CompanyName = Convert.ToString(dr["CompanyName"]),
+                        RegistrationDate = Convert.ToString(dr["RegistrationDate"]),
+                        ValidFrom = Convert.ToString(dr["ValidFrom"]),
+                        ValidTo = Convert.ToString(dr["ValidTo"]),
+                        Address = Convert.ToString(dr["Address"]),
+                        CompanyEmail = Convert.ToString(dr["CompanyEmail"]),
 
-                    });
+                    }
+                    );
+                
             }
             return registerList;
         }

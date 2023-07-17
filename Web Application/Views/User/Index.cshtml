@@ -1,14 +1,14 @@
-﻿@model IEnumerable<Web_Application.ModelViews.UpdateRegisterVM>
+﻿@model IEnumerable<Web_Application.ModelViews.UserVM>
 @{
     ViewData["Title"] = "Index";
 }
-<div id="PlaceHolderHere" ></div>
+<div id="PlaceHolderHere"></div>
 
-<button class="btn btn-primary btnbp" data-toggle="ajax-modal" data-target="#addregister"  data-url="@Url.Action("Register")" style="width:100px;margin-left:90%; ">Create</button>
+<button class="btn btn-primary btnbp" data-toggle="ajax-modal" data-target="#addregister" data-url="@Url.Action("Register")" style="width:100px;margin-left:90%; ">Create</button>
 <div class="input-group" style="margin-left:79%;margin-top:4px;">
-  @*<div class="form-outline">
+    @*<div class="form-outline">
     <input type="search" id="search" class="form-control" placeholder="Search..." />
-  </div>*@
+    </div>*@
 </div>
 
 <div class="card shadow mb-4" style="width: 112%; margin-left: -6%;">
@@ -29,7 +29,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Profile</th>
                         <th scope="col">IsActive</th>
-                        
+
                     </tr>
                 </thead>
                 <tbody id="table">
@@ -54,7 +54,7 @@
                             <td>
                                 <input type="checkbox" asp-for="@data.IsActive" class="form-check-input" onclick="return false;" />
                             </td>
-                           
+
 
                         </tr>
                     }
@@ -75,28 +75,27 @@
             });
         });
 
-        $(document).ready(function(){
-          $("#search").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#table tr").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        $(document).ready(function () {
+            $("#search").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#table tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
             });
-          });
-        });
 
-        $(function (){
+
+
             var PlaceHolderEleent = $('#PlaceHolderHere');
-            $(document).on("click",'.btnbp',function(){
-            //$('button[data-toggle="ajax-modal"]').click(function(event){
+            $(document).on("click", '.btnbp', function () {
+                //$('button[data-toggle="ajax-modal"]').click(function(event){
                 var url = $(this).data('url');
-                
                 var decodedUrl = decodeURIComponent(url);
-                $.get(decodedUrl).done(function (data){
+                $.get(decodedUrl).done(function (data) {
                     PlaceHolderEleent.html(data);
                     PlaceHolderEleent.find('.modal').modal('show');
                 })
-            })
-            PlaceHolderEleent.on('click','[data-save="modal"]',function (event){
+            });
+            PlaceHolderEleent.on('click', '[data-save="modal"]', function (event) {
 
                 //var form =$(this).parents('.modal').find('form');
                 //var actionUrl = form.attr('action');
@@ -107,8 +106,8 @@
                 //    PlaceHolderEleent.find('.modal').modal('hide');
                 //    window.location.reload();
                 //})
-                
+
             })
-        })
+        });
     </script>
 }

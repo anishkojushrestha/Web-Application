@@ -1,0 +1,385 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+    HttpContextAccessor a = new HttpContextAccessor();
+    ISession session = a.HttpContext.Session;
+    var profile = session.GetString("userProfile");
+    var fUser = session.GetString("userFirstName");
+    var lUser = session.GetString("userLastName");
+    var User = session.GetString("userName");
+    var Email = session.GetString("userEmail");
+    var company = session.GetString("companyName");
+    var companyEmail = session.GetString("companyEmail");
+    var address = session.GetString("address");
+    var registrationDate = session.GetString("registrationDate");
+    var validFrom = session.GetString("validFrom");
+    var validTo = session.GetString("validTo");
+}
+@*<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        Total Issue
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                </div>
+                <div class="col-auto">
+                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+<div class="row">
+    <div class="col">
+        <div class="card shadow mb-4 mt-4" style="width:55%; ">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">User Profile</h6>
+            </div>
+            <input id="txtoms" value="@profile" hidden/>
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col"><h6>First Name: @fUser</h6></div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col"><h6>Last Name: @lUser</h6></div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col"><h6>User Name: @User</h6></div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col"><h6>Profile: @profile</h6></div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col"><h6>Email: @Email</h6></div>
+                    @*@if (profile == "OMSUser")
+                    {
+                    <div class="col"><h6>Company Name: @company</h6></div>
+                    }*@
+                </div>
+                <div class="row mb-2">
+                    @if (profile == "OMSUser")
+                    {
+                        <div class="col"><h6>Company Name: @company</h6></div>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col">
+        <div class="card shadow mb-2 mt-4" style=" margin-left: -40%; width:115% ">
+
+            <div class="card-header p-1 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                    @if (profile == "OMSUser")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link active" id="custom-tabs-three-company-tab" data-toggle="pill" href="#custom-tabs-three-company" role="tab" aria-controls="custom-tabs-three-company" aria-selected="true">Company Info</a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="true">Edit Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-three-change-tab" data-toggle="pill" href="#custom-tabs-three-change" role="tab" aria-controls="custom-tabs-three-change" aria-selected="true">Change Password</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="custom-tabs-three-tabContent">
+                    @if (profile == "OMSUser")
+                    {
+                        <div class="tab-pane fade show active" id="custom-tabs-three-company" role="tabpanel" aria-labelledby="custom-tabs-three-company-tab">
+                            <div class="row mb-4 mt-2" style="margin-left:0%">
+                                <div class="col"><h6>Company Name: @company</h6></div>
+                                <div class="col"><h6>Address: @address</h6></div>
+                            </div>
+                            <div class="row mb-4" style="margin-left:0%">
+                                <div class="col"><h6>Email: @companyEmail</h6></div>
+                                <div class="col"><h6>Registration Date: @registrationDate</h6></div>
+                            </div>
+                            <div class="row mb-4" style="margin-left:0%">
+                                <div class="col"><h6>Valid From: @validFrom</h6></div>
+
+                                <div class="col"><h6>Valid To: @validTo</h6></div>
+
+                            </div>
+                        </div>
+                    }
+                    <div class="tab-pane fade show " id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+                        <form asp-action="EditProfile" id="form" asp-controller="User">
+                            <div class="row mb-4">
+
+                                <div class="col ">
+                                    <div class="row" style="margin-left: 0%;">
+                                        <div class="col"><label>First Name</label></div>
+                                        <div class="col" style="margin-left:-50%">
+                                            <input type="text" name="FirstName" style="width: 85%;"  class="form-control " required />
+                                            <span class="alert-danger">@ViewBag.Err</span>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                            <div class="row mb-4">
+
+                                <div class="col ">
+                                    <div class="row" style="margin-left: 0%;">
+                                        <div class="col"><label>Last Name</label></div>
+                                        <div class="col" style="margin-left:-50%">
+                                            <input type="text" name="LastName" style="width: 85%;"  class="form-control "  />
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                            <div class="row mb-4">
+
+                                <div class="col ">
+                                    <div class="row" style="margin-left: 0%;">
+                                        <div class="col"><label>UserName</label></div>
+                                        <div class="col" style="margin-left:-50%">
+                                            <input type="text" id="txtUser" name="UserName" style="width:85%" class="form-control" />
+                                            <div id="error" style="color:red;"></div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                            <div class="row mb-4">
+
+                                <div class="col ">
+                                    <div class="row" style="margin-left: 0%;">
+                                        <div class="col"><label>Email</label></div>
+                                        <div class="col" style="margin-left:-50%">
+                                            <input type="email" name="Email" style="width:85%" class="form-control" />
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="  margin-left: 44%;">Submit</button>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade show " id="custom-tabs-three-change" role="tabpanel" aria-labelledby="custom-tabs-three-change-tab">
+                        <form asp-action="Profile" asp-controller="User">
+                            <div class="row mb-4">
+                              
+                                <div class="col ">
+                                    <div class="row" style="margin-left: 0%;">
+                                        <div class="col"><label>Old Password</label></div>
+                                        <div class="col" style="margin-left:-50%">
+                                            <input type="password" name="OldPassword" style="width: 85%;" autocomplete="off" class="form-control " required />
+                                            <span class="alert-danger">@ViewBag.Err</span>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    
+                                    
+                                </div>
+
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col ">
+                                    <div class="row" style="margin-left: 0%;">
+                                        <div class="col"><label>New Password</label></div>
+                                    
+                                    <div class="col " style="margin-left:-50%">
+                                        <input type="password" name="NewPassword" style="width: 85%;" class="form-control" required />
+
+                                    </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col ">
+                                    <div class="row" style="margin-left: 0%;">
+                                        <div class="col"><label>Confirm Password</label></div>
+                                    
+                                    <div class="col " style="margin-left:-50%">
+                                        <input type="password" name="ConfirmPassword" style="width: 85%;" class="form-control" required />
+                                        <span class="alert-danger">@ViewBag.nErr</span>
+
+                                    </div>
+                                    </div>
+                                    
+
+                                </div>
+
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="  margin-left: 44%;">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="row mt-2">*@
+    @*<div class="col">
+    <div class="card mt-4" style="width:110%; ">
+    <div class="card-header  mb-1">
+    <h6 class="m-0 font-weight-bold text-primary">
+    User Profile
+    </h6>
+
+    </div>
+
+    </div>
+    @if (profile == "OMSUser")
+    {
+    <div class="card mt-4" style="width:110%; ">
+    <div class="card-header  mb-1">
+    <h6 class="m-0 font-weight-bold text-primary">
+    Company Info
+    </h6>
+
+    </div>
+    <div class="card-body">
+
+    <div class="row mb-2">
+    <div class="col"><h6>Company Name: @company</h6></div>
+    <div class="col"><h6>Address: @address</h6></div>
+    </div>
+    <div class="row mb-2">
+    <div class="col"><h6>Email: @companyEmail</h6></div>
+    <div class="col"><h6>Registration Date: @registrationDate</h6></div>
+    </div>
+    <div class="row mb-2">
+    <div class="col"><h6>Valid From: @validFrom</h6></div>
+
+    <div class="col"><h6>Valid To: @validTo</h6></div>
+
+    </div>
+    </div>
+    </div>
+    }
+    </div>*@
+    @*<div class="col">
+        <div class="card mt-4" style="width: 70%;margin-left: 18%;">
+            <div class="card-header  mb-1">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    Change Password
+                </h6>
+
+            </div>
+            <div class="card-body">
+                <form asp-action="Profile" asp-controller="User">
+                    <div class="row mb-2">
+                        <div class="col ">
+                            <label>Old Password</label>
+                            <input type="password" name="OldPassword" class="form-control" required />
+                            <span class="alert-danger">@ViewBag.Err</span>
+                        </div>
+
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col ">
+                            <label>New Password</label>
+                            <input type="password" name="NewPassword" class="form-control" required />
+
+                        </div>
+
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col ">
+                            <label>Confirm Password</label>
+                            <input type="password" name="ConfirmPassword" class="form-control" required />
+                            <span class="alert-danger">@ViewBag.nErr</span>
+
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="  margin-left: 44%;">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+    if ($("#txtoms").val() != "OMSUser"){
+    //removing active class from other selected/default tab
+        $("#custom-tabs-three-company").removeClass("active");
+    //adding active class to current clicked tab
+        $('#custom-tabs-three-change').removeClass("active");
+    $('#custom-tabs-three-profile').addClass("active");
+    }
+    $('#custom-tabs-three-change-tab').click(function () {
+
+        //removing active class from other selected/default tab
+        $("#custom-tabs-three-company-tab").removeClass("active");
+        $("#custom-tabs-three-profile-tab").removeClass("active");
+
+        //adding active class to current clicked tab
+        $('#custom-tabs-three-change-tab').addClass("active");
+    });
+    $('#custom-tabs-three-company-tab').click(function () {
+
+        //removing active class from other selected/default tab
+        $("#custom-tabs-three-change-tab").removeClass("active");
+        $("#custom-tabs-three-profile-tab").removeClass("active");
+        //adding active class to current clicked tab
+        $('#custom-tabs-three-company-tab').addClass("active");
+    });
+    $('#custom-tabs-three-profile-tab').click(function () {
+
+        //removing active class from other selected/default tab
+        $("#custom-tabs-three-change-tab").removeClass("active");
+        $("#custom-tabs-three-company-tab").removeClass("active");
+        //adding active class to current clicked tab
+        $('#custom-tabs-three-profile-tab').addClass("active");
+    });
+
+        $("#txtUser ").blur(function () {
+            $("#re").remove();
+            var username = $(this).val();
+            $.ajax({
+                url: "/User/UserError?username=" + username,
+                type: "POST",
+                success: function (data) {
+                    if (data == true) {
+                        $("#error").append('<p id="re">User Already Exist</p>');
+                        
+                    }
+                },
+
+            })
+        });
+        $('#form').submit(function (e) {
+            if($("#re").length == 1){
+
+                return false;
+                e.preventDefault();
+            }else{
+                return true;
+            }
+        });
+</script>
+
+
+
