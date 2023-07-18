@@ -35,9 +35,11 @@ namespace Web_Application.Controllers
             var total = idh.FilterDate().Count();
             var totalAssgin = idh.FilterDate().Where(x=>x.Support != "").Count();
             var totalTransfer = idh.FilterDate().Where(x=>x.TrasferName != "").Count();
+            var remainning = idh.FilterDate().Where(x=>x.Status != "Close").Count();
             ViewBag.TotalIssue = total;
             ViewBag.TotalAssign = totalAssgin;
             ViewBag.TotalTransfer = totalTransfer;
+            ViewBag.Remain = remainning;
             return View();
         }
     }

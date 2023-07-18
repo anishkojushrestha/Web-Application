@@ -27,7 +27,7 @@
             }
             if (!string.IsNullOrEmpty(userProfile))
             {
-                session.SetString("userProfile", string.IsNullOrEmpty(userProfile) ? "" : userProfile);
+                session.SetString("userProfile", userProfile);
 
             }
             if (!string.IsNullOrEmpty(userEmail))
