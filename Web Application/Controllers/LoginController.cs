@@ -49,11 +49,10 @@ namespace Web_Application.Controllers
                     //ViewBag._userName = userinfo[0].FirstName.ToString() + "," + userinfo[0].LastName.ToString();
                     SessionHandle session = new SessionHandle();
                     session.Session(userinfo[0].Id.ToString(), userinfo[0].UserName, userinfo[0].FirstName, userinfo[0].LastName, userinfo[0].Profile, userinfo[0].Email, userinfo[0].CompanyName, userinfo[0].NewPassword, userinfo[0].Address, userinfo[0].ValidFrom, userinfo[0].ValidTo, userinfo[0].CompanyEmail, userinfo[0].RegistrationDate);
-                    return RedirectToAction("Index", "Company");
+                    return RedirectToAction("Dashboard", "Home");
                 }
                 ViewBag.UserError = "InCorrect credentials ";
 
-                
             }
             return View();
         }

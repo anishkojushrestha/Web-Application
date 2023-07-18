@@ -4,7 +4,7 @@ using Web_Application.Models;
 
 namespace Web_Application.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -27,6 +27,18 @@ namespace Web_Application.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Dashboard()
+        {
+            IssueDbHandle idh = new IssueDbHandle();
+            var total = idh.FilterDate().Count();
+            var totalAssgin = idh.FilterDate().Where(x=>x.Support != "").Count();
+            var totalTransfer = idh.FilterDate().Where(x=>x.TrasferName != "").Count();
+            ViewBag.TotalIssue = total;
+            ViewBag.TotalAssign = totalAssgin;
+            ViewBag.TotalTransfer = totalTransfer;
+            return View();
         }
     }
 }

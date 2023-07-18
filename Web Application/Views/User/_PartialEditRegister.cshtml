@@ -1,4 +1,4 @@
-﻿@model Web_Application.ModelViews.UpdateRegisterVM
+﻿@model Web_Application.ModelViews.UserVM
 <style>
     .rw {
         width: 48%;
@@ -207,24 +207,23 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
 <script>
     if ($("#selProf").val() === "OMSUser") {
-            document.getElementById("selDiv").style.display = "block";
-           
-        } 
+        document.getElementById("selDiv").style.display = "block";
 
-    
+    }
+
+
     $("#selProf").on("change", function () {
         if ($(this).val() === "OMSUser") {
             document.getElementById("selDiv").style.display = "block";
         } else {
             document.getElementById("selDiv").style.display = "none";
         }
-    })
+    });
     //$(document).on("blur","#txtUserId",function () {
     //    $("#re").remove();
     //    var username = $(this).val();
@@ -236,7 +235,7 @@
     //                $("#error").append('<p id="re">User Already Exist</p>');
     //            }
 
-               
+
     //        },
 
     //    })

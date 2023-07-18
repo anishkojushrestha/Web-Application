@@ -150,7 +150,7 @@ namespace Web_Application.Controllers
         {
            // if (HttpContext.Session.GetString("userProfile") == "SuperAdmin" || HttpContext.Session.GetString("userProfile") == "Admin")
             //{
-                UserDbHandle sdb = new UserDbHandle();
+             UserDbHandle sdb = new UserDbHandle();
             CompanyDbHandle cdh = new CompanyDbHandle();
             ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
             return PartialView("_PartialEditRegister", sdb.GetUser().Find(vm => vm.Id == id));
@@ -214,6 +214,7 @@ namespace Web_Application.Controllers
         }
         public IActionResult Profile()
         {
+            
             return View();
         }
         [HttpPost]
