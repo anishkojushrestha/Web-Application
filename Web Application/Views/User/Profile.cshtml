@@ -229,8 +229,6 @@
 
                                     </div>
                                     </div>
-                                    
-
                                 </div>
 
                             </div>
@@ -330,9 +328,10 @@
 <script>
     if ($("#txtoms").val() != "OMSUser"){
     //removing active class from other selected/default tab
-        $("#custom-tabs-three-company").removeClass("active");
+        $("#custom-tabs-three-company-tab").removeClass("active");
     //adding active class to current clicked tab
-        $('#custom-tabs-three-change').removeClass("active");
+        $('#custom-tabs-three-change-tab').removeClass("active");
+    $('#custom-tabs-three-profile-tab').addClass("active");
     $('#custom-tabs-three-profile').addClass("active");
     }
     $('#custom-tabs-three-change-tab').click(function () {

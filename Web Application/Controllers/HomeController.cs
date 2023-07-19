@@ -42,5 +42,24 @@ namespace Web_Application.Controllers
             ViewBag.Remain = remainning;
             return View();
         }
+
+        public IActionResult TotalAssign()
+        {
+            IssueDbHandle idh = new IssueDbHandle();
+            var totalAssgin = idh.FilterDate().Where(x => x.Support != "").ToList();
+            return  Json(new { data= totalAssgin });
+        }
+        public IActionResult TotalTransfer()
+        {
+            IssueDbHandle idh = new IssueDbHandle();
+            var totalTran = idh.FilterDate().Where(x => x.TrasferName != "").ToList();
+            return  Json(new { data= totalTran });
+        }
+        public IActionResult TotalClose()
+        {
+            IssueDbHandle idh = new IssueDbHandle();
+            var totalClose = idh.FilterDate().Where(x => x.Status != "Close").ToList();
+            return  Json(new { data= totalClose });
+        }
     }
 }

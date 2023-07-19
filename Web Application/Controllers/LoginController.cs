@@ -20,7 +20,6 @@ namespace Web_Application.Controllers
             {
                 return View();
             }
-
         }
 
         [HttpPost]

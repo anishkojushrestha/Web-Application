@@ -415,15 +415,15 @@ namespace Web_Application.Models
                     sb.Append(" and  i.status = '" + Istatus + "'\n");
                 }
             }
-            
+
 
             //if (session.GetString("userProfile") == "OMSUser")
             //{
-            //    sb.Append(" and i.userid='" + session.GetString("userId") + "'\n");
+            //    sb.Append(" and i.CompanyName='" + session.GetString("companyName") + "'\n");
             //}
             //else if (session.GetString("userProfile") == "Support")
             //{
-            //    sb.Append(" and i.Support='" + session.GetString("userId") + "'\n");
+            //    sb.Append(" and u.Support='" + session.GetString("userId") + "'\n");
             //}
             //}
 

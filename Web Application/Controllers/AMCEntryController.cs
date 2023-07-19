@@ -34,7 +34,6 @@ namespace Web_Application.Controllers
                 if (ddh.CreateAMC(vm))
                 {
                     return RedirectToAction("Index");
-
                 }
             }
             return RedirectToAction("Index");

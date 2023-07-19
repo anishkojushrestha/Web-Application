@@ -3,7 +3,7 @@
     public class SessionHandle
     {
         HttpContextAccessor httpContextAccessor = new HttpContextAccessor();
-        ISession session => httpContextAccessor.HttpContext.Session;
+        ISession session => httpContextAccessor.HttpContext!.Session;
         //public void Session(params string[] values)
         public void Session(string userId=null, string userName=null , string userFirstName=null, string userLastName=null, string userProfile=null, string userEmail=null, string companyName=null, string password=null, string address=null, string validFrom=null, string validTo=null, string companyEmail=null , string registrationDate=null )
         {
