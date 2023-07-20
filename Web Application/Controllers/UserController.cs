@@ -27,15 +27,17 @@ namespace Web_Application.Controllers
         {
             //if(HttpContext.Session.GetString("userProfile") == "SuperAdmin" || HttpContext.Session.GetString("userProfile") == "Admin")
             //{
+            if (HttpContext.Session.GetString("userProfile") != "OMSUser")
+            {
                 UserDbHandle dbhandle = new UserDbHandle();
                 ModelState.Clear();
                 return View(dbhandle.GetUser());
-            //}
-            //else
-            //{
-              //  return RedirectToAction("AccessDenied", "Error");
-            //}
-            
+            }
+            else
+            {
+                return RedirectToAction("AccessDenied", "Error");
+            }
+
         }
 
         [HttpGet]
@@ -50,14 +52,16 @@ namespace Web_Application.Controllers
         {
             //if (HttpContext.Session.GetString("userProfile") == "SuperAdmin" || HttpContext.Session.GetString("userProfile") == "Admin")
             //{
+            if (HttpContext.Session.GetString("userProfile") != "OMSUser")
+            {
                 CompanyDbHandle cdh = new CompanyDbHandle();
                 ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
                 return PartialView("_PartialRegister");
-            //}
-            //else
-            //{
-              //  return RedirectToAction("AccessDenied", "Error");
-            //}
+            }
+            else
+            {
+                return RedirectToAction("AccessDenied", "Error");
+            }
         }
         
         public IActionResult UserError(string username)
@@ -88,6 +92,7 @@ namespace Web_Application.Controllers
                         {
                             ViewBag.Message = "Register Details Added Successfully";
                             ModelState.Clear();
+                            _toastNotification.Success("Registation hasbeen added Successfully");
                             return RedirectToAction("Index");
                         }
                     }
@@ -174,6 +179,8 @@ namespace Web_Application.Controllers
                 {
                     ViewBag.Message = "Register Details Edited Successfully";
                     ModelState.Clear();
+                    _toastNotification.Success("Registation hasbeen edited Successfully");
+
                     return RedirectToAction("Index");
                 }
 

@@ -4,8 +4,6 @@
 
 
 <div class="row mt-4" style=" width: 100%;font-size: 90%;">
-
-
     <div class="col-xl-3 col-md-6 mb-4 ">
         <div class="card border-start-primary bg-primary shadow h-100 py-2">
 
@@ -95,13 +93,31 @@
             </div>
         </div>
     </div>
+    @*<div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning bg-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-white text-uppercase mb-1">
+                            Today Due
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-white">@ViewBag.Remain</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa-solid fa-bell fa-2x text-white"></i>
+                    </div>
+                </div>
+                <button id="btnClose" class="small-box-footer text-white ml-4" style="outline:none; border:none; background:none;">More info <i class="fa-solid fa-circle-arrow-down"></i></button>
+            </div>
+        </div>
+    </div>*@
 </div>
 
 
 
-<div class="card shadow mb-4" >
+<div class="card shadow mb-4">
     <div class="card-header py-3 mb-3">
-        <h6 class="m-0 font-weight-bold text-primary">More Info</h6>
+        <h6 class="m-0 font-weight-bold text-primary">More Info <i class="fa-solid fa-circle-arrow-down"></i></h6>
     </div>
 
 
@@ -133,10 +149,10 @@
     <script>
         $(document).ready(function () {
             let dataTable = $('#dataTable').DataTable({
-               
+
                 columns: [
-                    
-                   
+
+
                     { data: 'issueNo' },
                     { data: 'supportType' },
                     { data: 'companyName' },
@@ -146,32 +162,30 @@
                     { data: 'trasferName' },
                     { data: 'contactName' },
                     { data: 'phoneNumber' },
-                    //{ data: 'issueDescription' },
-                    //{ data: 'issueGeneratorSteps' },
                     { data: 'status' },
                     { data: 'closeBy' },
                 ],
                 scrollX: true,
                 paging: false,
                 scrollY: 180,
-                
+
             });
 
             $("#btnTotalIssue").on("click", function () {
                 dataTable.ajax.url("/Issue/GetValue").load();
-                
+
             });
             $("#btnTotalAssign").on("click", function () {
                 dataTable.ajax.url("/Home/TotalAssign").load();
-                
+
             });
             $("#btnTran").on("click", function () {
                 dataTable.ajax.url("/Home/TotalTransfer").load();
-                
+
             });
             $("#btnClose").on("click", function () {
                 dataTable.ajax.url("/Home/TotalClose").load();
-                
+
             });
 
         });

@@ -35,6 +35,13 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                @{
+                            HttpContextAccessor a = new HttpContextAccessor();
+                            ISession session = a.HttpContext.Session;
+                            var profile = session.GetString("userProfile");
+                            var fUser = session.GetString("userFirstName");
+                            var lUser = session.GetString("userLastName");
+                        }
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                    
 
@@ -48,10 +55,14 @@
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Master</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown02">
                                 <a class="dropdown-item" asp-action="Dashboard" asp-controller="Home">Dashboard</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Company">Add Organization</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Demo">Demo</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="AMCEntry">AMC Entry</a>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="user">Registration</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="Company">Organization</a>
+                                @if(profile != "OMSUser")
+                                {
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="Demo">Demo</a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="AMCEntry">AMC Entry</a>
+                                    <a class="dropdown-item" asp-action="Index" asp-controller="user">Registration</a>
+                                }
+                                
                                 <a class="dropdown-item" asp-action="Index" asp-controller="Issue">Issue</a>
                                 @*<div class="dropdown dropend">
                                     <a class="dropdown-item dropdown-toggle" href="#" id="dropdown-layouts" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Client Issue</a>
@@ -78,13 +89,7 @@
 
 
                         </li>
-                        @{
-                            HttpContextAccessor a = new HttpContextAccessor();
-                            ISession session = a.HttpContext.Session;
-                            var profile = session.GetString("userProfile");
-                            var fUser = session.GetString("userFirstName");
-                            var lUser = session.GetString("userLastName");
-                        }
+                        
                        @* @if (profile == "SuperAdmin" || profile == "Admin")
                         {
                             <li class="nav-item">

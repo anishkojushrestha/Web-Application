@@ -50,7 +50,7 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width:130%;  margin-top: 20px; margin-left:-5%;">
             <div class="modal-header p-1" style="background-color:#569A75;">
-                        <h4 class="modal-title" id="addRegisterLabel" style="font-size:large; color:white;">Company/Contact</h4>
+                <h4 class="modal-title" id="addRegisterLabel" style="font-size:large; color:white;">Company/Contact</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="javascript:window.location.reload()">
                 </button>
 
@@ -77,7 +77,7 @@
                                     <div class="input-group row pb-1">
                                         <div>
                                             <label class="form-label" style="display:flex">Company Name:<h5 style="color:red">*</h5></label>
-                                            
+
                                             <input type="text" asp-for="CompanyName" class="form-control" style="height:33px" required>
                                         </div>
 
@@ -87,13 +87,13 @@
                                             <label class="form-label" style="display:flex">Category:<h5 style="color:red">*</h5></label>
                                             <select type="text" asp-for="Category" class="form-select" style="height:33px; font-size: 96%;" required>
                                                 <option disabled selected>Select Category</option>
-                                                <option >Registration</option>
-                                                <option >Marketing</option>
-                                                <option >Demo</option>
-                                                <option >Installation</option>
-                                                <option >Training</option>
-                                                <option >Payment</option>
-                                                <option >R&D</option>
+                                                <option>Registration</option>
+                                                <option>Marketing</option>
+                                                <option>Demo</option>
+                                                <option>Installation</option>
+                                                <option>Training</option>
+                                                <option>Payment</option>
+                                                <option>R&D</option>
                                             </select>
                                         </div>
                                     </div>
@@ -104,7 +104,7 @@
                                         </div>
                                         <div class="rw">
                                             <label class="form-label">Email:</label>
-                                            <input type="email" asp-for="Email" class="form-control" style="height:33px" >
+                                            <input type="email" asp-for="Email" class="form-control" style="height:33px">
                                         </div>
                                     </div>
                                     <div class="row pb-1">
@@ -113,16 +113,16 @@
                                             <input type="text" asp-for="Address" class="form-control" style="height:33px" required>
                                         </div>
                                         <div class="rw">
-                                            <label class="form-label" >Pan No.</label>
+                                            <label class="form-label">Pan No.</label>
                                             <input type="text" asp-for="PanNumber" class="form-control num" style="height:33px">
                                         </div>
                                     </div>
                                     <div class="row pb-1">
-                                        
+
                                         <div class="rw" id="divDistrict">
                                             <label class="form-label" style="display:flex">District:<h5 style="color:red">*</h5></label>
-                                            
-                                            <select type="text" asp-for="District" id="selDistrict" class="form-select" style="height:33px" required>
+
+                                            <select type="text" name="District" id="selDistrict" class="form-select" style="height:33px" required>
                                                 <option disabled selected>Select District</option>
                                                 <option>Achham</option>
                                                 <option>Baitadi</option>
@@ -241,13 +241,13 @@
                                             </select>
                                         </div>
                                         <div class="rws">
-                                            <label class="form-label" style="display:flex">Address:<h5 style="color:red">*</h5></label>
+                                            <label class="form-label" style="display:flex">Address:</label>
                                             <input type="text" name="address" id="address" class="form-control" style="height:33px">
                                         </div>
                                     </div>
                                     <div class="row pb-1">
                                         <div class="rws">
-                                            <label class="form-label" >Phone Number:</label>
+                                            <label class="form-label">Phone Number:</label>
                                             <input type="text" name="phoneNumber" id="phone" class="form-control num" style="height:33px">
                                         </div>
                                         <div class="rws">
@@ -278,12 +278,12 @@
                                     <input type="text" asp-for="MobileNumber" class="form-control" required>
                                     </div>*@
                                 </div>
-                                
+
                                 <button type="button" class="btn btn-primary" id="add" style="margin-left:90%; margin-top: 2px; height:30px; font-size:13px; ">Add</button>
 
                                 <div id="addmsg">
                                 </div>
-                               
+
                                 @if (Model != null)
                                 {
                                     if (Model.contactPersonVM != null && Model.contactPersonVM.Count > 0)
@@ -301,9 +301,9 @@
                                 }
                                 else
                                 {
-                                    <input type="hidden" id="hidRowClicked" value="-1"/>
-                                    <input type="hidden" id="hiddbRecid"  />
-                                    <input type="hidden" id="hidRowCount"  />
+                                    <input type="hidden" id="hidRowClicked" value="-1" />
+                                    <input type="hidden" id="hiddbRecid" />
+                                    <input type="hidden" id="hidRowCount" />
                                 }
 
 
@@ -352,7 +352,7 @@
                                                             <td>
                                                                 <input style='height:33px;' type='text' readonly value="@item.MobileNumber" class='form-control' name='contactPersonVM[@rowcount].MobileNumber' id="txtMobileNumber_@rowcount" />
                                                             </td>
-                                                            
+
                                                             <td>
                                                                 <input style='height:33px;' type='text' readonly value="@item.Designation" class='form-control' name='contactPersonVM[@rowcount].Designation' id="txtDesignation_@rowcount" />
                                                             </td>
@@ -364,10 +364,10 @@
                                                         rowcount++;
                                                     }
                                                     //@rowcount = @rowcount + 1;
-                                                    
+
 
                                                 }
-                                                
+
                                             }
                                         }
 
@@ -419,32 +419,34 @@
                 }
             }
         );
-    if ($("#txtComId").val() == 0){
-    const currentDate = new Date();
+    if ($("#txtComId").val() == 0) {
+        const currentDate = new Date();
 
-    // Format the date as YYYY-MM-DD
-    const year = currentDate.getFullYear();
-    const increaseYear = (currentDate.getFullYear()+1);
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
-    const validTo = `${increaseYear}-${month}-${day}`;
-    $("#dateRegistration").val(formattedDate);
-    $("#dateValidFrom").val(formattedDate);
-    $("#dateValidTo").val(validTo);
+        // Format the date as YYYY-MM-DD
+        const year = currentDate.getFullYear();
+        const increaseYear = (currentDate.getFullYear() + 1);
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+        const validTo = `${increaseYear}-${month}-${day}`;
+        $("#dateRegistration").val(formattedDate);
+        $("#dateValidFrom").val(formattedDate);
+        $("#dateValidTo").val(validTo);
     }
-    $("#selCountry").on("change", function(){
+    $("#selCountry").on("change", function () {
         $("#inDistrict").remove();
         var country = $(this).val();
-        if(country == "India" || country == "China"){
+        if (country == "India" || country == "China") {
             $("#selDistrict").hide();
+            $("#selDistrict").removeAttr("name");
             $("#divDistrict").append('<input type="text" name="District" id="inDistrict" class="form-control" style="height:33px" required />');
-            
-        }else{
+
+        } else {
             $("#inDistrict").remove();
             $("#selDistrict").show();
+            $("#selDistrict").attr("name", "District");
         }
-        
+
     });
 
     $('#custom-tabs-three-profile-tab').click(function () {
@@ -465,44 +467,52 @@
     });
     $(document).ready(function () {
         var rowCount = parseInt($("#hidRowCount").val() == "" ? "0" : $("#hidRowCount").val());
-        
+
         $("#add").click(function () {
-            var cols = "";
-            var recid = $("#hiddbRecid").val();
-            var rowid = $("#hidRowClicked").val();
-
-            if (rowid >= 0) {
-                var contactname = $('#contact').val();
-                var gender = $('#gender').val();
-                var address = $('#address').val();
-                var email = $('#email').val();
-                var phonenumber = $('#phone').val();
-                var mobilenumber = $('#mobile').val();
-                var designation = $('#designation').val();
-                $("#txtId_" + rowid).val(recid)
-                $("#txtContactName_" + rowid).val(contactname)
-                $("#txtGender_" + rowid).val(gender)
-                $("#txtAddress_" + rowid).val(address)
-                $("#txtEmail_" + rowid).val(email)
-                $("#txtPhoneNumber_" + rowid).val(phonenumber)
-                $("#txtMobileNumber_" + rowid).val(mobilenumber)
-                $("#txtDesignation_" + rowid).val(designation)
+            if ($("#contact").val() == "" || $("#gender").val() == "" || $("#mobile").val() == "" || $("#email").val() == "" || $("#designation").val() == null) {
+                $("#addmsg").append('<div class="alert alert-danger p-1" role="alert">Invalid Form </div>');
+                setTimeout(function () {
+                    $(".alert").remove();
+                }, 1000);
             } else {
+                var cols = "";
+                var recid = $("#hiddbRecid").val();
+                var rowid = $("#hidRowClicked").val();
 
-                cols = cols + "<tr id='tr_" + rowCount + "'><td><input type='text' readonly class='form-control' style='height:33px;' name='contactPersonVM[" + rowCount + "].ContactName' id='txtContactName_" + rowCount + "' value = '" + $("#contact").val() + "' /> </td><td><input type='text' style='height:33px;' name='contactPersonVM[" + rowCount + "].Gender' class='form-control' readonly id='txtGender_" + rowCount + "' value='" + $("#gender").val() + "'/ > </td><td><input type='text' style='height:33px;' readonly id='txtAddress_" + rowCount + "' class='form-control' name='contactPersonVM[" + rowCount + "].Address'  value='" + $("#address").val() + "'/ > </td><td><input type='text' style='height:33px;' readonly id='txtEmail_" + rowCount + "' class='form-control' name='contactPersonVM[" + rowCount + "].Email'  value='" + $("#email").val() + "'/ > </td><td><input type='text' readonly style='height:33px;' class='form-control' id='txtPhoneNumber_" + rowCount + "' name='contactPersonVM[" + rowCount + "].PhoneNumber' value='" + $("#phone").val() + "'/ > </td><td><input style='height:33px;' readonly type='text' class='form-control' id='txtMobileNumber_" + rowCount + "' name='contactPersonVM[" + rowCount + "].MobileNumber' value='" + $("#mobile").val() + "'/ > </td><td><input style='height:33px;' readonly type='text' class='form-control' id='txtDesignation_" + rowCount + "' name='contactPersonVM[" + rowCount + "].Designation' value='" + $("#designation").val() + "'/ > </td><td style='display: flex; readonly padding-right: 1px;'><button type='submit' onclick='return confirm('Are sure wants to delete?');' class='btn btn-link btn-sm px-1' id='delete' data-recCount='" + rowCount + "' data-recid='" + rowCount + "'  data-ripple-color='dark'><i class='fas fa-times'></i > </button><button readonly  type='button' class='btn btn-link btn-sm px-1 btnEdit' data-rowcount='" + rowCount + "' data-recid='" + rowCount + "' data-ripple-color='dark'><i class='fa-solid fa-pen'></i></button></<td> </tr>";
+                if (rowid >= 0) {
+                    var contactname = $('#contact').val();
+                    var gender = $('#gender').val();
+                    var address = $('#address').val();
+                    var email = $('#email').val();
+                    var phonenumber = $('#phone').val();
+                    var mobilenumber = $('#mobile').val();
+                    var designation = $('#designation').val();
+                    $("#txtId_" + rowid).val(recid)
+                    $("#txtContactName_" + rowid).val(contactname)
+                    $("#txtGender_" + rowid).val(gender)
+                    $("#txtAddress_" + rowid).val(address)
+                    $("#txtEmail_" + rowid).val(email)
+                    $("#txtPhoneNumber_" + rowid).val(phonenumber)
+                    $("#txtMobileNumber_" + rowid).val(mobilenumber)
+                    $("#txtDesignation_" + rowid).val(designation)
+                } else {
+
+                    cols = cols + "<tr id='tr_" + rowCount + "'><td><input type='text' readonly class='form-control' style='height:33px;' name='contactPersonVM[" + rowCount + "].ContactName' id='txtContactName_" + rowCount + "' value = '" + $("#contact").val() + "' /> </td><td><input type='text' style='height:33px;' name='contactPersonVM[" + rowCount + "].Gender' class='form-control' readonly id='txtGender_" + rowCount + "' value='" + $("#gender").val() + "'/ > </td><td><input type='text' style='height:33px;' readonly id='txtAddress_" + rowCount + "' class='form-control' name='contactPersonVM[" + rowCount + "].Address'  value='" + $("#address").val() + "'/ > </td><td><input type='text' style='height:33px;' readonly id='txtEmail_" + rowCount + "' class='form-control' name='contactPersonVM[" + rowCount + "].Email'  value='" + $("#email").val() + "'/ > </td><td><input type='text' readonly style='height:33px;' class='form-control' id='txtPhoneNumber_" + rowCount + "' name='contactPersonVM[" + rowCount + "].PhoneNumber' value='" + $("#phone").val() + "'/ > </td><td><input style='height:33px;' readonly type='text' class='form-control' id='txtMobileNumber_" + rowCount + "' name='contactPersonVM[" + rowCount + "].MobileNumber' value='" + $("#mobile").val() + "'/ > </td><td><input style='height:33px;' readonly type='text' class='form-control' id='txtDesignation_" + rowCount + "' name='contactPersonVM[" + rowCount + "].Designation' value='" + $("#designation").val() + "'/ > </td><td style='display: flex; readonly padding-right: 1px;'><button type='submit' onclick='return confirm('Are sure wants to delete?');' class='btn btn-link btn-sm px-1' id='delete' data-recCount='" + rowCount + "' data-recid='" + rowCount + "'  data-ripple-color='dark'><i class='fas fa-times'></i > </button><button readonly  type='button' class='btn btn-link btn-sm px-1 btnEdit' data-rowcount='" + rowCount + "' data-recid='" + rowCount + "' data-ripple-color='dark'><i class='fa-solid fa-pen'></i></button></<td> </tr>";
+
+                }
+
+                $("#tbldatatabletbody").append(cols);
+                var c = $("#contact").val('');
+                var p = $("#phone").val('');
+                var m = $("#mobile").val('');
+                var a = $("#address").val('');
+                var e = $("#email").val('');
+                rowCount++;
+
+                $("#hiddbRecid").val('-1')
+                $("#hidRowClicked").val('-1')
 
             }
-
-            $("#tbldatatabletbody").append(cols);
-            var c = $("#contact").val('');
-            var p = $("#phone").val('');
-            var m = $("#mobile").val('');
-            var a = $("#address").val('');
-            var e = $("#email").val('');
-            rowCount++;
-
-            $("#hiddbRecid").val('-1')
-            $("#hidRowClicked").val('-1')
         });
 
         $(document).on('click', '#delete', function () {
@@ -510,8 +520,9 @@
             rowCount--;
         });
     });
-    
-        $("#form").submit(function (event) {
+
+    $("#form").submit(function (event) {
+
         if ($("#tbldatatabletbody tr").length == 0) {
             $("#addmsg").append('<div class="alert alert-danger p-1" role="alert">Add Contact Data </div>');
             setTimeout(function () {
@@ -523,8 +534,11 @@
             // Form validation logic
 
             return false;
-        }// Prevent form submission
-        });
+        }
+
+
+        // Prevent form submission
+    });
 
     $(document).on("click", '.btnEdit', function () {
         $("#contact").val('');
@@ -537,7 +551,7 @@
 
         var dataid = $(this).attr("data-recid");
         var rowid = $(this).attr("data-rowcount");
-       
+
 
         $("#hiddbRecid").val(dataid);
         $("#hidRowClicked").val(rowid);
@@ -558,23 +572,23 @@
         $("#designation").val(designation);
 
     })
-    $(".btnDelete").on("click",function(){
+    $(".btnDelete").on("click", function () {
         var id = $(this).attr('data-id');
 
         //ajax
         //company/delct
         $.ajax({
-            url:'/Company/DeleteContact?id='+id,
-            type:"Get",
-            data:{id:id},
-            success:function(){
-                if(data != null){
+            url: '/Company/DeleteContact?id=' + id,
+            type: "Get",
+            data: { id: id },
+            success: function () {
+                if (data != null) {
                     location.reload();
                 }
             }
         })
 
-        
+
 
     });
 </script>

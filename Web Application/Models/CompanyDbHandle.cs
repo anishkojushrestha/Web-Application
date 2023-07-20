@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using Web_Application.ModelViews;
@@ -8,6 +9,8 @@ namespace Web_Application.Models
     public class CompanyDbHandle
     {
         private SqlConnection con;
+        HttpContextAccessor accessor = new HttpContextAccessor();
+        ISession session => accessor.HttpContext.Session;
         private void connection()
         {
             IConfigurationBuilder builder = new ConfigurationBuilder();
@@ -32,7 +35,7 @@ namespace Web_Application.Models
                 str.Append("UPDATE CompanyInfo SET CompanyName = '" + vm.CompanyName + "',Category='"+vm.Category+"', Address = '" + vm.Address + "',Email = '" + vm.Email + "',PanNumber = '" + vm.PanNumber + "', District = '" + vm.District + "', Country = '" + vm.Country + "',RegistrationDate = '" + registerDate + "', ValidFrom = '" + validFrom + "', ValidTo = '" + validTo + "' WHERE CompanyId = " + vm.Id + "\n");
                 foreach (var data in vm.contactPersonVM)
                 {
-                    if (data.Id != 0)
+                    if (data.Id != null)
                     {
                         str.Append(" update contactperson set ContactName = '" + data.ContactName + "',Gender = '" + data.Gender + "', Address = '" + data.Address + "', Email = '"+data.Email+"', PhoneNumber = '" + data.phoneNumber + "', MobileNumber = '" + data.MobileNumber + "', designation = '" + data.Designation + "' where ContactId =" + data.Id + "  \n");
                         
@@ -41,7 +44,7 @@ namespace Web_Application.Models
                     {
                         str.Append("set @pid = (select isnull(max(ContactId),0)+1 from ContactPerson)\n");
 
-                        str.Append("INSERT INTO ContactPerson(ContactId, ContactName, Gender,Address,Email, PhoneNumber, MobileNumber,Designation, CompanyId ) VALUES(@pid, '" + data.ContactName + "','" + data.Gender + "','" + data.Address + "','" + data.Email + "'," + data.phoneNumber + "," + data.MobileNumber + ",'" + data.Designation + "'," + vm.Id + ") \n");
+                        str.Append("INSERT INTO ContactPerson(ContactId, ContactName, Gender,Address,Email, PhoneNumber, MobileNumber,Designation, CompanyId ) VALUES(@pid, '" + data.ContactName + "','" + data.Gender + "','" + data.Address + "','" + data.Email + "','" + data.phoneNumber + "','" + data.MobileNumber + "','" + data.Designation + "'," + vm.Id + ") \n");
                     }
                 }
             }
@@ -115,7 +118,14 @@ namespace Web_Application.Models
         public List<CompanyMV> GetCompany() {
             connection();
             List<CompanyMV> customerList = new List<CompanyMV>();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM CompanyInfo", con);
+            StringBuilder str = new StringBuilder();
+            str.Append("SELECT * FROM CompanyInfo where 1=1 \n");
+
+            if(session.GetString("userProfile") == "OMSUser")
+            {
+                str.Append(" and CompanyId = " + session.GetString("userId") + " \n");
+            }
+            SqlCommand cmd = new SqlCommand(str.ToString(), con);
             SqlDataAdapter ad = new SqlDataAdapter(cmd);   
             DataTable dt = new DataTable();
             con.Open();

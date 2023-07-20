@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Web_Application.Models;
@@ -9,44 +10,80 @@ namespace Web_Application.Controllers
     public class DemoController : BaseController
     {
 
-    private readonly IWebHostEnvironment _webHostEnvironment;
-        public DemoController(IWebHostEnvironment webHostEnvironment)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly INotyfService _toastNotification;
+        public DemoController(IWebHostEnvironment webHostEnvironment, INotyfService _toasterNotification)
         {
             _webHostEnvironment = webHostEnvironment;
+            this._toastNotification = _toasterNotification;
         }
         public IActionResult Index()
         {
-            DemoDbHandle ddh = new DemoDbHandle();
-            return View(ddh.GetDemoDetail());
+            if (HttpContext.Session.GetString("userProfile") != "OMSUser")
+            {
+                DemoDbHandle ddh = new DemoDbHandle();
+                return View(ddh.GetDemoDetail());
+            }
+            else
+            {
+                return RedirectToAction("AccessDenied", "Error");
+            }
         }
-        
+
         public IActionResult CreateDemo()
         {
-            CompanyDbHandle idh = new CompanyDbHandle();
-            ViewData["Company"] = new SelectList(idh.GetCompany(), "Id", "CompanyName");
-            return PartialView("_PartialCreateDemo");
+            if (HttpContext.Session.GetString("userProfile") != "OMSUser")
+            {
+                CompanyDbHandle idh = new CompanyDbHandle();
+                ViewData["Company"] = new SelectList(idh.GetCompany(), "Id", "CompanyName");
+                return PartialView("_PartialCreateDemo");
+            }
+            else
+            {
+                return RedirectToAction("AccessDenied", "Error");
+            }
         }
         public IActionResult EditDemo(int id)
         {
-            DemoDbHandle ddh = new DemoDbHandle();
-            CompanyDbHandle idh = new CompanyDbHandle();
-            ViewData["Company"] = new SelectList(idh.GetCompany(), "Id", "CompanyName");
-            return PartialView("_PartialCreateDemo",ddh.GetDemoDetail().Find(x=>x.Id == id));
+            if (HttpContext.Session.GetString("userProfile") != "OMSUser")
+            {
+                DemoDbHandle ddh = new DemoDbHandle();
+                CompanyDbHandle idh = new CompanyDbHandle();
+                ViewData["Company"] = new SelectList(idh.GetCompany(), "Id", "CompanyName");
+                return PartialView("_PartialCreateDemo", ddh.GetDemoDetail().Find(x => x.Id == id));
+            }
+            else
+            {
+                return RedirectToAction("AccessDenied", "Error");
+            }
         }
 
         [HttpPost]
         public IActionResult CreateDemo(DemoMV vm)
         {
             DemoDbHandle ddh = new DemoDbHandle();
-                if (ModelState.IsValid)
+            if (ModelState.IsValid)
+            {
+                if (vm.Id == null)
                 {
                     if (ddh.CreateDemo(vm, UploadFile(vm.Attechment)))
                     {
+                        _toastNotification.Success("Demo hasbeen added Successfully");
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    if (ddh.CreateDemo(vm, UploadFile(vm.Attechment)))
+                    {
+                        _toastNotification.Success("Demo hasbeen Edited Successfully");
                         return RedirectToAction("Index");
 
                     }
                 }
-            
+
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -80,7 +117,7 @@ namespace Web_Application.Controllers
 
                     files.Add(uniqueFileName);
                 }
-                
+
             }
             return files;
         }

@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Wordprocessing;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,12 @@ namespace Web_Application.Controllers
 {
     public class CompanyController : BaseController
     {
-        
+        private readonly INotyfService _toastNotification;
+        public CompanyController(INotyfService toastNotification)
+        {
+            _toastNotification = toastNotification;
+        }
+
         public IActionResult Index()
         {
             CompanyDbHandle cdh = new CompanyDbHandle();
@@ -35,21 +41,32 @@ namespace Web_Application.Controllers
                 CompanyDbHandle cdh = new CompanyDbHandle();
                 //vm.contactPersonVM = new List<ContactPersonVM>();
 
-                
-               //string[] contactName = Request.Form["txtContactName"];
 
-               // StringValues id; 
-               // Request.Form.TryGetValue("txtContactName", out id);
+                //string[] contactName = Request.Form["txtContactName"];
 
-                
+                // StringValues id; 
+                // Request.Form.TryGetValue("txtContactName", out id);
 
 
-              //  Request.Form.TryGetValue("txtContactName", out id);
-              
 
-                if (cdh.CreateCompany(vm))
+
+                //  Request.Form.TryGetValue("txtContactName", out id);
+
+                if (vm.Id == null)
                 {
-                    return RedirectToAction("Index");
+                    if (cdh.CreateCompany(vm))
+                    {
+                        _toastNotification.Success("Company hasbeen added Successfully");
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    if (cdh.CreateCompany(vm))
+                    {
+                        _toastNotification.Success("Company hasbeen Edited Successfully");
+                        return RedirectToAction("Index");
+                    }
                 }
             }
             return RedirectToAction("Index");
@@ -123,6 +140,7 @@ namespace Web_Application.Controllers
             CompanyDbHandle cdh = new CompanyDbHandle();
             if (cdh.DeleteContact(id))
             {
+                
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");

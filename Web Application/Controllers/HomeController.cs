@@ -31,11 +31,14 @@ namespace Web_Application.Controllers
 
         public IActionResult Dashboard()
         {
+            DateTime date= DateTime.Now;
+            
             IssueDbHandle idh = new IssueDbHandle();
             var total = idh.FilterDate().Count();
             var totalAssgin = idh.FilterDate().Where(x=>x.Support != "").Count();
             var totalTransfer = idh.FilterDate().Where(x=>x.TrasferName != "").Count();
             var remainning = idh.FilterDate().Where(x=>x.Status != "Close").Count();
+            var todayDue = idh.FilterDate().Where(x => x.CloseBy == date.ToString("yyyy-MM-dd")).Count();
             ViewBag.TotalIssue = total;
             ViewBag.TotalAssign = totalAssgin;
             ViewBag.TotalTransfer = totalTransfer;

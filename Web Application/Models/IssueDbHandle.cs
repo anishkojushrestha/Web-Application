@@ -417,13 +417,13 @@ namespace Web_Application.Models
             }
 
 
-            //if (session.GetString("userProfile") == "OMSUser")
-            //{
-            //    sb.Append(" and i.CompanyName='" + session.GetString("companyName") + "'\n");
-            //}
+            if (session.GetString("userProfile") == "OMSUser")
+            {
+                sb.Append(" and c.CompanyName='" + session.GetString("companyName") + "'\n");
+            }
             //else if (session.GetString("userProfile") == "Support")
             //{
-            //    sb.Append(" and u.Support='" + session.GetString("userId") + "'\n");
+            //    sb.Append(" and u.UserId='" + session.GetString("userId") + "'\n");
             //}
             //}
 

@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Drawing;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Office2019.Excel.RichData2;
 using Intersoft.Crosslight;
 using Microsoft.AspNetCore.Hosting;
@@ -14,10 +15,12 @@ namespace Web_Application.Controllers
     public class IssueController : BaseController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly INotyfService _toastNotification;
 
-        public IssueController(IWebHostEnvironment _webHostEnvironment)
+        public IssueController(IWebHostEnvironment _webHostEnvironment, INotyfService _toastNotification)
         {
             this._webHostEnvironment = _webHostEnvironment;
+            this._toastNotification = _toastNotification;
         }
         public IActionResult Index()
         {
@@ -190,7 +193,7 @@ namespace Web_Application.Controllers
         {
             IssueDbHandle idh = new IssueDbHandle();
             CompanyDbHandle cdh = new CompanyDbHandle();
-            ViewData["Company"] = new SelectList(cdh.GetCompany(), "Id", "CompanyName");
+            ViewData["Company"] = new SelectList((HttpContext.Session.GetString("companyName") == null)?cdh.GetCompany():cdh.GetCompany().Where(x=>x.CompanyName == HttpContext.Session.GetString("companyName")), "Id", "CompanyName");
             ViewData["Support"] = new SelectList(idh.GetUser(), "Id", "UserName");
             return PartialView("_PartialIssue");
         }
@@ -205,6 +208,8 @@ namespace Web_Application.Controllers
                     IssueDbHandle idh = new IssueDbHandle();
                     if (idh.CreateIssue(vm, UploadFile(vm.Attachments)))
                     {
+                        _toastNotification.Success("Issue hasbeen added Successfully");
+
                         return RedirectToAction("Index");
                     }
                 }
@@ -216,6 +221,7 @@ namespace Web_Application.Controllers
                     IssueDbHandle idh = new IssueDbHandle();
                     if (idh.UpdateIssue(vm, UploadFile(vm.Attachments)))
                     {
+                        _toastNotification.Success("Issue hasbeen edited Successfully");
                         return RedirectToAction("Index");
                     }
                 }
