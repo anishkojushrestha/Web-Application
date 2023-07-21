@@ -7,7 +7,7 @@ namespace Web_Application.Controllers
     public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
-
+        DateTime date = DateTime.Now;
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -31,7 +31,7 @@ namespace Web_Application.Controllers
 
         public IActionResult Dashboard()
         {
-            DateTime date= DateTime.Now;
+            
             
             IssueDbHandle idh = new IssueDbHandle();
             var total = idh.FilterDate().Count();
@@ -43,6 +43,7 @@ namespace Web_Application.Controllers
             ViewBag.TotalAssign = totalAssgin;
             ViewBag.TotalTransfer = totalTransfer;
             ViewBag.Remain = remainning;
+            ViewBag.TodayDue = todayDue;
             return View();
         }
 
@@ -64,5 +65,13 @@ namespace Web_Application.Controllers
             var totalClose = idh.FilterDate().Where(x => x.Status != "Close").ToList();
             return  Json(new { data= totalClose });
         }
+        public IActionResult TodayDue()
+        {
+            IssueDbHandle idh = new IssueDbHandle();
+            var todayDue = idh.FilterDate().Where(x => x.CloseBy == date.ToString("yyyy-MM-dd")).ToList();
+            return Json(new { data = todayDue });
+        }
+
+
     }
 }

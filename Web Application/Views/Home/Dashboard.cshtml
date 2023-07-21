@@ -2,9 +2,23 @@
     ViewData["Title"] = "Dashboard";
 }
 
+<style>
+    @@media screen and (min-width:400px) and (max-width: 600px) {
+        .crd {
+            width: 100%;
+        }
+    }
 
-<div class="row mt-4" style=" width: 100%;font-size: 90%;">
-    <div class="col-xl-3 col-md-6 mb-4 ">
+    @@media screen and (min-width:900px) and (max-width: 1400px) {
+        .crd {
+            width: 20%;
+        }
+    }
+</style>
+
+
+<div class="row mt-4" style=" width: 100%;font-size: 70%;">
+    <div class="col-xl-3 col-md-6 mb-4 crd"  >
         <div class="card border-start-primary bg-primary shadow h-100 py-2">
 
 
@@ -28,7 +42,7 @@
     </div>
 
 
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6 mb-4 crd" >
         <div class="card border-left-success bg-success shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -49,7 +63,7 @@
     </div>
 
 
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6 mb-4 crd">
         <div class="card border-left-info bg-info shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -74,7 +88,7 @@
     </div>
 
 
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6 mb-4 crd" >
         <div class="card border-left-warning bg-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -93,24 +107,24 @@
             </div>
         </div>
     </div>
-    @*<div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning bg-warning shadow h-100 py-2">
+    <div class="col-xl-3 col-md-6 mb-4 crd" >
+        <div class="card border-left-warning bg-danger shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-white text-uppercase mb-1">
                             Today Due
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-white">@ViewBag.Remain</div>
+                        <div class="h5 mb-0 font-weight-bold text-white">@ViewBag.TodayDue</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fa-solid fa-bell fa-2x text-white"></i>
+                        <i class="fa-solid fa-clock fa-2x text-white"></i>
                     </div>
                 </div>
-                <button id="btnClose" class="small-box-footer text-white ml-4" style="outline:none; border:none; background:none;">More info <i class="fa-solid fa-circle-arrow-down"></i></button>
+                <button id="btnDue" class="small-box-footer text-white ml-4" style="outline:none; border:none; background:none;">more info <i class="fa-solid fa-circle-arrow-down"></i></button>
             </div>
         </div>
-    </div>*@
+    </div>
 </div>
 
 
@@ -185,6 +199,10 @@
             });
             $("#btnClose").on("click", function () {
                 dataTable.ajax.url("/Home/TotalClose").load();
+
+            });
+            $("#btnDue").on("click", function () {
+                dataTable.ajax.url("/Home/TodayDue").load();
 
             });
 

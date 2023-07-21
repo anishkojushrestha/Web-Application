@@ -246,7 +246,6 @@ namespace Web_Application.Controllers
                     else
                     {
                         ViewBag.nErr = "Password doesnot match!!";
-
                     }
                 }
                 else

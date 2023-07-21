@@ -25,13 +25,13 @@ namespace Web_Application.Controllers
         public IActionResult Index()
         {
             IssueDbHandle idh = new IssueDbHandle();
-            
+
             return View();
         }
-        public IActionResult GetValue(string Istatus=null, string FromD=null, string To=null)
+        public IActionResult GetValue(string Istatus = null, string FromD = null, string To = null)
         {
             IssueDbHandle idh = new IssueDbHandle();
-            var result= idh.FilterDate(Istatus, FromD, To).ToList();
+            var result = idh.FilterDate(Istatus, FromD, To).ToList();
             return Json(new { data = result });
         }
         public JsonResult GetReportDate(string DateType)
@@ -108,7 +108,6 @@ namespace Web_Application.Controllers
                 //        sql = sql + " or Len(Convert(Numeric,Substring(M_Miti,4,2))-1)<>1 and Convert(Numeric,Substring(M_Miti,4,2))=(Select Distinct Case When Convert(nvarchar(5), Convert(Numeric, Substring(M_Miti, 4, 2)) - 1) = 0 Then 12 Else Convert(nvarchar(5),Convert(Numeric,Substring(M_Miti,4,2))-1) End from DateMiti Where M_Date= '" + DateTime.Now.ToString("yyyy-MM-dd") + "') ) \n";
                 //        sql = sql + " Order By M_Date desc \n";
                 //        Enddate = Convert.ToDateTime(DAL.Database.GetSqlData(sql));
-
                 //        //commented not return true value of deduct -30 days
                 //        //sql = "Select Top(1) M_Date from DateMiti where Substring(M_Miti,7,4) =";
                 //        //sql = sql + " (Select substring(M_Miti, 7, 4) from  DateMiti where  Convert(Varchar(10), M_Date, 103) = Convert(Varchar(10), DATEADD(day, -30, getdate()), 103))";
@@ -148,7 +147,7 @@ namespace Web_Application.Controllers
                 //    FromDate = DAL.Database.GetSqlData("Select m_miti from datemiti where m_date='" + Startdate.ToString("yyyy/MM/dd") + "'");
                 //    ToDate = DAL.Database.GetSqlData("Select m_miti from datemiti where m_date='" + Enddate.ToString("yyyy/MM/dd") + "'");
                 //}
-                
+
                 Startdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 Enddate = Startdate.AddMonths(1).AddDays(-1);
             }
@@ -161,7 +160,7 @@ namespace Web_Application.Controllers
             else if (DateType == "Upto Date")
             {
                 IssueDbHandle ish = new IssueDbHandle();
-                Startdate = Convert.ToDateTime( ish.Min());
+                Startdate = Convert.ToDateTime(ish.Min());
                 Enddate = Convert.ToDateTime(ish.Max());
             }
             FromDate = Startdate.ToString("yyyy-MM-dd");
@@ -176,7 +175,7 @@ namespace Web_Application.Controllers
         public IActionResult Ticket()
         {
             IssueDbHandle idh = new IssueDbHandle();
-            var result =  idh.maxId();
+            var result = idh.maxId();
             result++;
             var tick = "IssueNo" + result;
             return Json(tick);
@@ -193,7 +192,7 @@ namespace Web_Application.Controllers
         {
             IssueDbHandle idh = new IssueDbHandle();
             CompanyDbHandle cdh = new CompanyDbHandle();
-            ViewData["Company"] = new SelectList((HttpContext.Session.GetString("companyName") == null)?cdh.GetCompany():cdh.GetCompany().Where(x=>x.CompanyName == HttpContext.Session.GetString("companyName")), "Id", "CompanyName");
+            ViewData["Company"] = new SelectList((HttpContext.Session.GetString("companyName") == null) ? cdh.GetCompany() : cdh.GetCompany().Where(x => x.CompanyName == HttpContext.Session.GetString("companyName")), "Id", "CompanyName");
             ViewData["Support"] = new SelectList(idh.GetUser(), "Id", "UserName");
             return PartialView("_PartialIssue");
         }
@@ -233,7 +232,7 @@ namespace Web_Application.Controllers
         public IActionResult GetEmail(int id)
         {
             IssueDbHandle idh = new IssueDbHandle();
-            var result= idh.Email(id);
+            var result = idh.Email(id);
             return Json(result);
         }
         public IActionResult GetUserEmail(int id, string username)
@@ -252,7 +251,7 @@ namespace Web_Application.Controllers
         public IActionResult GetTransfer(int id)
         {
             IssueDbHandle idh = new IssueDbHandle();
-            var result= idh.Transfer(id);
+            var result = idh.Transfer(id);
             return Json(result);
         }
 
@@ -262,8 +261,8 @@ namespace Web_Application.Controllers
             var result = idh.GetContact(id);
             return Json(result);
         }
-      
-       
+
+
         [HttpPost]
         public IActionResult Assign(IssueVM vm)
         {
@@ -303,7 +302,6 @@ namespace Web_Application.Controllers
             List<string> files = new List<string>();
             if (file != null)
             {
-
                 string uniqueFileName = "";
                 var folderPath = System.IO.Path.Combine(_webHostEnvironment.WebRootPath, "files");
                 foreach (var data in file)
@@ -321,5 +319,7 @@ namespace Web_Application.Controllers
             }
             return files;
         }
+
+        
     }
 }

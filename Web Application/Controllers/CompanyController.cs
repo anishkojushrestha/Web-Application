@@ -91,8 +91,6 @@ namespace Web_Application.Controllers
         public IActionResult GetContact(int id)
         {
             CompanyDbHandle cdh = new CompanyDbHandle();
-
-
             return PartialView("_PartialGetContact", cdh.GetContactDetail().Where(x => x.CompanyId == id));
         }
 
